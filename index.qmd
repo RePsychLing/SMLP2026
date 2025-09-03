@@ -1,5 +1,5 @@
 ---
-title: "Ninth Summer School on Statistical Methods for Linguistics and Psychology"
+title: "Tenth Summer School on Statistical Methods for Linguistics and Psychology"
 subtitle: "Advanced methods in frequentist statistics with Julia"
 author: "Phillip Alday and Reinhold Kliegl"
 engine: julia
