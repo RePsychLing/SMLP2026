@@ -19,7 +19,7 @@ using DataFrames
 using Effects
 using MixedModels
 using MixedModelsMakie
-using SMLP2025: dataset
+using SMLP2026: dataset
 using StandardizedPredictors
 using StatsBase
 ```

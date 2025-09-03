@@ -34,10 +34,10 @@ using MixedModelsMakie # diagnostic plots
 using Random           # random number generators
 using RCall            # call R from Julia
 using MixedModelsMakie: simplelinreg
-using SMLP2025: dataset
+using SMLP2026: dataset
 ```
 
-The `sleepstudy` data are one of the datasets available with the `MixedModels` package.  It is re-exported by the `SMLP2025` package's `dataset` function.
+The `sleepstudy` data are one of the datasets available with the `MixedModels` package.  It is re-exported by the `SMLP2026` package's `dataset` function.
 
 ```{julia}
 sleepstudy = DataFrame(dataset("sleepstudy"))
