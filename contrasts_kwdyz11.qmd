@@ -15,7 +15,7 @@ using CairoMakie
 using Chain
 using DataFrames
 using MixedModels
-using SMLP2025: dataset
+using SMLP2026: dataset
 using StatsBase
 using StatsModels
 

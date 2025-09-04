@@ -10,11 +10,11 @@ execute:
 number-sections: true
 github:
   owner: RePsychLing
-  repo: SMLP2025
+  repo: SMLP2026
 
 project:
   type: website
-  title: "SMLP2025"
+  title: "SMLP2026"
   execute-dir: project
   output-dir: _build/
   render:
@@ -63,9 +63,9 @@ format:
     fig-height: 6
 
 website:
-  title: "SMLP2025: Advanced Frequentist Track"
-  site-url: https://RePsychLing.github.io/SMLP2025
-  repo-url: https://github.com/RePsychLing/SMLP2025
+  title: "SMLP2026: Advanced Frequentist Track"
+  site-url: https://RePsychLing.github.io/SMLP2026
+  repo-url: https://github.com/RePsychLing/SMLP2026
   repo-actions: [edit, issue]
   # reader-mode: true
   navbar:
@@ -76,7 +76,7 @@ website:
     #   - about.qmd
     right:
       - icon: github
-        href: https://github.com/RePsychLing/SMLP2025
+        href: https://github.com/RePsychLing/SMLP2026
   page-navigation: true
   back-to-top-navigation: true
   sidebar:

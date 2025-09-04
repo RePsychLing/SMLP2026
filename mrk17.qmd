@@ -13,7 +13,7 @@ Packages we (might) use.
 using DataFrames
 using MixedModels
 using MixedModelsMakie
-using SMLP2025: dataset
+using SMLP2026: dataset
 using Statistics: mean, std
 
 const progress=false
