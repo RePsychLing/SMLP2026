@@ -427,13 +427,12 @@ The choice of contrast does not affect the model objective, in other words, they
 Trivially, the meaning of a contrast depends on its definition. Consequently, the contrast specification has a big effect on the random-effect structure. As an illustration, we refit the LMMs with variance components (VCs) and correlation parameters (CPs) for `Child`-related contrasts of `Test`. Unfortunately, it is not easy, actually rather quite difficult, to grasp the meaning of correlations of contrast-based effects; they represent two-way interactions.
 
 ```{julia}
+#| output: false
 f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
 m_Child_SDC = lmm(f_Child, dat; contrasts=contr1, progress)
 m_Child_HeC = lmm(f_Child, dat; contrasts=contr2, progress)
 m_Child_HyC = lmm(f_Child, dat; contrasts=contr3, progress)
 m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress)
-# suppress printing of the model fits
-nothing
 ```
 
 ```{julia}
@@ -457,13 +456,12 @@ The CPs for the various contrasts are in line with expectations. For the SDC we 
 Do these differences in CPs imply that we can move to zcpLMMs when we have orthogonal contrasts? We pursue this question with by refitting the four LMMs with zerocorr() and compare the goodness of fit.
 
 ```{julia}
+#| output: false
 f_Child0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child))
 m_Child_SDC0 = lmm(f_Child0, dat; contrasts=contr1, progress)
 m_Child_HeC0 = lmm(f_Child0, dat; contrasts=contr2, progress)
 m_Child_HyC0 = lmm(f_Child0, dat; contrasts=contr3, progress)
 m_Child_PCA0 = lmm(f_Child0, dat; contrasts=contr4, progress)
-# suppress printing of the model fits
-nothing
 ```
 
 ```{julia}
@@ -510,13 +508,12 @@ The effect of `age` (i.e., developmental gain) varies within `School`.
 Therefore, we also include its VCs and CPs in this model; the school-related VC for `Sex` was not significant.
 
 ```{julia}
+#| output: false
 f_School = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test + a1 | School))
 m_School_SeqDiff = lmm(f_School, dat; contrasts=contr1, progress)
 m_School_Helmert = lmm(f_School, dat; contrasts=contr2, progress)
 m_School_Hypo = lmm(f_School, dat; contrasts=contr3, progress)
 m_School_PCA = lmm(f_School, dat; contrasts=contr4, progress)
-# suppress printing of the model fits
-nothing
 ```
 
 ```{julia}
