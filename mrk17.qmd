@@ -13,10 +13,12 @@ Packages we (might) use.
 using DataFrames
 using MixedModels
 using MixedModelsMakie
+using StatsBase
+
 using SMLP2026: dataset
 using Statistics: mean, std
 
-const progress=false
+const progress = isinteractive()
 ```
 
 ```{julia}
@@ -283,9 +285,10 @@ gof_summary = let
     AIC=round.(aic.(mods),digits=0),
     AICc=round.(aicc.(mods),digits=0),
     BIC=round.(bic.(mods),digits=0),
-    χ²=vcat(:., round.(lrt.tests.deviancediff, digits=0)),
-    χ²_dof=vcat(:., round.(lrt.tests.dofdiff, digits=0)),
-    pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
+    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
+    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
+    # StatsBase.PValue includes some pretty-printing methods
+    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
   )
 end
 ```
@@ -378,9 +381,10 @@ gof_summary = let
     AIC=aic.(mods),
     AICc=aicc.(mods),
     BIC=bic.(mods),
-    χ²=vcat(:.,lrt.tests.deviancediff),
-    χ²_dof=vcat(:.,lrt.tests.dofdiff),
-    pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
+    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
+    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
+    # StatsBase.PValue includes some pretty-printing methods
+    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
   )
 end
 ```

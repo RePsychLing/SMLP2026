@@ -19,15 +19,14 @@ using LinearAlgebra
 using MixedModels
 using MixedModelsMakie
 
-const progress=false
+const progress = isinteractive()
 ```
 
-Fit a model for reaction time in the sleepstudy example, preserving information on the estimation progress (the `thin=1` optional argument)
+Fit a model for reaction time in the sleepstudy example.
 
 ```{julia}
-m01 = let f = @formula reaction ~ 1 + days + (1 + days|subj)
-  fit(MixedModel, f, MixedModels.dataset(:sleepstudy); thin=1, progress)
-end
+m01 = lmm(@formula(reaction ~ 1 + days + (1 + days|subj)), MixedModels.dataset(:sleepstudy); progress)
+
 print(m01)
 ```
 
@@ -82,16 +81,14 @@ The elements of this parameter vector are subject to constraints.
 In particular, two of the three elements have a lower bound of zero.
 
 ```{julia}
-m01.lowerbd
+lowerbd(m01)
 ```
 
 That is, the first and third elements of $\theta$, corresponding to diagonal elements of $\lambda$, must be non-negative, whereas the second component is unconstrained (has a lower bound of $-\infty$).
 
 # Progress of the iterations
 
-The `optsum.fitlog` property of the model is a vector of tuples where each tuple contains the value of the $\theta$ vector and the value of the objective at that $\theta$.
-The `fitlog` always contains the first and the last evaluation.
-When the `thin` named argument is set, this property has a row for every thin'th evaluation.
+The `optsum.fitlog` property of the model is table that contains the value of the $\theta$ vector and the value of the objective at that $\theta$.
 
 ```{julia}
 m01.optsum.fitlog
