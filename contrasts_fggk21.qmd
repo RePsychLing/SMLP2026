@@ -47,11 +47,13 @@ using DataFrames
 using DataFrameMacros
 using MixedModels
 using ProgressMeter
-using SMLP2026: dataset
 using Statistics
 using StatsBase
 
-ProgressMeter.ijulia_behavior(:clear);
+using MixedModels: likelihoodratiotest
+using SMLP2026: dataset
+
+progress = isinteractive()
 ```
 
 ## Readme for `dataset("fggk21")`
@@ -149,23 +151,17 @@ The statistical disadvantage of _SeqDiffCoding_ is that the contrasts are not or
 Obviously, the tradeoff between theoretical motivation and statistical purity is something that must be considered carefully when planning the analysis.
 
 ```{julia}
-contr1 = merge(
-  Dict(nm => Grouping() for nm in (:School, :Child, :Cohort)),
-  Dict(
+contr1 = Dict(
     :Sex => EffectsCoding(; levels=["Girls", "Boys"]),
     :Test => SeqDiffCoding(;
       levels=["Run", "Star_r", "S20_r", "SLJ", "BPT"]
     ),
-  ),
-)
+  )
 ```
 
 ```{julia}
-f_ovi_1 = @formula zScore ~ 1 + Test + (1 | Child);
-```
-
-```{julia}
-m_ovi_SeqDiff_1 = fit(MixedModel, f_ovi_1, dat; contrasts=contr1)
+m_ovi_SeqDiff_1 = lmm(@formula(zScore ~ 1 + Test + (1 | Child)),
+                      dat; contrasts=contr1, progress)
 ```
 
 In this case, any differences between tests identified by the contrasts would be  spurious because each test was standardized (i.e., _M_=0, $SD$=1). The differences could also be due to an imbalance in the number of boys and girls or in the number of missing observations for each test.
@@ -173,10 +169,8 @@ In this case, any differences between tests identified by the contrasts would be
 The primary interest in this study related to interactions of the test contrasts with and `age` and `Sex`. We start with age (linear) and its interaction with the four test contrasts.
 
 ```{julia}
-m_ovi_SeqDiff_2 = let
-  form = @formula zScore ~ 1 + Test * a1 + (1 | Child)
-  fit(MixedModel, form, dat; contrasts=contr1)
-end
+m_ovi_SeqDiff_2 = lmm(@formula(zScore ~ 1 + Test * a1 + (1 | Child)),
+                      dat; contrasts=contr1, progress)
 ```
 
 The difference between older and younger children is larger for `Star_r` than for `Run` (0.2473).  `S20_r` did not differ significantly from `Star_r` (-0.0377) and `SLJ` (-0.0113) The largest difference in developmental gain was between `BPT` and `SLJ` (0.3355).
@@ -186,10 +180,8 @@ The difference between older and younger children is larger for `Star_r` than fo
 Next we add the main effect of `Sex` and its interaction with the four test contrasts.
 
 ```{julia}
-m_ovi_SeqDiff_3 = let
-  form = @formula zScore ~ 1 + Test * (a1 + Sex) + (1 | Child)
-  fit(MixedModel, form, dat; contrasts=contr1)
-end
+m_ovi_SeqDiff_3 = lmm(@formula(zScore ~ 1 + Test * (a1 + Sex) + (1 | Child)),
+                      dat; contrasts=contr1, progress)
 ```
 
 The significant interactions with `Sex` reflect mostly differences related to muscle power, where the physiological constitution gives boys an advantage. The sex difference is smaller when coordination and cognition play a role -- as in the `Star_r` test. (Caveat: SEs are estimated with an underspecified RES.)
@@ -197,8 +189,10 @@ The significant interactions with `Sex` reflect mostly differences related to mu
 The final step in this first series is to add the interactions between the three covariates. A significant interaction between any of the four `Test` contrasts and age (linear) x `Sex` was hypothesized to reflect a prepubertal signal (i.e., hormones start to rise in girls' ninth year of life). However, this hypothesis is linked to a specific shape of the interaction: Girls would need to gain more than boys in tests of muscular power.
 
 ```{julia}
-f_ovi = @formula zScore ~ 1 + Test * a1 * Sex + (1 | Child)
-m_ovi_SeqDiff = fit(MixedModel, f_ovi, dat; contrasts=contr1)
+# we'll be re-using this formula with other contrast specifications,
+# so we assign it to its own variable
+f_ovi = @formula(zScore ~ 1 + Test * a1 * Sex + (1 | Child))
+m_ovi_SeqDiff = lmm(f_ovi, dat; contrasts=contr1, progress)
 ```
 
 The results are very clear: Despite an abundance of statistical power there is no evidence for the differences between boys and girls in how much they gain in the ninth year of life in these five tests. The authors argue that, in this case, absence of evidence looks very much like evidence of absence of a hypothesized interaction.
@@ -228,9 +222,6 @@ The statistical advantage of _HelmertCoding_ is that the resulting contrasts are
 
 ```{julia}
 contr2 = Dict(
-  :School => Grouping(),
-  :Child => Grouping(),
-  :Cohort => Grouping(),
   :Sex => EffectsCoding(; levels=["Girls", "Boys"]),
   :Test => HelmertCoding(;
     levels=["Run", "Star_r", "S20_r", "SLJ", "BPT"],
@@ -239,7 +230,7 @@ contr2 = Dict(
 ```
 
 ```{julia}
-m_ovi_Helmert = fit(MixedModel, f_ovi, dat; contrasts=contr2)
+m_ovi_Helmert = lmm(f_ovi, dat; contrasts=contr2, progress)
 ```
 
 We forego a detailed discussion of the effects, but note that again none of the interactions between `age x Sex` with the four test contrasts was significant.
@@ -261,9 +252,6 @@ The third set of contrasts uses _HypothesisCoding_. _Hypothesis coding_ allows t
 
 ```{julia}
 contr3 = Dict(
-  :School => Grouping(),
-  :Child => Grouping(),
-  :Cohort => Grouping(),
   :Sex => EffectsCoding(; levels=["Girls", "Boys"]),
   :Test => HypothesisCoding(
     [
@@ -279,7 +267,7 @@ contr3 = Dict(
 ```
 
 ```{julia}
-m_ovi_Hypo = fit(MixedModel, f_ovi, dat; contrasts=contr3)
+m_ovi_Hypo = lmm(f_ovi, dat; contrasts=contr3, progress)
 ```
 
 With _HypothesisCoding_ we must generate our own labels for the contrasts. The default labeling of contrasts is usually not interpretable. Therefore, we provide our own.
@@ -288,9 +276,6 @@ Anyway, none of the interactions between `age` x `Sex` with the four `Test` cont
 
 ```{julia}
 contr1b = Dict(
-  :School => Grouping(),
-  :Child => Grouping(),
-  :Cohort => Grouping(),
   :Sex => EffectsCoding(; levels=["Girls", "Boys"]),
   :Test => HypothesisCoding(
     [
@@ -306,34 +291,22 @@ contr1b = Dict(
 ```
 
 ```{julia}
-m_ovi_SeqDiff_v2 = fit(MixedModel, f_ovi, dat; contrasts=contr1b)
+m_ovi_SeqDiff_v2 = lmm(f_ovi, dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
-m_zcp_SeqD = let
-  form = @formula(
-    zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child)
-  )
-  fit(MixedModel, form, dat; contrasts=contr1b)
-end
+m_zcp_SeqD = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child)),
+                 dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
-m_zcp_SeqD_2 = let
-  form = @formula(
-    zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)
-  )
-  fit(MixedModel, form, dat; contrasts=contr1b)
-end
+m_zcp_SeqD_2 = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
+                   dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
-m_cpx_0_SeqDiff = let
-  f_cpx_0 = @formula(
-    zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)
-  )
-  fit(MixedModel, f_cpx_0, dat; contrasts=contr1b)
-end
+m_cpx_0_SeqDiff = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
+                      dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
@@ -345,11 +318,8 @@ m_cpx_0_SeqDiff.PCA
 ```
 
 ```{julia}
-f_cpx_1 = @formula(
-  zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child)
-)
-m_cpx_1_SeqDiff =
-fit(MixedModel, f_cpx_1, dat; contrasts=contr1b)
+f_cpx_1 = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
+m_cpx_1_SeqDiff = lmm(f_cpx_1, dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
@@ -369,9 +339,6 @@ PC1 contrasts the worst and the best indicator of physical **health**; PC2 contr
 
 ```{julia}
 contr4 = Dict(
-  :School => Grouping(),
-  :Child => Grouping(),
-  :Cohort => Grouping(),
   :Sex => EffectsCoding(; levels=["Girls", "Boys"]),
   :Test => HypothesisCoding(
     [
@@ -387,7 +354,7 @@ contr4 = Dict(
 ```
 
 ```{julia}
-m_cpx_1_PC = fit(MixedModel, f_cpx_1, dat; contrasts=contr4)
+m_cpx_1_PC = lmm(f_cpx_1, dat; contrasts=contr4, progress)
 ```
 
 ```{julia}
@@ -401,9 +368,7 @@ m_cpx_1_PC.PCA
 There is a numerical interaction with a z-value > 2.0 for the first PCA (i.e., `BPT` - `Run_r`).  This interaction would really need to be replicated to be taken seriously. It is probably due to larger "unfitness" gains in boys than girls (i.e., in `BPT`)  relative to the slightly larger health-related "fitness" gains of girls than boys (i.e., in `Run_r`).
 
 ```{julia}
-contr4b = merge(
-  Dict(nm => Grouping() for nm in (:School, :Child, :Cohort)),
-  Dict(
+contr4b = Dict(
     :Sex => EffectsCoding(; levels=["Girls", "Boys"]),
     :Test => HypothesisCoding(
       [
@@ -414,13 +379,12 @@ contr4b = merge(
       ];
       levels=["Run", "Star_r", "S20_r", "SLJ", "BPT"],
       labels=["c5.1", "c234.15", "c12.34", "c3.4"],
-    ),
-  ),
+    )
 );
 ```
 
 ```{julia}
-m_cpx_1_PC_2 = fit(MixedModel, f_cpx_1, dat; contrasts=contr4b)
+m_cpx_1_PC_2 = lmm(f_cpx_1, dat; contrasts=contr4b, progress)
 ```
 
 ```{julia}
@@ -432,8 +396,8 @@ m_cpx_1_PC_2.PCA
 ```
 
 ```{julia}
-f_zcp_1 = @formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child))
-m_zcp_1_PC_2 = fit(MixedModel, f_zcp_1, dat; contrasts=contr4b)
+m_zcp_1_PC_2 = lmm(@formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child)),
+                   dat; contrasts=contr4b, progress)
 ```
 
 ```{julia}
@@ -441,7 +405,7 @@ VarCorr(m_zcp_1_PC_2)
 ```
 
 ```{julia}
-MixedModels.likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
+# likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
 ```
 
 # Other topics
@@ -463,14 +427,13 @@ The choice of contrast does not affect the model objective, in other words, they
 Trivially, the meaning of a contrast depends on its definition. Consequently, the contrast specification has a big effect on the random-effect structure. As an illustration, we refit the LMMs with variance components (VCs) and correlation parameters (CPs) for `Child`-related contrasts of `Test`. Unfortunately, it is not easy, actually rather quite difficult, to grasp the meaning of correlations of contrast-based effects; they represent two-way interactions.
 
 ```{julia}
-begin
-  f_Child = @formula zScore ~
-    1 + Test * a1 * Sex + (1 + Test | Child)
-  m_Child_SDC = fit(MixedModel, f_Child, dat; contrasts=contr1)
-  m_Child_HeC = fit(MixedModel, f_Child, dat; contrasts=contr2)
-  m_Child_HyC = fit(MixedModel, f_Child, dat; contrasts=contr3)
-  m_Child_PCA = fit(MixedModel, f_Child, dat; contrasts=contr4)
-end
+f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
+m_Child_SDC = lmm(f_Child, dat; contrasts=contr1, progress)
+m_Child_HeC = lmm(f_Child, dat; contrasts=contr2, progress)
+m_Child_HyC = lmm(f_Child, dat; contrasts=contr3, progress)
+m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress)
+# suppress printing of the model fits
+nothing
 ```
 
 ```{julia}
@@ -494,49 +457,46 @@ The CPs for the various contrasts are in line with expectations. For the SDC we 
 Do these differences in CPs imply that we can move to zcpLMMs when we have orthogonal contrasts? We pursue this question with by refitting the four LMMs with zerocorr() and compare the goodness of fit.
 
 ```{julia}
-begin
-  f_Child0 = @formula zScore ~
-    1 + Test * a1 * Sex + zerocorr(1 + Test | Child)
-  m_Child_SDC0 = fit(MixedModel, f_Child0, dat; contrasts=contr1)
-  m_Child_HeC0 = fit(MixedModel, f_Child0, dat; contrasts=contr2)
-  m_Child_HyC0 = fit(MixedModel, f_Child0, dat; contrasts=contr3)
-  m_Child_PCA0 = fit(MixedModel, f_Child0, dat; contrasts=contr4)
-end
+f_Child0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child))
+m_Child_SDC0 = lmm(f_Child0, dat; contrasts=contr1, progress)
+m_Child_HeC0 = lmm(f_Child0, dat; contrasts=contr2, progress)
+m_Child_HyC0 = lmm(f_Child0, dat; contrasts=contr3, progress)
+m_Child_PCA0 = lmm(f_Child0, dat; contrasts=contr4, progress)
+# suppress printing of the model fits
+nothing
 ```
 
 ```{julia}
-MixedModels.likelihoodratiotest(m_Child_SDC0, m_Child_SDC)
+# likelihoodratiotest(m_Child_SDC0, m_Child_SDC)
 ```
 
 ```{julia}
-MixedModels.likelihoodratiotest(m_Child_HeC0, m_Child_HeC)
+# likelihoodratiotest(m_Child_HeC0, m_Child_HeC)
 ```
 
 ```{julia}
-MixedModels.likelihoodratiotest(m_Child_HyC0, m_Child_HyC)
+# likelihoodratiotest(m_Child_HyC0, m_Child_HyC)
 ```
 
 ```{julia}
-MixedModels.likelihoodratiotest(m_Child_PCA0, m_Child_PCA)
+# likelihoodratiotest(m_Child_PCA0, m_Child_PCA)
 ```
 
 Obviously, we can not drop CPs from any of the LMMs. The full LMMs all have the same objective, but we can compare the goodness-of-fit statistics of zcpLMMs more directly.
 
 ```{julia}
-begin
-  zcpLMM = ["SDC0", "HeC0", "HyC0", "PCA0"]
-  mods = [m_Child_SDC0, m_Child_HeC0, m_Child_HyC0, m_Child_PCA0]
-  gof_summary = sort!(
-    DataFrame(;
-      zcpLMM=zcpLMM,
-      dof=dof.(mods),
-      deviance=deviance.(mods),
-      AIC=aic.(mods),
-      BIC=bic.(mods),
-    ),
-    :deviance,
-  )
-end
+zcpLMM = ["SDC0", "HeC0", "HyC0", "PCA0"]
+mods = [m_Child_SDC0, m_Child_HeC0, m_Child_HyC0, m_Child_PCA0]
+gof_summary = sort!(
+  DataFrame(;
+    zcpLMM=zcpLMM,
+    dof=dof.(mods),
+    deviance=deviance.(mods),
+    AIC=aic.(mods),
+    BIC=bic.(mods),
+  ),
+  :deviance,
+)
 ```
 
 The best fit was obtained for the PCA-based zcpLMM. Somewhat surprisingly the second best fit was obtained for the SDC. The relatively poor performance of HeC-based zcpLMM is puzzling to me. I thought it might be related to imbalance in design in the present data, but this does not appear to be the case. The same comparison of _SequentialDifferenceCoding_ and _Helmert Coding_ also showed a worse fit for the zcp-HeC LMM than the zcp-SDC LMM.
@@ -550,12 +510,13 @@ The effect of `age` (i.e., developmental gain) varies within `School`.
 Therefore, we also include its VCs and CPs in this model; the school-related VC for `Sex` was not significant.
 
 ```{julia}
-f_School = @formula zScore ~
-  1 + Test * a1 * Sex + (1 + Test + a1 | School);
-m_School_SeqDiff = fit(MixedModel, f_School, dat; contrasts=contr1);
-m_School_Helmert = fit(MixedModel, f_School, dat; contrasts=contr2);
-m_School_Hypo = fit(MixedModel, f_School, dat; contrasts=contr3);
-m_School_PCA = fit(MixedModel, f_School, dat; contrasts=contr4);
+f_School = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test + a1 | School))
+m_School_SeqDiff = lmm(f_School, dat; contrasts=contr1, progress)
+m_School_Helmert = lmm(f_School, dat; contrasts=contr2, progress)
+m_School_Hypo = lmm(f_School, dat; contrasts=contr3, progress)
+m_School_PCA = lmm(f_School, dat; contrasts=contr4, progress)
+# suppress printing of the model fits
+nothing
 ```
 
 ```{julia}
@@ -577,29 +538,26 @@ VarCorr(m_School_PCA)
 We compare again how much of the fit resides in the CPs.
 
 ```{julia}
-begin
-  f_School0 = @formula zScore ~
-    1 + Test * a1 * Sex + zerocorr(1 + Test + a1 | School)
-  m_School_SDC0 = fit(MixedModel, f_School0, dat; contrasts=contr1)
-  m_School_HeC0 = fit(MixedModel, f_School0, dat; contrasts=contr2)
-  m_School_HyC0 = fit(MixedModel, f_School0, dat; contrasts=contr3)
-  m_School_PCA0 = fit(MixedModel, f_School0, dat; contrasts=contr4)
-  #
-  zcpLMM2 = ["SDC0", "HeC0", "HyC0", "PCA0"]
-  mods2 = [
-    m_School_SDC0, m_School_HeC0, m_School_HyC0, m_School_PCA0
-  ]
-  gof_summary2 = sort!(
-    DataFrame(;
-      zcpLMM=zcpLMM2,
-      dof=dof.(mods2),
-      deviance=deviance.(mods2),
-      AIC=aic.(mods2),
-      BIC=bic.(mods2),
-    ),
-    :deviance,
-  )
-end
+f_School0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test + a1 | School))
+m_School_SDC0 = lmm(f_School0, dat; contrasts=contr1, progress)
+m_School_HeC0 = lmm(f_School0, dat; contrasts=contr2, progress)
+m_School_HyC0 = lmm(f_School0, dat; contrasts=contr3, progress)
+m_School_PCA0 = lmm(f_School0, dat; contrasts=contr4, progress)
+
+zcpLMM2 = ["SDC0", "HeC0", "HyC0", "PCA0"]
+mods2 = [
+  m_School_SDC0, m_School_HeC0, m_School_HyC0, m_School_PCA0
+]
+gof_summary2 = sort!(
+  DataFrame(;
+    zcpLMM=zcpLMM2,
+    dof=dof.(mods2),
+    deviance=deviance.(mods2),
+    AIC=aic.(mods2),
+    BIC=bic.(mods2),
+  ),
+  :deviance,
+)
 ```
 
 For the random factor `School` the Helmert contrast, followed by PCA-based contrasts have least information in the CPs; SDC has the largest contribution from CPs. Interesting.
