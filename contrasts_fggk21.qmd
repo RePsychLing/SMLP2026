@@ -428,13 +428,14 @@ The choice of contrast does not affect the model objective, in other words, they
 
 Trivially, the meaning of a contrast depends on its definition. Consequently, the contrast specification has a big effect on the random-effect structure. As an illustration, we refit the LMMs with variance components (VCs) and correlation parameters (CPs) for `Child`-related contrasts of `Test`. Unfortunately, it is not easy, actually rather quite difficult, to grasp the meaning of correlations of contrast-based effects; they represent two-way interactions.
 
+<!-- These optima are really poorly defined! The choice of optimizer makes a big difference -->
 ```{julia}
 #| output: false
 f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
-m_Child_SDC = lmm(f_Child, dat; contrasts=contr1, progress)
-m_Child_HeC = lmm(f_Child, dat; contrasts=contr2, progress)
-m_Child_HyC = lmm(f_Child, dat; contrasts=contr3, progress)
-m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress)
+m_Child_SDC = lmm(f_Child, dat; contrasts=contr1, progress, optimizer=:LN_BOBYQA)
+m_Child_HeC = lmm(f_Child, dat; contrasts=contr2, progress, optimizer=:LN_NELDERMEAD)
+m_Child_HyC = lmm(f_Child, dat; contrasts=contr3, progress, optimizer=:LN_NELDERMEAD)
+m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD)
 ```
 
 ```{julia}
@@ -460,26 +461,26 @@ Do these differences in CPs imply that we can move to zcpLMMs when we have ortho
 ```{julia}
 #| output: false
 f_Child0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child))
-m_Child_SDC0 = lmm(f_Child0, dat; contrasts=contr1, progress)
-m_Child_HeC0 = lmm(f_Child0, dat; contrasts=contr2, progress)
-m_Child_HyC0 = lmm(f_Child0, dat; contrasts=contr3, progress)
-m_Child_PCA0 = lmm(f_Child0, dat; contrasts=contr4, progress)
+m_Child_SDC0 = lmm(f_Child0, dat; contrasts=contr1, progress, optimizer=:LN_NEWUOA)
+m_Child_HeC0 = lmm(f_Child0, dat; contrasts=contr2, progress, optimizer=:LN_NEWUOA)
+m_Child_HyC0 = lmm(f_Child0, dat; contrasts=contr3, progress, optimizer=:LN_NEWUOA)
+m_Child_PCA0 = lmm(f_Child0, dat; contrasts=contr4, progress, optimizer=:LN_NEWUOA)
 ```
 
 ```{julia}
-# likelihoodratiotest(m_Child_SDC0, m_Child_SDC)
+likelihoodratiotest(m_Child_SDC0, m_Child_SDC)
 ```
 
 ```{julia}
-# likelihoodratiotest(m_Child_HeC0, m_Child_HeC)
+likelihoodratiotest(m_Child_HeC0, m_Child_HeC)
 ```
 
 ```{julia}
-# likelihoodratiotest(m_Child_HyC0, m_Child_HyC)
+likelihoodratiotest(m_Child_HyC0, m_Child_HyC)
 ```
 
 ```{julia}
-# likelihoodratiotest(m_Child_PCA0, m_Child_PCA)
+likelihoodratiotest(m_Child_PCA0, m_Child_PCA)
 ```
 
 Obviously, we can not drop CPs from any of the LMMs. The full LMMs all have the same objective, but we can compare the goodness-of-fit statistics of zcpLMMs more directly.
