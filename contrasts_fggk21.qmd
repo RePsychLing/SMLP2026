@@ -384,7 +384,8 @@ contr4b = Dict(
 ```
 
 ```{julia}
-m_cpx_1_PC_2 = lmm(f_cpx_1, dat; contrasts=contr4b, progress)
+# LN_NEWUOA does a poor job here
+m_cpx_1_PC_2 = lmm(f_cpx_1, dat; contrasts=contr4b, progress, optimizer=:LN_BOBYQA)
 ```
 
 ```{julia}
@@ -396,8 +397,9 @@ m_cpx_1_PC_2.PCA
 ```
 
 ```{julia}
+# LN_BOBYQA does a poor job here
 m_zcp_1_PC_2 = lmm(@formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child)),
-                   dat; contrasts=contr4b, progress)
+                   dat; contrasts=contr4b, progress, optimizer=:LN_NEWUOA)
 ```
 
 ```{julia}
@@ -405,7 +407,7 @@ VarCorr(m_zcp_1_PC_2)
 ```
 
 ```{julia}
-# likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
+likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
 ```
 
 # Other topics
