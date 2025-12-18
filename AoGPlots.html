@@ -596,13 +596,6 @@ div.csl-indent {
 </div>
 <div id="4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="op">=</span> <span class="fu">dataset</span>(<span class="st">"fggk21"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-cyan-fg ansi-bold">[ </span><span class="ansi-cyan-fg ansi-bold">Info: </span>Downloading dataset...
-<span class="ansi-cyan-fg ansi-bold">[ </span><span class="ansi-cyan-fg ansi-bold">Info: </span>done
-</pre>
-</div>
-</div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>Arrow.Table with 525126 rows, 7 columns, and schema:
  :Cohort  String
@@ -655,19 +648,19 @@ div.csl-indent {
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>zScore <span class="op">=&gt;</span> length <span class="op">=&gt;</span> <span class="op">:</span>n,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div><div style="float: left;"><span>120×5 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">95 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
+<div><div style="float: left;"><span>120×5 DataFrame</span></div><div style="float: right; font-style: italic;"><span>95 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<tr class="columnLabelRow header">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Sex</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Test</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">age</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">zScore</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">n</th>
 </tr>
-<tr class="subheader headerLastRow even">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<tr class="columnLabelRow even">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
@@ -676,104 +669,104 @@ div.csl-indent {
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">S20_r</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.0265138</td>
 <td style="text-align: right;">1223</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">BPT</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">0.026973</td>
 <td style="text-align: right;">1227</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">SLJ</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">0.121609</td>
 <td style="text-align: right;">1227</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">Star_r</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.0571726</td>
 <td style="text-align: right;">1186</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">5</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">Run</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">0.292695</td>
 <td style="text-align: right;">1210</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">6</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">S20_r</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.35164</td>
 <td style="text-align: right;">1411</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">BPT</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.610355</td>
 <td style="text-align: right;">1417</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">8</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">8</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">SLJ</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.279872</td>
 <td style="text-align: right;">1418</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">9</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">9</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">Star_r</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.268221</td>
 <td style="text-align: right;">1381</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">10</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">10</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">Run</td>
 <td style="text-align: right;">8.0</td>
 <td style="text-align: right;">-0.245573</td>
 <td style="text-align: right;">1387</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">11</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">11</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">S20_r</td>
 <td style="text-align: right;">8.1</td>
 <td style="text-align: right;">0.0608397</td>
 <td style="text-align: right;">3042</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">12</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">12</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">BPT</td>
 <td style="text-align: right;">8.1</td>
 <td style="text-align: right;">0.0955413</td>
 <td style="text-align: right;">3069</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">13</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">13</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">SLJ</td>
 <td style="text-align: right;">8.1</td>
@@ -782,102 +775,102 @@ div.csl-indent {
 </tr>
 <tr class="even">
 <td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
+<td style="text-align: left;">⋮</td>
+<td style="text-align: left;">⋮</td>
 <td style="text-align: right;">⋮</td>
 <td style="text-align: right;">⋮</td>
 <td style="text-align: right;">⋮</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">109</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">109</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">Star_r</td>
 <td style="text-align: right;">9.0</td>
 <td style="text-align: right;">0.254973</td>
 <td style="text-align: right;">4049</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">110</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">110</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">Run</td>
 <td style="text-align: right;">9.0</td>
 <td style="text-align: right;">0.258082</td>
 <td style="text-align: right;">4034</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">111</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">111</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">S20_r</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">-0.0286172</td>
 <td style="text-align: right;">1154</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">112</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">112</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">BPT</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">-0.0752301</td>
 <td style="text-align: right;">1186</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">113</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">113</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">SLJ</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">-0.094587</td>
 <td style="text-align: right;">1174</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">114</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">114</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">Star_r</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">0.00276252</td>
 <td style="text-align: right;">1162</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">115</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">115</td>
 <td style="text-align: left;">female</td>
 <td style="text-align: left;">Run</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">-0.235591</td>
 <td style="text-align: right;">1150</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">116</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">116</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">S20_r</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">0.325745</td>
 <td style="text-align: right;">1303</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">117</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">117</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">BPT</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">0.616416</td>
 <td style="text-align: right;">1320</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">118</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">118</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">SLJ</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">0.267577</td>
 <td style="text-align: right;">1310</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">119</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">119</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">Star_r</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: right;">0.254342</td>
 <td style="text-align: right;">1297</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">120</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">120</td>
 <td style="text-align: left;">male</td>
 <td style="text-align: left;">Run</td>
 <td style="text-align: right;">9.1</td>
@@ -915,8 +908,8 @@ div.csl-indent {
 Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. <em>Scientific Reports</em>, <em>11</em>(1). <a href="https://doi.org/10.1038/s41598-021-97000-4">https://doi.org/10.1038/s41598-021-97000-4</a>
 </div>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/97da28d
-">97da28d
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/fb99b3c
+">fb99b3c
 </a> using Quarto 1.7.33.</em></p>
 
 

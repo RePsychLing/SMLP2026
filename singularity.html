@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Bates">
-<meta name="dcterms.date" content="2025-09-12">
+<meta name="dcterms.date" content="2025-09-14">
 
 <title>Convergence, singularity and all that – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -582,7 +582,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-09-12</p>
+      <p class="date">2025-09-14</p>
     </div>
   </div>
   
@@ -606,15 +606,14 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress<span class="op">=</span><span class="cn">false</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Fit a model for reaction time in the sleepstudy example, preserving information on the estimation progress (the <code>thin=1</code> optional argument)</p>
+<p>Fit a model for reaction time in the sleepstudy example.</p>
 <div id="4" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m01 <span class="op">=</span> <span class="kw">let</span> f <span class="op">=</span> <span class="pp">@formula</span> reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days<span class="op">|</span>subj)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, f, MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy); thin<span class="op">=</span><span class="fl">1</span>, progress)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(m01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m01 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days<span class="op">|</span>subj)), MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy); progress)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(m01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
  reaction ~ 1 + days + (1 + days | subj)
@@ -623,16 +622,16 @@ window.Quarto = {
 
 Variance components:
             Column    Variance Std.Dev.   Corr.
-subj     (Intercept)  565.51067 23.78047
-         days          32.68212  5.71683 +0.08
-Residual              654.94145 25.59182
+subj     (Intercept)  565.52071 23.78068
+         days          32.68242  5.71685 +0.08
+Residual              654.94015 25.59180
  Number of obs: 180; levels of grouping factors: 18
 
   Fixed-effects parameters:
 ──────────────────────────────────────────────────
                 Coef.  Std. Error      z  Pr(&gt;|z|)
 ──────────────────────────────────────────────────
-(Intercept)  251.405      6.63226  37.91    &lt;1e-99
+(Intercept)  251.405      6.6323   37.91    &lt;1e-99
 days          10.4673     1.50224   6.97    &lt;1e-11
 ──────────────────────────────────────────────────</code></pre>
 </div>
@@ -642,8 +641,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>λ <span class="op">=</span> <span class="fu">only</span>(m01.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 LowerTriangular{Float64, Matrix{Float64}}:
- 0.929221    ⋅ 
- 0.0181684  0.222645</code></pre>
+ 0.92923     ⋅ 
+ 0.0181644  0.222646</code></pre>
 </div>
 </div>
 <p>The <em>transpose</em> of <span class="math inline">\(\lambda\)</span>, written <span class="math inline">\(\lambda'\)</span>, is an upper triangular matrix generated by “flipping” <span class="math inline">\(\lambda\)</span> about the main diagonal.</p>
@@ -651,8 +650,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>λ<span class="ch">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 UpperTriangular{Float64, Adjoint{Float64, Matrix{Float64}}}:
- 0.929221  0.0181684
-  ⋅        0.222645</code></pre>
+ 0.92923  0.0181644
+  ⋅       0.222646</code></pre>
 </div>
 </div>
 <p>The product <span class="math inline">\(\lambda * \lambda'\)</span> will be symmetric. The covariance matrix of the random effects, <span class="math inline">\(\Sigma\)</span>, is this symmetric matrix scaled by <span class="math inline">\(\sigma^2\)</span></p>
@@ -660,8 +659,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> m01.σ<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> λ <span class="op">*</span> λ<span class="ch">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 Matrix{Float64}:
- 565.511  11.057
-  11.057  32.6821</code></pre>
+ 565.521   11.0547
+  11.0547  32.6824</code></pre>
 </div>
 </div>
 <p>The estimated variances of the random effects, which are the diagonal elements of <span class="math inline">\(\Sigma\)</span>, correspond to the values shown in the table. To evaluate the covariance, isolate the correlation</p>
@@ -675,14 +674,14 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># there is exactly one.</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ρ <span class="op">=</span> <span class="fu">only</span>(m01.σρs.subj.ρ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>0.08133216865276134</code></pre>
+<pre><code>0.08131376654227451</code></pre>
 </div>
 </div>
 <p>and multiply by the standard deviations</p>
 <div id="14" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ρ <span class="op">*</span> <span class="fu">sqrt</span>(<span class="fu">first</span>(Σ) <span class="op">*</span> <span class="fu">last</span>(Σ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>11.057014395926759</code></pre>
+<pre><code>11.054661054378572</code></pre>
 </div>
 </div>
 </section>
@@ -693,14 +692,14 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m01.θ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>3-element Vector{Float64}:
- 0.9292213162629417
- 0.018168381188609965
- 0.22264487194620683</code></pre>
+ 0.9292304864356652
+ 0.018164371001158423
+ 0.22264644003494607</code></pre>
 </div>
 </div>
 <p>The elements of this parameter vector are subject to constraints. In particular, two of the three elements have a lower bound of zero.</p>
 <div id="18" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m01.lowerbd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lowerbd</span>(m01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>3-element Vector{Float64}:
    0.0
@@ -712,11 +711,31 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </section>
 <section id="progress-of-the-iterations" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Progress of the iterations</h1>
-<p>The <code>optsum.fitlog</code> property of the model is a vector of tuples where each tuple contains the value of the <span class="math inline">\(\theta\)</span> vector and the value of the objective at that <span class="math inline">\(\theta\)</span>. The <code>fitlog</code> always contains the first and the last evaluation. When the <code>thin</code> named argument is set, this property has a row for every thin’th evaluation.</p>
+<p>The <code>optsum.fitlog</code> property of the model is table that contains the value of the <span class="math inline">\(\theta\)</span> vector and the value of the objective at that <span class="math inline">\(\theta\)</span>.</p>
 <div id="20" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m01.optsum.fitlog</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Tuple{Vector{Float64}, Float64}[]</code></pre>
+<pre><code>Table with 2 columns and 72 rows:
+      θ                                 objective
+    ┌────────────────────────────────────────────
+ 1  │ [1.0, 0.0, 1.0]                   1784.64
+ 2  │ [2.0, 0.0, 1.0]                   1792.86
+ 3  │ [1.0, 1.0, 1.0]                   1799.0
+ 4  │ [1.0, 0.0, 2.0]                   1808.55
+ 5  │ [0.0, 0.0, 1.0]                   1806.24
+ 6  │ [1.0, -1.0, 1.0]                  1798.6
+ 7  │ [1.0, 0.0, 0.0]                   1794.77
+ 8  │ [1.22435, -0.00691503, 0.797624]  1778.03
+ 9  │ [1.46448, -0.0169209, 0.611336]   1771.86
+ 10 │ [1.80499, -0.0631689, 0.109571]   1774.69
+ 11 │ [1.46736, 0.101338, 0.607374]     1772.35
+ 12 │ [1.56923, -0.151459, 0.422853]    1763.91
+ 13 │ [1.66673, -0.627902, 0.274894]    1783.3
+ 14 │ [1.65242, -0.14957, 0.478319]     1767.42
+ 15 │ [1.49341, -0.0708007, 0.32143]    1757.94
+ 16 │ [1.51395, 0.228361, 0.337085]     1763.58
+ 17 │ [1.40516, -0.106856, 0.291229]    1756.52
+ ⋮  │                ⋮                      ⋮</code></pre>
 </div>
 </div>
 <p>There were 57 evaluations of the objective before convergence was declared, according to rather stringent convergence criteria. We can see that the last 10 evaluations only produced changes in the fourth decimal place of the objective or even smaller. That is, effective convergence occurred after about 40 or 45 evaluations.</p>
@@ -737,15 +756,15 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>normed <span class="op">=</span> <span class="fu">normalize!</span>(λ[<span class="fl">2</span>, <span class="op">:</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2-element Vector{Float64}:
- 0.08133216865276136
- 0.996687051356763</code></pre>
+ 0.08131376654227453
+ 0.9966885528442215</code></pre>
 </div>
 </div>
 <p>providing the correlation as</p>
 <div id="24" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(normed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>0.08133216865276136</code></pre>
+<pre><code>0.08131376654227453</code></pre>
 </div>
 </div>
 </section>
@@ -763,8 +782,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 \]</span> and thus <span class="math display">\[
 \theta_2=\frac{\rho}{\sqrt{1-\rho^2}}\theta_3
 \]</span></p>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/97da28d
-">97da28d
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/fb99b3c
+">fb99b3c
 </a> using Quarto 1.7.33.</em></p>
 
 

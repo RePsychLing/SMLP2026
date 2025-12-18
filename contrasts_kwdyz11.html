@@ -650,27 +650,20 @@ div.csl-indent {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>rt <span class="op">=&gt;</span> length,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>rt <span class="op">=&gt;</span> (x <span class="op">-&gt;</span> <span class="fu">std</span>(x) <span class="op">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(x))) <span class="op">=&gt;</span> <span class="op">:</span>rt_semean,</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-cyan-fg ansi-bold">[ </span><span class="ansi-cyan-fg ansi-bold">Info: </span>Downloading dataset...
-<span class="ansi-cyan-fg ansi-bold">[ </span><span class="ansi-cyan-fg ansi-bold">Info: </span>done
-</pre>
-</div>
-</div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>4×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<tr class="columnLabelRow header">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">CTR</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">rt_mean</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">rt_std</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">rt_length</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">rt_semean</th>
 </tr>
-<tr class="subheader headerLastRow even">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<tr class="columnLabelRow even">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Float32">Float32</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Float32">Float32</th>
@@ -679,32 +672,32 @@ div.csl-indent {
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
 <td style="text-align: left;">val</td>
 <td style="text-align: right;">358.032</td>
 <td style="text-align: right;">83.4579</td>
 <td style="text-align: right;">20141</td>
 <td style="text-align: right;">0.588067</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">sod</td>
 <td style="text-align: right;">391.267</td>
 <td style="text-align: right;">92.662</td>
 <td style="text-align: right;">2863</td>
 <td style="text-align: right;">1.73177</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: left;">dos</td>
 <td style="text-align: right;">405.146</td>
 <td style="text-align: right;">92.6892</td>
 <td style="text-align: right;">2843</td>
 <td style="text-align: right;">1.73836</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: left;">dod</td>
 <td style="text-align: right;">402.3</td>
 <td style="text-align: right;">95.3913</td>
@@ -759,38 +752,38 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0906</td>
-<td style="text-align: right;">54.97</td>
+<td style="text-align: right;">7.0923</td>
+<td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1938</td>
+<td style="text-align: right;">55.2077</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2869</td>
+<td style="text-align: right;">3.2877</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2439</td>
+<td style="text-align: right;">23.2508</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">13.9852</td>
-<td style="text-align: right;">2.3051</td>
+<td style="text-align: right;">2.3057</td>
 <td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7456</td>
+<td style="text-align: right;">10.7542</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">-2.7469</td>
-<td style="text-align: right;">2.2140</td>
+<td style="text-align: right;">2.2146</td>
 <td style="text-align: right;">-1.24</td>
-<td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">9.5064</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">9.5153</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -842,38 +835,38 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0910</td>
+<td style="text-align: right;">7.0913</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1969</td>
+<td style="text-align: right;">55.1995</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: spt</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2875</td>
+<td style="text-align: right;">3.2873</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2490</td>
+<td style="text-align: right;">23.2477</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: obj</td>
 <td style="text-align: right;">13.9852</td>
-<td style="text-align: right;">2.3054</td>
+<td style="text-align: right;">2.3057</td>
 <td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7491</td>
+<td style="text-align: right;">10.7538</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: grv</td>
 <td style="text-align: right;">2.7470</td>
-<td style="text-align: right;">2.2139</td>
+<td style="text-align: right;">2.2142</td>
 <td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.2147</td>
-<td style="text-align: right;">9.5049</td>
+<td style="text-align: right;">0.2148</td>
+<td style="text-align: right;">9.5099</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -907,38 +900,38 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">358.0914</td>
-<td style="text-align: right;">6.1540</td>
-<td style="text-align: right;">58.19</td>
+<td style="text-align: right;">6.1526</td>
+<td style="text-align: right;">58.20</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">47.9101</td>
+<td style="text-align: right;">47.8994</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">45.0200</td>
-<td style="text-align: right;">4.3634</td>
+<td style="text-align: right;">4.3627</td>
 <td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">32.2899</td>
+<td style="text-align: right;">32.2840</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">47.7669</td>
-<td style="text-align: right;">3.5565</td>
+<td style="text-align: right;">3.5559</td>
 <td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">25.5361</td>
+<td style="text-align: right;">25.5305</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2874</td>
+<td style="text-align: right;">3.2866</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2483</td>
+<td style="text-align: right;">23.2416</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8348</td>
+<td style="text-align: right;">69.8349</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -985,7 +978,7 @@ div.csl-indent {
 <td style="text-align: right;">7.0911</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1983</td>
+<td style="text-align: right;">55.1977</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
@@ -993,23 +986,23 @@ div.csl-indent {
 <td style="text-align: right;">3.2874</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2487</td>
+<td style="text-align: right;">23.2484</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">47.7669</td>
-<td style="text-align: right;">3.5568</td>
+<td style="text-align: right;">3.5567</td>
 <td style="text-align: right;">13.43</td>
 <td style="text-align: right;">&lt;1e-40</td>
-<td style="text-align: right;">25.5386</td>
+<td style="text-align: right;">25.5373</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">45.0200</td>
-<td style="text-align: right;">4.3635</td>
+<td style="text-align: right;">4.3636</td>
 <td style="text-align: right;">10.32</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">32.2906</td>
+<td style="text-align: right;">32.2911</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1053,34 +1046,34 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0913</td>
+<td style="text-align: right;">7.0915</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1996</td>
+<td style="text-align: right;">55.2009</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-33.7817</td>
-<td style="text-align: right;">3.2874</td>
+<td style="text-align: right;">3.2873</td>
 <td style="text-align: right;">-10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2484</td>
+<td style="text-align: right;">23.2478</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">13.9852</td>
-<td style="text-align: right;">2.3057</td>
+<td style="text-align: right;">2.3056</td>
 <td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7540</td>
+<td style="text-align: right;">10.7524</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">11.2383</td>
-<td style="text-align: right;">2.3585</td>
-<td style="text-align: right;">4.76</td>
+<td style="text-align: right;">2.3584</td>
+<td style="text-align: right;">4.77</td>
 <td style="text-align: right;">&lt;1e-05</td>
-<td style="text-align: right;">11.4649</td>
+<td style="text-align: right;">11.4640</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1124,34 +1117,34 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0904</td>
-<td style="text-align: right;">54.97</td>
+<td style="text-align: right;">7.0912</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1927</td>
+<td style="text-align: right;">55.1986</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-33.7817</td>
-<td style="text-align: right;">3.2872</td>
+<td style="text-align: right;">3.2874</td>
 <td style="text-align: right;">-10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2471</td>
+<td style="text-align: right;">23.2486</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">13.9852</td>
-<td style="text-align: right;">2.3061</td>
-<td style="text-align: right;">6.06</td>
+<td style="text-align: right;">2.3058</td>
+<td style="text-align: right;">6.07</td>
 <td style="text-align: right;">&lt;1e-08</td>
-<td style="text-align: right;">10.7584</td>
+<td style="text-align: right;">10.7550</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
-<td style="text-align: right;">11.2382</td>
-<td style="text-align: right;">2.3584</td>
-<td style="text-align: right;">4.77</td>
+<td style="text-align: right;">11.2383</td>
+<td style="text-align: right;">2.3585</td>
+<td style="text-align: right;">4.76</td>
 <td style="text-align: right;">&lt;1e-05</td>
-<td style="text-align: right;">11.4639</td>
+<td style="text-align: right;">11.4653</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1188,18 +1181,18 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0920</td>
-<td style="text-align: right;">54.95</td>
+<td style="text-align: right;">7.0911</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2050</td>
+<td style="text-align: right;">55.1980</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">2.1396</td>
-<td style="text-align: right;">1.3337</td>
+<td style="text-align: right;">1.3339</td>
 <td style="text-align: right;">1.60</td>
 <td style="text-align: right;">0.1087</td>
-<td style="text-align: right;">6.0068</td>
+<td style="text-align: right;">6.0082</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
@@ -1207,19 +1200,19 @@ div.csl-indent {
 <td style="text-align: right;">1.4404</td>
 <td style="text-align: right;">11.19</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">7.3313</td>
+<td style="text-align: right;">7.3317</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">13.3778</td>
-<td style="text-align: right;">1.9324</td>
+<td style="text-align: right;">1.9323</td>
 <td style="text-align: right;">6.92</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">12.4638</td>
+<td style="text-align: right;">12.4630</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1249,34 +1242,34 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0917</td>
-<td style="text-align: right;">54.96</td>
+<td style="text-align: right;">7.0928</td>
+<td style="text-align: right;">54.95</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2027</td>
+<td style="text-align: right;">55.2118</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-31.6422</td>
-<td style="text-align: right;">2.6423</td>
-<td style="text-align: right;">-11.98</td>
+<td style="text-align: right;">2.6427</td>
+<td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">19.9503</td>
+<td style="text-align: right;">19.9535</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">2.1396</td>
-<td style="text-align: right;">1.3338</td>
+<td style="text-align: right;">1.3340</td>
 <td style="text-align: right;">1.60</td>
 <td style="text-align: right;">0.1087</td>
-<td style="text-align: right;">6.0077</td>
+<td style="text-align: right;">6.0098</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">16.1248</td>
-<td style="text-align: right;">1.4403</td>
-<td style="text-align: right;">11.20</td>
+<td style="text-align: right;">1.4407</td>
+<td style="text-align: right;">11.19</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">7.3309</td>
+<td style="text-align: right;">7.3350</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1320,38 +1313,38 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0945</td>
-<td style="text-align: right;">54.93</td>
+<td style="text-align: right;">7.0915</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2244</td>
+<td style="text-align: right;">55.2014</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">2.1396</td>
-<td style="text-align: right;">1.3343</td>
+<td style="text-align: right;">1.3338</td>
 <td style="text-align: right;">1.60</td>
-<td style="text-align: right;">0.1088</td>
-<td style="text-align: right;">6.0142</td>
+<td style="text-align: right;">0.1087</td>
+<td style="text-align: right;">6.0081</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
-<td style="text-align: right;">16.1247</td>
-<td style="text-align: right;">1.4413</td>
+<td style="text-align: right;">16.1248</td>
+<td style="text-align: right;">1.4404</td>
 <td style="text-align: right;">11.19</td>
 <td style="text-align: right;">&lt;1e-28</td>
-<td style="text-align: right;">7.3430</td>
+<td style="text-align: right;">7.3321</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
-<td style="text-align: right;">13.3779</td>
-<td style="text-align: right;">1.9330</td>
+<td style="text-align: right;">13.3778</td>
+<td style="text-align: right;">1.9325</td>
 <td style="text-align: right;">6.92</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">12.4692</td>
+<td style="text-align: right;">12.4644</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8346</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1384,34 +1377,34 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0916</td>
+<td style="text-align: right;">7.0918</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2024</td>
+<td style="text-align: right;">55.2033</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: sod</td>
 <td style="text-align: right;">16.8909</td>
-<td style="text-align: right;">1.6439</td>
-<td style="text-align: right;">10.27</td>
+<td style="text-align: right;">1.6438</td>
+<td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">11.6261</td>
+<td style="text-align: right;">11.6248</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: dos</td>
 <td style="text-align: right;">10.2920</td>
-<td style="text-align: right;">0.8355</td>
+<td style="text-align: right;">0.8354</td>
 <td style="text-align: right;">12.32</td>
 <td style="text-align: right;">&lt;1e-34</td>
-<td style="text-align: right;">5.2586</td>
+<td style="text-align: right;">5.2573</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dod</td>
 <td style="text-align: right;">4.4593</td>
-<td style="text-align: right;">0.6443</td>
+<td style="text-align: right;">0.6441</td>
 <td style="text-align: right;">6.92</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">4.1561</td>
+<td style="text-align: right;">4.1546</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1459,38 +1452,38 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0907</td>
+<td style="text-align: right;">7.0913</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1949</td>
+<td style="text-align: right;">55.2000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: 2-1</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2868</td>
+<td style="text-align: right;">3.2874</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2430</td>
+<td style="text-align: right;">23.2482</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: 3-21</td>
 <td style="text-align: right;">30.8761</td>
-<td style="text-align: right;">2.5059</td>
+<td style="text-align: right;">2.5062</td>
 <td style="text-align: right;">12.32</td>
 <td style="text-align: right;">&lt;1e-34</td>
-<td style="text-align: right;">15.7696</td>
+<td style="text-align: right;">15.7718</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: 4-321</td>
 <td style="text-align: right;">17.8371</td>
-<td style="text-align: right;">2.5763</td>
+<td style="text-align: right;">2.5765</td>
 <td style="text-align: right;">6.92</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">16.6167</td>
+<td style="text-align: right;">16.6182</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8349</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1523,10 +1516,10 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0940</td>
-<td style="text-align: right;">54.94</td>
+<td style="text-align: right;">7.0916</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2207</td>
+<td style="text-align: right;">55.2024</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: dos</td>
@@ -1534,7 +1527,7 @@ div.csl-indent {
 <td style="text-align: right;">1.1072</td>
 <td style="text-align: right;">1.24</td>
 <td style="text-align: right;">0.2148</td>
-<td style="text-align: right;">4.7558</td>
+<td style="text-align: right;">4.7564</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: sod</td>
@@ -1542,15 +1535,15 @@ div.csl-indent {
 <td style="text-align: right;">0.6843</td>
 <td style="text-align: right;">-6.14</td>
 <td style="text-align: right;">&lt;1e-09</td>
-<td style="text-align: right;">3.3493</td>
+<td style="text-align: right;">3.3492</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: val</td>
 <td style="text-align: right;">-10.5474</td>
-<td style="text-align: right;">0.8807</td>
-<td style="text-align: right;">-11.98</td>
+<td style="text-align: right;">0.8808</td>
+<td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">6.6500</td>
+<td style="text-align: right;">6.6505</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1597,38 +1590,38 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0851</td>
-<td style="text-align: right;">55.01</td>
+<td style="text-align: right;">7.0911</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1510</td>
+<td style="text-align: right;">55.1980</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: 3-4</td>
-<td style="text-align: right;">2.7467</td>
-<td style="text-align: right;">2.2165</td>
+<td style="text-align: right;">2.7470</td>
+<td style="text-align: right;">2.2141</td>
 <td style="text-align: right;">1.24</td>
-<td style="text-align: right;">0.2153</td>
-<td style="text-align: right;">9.5426</td>
+<td style="text-align: right;">0.2147</td>
+<td style="text-align: right;">9.5087</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: 2-34</td>
-<td style="text-align: right;">-12.6119</td>
-<td style="text-align: right;">2.0535</td>
+<td style="text-align: right;">-12.6117</td>
+<td style="text-align: right;">2.0532</td>
 <td style="text-align: right;">-6.14</td>
 <td style="text-align: right;">&lt;1e-09</td>
-<td style="text-align: right;">10.0562</td>
+<td style="text-align: right;">10.0524</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: 1-234</td>
-<td style="text-align: right;">-42.1896</td>
-<td style="text-align: right;">3.5247</td>
+<td style="text-align: right;">-42.1895</td>
+<td style="text-align: right;">3.5237</td>
 <td style="text-align: right;">-11.97</td>
 <td style="text-align: right;">&lt;1e-32</td>
-<td style="text-align: right;">26.6142</td>
+<td style="text-align: right;">26.6057</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
-<td style="text-align: right;">69.8346</td>
+<td style="text-align: right;">69.8348</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1701,34 +1694,34 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0924</td>
-<td style="text-align: right;">54.95</td>
+<td style="text-align: right;">7.0912</td>
+<td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.2085</td>
+<td style="text-align: right;">55.1989</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: A</td>
 <td style="text-align: right;">59.0052</td>
-<td style="text-align: right;">5.1818</td>
+<td style="text-align: right;">5.1826</td>
 <td style="text-align: right;">11.39</td>
 <td style="text-align: right;">&lt;1e-29</td>
-<td style="text-align: right;">36.2007</td>
+<td style="text-align: right;">36.2079</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: B</td>
 <td style="text-align: right;">31.0348</td>
-<td style="text-align: right;">4.6751</td>
+<td style="text-align: right;">4.6750</td>
 <td style="text-align: right;">6.64</td>
 <td style="text-align: right;">&lt;1e-10</td>
-<td style="text-align: right;">31.7147</td>
+<td style="text-align: right;">31.7137</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: AxB</td>
-<td style="text-align: right;">-36.5286</td>
-<td style="text-align: right;">3.0925</td>
+<td style="text-align: right;">-36.5287</td>
+<td style="text-align: right;">3.0927</td>
 <td style="text-align: right;">-11.81</td>
 <td style="text-align: right;">&lt;1e-31</td>
-<td style="text-align: right;">16.0032</td>
+<td style="text-align: right;">16.0052</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1791,34 +1784,34 @@ div.csl-indent {
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">389.7336</td>
-<td style="text-align: right;">7.0913</td>
+<td style="text-align: right;">7.0907</td>
 <td style="text-align: right;">54.96</td>
 <td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">55.1998</td>
+<td style="text-align: right;">55.1946</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: do_so</td>
 <td style="text-align: right;">59.0052</td>
-<td style="text-align: right;">5.1826</td>
-<td style="text-align: right;">11.39</td>
+<td style="text-align: right;">5.1827</td>
+<td style="text-align: right;">11.38</td>
 <td style="text-align: right;">&lt;1e-29</td>
-<td style="text-align: right;">36.2082</td>
+<td style="text-align: right;">36.2089</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CTR: spt</td>
 <td style="text-align: right;">33.7817</td>
-<td style="text-align: right;">3.2874</td>
+<td style="text-align: right;">3.2872</td>
 <td style="text-align: right;">10.28</td>
 <td style="text-align: right;">&lt;1e-24</td>
-<td style="text-align: right;">23.2481</td>
+<td style="text-align: right;">23.2466</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CTR: grv</td>
 <td style="text-align: right;">2.7470</td>
-<td style="text-align: right;">2.2142</td>
+<td style="text-align: right;">2.2143</td>
 <td style="text-align: right;">1.24</td>
 <td style="text-align: right;">0.2148</td>
-<td style="text-align: right;">9.5101</td>
+<td style="text-align: right;">9.5107</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Residual</td>
@@ -1846,13 +1839,6 @@ div.csl-indent {
 <p>2 x 3 = 6 measures / subject</p>
 <div id="44" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> <span class="fu">dataset</span>(<span class="op">:</span>exp_2x2x3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-cyan-fg ansi-bold">[ </span><span class="ansi-cyan-fg ansi-bold">Info: </span>Downloading dataset...
-<span class="ansi-cyan-fg ansi-bold">[ </span><span class="ansi-cyan-fg ansi-bold">Info: </span>done
-</pre>
-</div>
-</div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>Arrow.Table with 396 rows, 5 columns, and schema:
  :Subj   String
@@ -2056,8 +2042,8 @@ A: A2 &amp; B: B3               0.523243      0.950202   0.55    0.5819
 <p>There are two ways to manually specify contrasts. First, you can specify them <strong>directly</strong> via <code>ContrastsCoding</code>. If you do, it’s good practice to specify the levels corresponding to the rows of the matrix, although they can be omitted in which case they’ll be inferred from the data.</p>
 <p><strong>HypothesisCoding()</strong></p>
 <p>A better way to specify manual contrasts is via <code>HypothesisCoding</code>, where each row of the matrix corresponds to the weights given to the cell means of the levels corresponding to each column (see <span class="citation" data-cites="Schad2020">Schad et al. (<a href="#ref-Schad2020" role="doc-biblioref">2020</a>)</span> for more information).</p>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/97da28d
-">97da28d
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/fb99b3c
+">fb99b3c
 </a> using Quarto 1.7.33.</em></p>
 
 

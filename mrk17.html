@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2025-09-12">
+<meta name="dcterms.date" content="2025-09-14">
 
 <title>RePsychLing Masson, Rabe, &amp; Kliegl, 2017) with Julia: Specification and selection – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -586,7 +586,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-09-12</p>
+      <p class="date">2025-09-14</p>
     </div>
   </div>
   
@@ -605,10 +605,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span>: mean, std</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress<span class="op">=</span><span class="cn">false</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span>: mean, std</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>false</code></pre>
 </div>
@@ -620,8 +622,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div><div style="float: left;"><span>9×7 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<tr class="columnLabelRow header">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">variable</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">mean</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">min</th>
@@ -630,8 +632,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">nmissing</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">eltype</th>
 </tr>
-<tr class="subheader headerLastRow even">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<tr class="columnLabelRow even">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Symbol">Symbol</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Union{Nothing, Float64}">Union…</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Any">Any</th>
@@ -642,8 +644,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
 <td style="text-align: left;">subj</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">S01</td>
@@ -652,8 +654,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">item</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">ACHE</td>
@@ -662,8 +664,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: left;">trial</td>
 <td style="text-align: left;">239.958</td>
 <td style="text-align: left;">2</td>
@@ -672,8 +674,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">Int16</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: left;">F</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">HF</td>
@@ -682,8 +684,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">5</td>
 <td style="text-align: left;">P</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">rel</td>
@@ -692,8 +694,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">6</td>
 <td style="text-align: left;">Q</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">clr</td>
@@ -702,8 +704,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">lQ</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">clr</td>
@@ -712,8 +714,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">8</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">8</td>
 <td style="text-align: left;">lT</td>
 <td style="text-align: left; font-style: italic;"></td>
 <td style="text-align: left;">NW</td>
@@ -722,8 +724,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">String</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">9</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">9</td>
 <td style="text-align: left;">rt</td>
 <td style="text-align: left;">647.173</td>
 <td style="text-align: left;">301</td>
@@ -854,11 +856,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>cells</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div><div style="float: left;"><span>32×8 DataFrame</span></div><div style="float: right;"><span style="font-style: italic;">7 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
+<div><div style="float: left;"><span>32×8 DataFrame</span></div><div style="float: right; font-style: italic;"><span>7 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<tr class="columnLabelRow header">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">F</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">P</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Q</th>
@@ -868,8 +870,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th style="text-align: left;" data-quarto-table-cell-role="th">rt_m</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">rt_sd</th>
 </tr>
-<tr class="subheader headerLastRow even">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<tr class="columnLabelRow even">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
@@ -881,8 +883,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">deg</td>
@@ -892,8 +894,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">683.831</td>
 <td style="text-align: right;">197.074</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">deg</td>
@@ -903,8 +905,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">676.848</td>
 <td style="text-align: right;">198.409</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">deg</td>
@@ -914,8 +916,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">685.265</td>
 <td style="text-align: right;">186.73</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">deg</td>
@@ -925,8 +927,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">676.711</td>
 <td style="text-align: right;">167.794</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">5</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -936,8 +938,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">658.225</td>
 <td style="text-align: right;">213.144</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">6</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">6</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -947,8 +949,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">653.03</td>
 <td style="text-align: right;">196.71</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">7</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">7</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -958,8 +960,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">648.057</td>
 <td style="text-align: right;">209.625</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">8</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">8</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -969,8 +971,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">641.669</td>
 <td style="text-align: right;">183.413</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">9</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">9</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -980,8 +982,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">667.872</td>
 <td style="text-align: right;">175.869</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">10</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">10</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -991,8 +993,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">653.43</td>
 <td style="text-align: right;">180.58</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">11</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">11</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -1002,8 +1004,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">650.16</td>
 <td style="text-align: right;">167.51</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">12</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">12</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -1013,8 +1015,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">678.119</td>
 <td style="text-align: right;">217.209</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">13</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">13</td>
 <td style="text-align: left;">LF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">clr</td>
@@ -1026,17 +1028,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
-<td style="text-align: right;">⋮</td>
+<td style="text-align: left;">⋮</td>
+<td style="text-align: left;">⋮</td>
+<td style="text-align: left;">⋮</td>
+<td style="text-align: left;">⋮</td>
+<td style="text-align: left;">⋮</td>
 <td style="text-align: right;">⋮</td>
 <td style="text-align: right;">⋮</td>
 <td style="text-align: right;">⋮</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">21</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">21</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -1046,8 +1048,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">644.6</td>
 <td style="text-align: right;">203.261</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">22</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">22</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -1057,8 +1059,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">633.046</td>
 <td style="text-align: right;">172.604</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">23</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">23</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -1068,8 +1070,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">619.626</td>
 <td style="text-align: right;">176.55</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">24</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">24</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">unr</td>
 <td style="text-align: left;">clr</td>
@@ -1079,8 +1081,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">620.838</td>
 <td style="text-align: right;">192.689</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">25</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">25</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -1090,8 +1092,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">659.266</td>
 <td style="text-align: right;">192.637</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">26</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">26</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -1101,8 +1103,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">637.793</td>
 <td style="text-align: right;">177.496</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">27</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">27</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -1112,8 +1114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">645.493</td>
 <td style="text-align: right;">179.962</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">28</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">28</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">deg</td>
@@ -1123,8 +1125,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">667.685</td>
 <td style="text-align: right;">231.145</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">29</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">29</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">clr</td>
@@ -1134,8 +1136,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">615.647</td>
 <td style="text-align: right;">176.826</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">30</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">30</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">clr</td>
@@ -1145,8 +1147,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">620.569</td>
 <td style="text-align: right;">173.764</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">31</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">31</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">clr</td>
@@ -1156,8 +1158,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">635.319</td>
 <td style="text-align: right;">205.19</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">32</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">32</td>
 <td style="text-align: left;">HF</td>
 <td style="text-align: left;">rel</td>
 <td style="text-align: left;">clr</td>
@@ -1213,8 +1215,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320224</td>
-<td style="text-align: right;">0.05658830</td>
+<td style="text-align: right;">0.00320197</td>
+<td style="text-align: right;">0.05658591</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1224,8 +1226,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00012892</td>
-<td style="text-align: right;">0.01135418</td>
+<td style="text-align: right;">0.00012890</td>
+<td style="text-align: right;">0.01135339</td>
 <td style="text-align: right;">+0.05</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1235,8 +1237,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00015999</td>
-<td style="text-align: right;">0.01264876</td>
+<td style="text-align: right;">0.00016010</td>
+<td style="text-align: right;">0.01265320</td>
 <td style="text-align: right;">+0.36</td>
 <td style="text-align: right;">+0.38</td>
 <td style="text-align: right;"></td>
@@ -1246,9 +1248,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00003476</td>
-<td style="text-align: right;">0.00589548</td>
-<td style="text-align: right;">+0.38</td>
+<td style="text-align: right;">0.00003528</td>
+<td style="text-align: right;">0.00593999</td>
+<td style="text-align: right;">+0.37</td>
 <td style="text-align: right;">+0.03</td>
 <td style="text-align: right;">+0.03</td>
 <td style="text-align: right;"></td>
@@ -1257,8 +1259,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00015750</td>
-<td style="text-align: right;">0.01254988</td>
+<td style="text-align: right;">0.00015722</td>
+<td style="text-align: right;">0.01253868</td>
 <td style="text-align: right;">-0.11</td>
 <td style="text-align: right;">-0.87</td>
 <td style="text-align: right;">-0.01</td>
@@ -1268,8 +1270,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061783</td>
-<td style="text-align: right;">0.17497951</td>
+<td style="text-align: right;">0.03062637</td>
+<td style="text-align: right;">0.17500392</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1279,9 +1281,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">F: HF</td>
-<td style="text-align: right;">0.00004440</td>
-<td style="text-align: right;">0.00666334</td>
-<td style="text-align: right;">+0.36</td>
+<td style="text-align: right;">0.00004632</td>
+<td style="text-align: right;">0.00680610</td>
+<td style="text-align: right;">+0.35</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1290,8 +1292,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00012734</td>
-<td style="text-align: right;">0.01128461</td>
+<td style="text-align: right;">0.00012558</td>
+<td style="text-align: right;">0.01120617</td>
 <td style="text-align: right;">+0.35</td>
 <td style="text-align: right;">+0.89</td>
 <td style="text-align: right;"></td>
@@ -1301,41 +1303,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00078985</td>
-<td style="text-align: right;">0.02810434</td>
+<td style="text-align: right;">0.00079013</td>
+<td style="text-align: right;">0.02810932</td>
 <td style="text-align: right;">+0.41</td>
-<td style="text-align: right;">+0.45</td>
-<td style="text-align: right;">+0.73</td>
+<td style="text-align: right;">+0.43</td>
+<td style="text-align: right;">+0.74</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00011615</td>
-<td style="text-align: right;">0.01077740</td>
+<td style="text-align: right;">0.00011717</td>
+<td style="text-align: right;">0.01082471</td>
 <td style="text-align: right;">+0.06</td>
-<td style="text-align: right;">+0.17</td>
-<td style="text-align: right;">+0.18</td>
-<td style="text-align: right;">+0.58</td>
+<td style="text-align: right;">+0.13</td>
+<td style="text-align: right;">+0.19</td>
+<td style="text-align: right;">+0.57</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00104531</td>
-<td style="text-align: right;">0.03233128</td>
+<td style="text-align: right;">0.00104659</td>
+<td style="text-align: right;">0.03235111</td>
 <td style="text-align: right;">+0.26</td>
-<td style="text-align: right;">-0.10</td>
-<td style="text-align: right;">-0.02</td>
+<td style="text-align: right;">-0.06</td>
+<td style="text-align: right;">-0.04</td>
 <td style="text-align: right;">+0.37</td>
-<td style="text-align: right;">+0.51</td>
+<td style="text-align: right;">+0.50</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08569955</td>
-<td style="text-align: right;">0.29274486</td>
+<td style="text-align: right;">0.08569796</td>
+<td style="text-align: right;">0.29274214</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1360,38 +1362,38 @@ Principal components based on correlation matrix
  (Intercept)   1.0     .      .      .      .
  P: rel        0.05   1.0     .      .      .
  Q: clr        0.36   0.38   1.0     .      .
- lQ: clr       0.38   0.03   0.03   1.0     .
+ lQ: clr       0.37   0.03   0.03   1.0     .
  lT: WD       -0.11  -0.87  -0.01  -0.35   1.0
 
 Normalized cumulative variances:
-[0.4223, 0.6865, 0.906, 1.0, 1.0]
+[0.4221, 0.686, 0.9051, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5
  (Intercept)  -0.3   -0.67   0.02  -0.67   0.07
  P: rel       -0.6    0.38   0.22  -0.05   0.67
- Q: clr       -0.31  -0.34   0.7    0.46  -0.28
- lQ: clr      -0.31  -0.41  -0.62   0.55   0.19
+ Q: clr       -0.31  -0.34   0.7    0.47  -0.28
+ lQ: clr      -0.31  -0.41  -0.62   0.55   0.2
  lT: WD        0.6   -0.34   0.27   0.15   0.66, subj = 
 Principal components based on correlation matrix
- (Intercept)   1.0     .      .      .      .      .
- F: HF         0.36   1.0     .      .      .      .
- P: rel        0.35   0.89   1.0     .      .      .
- Q: clr        0.41   0.45   0.73   1.0     .      .
- lQ: clr       0.06   0.17   0.18   0.58   1.0     .
- lT: WD        0.26  -0.1   -0.02   0.37   0.51   1.0
+ (Intercept)   1.0     .      .      .      .     .
+ F: HF         0.35   1.0     .      .      .     .
+ P: rel        0.35   0.89   1.0     .      .     .
+ Q: clr        0.41   0.43   0.74   1.0     .     .
+ lQ: clr       0.06   0.13   0.19   0.57   1.0    .
+ lT: WD        0.26  -0.06  -0.04   0.37   0.5   1.0
 
 Normalized cumulative variances:
-[0.4768, 0.7358, 0.8812, 0.9431, 1.0, 1.0]
+[0.4751, 0.733, 0.8783, 0.9457, 0.9999, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5    PC6
- (Intercept)  -0.34   0.02   0.84   0.31  -0.27  -0.11
- F: HF        -0.45   0.42  -0.12  -0.41  -0.44   0.5
- P: rel       -0.51   0.35  -0.16  -0.17   0.27  -0.7
- Q: clr       -0.52  -0.15  -0.11   0.41   0.57   0.45
- lQ: clr      -0.32  -0.51  -0.43   0.3   -0.56  -0.21
- lT: WD       -0.21  -0.65   0.24  -0.67   0.16  -0.0)</code></pre>
+ (Intercept)  -0.34   0.03   0.83   0.29  -0.31  -0.08
+ F: HF        -0.45   0.42  -0.1   -0.51  -0.35   0.48
+ P: rel       -0.52   0.35  -0.17  -0.06   0.25  -0.72
+ Q: clr       -0.52  -0.15  -0.12   0.44   0.52   0.47
+ lQ: clr      -0.31  -0.52  -0.43   0.22  -0.61  -0.16
+ lT: WD       -0.21  -0.64   0.25  -0.64   0.27  -0.07)</code></pre>
 </div>
 </div>
 <p>Variance-covariance matrix of random-effect structure suggests overparameterization for both subject-related and item-related components.</p>
@@ -1404,11 +1406,11 @@ Component loadings
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(m_cpx.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>5×5 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
-  0.193302      ⋅             ⋅           ⋅         ⋅ 
-  0.00210882   0.0387279      ⋅           ⋅         ⋅ 
-  0.0155967    0.0156512     0.0371304    ⋅         ⋅ 
-  0.00757715   0.000160552  -0.002579    0.018479   ⋅ 
- -0.00483918  -0.037088      0.0174059  -0.011658  0.0</code></pre>
+  0.193296      ⋅             ⋅           ⋅          ⋅ 
+  0.0020979    0.0387261      ⋅           ⋅          ⋅ 
+  0.0156057    0.0156812     0.0371321    ⋅          ⋅ 
+  0.00756068   0.000110154  -0.0024608   0.0186678   ⋅ 
+ -0.00485665  -0.0369802     0.01735    -0.0119339  0.0</code></pre>
 </div>
 </div>
 <p>VP is zero for last diagonal entry; not supported by data.</p>
@@ -1416,12 +1418,12 @@ Component loadings
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">last</span>(m_cpx.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>6×6 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
- 0.59772       ⋅          ⋅           ⋅          ⋅          ⋅ 
- 0.00814528   0.0212543   ⋅           ⋅          ⋅          ⋅ 
- 0.0134425    0.0317765  0.0171892    ⋅          ⋅          ⋅ 
- 0.0392834    0.0309145  0.0686994   0.0446995   ⋅          ⋅ 
- 0.00205584   0.0057383  0.00227977  0.0362352  0.0         ⋅ 
- 0.0283307   -0.0222477  0.0131949   0.0578621  0.0731409  0.0450343</code></pre>
+ 0.597809      ⋅           ⋅           ⋅           ⋅          ⋅ 
+ 0.00815402   0.0217727    ⋅           ⋅           ⋅          ⋅ 
+ 0.0134843    0.0312673   0.0174896    ⋅           ⋅          ⋅ 
+ 0.039272     0.0296599   0.0714437   0.0411557    ⋅          ⋅ 
+ 0.00204162   0.00439008  0.00579478  0.0342807   0.0116236   ⋅ 
+ 0.0283568   -0.0180685   0.00121043  0.0795929  -0.0582267  0.0368125</code></pre>
 </div>
 </div>
 <p>VP is zero for fourth diagonal entry; not supported by data.</p>
@@ -1478,8 +1480,8 @@ Component loadings
  (Intercept)  1.0   0.0   0.0   0.0   0.0   0.0
  F: HF        0.0   1.0   0.0   0.0   0.0   0.0
  P: rel       0.0   0.0   1.0   0.0   0.0   0.0
- Q: clr       0.0   0.0   0.0   0.0   1.0   0.0
- lQ: clr      0.0   0.0   0.0   1.0   0.0   0.0
+ Q: clr       0.0   0.0   0.0   1.0   0.0   0.0
+ lQ: clr      0.0   0.0   0.0   0.0   1.0   0.0
  lT: WD       0.0   0.0   0.0   0.0   0.0   1.0)</code></pre>
 </div>
 </div>
@@ -1491,7 +1493,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th"></td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">deviance</td>
+<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
 <td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
@@ -1499,7 +1501,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + F + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">7188</td>
+<td style="text-align: right;">-7188</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: left;"></td>
@@ -1507,10 +1509,10 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + F + P + Q + lQ + lT | subj) + (1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">69</td>
-<td style="text-align: right;">7148</td>
+<td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0233</td>
+<td style="text-align: left;">0.0231</td>
 </tr>
 </tbody>
 </table>
@@ -1541,8 +1543,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320203</td>
-<td style="text-align: right;">0.05658650</td>
+<td style="text-align: right;">0.00320202</td>
+<td style="text-align: right;">0.05658637</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1551,8 +1553,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00007139</td>
-<td style="text-align: right;">0.00844898</td>
+<td style="text-align: right;">0.00007138</td>
+<td style="text-align: right;">0.00844840</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1562,7 +1564,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.00014720</td>
-<td style="text-align: right;">0.01213252</td>
+<td style="text-align: right;">0.01213251</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -1572,7 +1574,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.00011708</td>
-<td style="text-align: right;">0.01082057</td>
+<td style="text-align: right;">0.01082036</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1581,8 +1583,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061099</td>
-<td style="text-align: right;">0.17495996</td>
+<td style="text-align: right;">0.03061084</td>
+<td style="text-align: right;">0.17495954</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1592,7 +1594,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
 <td style="text-align: right;">0.00009921</td>
-<td style="text-align: right;">0.00996029</td>
+<td style="text-align: right;">0.00996047</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1602,7 +1604,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.00077305</td>
-<td style="text-align: right;">0.02780380</td>
+<td style="text-align: right;">0.02780383</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -1611,8 +1613,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00011889</td>
-<td style="text-align: right;">0.01090373</td>
+<td style="text-align: right;">0.00011890</td>
+<td style="text-align: right;">0.01090422</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1621,8 +1623,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00106147</td>
-<td style="text-align: right;">0.03258023</td>
+<td style="text-align: right;">0.00106148</td>
+<td style="text-align: right;">0.03258037</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1631,8 +1633,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08591585</td>
-<td style="text-align: right;">0.29311406</td>
+<td style="text-align: right;">0.08591586</td>
+<td style="text-align: right;">0.29311407</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1650,7 +1652,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th"></td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">deviance</td>
+<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
 <td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
@@ -1658,7 +1660,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lT | item)</td>
 <td style="text-align: right;">42</td>
-<td style="text-align: right;">7189</td>
+<td style="text-align: right;">-7189</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: left;"></td>
@@ -1666,7 +1668,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + F + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">7188</td>
+<td style="text-align: right;">-7188</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">0.9634</td>
@@ -1674,10 +1676,10 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + F + P + Q + lQ + lT | subj) + (1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">69</td>
-<td style="text-align: right;">7148</td>
+<td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0233</td>
+<td style="text-align: left;">0.0231</td>
 </tr>
 </tbody>
 </table>
@@ -1706,15 +1708,15 @@ Component loadings
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032049</td>
-<td style="text-align: right;">0.0566117</td>
+<td style="text-align: right;">0.0566118</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306169</td>
-<td style="text-align: right;">0.1749768</td>
+<td style="text-align: right;">0.0306166</td>
+<td style="text-align: right;">0.1749760</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1722,7 +1724,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007629</td>
-<td style="text-align: right;">0.0276198</td>
+<td style="text-align: right;">0.0276199</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1730,7 +1732,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010645</td>
-<td style="text-align: right;">0.0326267</td>
+<td style="text-align: right;">0.0326265</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 </tr>
@@ -1754,7 +1756,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th"></td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">deviance</td>
+<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
 <td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
@@ -1762,7 +1764,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + Q + lT | subj) + (1 | item)</td>
 <td style="text-align: right;">37</td>
-<td style="text-align: right;">7196</td>
+<td style="text-align: right;">-7196</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: left;"></td>
@@ -1770,7 +1772,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lT | item)</td>
 <td style="text-align: right;">42</td>
-<td style="text-align: right;">7189</td>
+<td style="text-align: right;">-7189</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: left;">0.1781</td>
@@ -1778,7 +1780,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + F + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">7188</td>
+<td style="text-align: right;">-7188</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">0.9634</td>
@@ -1786,10 +1788,10 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + F + P + Q + lQ + lT | subj) + (1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">69</td>
-<td style="text-align: right;">7148</td>
+<td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0233</td>
+<td style="text-align: left;">0.0231</td>
 </tr>
 </tbody>
 </table>
@@ -1823,15 +1825,15 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306608</td>
-<td style="text-align: right;">0.1751022</td>
+<td style="text-align: right;">0.0306610</td>
+<td style="text-align: right;">0.1751028</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010896</td>
-<td style="text-align: right;">0.0330097</td>
+<td style="text-align: right;">0.0330098</td>
 <td style="text-align: right;">.</td>
 </tr>
 <tr class="odd">
@@ -1853,7 +1855,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th"></td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">deviance</td>
+<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
 <td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
@@ -1861,7 +1863,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + lT | subj) + (1 | item)</td>
 <td style="text-align: right;">36</td>
-<td style="text-align: right;">7259</td>
+<td style="text-align: right;">-7259</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: left;"></td>
@@ -1869,7 +1871,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + Q + lT | subj) + (1 | item)</td>
 <td style="text-align: right;">37</td>
-<td style="text-align: right;">7196</td>
+<td style="text-align: right;">-7196</td>
 <td style="text-align: right;">63</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">&lt;1e-14</td>
@@ -1877,7 +1879,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lT | item)</td>
 <td style="text-align: right;">42</td>
-<td style="text-align: right;">7189</td>
+<td style="text-align: right;">-7189</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: left;">0.1781</td>
@@ -1885,7 +1887,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + F + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">7188</td>
+<td style="text-align: right;">-7188</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: left;">0.9634</td>
@@ -1893,10 +1895,10 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + F + P + Q + lQ + lT | subj) + (1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">69</td>
-<td style="text-align: right;">7148</td>
+<td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0233</td>
+<td style="text-align: left;">0.0231</td>
 </tr>
 </tbody>
 </table>
@@ -1925,15 +1927,15 @@ Component loadings
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032010</td>
-<td style="text-align: right;">0.0565773</td>
+<td style="text-align: right;">0.0565772</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306216</td>
-<td style="text-align: right;">0.1749903</td>
+<td style="text-align: right;">0.0306214</td>
+<td style="text-align: right;">0.1749898</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1941,7 +1943,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276159</td>
+<td style="text-align: right;">0.0276156</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1949,7 +1951,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325898</td>
+<td style="text-align: right;">0.0325896</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -1989,15 +1991,15 @@ Component loadings
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032010</td>
-<td style="text-align: right;">0.0565773</td>
+<td style="text-align: right;">0.0565772</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306216</td>
-<td style="text-align: right;">0.1749903</td>
+<td style="text-align: right;">0.0306214</td>
+<td style="text-align: right;">0.1749898</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2005,7 +2007,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276159</td>
+<td style="text-align: right;">0.0276156</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2013,7 +2015,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325898</td>
+<td style="text-align: right;">0.0325896</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -2041,7 +2043,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;" data-quarto-table-cell-role="th"></td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">deviance</td>
+<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
 <td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
 <td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
@@ -2049,7 +2051,7 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + Q + lT | subj) + (1 | item)</td>
 <td style="text-align: right;">37</td>
-<td style="text-align: right;">7196</td>
+<td style="text-align: right;">-7196</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: left;"></td>
@@ -2057,7 +2059,7 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + Q + lT | subj) + (1 | item)</td>
 <td style="text-align: right;">40</td>
-<td style="text-align: right;">7180</td>
+<td style="text-align: right;">-7180</td>
 <td style="text-align: right;">16</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">0.0011</td>
@@ -2065,10 +2067,10 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + F + P + Q + lQ + lT | subj) + (1 + P + Q + lQ + lT | item)</td>
 <td style="text-align: right;">69</td>
-<td style="text-align: right;">7148</td>
+<td style="text-align: right;">-7148</td>
 <td style="text-align: right;">33</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: left;">0.2916</td>
+<td style="text-align: left;">0.2904</td>
 </tr>
 </tbody>
 </table>
@@ -2087,17 +2089,18 @@ Component loadings
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    AIC<span class="op">=</span><span class="fu">round</span>.(<span class="fu">aic</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    AICc<span class="op">=</span><span class="fu">round</span>.(<span class="fu">aicc</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    BIC<span class="op">=</span><span class="fu">round</span>.(<span class="fu">bic</span>.(mods),digits<span class="op">=</span><span class="fl">0</span>),</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.deviancediff, digits<span class="op">=</span><span class="fl">0</span>)),</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.dofdiff, digits<span class="op">=</span><span class="fl">0</span>)),</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.pvalues, digits<span class="op">=</span><span class="fl">3</span>))</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(<span class="dt">Int</span>, <span class="fu">diff</span>(<span class="fu">collect</span>(lrt.lrt.deviance)))),</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">diff</span>(<span class="fu">collect</span>(lrt.lrt.dof))),</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># StatsBase.PValue includes some pretty-printing methods</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., StatsBase.<span class="fu">PValue</span>.(<span class="fu">collect</span>(lrt.lrt.pval[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>])))</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>3×9 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<tr class="columnLabelRow header">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">dof</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">deviance</th>
@@ -2108,8 +2111,8 @@ Component loadings
 <th style="text-align: left;" data-quarto-table-cell-role="th">χ²_dof</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">pvalue</th>
 </tr>
-<tr class="subheader headerLastRow even">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<tr class="columnLabelRow even">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Symbol">Symbol</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Int64">Int64</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
@@ -2122,8 +2125,8 @@ Component loadings
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
 <td style="text-align: left;">m_zcp3</td>
 <td style="text-align: right;">37</td>
 <td style="text-align: right;">7196.0</td>
@@ -2134,29 +2137,29 @@ Component loadings
 <td style="text-align: left;">.</td>
 <td style="text-align: left;">.</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">m_prm</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">7180.0</td>
 <td style="text-align: right;">7260.0</td>
 <td style="text-align: right;">7260.0</td>
 <td style="text-align: right;">7568.0</td>
-<td style="text-align: left;">16.0</td>
-<td style="text-align: left;">3.0</td>
-<td style="text-align: left;">0.001</td>
+<td style="text-align: left;">-16</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0.0011</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: left;">m_cpx</td>
 <td style="text-align: right;">69</td>
 <td style="text-align: right;">7148.0</td>
 <td style="text-align: right;">7286.0</td>
 <td style="text-align: right;">7286.0</td>
 <td style="text-align: right;">7817.0</td>
-<td style="text-align: left;">33.0</td>
-<td style="text-align: left;">29.0</td>
-<td style="text-align: left;">0.292</td>
+<td style="text-align: left;">-33</td>
+<td style="text-align: left;">29</td>
+<td style="text-align: left;">0.2904</td>
 </tr>
 </tbody>
 </table>
@@ -2193,15 +2196,15 @@ Component loadings
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032010</td>
-<td style="text-align: right;">0.0565773</td>
+<td style="text-align: right;">0.0565772</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306216</td>
-<td style="text-align: right;">0.1749903</td>
+<td style="text-align: right;">0.0306214</td>
+<td style="text-align: right;">0.1749898</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2209,7 +2212,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276159</td>
+<td style="text-align: right;">0.0276156</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2217,7 +2220,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325898</td>
+<td style="text-align: right;">0.0325896</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -2243,48 +2246,48 @@ Component loadings
 
 Variance components:
             Column    Variance   Std.Dev.    Corr.
-item     (Intercept)  0.00320570 0.05661895
-         P: rel       0.00006692 0.00818053   .  
-subj     (Intercept)  0.03061792 0.17497978
-         Q: clr       0.00076255 0.02761426 +0.42
-         lT: WD       0.00106214 0.03259043   .     .  
-Residual              0.08640796 0.29395231
+item     (Intercept)  0.00320567 0.05661866
+         P: rel       0.00006693 0.00818081   .  
+subj     (Intercept)  0.03061757 0.17497878
+         Q: clr       0.00076248 0.02761311 +0.42
+         lT: WD       0.00106208 0.03258956   .     .  
+Residual              0.08640801 0.29395239
  Number of obs: 16409; levels of grouping factors: 240, 73
 
   Fixed-effects parameters:
 ─────────────────────────────────────────────────────────────────────────────────────
                                                    Coef.  Std. Error      z  Pr(&gt;|z|)
 ─────────────────────────────────────────────────────────────────────────────────────
-(Intercept)                                  1.63743      0.0209305   78.23    &lt;1e-99
-F: HF                                        0.019366     0.00431956   4.48    &lt;1e-05
-P: rel                                       0.0188081    0.00236112   7.97    &lt;1e-14
-Q: clr                                       0.042901     0.00396839  10.81    &lt;1e-26
-lQ: clr                                      0.00174652   0.00231531   0.75    0.4506
-lT: WD                                       0.00836024   0.00446189   1.87    0.0610
+(Intercept)                                  1.63743      0.0209303   78.23    &lt;1e-99
+F: HF                                        0.019366     0.00431955   4.48    &lt;1e-05
+P: rel                                       0.0188081    0.00236113   7.97    &lt;1e-14
+Q: clr                                       0.042901     0.00396828  10.81    &lt;1e-26
+lQ: clr                                      0.00174653   0.00231531   0.75    0.4506
+lT: WD                                       0.00836023   0.0044618    1.87    0.0610
 F: HF &amp; P: rel                              -0.00711249   0.00236171  -3.01    0.0026
 F: HF &amp; Q: clr                              -0.00141259   0.00230067  -0.61    0.5392
-P: rel &amp; Q: clr                              0.00134141   0.00230239   0.58    0.5602
+P: rel &amp; Q: clr                              0.00134142   0.00230239   0.58    0.5601
 F: HF &amp; lQ: clr                             -0.00105227   0.00232139  -0.45    0.6503
-P: rel &amp; lQ: clr                            -0.00240742   0.00232055  -1.04    0.2995
+P: rel &amp; lQ: clr                            -0.00240742   0.00232056  -1.04    0.2995
 Q: clr &amp; lQ: clr                             0.00759804   0.00231922   3.28    0.0011
-F: HF &amp; lT: WD                               0.000536559  0.00231365   0.23    0.8166
-P: rel &amp; lT: WD                              2.93106e-5   0.00231751   0.01    0.9899
-Q: clr &amp; lT: WD                              0.0018553    0.00231773   0.80    0.4234
-lQ: clr &amp; lT: WD                            -0.00524633   0.00231607  -2.27    0.0235
-F: HF &amp; P: rel &amp; Q: clr                     -0.00036224   0.00230272  -0.16    0.8750
-F: HF &amp; P: rel &amp; lQ: clr                    -0.00117753   0.00232025  -0.51    0.6118
-F: HF &amp; Q: clr &amp; lQ: clr                     0.00273697   0.00232283   1.18    0.2387
-P: rel &amp; Q: clr &amp; lQ: clr                   -0.0039323    0.0023222   -1.69    0.0904
+F: HF &amp; lT: WD                               0.000536556  0.00231365   0.23    0.8166
+P: rel &amp; lT: WD                              2.93226e-5   0.00231751   0.01    0.9899
+Q: clr &amp; lT: WD                              0.00185532   0.00231773   0.80    0.4234
+lQ: clr &amp; lT: WD                            -0.00524632   0.00231608  -2.27    0.0235
+F: HF &amp; P: rel &amp; Q: clr                     -0.000362238  0.00230272  -0.16    0.8750
+F: HF &amp; P: rel &amp; lQ: clr                    -0.00117754   0.00232025  -0.51    0.6118
+F: HF &amp; Q: clr &amp; lQ: clr                     0.00273699   0.00232283   1.18    0.2387
+P: rel &amp; Q: clr &amp; lQ: clr                   -0.00393229   0.0023222   -1.69    0.0904
 F: HF &amp; P: rel &amp; lT: WD                      0.0019864    0.00231879   0.86    0.3916
 F: HF &amp; Q: clr &amp; lT: WD                     -0.00112586   0.00231657  -0.49    0.6270
-P: rel &amp; Q: clr &amp; lT: WD                     0.000261834  0.00231924   0.11    0.9101
+P: rel &amp; Q: clr &amp; lT: WD                     0.000261826  0.00231924   0.11    0.9101
 F: HF &amp; lQ: clr &amp; lT: WD                     0.00150677   0.00232198   0.65    0.5164
-P: rel &amp; lQ: clr &amp; lT: WD                    8.67915e-5   0.00232177   0.04    0.9702
-Q: clr &amp; lQ: clr &amp; lT: WD                    0.00916752   0.00231827   3.95    &lt;1e-04
+P: rel &amp; lQ: clr &amp; lT: WD                    8.67965e-5   0.00232177   0.04    0.9702
+Q: clr &amp; lQ: clr &amp; lT: WD                    0.00916751   0.00231827   3.95    &lt;1e-04
 F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr           -0.00234443   0.00231978  -1.01    0.3122
-F: HF &amp; P: rel &amp; Q: clr &amp; lT: WD            -0.00148723   0.00232057  -0.64    0.5216
+F: HF &amp; P: rel &amp; Q: clr &amp; lT: WD            -0.00148721   0.00232057  -0.64    0.5216
 F: HF &amp; P: rel &amp; lQ: clr &amp; lT: WD            0.00308764   0.00232145   1.33    0.1835
-F: HF &amp; Q: clr &amp; lQ: clr &amp; lT: WD            0.00393597   0.00232128   1.70    0.0900
+F: HF &amp; Q: clr &amp; lQ: clr &amp; lT: WD            0.00393598   0.00232128   1.70    0.0900
 P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD           0.00202623   0.00232125   0.87    0.3827
 F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.00231838   0.62    0.5320
 ─────────────────────────────────────────────────────────────────────────────────────</code></pre>
@@ -2586,17 +2589,18 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>    AIC<span class="op">=</span><span class="fu">aic</span>.(mods),</span>
 <span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>    AICc<span class="op">=</span><span class="fu">aicc</span>.(mods),</span>
 <span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>    BIC<span class="op">=</span><span class="fu">bic</span>.(mods),</span>
-<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>.,lrt.tests.deviancediff),</span>
-<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>.,lrt.tests.dofdiff),</span>
-<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(lrt.tests.pvalues, digits<span class="op">=</span><span class="fl">3</span>))</span>
-<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>    χ²<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">round</span>.(<span class="dt">Int</span>, <span class="fu">diff</span>(<span class="fu">collect</span>(lrt.lrt.deviance)))),</span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>    χ²_dof<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., <span class="fu">diff</span>(<span class="fu">collect</span>(lrt.lrt.dof))),</span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># StatsBase.PValue includes some pretty-printing methods</span></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., StatsBase.<span class="fu">PValue</span>.(<span class="fu">collect</span>(lrt.lrt.pval[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>])))</span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>5×9 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
 <table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
-<tr class="header">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
+<tr class="columnLabelRow header">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">dof</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">deviance</th>
@@ -2607,8 +2611,8 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <th style="text-align: left;" data-quarto-table-cell-role="th">χ²_dof</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">pvalue</th>
 </tr>
-<tr class="subheader headerLastRow even">
-<th class="rowNumber" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
+<tr class="columnLabelRow even">
+<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Symbol">Symbol</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Int64">Int64</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
@@ -2621,8 +2625,8 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">1</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
 <td style="text-align: left;">m_prm_1</td>
 <td style="text-align: right;">14</td>
 <td style="text-align: right;">7237.39</td>
@@ -2633,53 +2637,53 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <td style="text-align: left;">.</td>
 <td style="text-align: left;">.</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">2</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
 <td style="text-align: left;">m_prm_2</td>
 <td style="text-align: right;">24</td>
 <td style="text-align: right;">7209.2</td>
 <td style="text-align: right;">7257.2</td>
 <td style="text-align: right;">7257.27</td>
 <td style="text-align: right;">7442.13</td>
-<td style="text-align: left;">28.1868</td>
+<td style="text-align: left;">-28</td>
 <td style="text-align: left;">10</td>
-<td style="text-align: left;">0.002</td>
+<td style="text-align: left;">0.0017</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">3</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">3</td>
 <td style="text-align: left;">m_prm_3</td>
 <td style="text-align: right;">34</td>
 <td style="text-align: right;">7187.57</td>
 <td style="text-align: right;">7255.57</td>
 <td style="text-align: right;">7255.71</td>
 <td style="text-align: right;">7517.56</td>
-<td style="text-align: left;">21.6317</td>
+<td style="text-align: left;">-22</td>
 <td style="text-align: left;">10</td>
-<td style="text-align: left;">0.017</td>
+<td style="text-align: left;">0.0171</td>
 </tr>
-<tr class="even">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">4</td>
+<tr class="dataRow even">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">4</td>
 <td style="text-align: left;">m_prm_4</td>
 <td style="text-align: right;">39</td>
 <td style="text-align: right;">7180.61</td>
 <td style="text-align: right;">7258.61</td>
 <td style="text-align: right;">7258.8</td>
 <td style="text-align: right;">7559.13</td>
-<td style="text-align: left;">6.95863</td>
+<td style="text-align: left;">-7</td>
 <td style="text-align: left;">5</td>
-<td style="text-align: left;">0.224</td>
+<td style="text-align: left;">0.2237</td>
 </tr>
-<tr class="odd">
-<td class="rowNumber" style="text-align: right; font-weight: bold;">5</td>
+<tr class="dataRow odd">
+<td class="rowLabel" style="text-align: right; font-weight: bold;">5</td>
 <td style="text-align: left;">m_prm_5</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">7180.21</td>
 <td style="text-align: right;">7260.21</td>
 <td style="text-align: right;">7260.41</td>
 <td style="text-align: right;">7568.44</td>
-<td style="text-align: left;">0.398591</td>
+<td style="text-align: left;">0</td>
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">0.528</td>
+<td style="text-align: left;">0.5278</td>
 </tr>
 </tbody>
 </table>
@@ -2913,8 +2917,8 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>[<span class="fu">objective</span>(m_prm3), <span class="fu">objective</span>(m_prm3_posthoc)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2-element Vector{Float64}:
- 7291.145437442645
- 7291.145437447412</code></pre>
+ 7291.145437442885
+ 7291.14543744171</code></pre>
 </div>
 </div>
 </section>
@@ -2923,23 +2927,24 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <div id="58" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Julia Version 1.11.6
-Commit 9615af0f269 (2025-07-09 12:58 UTC)
+<pre><code>Julia Version 1.12.3
+Commit 966d0af0fdf (2025-12-15 11:20 UTC)
 Build Info:
-  Official https://julialang.org/ release
+  Official https://julialang.org release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
   CPU: 16 × Intel(R) Xeon(R) E-2288G CPU @ 3.70GHz
   WORD_SIZE: 64
-  LLVM: libLLVM-16.0.6 (ORCJIT, skylake)
-Threads: 16 default, 0 interactive, 8 GC (on 16 virtual cores)
+  LLVM: libLLVM-18.1.7 (ORCJIT, skylake)
+  GC: Built with stock GC
+Threads: 16 default, 1 interactive, 16 GC (on 16 virtual cores)
 Environment:
   JULIA_PROJECT = @.
   JULIA_LOAD_PATH = @:@stdlib</code></pre>
 </div>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/97da28d
-">97da28d
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/fb99b3c
+">fb99b3c
 </a> using Quarto 1.7.33.</em></p>
 
 
