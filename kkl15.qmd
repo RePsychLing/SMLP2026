@@ -31,7 +31,6 @@ Stroup, W. W. (2012, p. 185). _Generalized linear mixed models: Modern concepts,
 #| code-fold: true
 #| output: false
 using AlgebraOfGraphics
-using AlgebraOfGraphics: density
 using BoxCox
 using CairoMakie
 using CategoricalArrays
@@ -41,8 +40,12 @@ using DataFrames
 using MixedModels
 using MixedModelsMakie
 using Random
-using SMLP2026: dataset
 using StatsBase
+
+using AlgebraOfGraphics: density
+using SMLP2026: dataset
+
+progress = isinteractive()
 ```
 
 # Read data, compute and plot means
@@ -101,7 +104,7 @@ contrasts = Dict(
 
 # Maximum LMM
 
-This is the maximum LMM for the design; `size` is a between-subject factor, 
+This is the maximum LMM for the design; `size` is a between-subject factor,
 ignoring other information such as trial number, age and gender of subjects.
 
 ```{julia}
@@ -124,7 +127,7 @@ only(MixedModels.PCA(m_max))
 VarCorr(m_max)
 ```
 
-The LMM `m_max` is overparameterized but it is not immediately apparent why. 
+The LMM `m_max` is overparameterized but it is not immediately apparent why.
 
 # Reduction strategy 1
 
@@ -152,7 +155,7 @@ only(MixedModels.PCA(m_zcp1))
 VarCorr(m_zcp1)
 ```
 
-The LMM `m_zcp1` is also overparameterized, but now there is clear evidence for absence of evidence for the VC of one of the interactions and the other two interaction-based VCs are also very small. 
+The LMM `m_zcp1` is also overparameterized, but now there is clear evidence for absence of evidence for the VC of one of the interactions and the other two interaction-based VCs are also very small.
 
 ## Reduced zcp LMM
 
@@ -178,7 +181,7 @@ only(MixedModels.PCA(m_zcp1_rdc))
 VarCorr(m_zcp1_rdc)
 ```
 
-LMM `m_zcp_rdc` is ok . We add in CPs. 
+LMM `m_zcp_rdc` is ok . We add in CPs.
 
 ## Parsimonious LMM (1)
 
@@ -200,7 +203,7 @@ issingular(m_prm1)
 only(MixedModels.PCA(m_prm1))
 ```
 
-LMM `m_zcp_rdc` is ok . We add in CPs. 
+LMM `m_zcp_rdc` is ok . We add in CPs.
 
 ```{julia}
 VarCorr(m_prm1)
@@ -221,21 +224,22 @@ gof_summary = let
     deviance=round.(deviance.(mods), digits=0),
     AIC=round.(aic.(mods),digits=0),
     AICc=round.(aicc.(mods),digits=0),
-     BIC=round.(bic.(mods),digits=0),
-    χ²=vcat(:., round.(lrt.tests.deviancediff, digits=0)),
-    χ²_dof=vcat(:., round.(lrt.tests.dofdiff, digits=0)),
-    pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
+    BIC=round.(bic.(mods),digits=0),
+    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
+    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
+    # StatsBase.PValue includes some pretty-printing methods
+    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
   )
 end
 ```
 
-AIC prefers LMM `m_prm1` over `m_zcp1_rdc`; BIC LMM `m_zcp1_rdc`. 
+AIC prefers LMM `m_prm1` over `m_zcp1_rdc`; BIC LMM `m_zcp1_rdc`.
 As the CPs were one reason for conducting this experiment, AIC is the criterion of choice.
 
 # Reduction strategy 2
 
 ## Complex LMM
-Relative to LMM `m_max`, first we take out interaction VCs and associated CPs, because these VCs are very small. This is the same as LMM `m_prm1` above. 
+Relative to LMM `m_max`, first we take out interaction VCs and associated CPs, because these VCs are very small. This is the same as LMM `m_prm1` above.
 
 ```{julia}
 m_cpx = let
@@ -290,16 +294,17 @@ gof_summary = let
     deviance=round.(deviance.(mods), digits=0),
     AIC=round.(aic.(mods),digits=0),
     AICc=round.(aicc.(mods),digits=0),
-     BIC=round.(bic.(mods),digits=0),
-    χ²=vcat(:., round.(lrt.tests.deviancediff, digits=0)),
-    χ²_dof=vcat(:., round.(lrt.tests.dofdiff, digits=0)),
-    pvalue=vcat(:., round.(lrt.tests.pvalues, digits=3))
+    BIC=round.(bic.(mods),digits=0),
+    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
+    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
+    # StatsBase.PValue includes some pretty-printing methods
+    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
   )
 end
 ```
 
-The cardinal-related CPs could be removed w/o loss of goodness of fit. 
-However, there is no harm in keeping them in the LMM. 
+The cardinal-related CPs could be removed w/o loss of goodness of fit.
+However, there is no harm in keeping them in the LMM.
 The data support both LMM `m_prm2` and  `m_cpx` (same as: `m_prm1`).
 We keep the slightly more complex LMM `m_cpx` (`m_prm1`).
 
