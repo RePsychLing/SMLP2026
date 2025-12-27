@@ -49,3 +49,5 @@ site_libs/
 *.ipynb
 .cache/
 
+
+**/*.quarto_ipynb
