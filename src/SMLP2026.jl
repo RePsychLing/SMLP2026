@@ -44,34 +44,63 @@ export GENRES,
     fit_or_restore,
     fit_or_restore!
 
-function _normalize_path(path)
+function _normalize_model_cache_path(path)
     dir, file = splitdir(path)
-    if isempty(dir) 
-        return joinpath(dirname(@__DIR__), "fits", file)
-    else 
-        return path
+    if isempty(dir)
+        path = joinpath(dirname(@__DIR__), "fits", file)
     end
+
+    _, ext = splitext(path)
+    if ext != ".zip"
+        path = path * ".zip"
+    end
+
+    return path
 end
 
-function fit_or_restore(fname, args...;
-                         force_fit=false, fit_kwargs=(;), restore_kwargs=(;))
-    model = MixedModel(args...)
-    return fit_or_restore!(model, fname; force_fit, fit_kwargs, restore_kwargs)
+function fit_or_restore(fname, ::Type{<:MixedModel}, args...; kwargs...)
+    return fit_or_restore(fname, args...; kwargs...)
 end
-    
+
+function fit_or_restore(fname, args...; contrasts=Dict{Symbol}(), kwargs...)
+    model = MixedModel(args...; contrasts)
+    return fit_or_restore!(model, fname; kwargs...)
+end
+
 function fit_or_restore!(model::MixedModel, fname;
-                         force_fit=false, fit_kwargs=(;), restore_kwargs=(;))
-    fname = _normalize_path(fname)
+                         force_fit=false, restore_kwargs=(; atol=1e-8), fit_kwargs...)
+    fname = _normalize_model_cache_path(fname)
+    @debug "cache path: $(fname)"
     if !isfile(fname) || force_fit
-        fit!(model; fitlog=true, fit_kwargs...)
-        saveoptsum(fname, model)
+        @debug "fitting model"
+        fit!(model; fit_kwargs...)
+        zip = ZipFile.Writer(fname)
+        try
+            mktempdir() do dir
+                f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
+                saveoptsum(f, model)
+                return nothing
+            end
+        catch
+            error("Something went wrong in saving the model cache")
+        finally
+            close(zip)
+        end
     else
-        @info "Restoring from cache"
-        restoreoptsum!(model, fname; restore_kwargs...)
+        @debug "restoring from cache"
+        zip = ZipFile.Reader(fname)
+        try
+            restoreoptsum!(model, only(zip.files); restore_kwargs...)
+        catch
+            error("Something went wrong in reading the model cache")
+        finally
+            close(zip)
+        end
     end
 
     return model
 end
 
-    
+# TODO: wrapper function for bootstrap, which crosschecks the PRNG
+
 end # module EmbraceUncertainty

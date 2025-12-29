@@ -48,6 +48,11 @@ using SMLP2026: dataset
 progress = isinteractive()
 ```
 
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
+```
+
 # Read data, compute and plot means
 
 ```{julia}
@@ -86,7 +91,7 @@ boxplot(
       ]
     )
   ),
-  figure=(; resolution=(800, 300)),
+  figure=(; size=(800, 300)),
 )
 ```
 
@@ -108,11 +113,21 @@ This is the maximum LMM for the design; `size` is a between-subject factor,
 ignoring other information such as trial number, age and gender of subjects.
 
 ```{julia}
+#| eval: false
 m_max = let
   form = @formula rt ~ 1 + CTR * cardinal * size +
                            (1 + CTR * cardinal | Subj)
   fit(MixedModel, form, dat; contrasts)
 end;
+```
+
+```{julia}
+#| include: false
+m_max = let
+  form = @formula rt ~ 1 + CTR * cardinal * size +
+                           (1 + CTR * cardinal | Subj)
+  fit_or_restore("kkl15_m_max.json", MixedModel, form, dat; contrasts)
+end
 ```
 
 ```{julia}
@@ -136,12 +151,23 @@ The LMM `m_max` is overparameterized but it is not immediately apparent why.
 Force CPs to zero. _Reduction strategy 1_ is more suited for reducing model w/o theoretical expectations about CPs. The better reduction strategy for the present experiment with an _a priori_ interest in CPs is described as _Reduction strategy 2_.
 
 ```{julia}
+#| eval: false
 m_zcp1 = let
   form = @formula rt ~ 1 + CTR * cardinal * size +
                    zerocorr(1 + CTR * cardinal | Subj)
   fit(MixedModel, form, dat; contrasts)
 end;
 ```
+
+```{julia}
+#| include: false
+m_zcp1 = let
+  form = @formula rt ~ 1 + CTR * cardinal * size +
+                  zerocorr(1 + CTR * cardinal | Subj)
+  fit_or_restore("kkl15_m_zcp1.json", MixedModel, form, dat; contrasts)
+end
+```
+
 
 ```{julia}
 issingular(m_zcp1)
@@ -162,12 +188,23 @@ The LMM `m_zcp1` is also overparameterized, but now there is clear evidence for 
 Take out VCs for interactions.
 
 ```{julia}
+#| eval: false
 m_zcp1_rdc = let
   form = @formula rt ~ 1 + CTR * cardinal * size +
                    zerocorr(1 + CTR + cardinal | Subj)
   fit(MixedModel, form, dat; contrasts)
 end;
 ```
+
+```{julia}
+#| include: false
+m_zcp1_rdc = let
+  form = @formula rt ~ 1 + CTR * cardinal * size +
+                   zerocorr(1 + CTR + cardinal | Subj)
+  fit_or_restore("kkl15_m_zcp1_rdc.json", MixedModel, form, dat; contrasts)
+end
+```
+
 
 ```{julia}
 issingular(m_zcp1_rdc)
@@ -188,12 +225,23 @@ LMM `m_zcp_rdc` is ok . We add in CPs.
 Extend zcp-reduced LMM with CPs
 
 ```{julia}
+#| eval: false
 m_prm1 = let
   form = @formula rt ~ 1 + CTR * cardinal * size +
                            (1 + CTR + cardinal | Subj)
   fit(MixedModel, form, dat; contrasts)
 end;
 ```
+
+```{julia}
+#| include: false
+m_prm1 = let
+  form = @formula rt ~ 1 + CTR * cardinal * size +
+                           (1 + CTR + cardinal | Subj)
+  fit_or_restore("kkl15_m_prm1.json", MixedModel, form, dat; contrasts)
+end
+```
+
 
 ```{julia}
 issingular(m_prm1)
@@ -242,11 +290,21 @@ As the CPs were one reason for conducting this experiment, AIC is the criterion 
 Relative to LMM `m_max`, first we take out interaction VCs and associated CPs, because these VCs are very small. This is the same as LMM `m_prm1` above.
 
 ```{julia}
+#| eval: false
 m_cpx = let
   form = @formula rt ~ 1 + CTR * cardinal * size +
                       (1 + CTR + cardinal | Subj)
   fit(MixedModel, form, dat; contrasts)
 end;
+```
+
+```{julia}
+#| include: false
+m_cpx = let
+  form = @formula rt ~ 1 + CTR * cardinal * size +
+                      (1 + CTR + cardinal | Subj)
+  fit_or_restore("kkl15_m_cpx.json", MixedModel, form, dat; contrasts)
+end
 ```
 
 ## Zero-correlation parameter LMM (2)
@@ -260,6 +318,14 @@ m_zcp2 = let
 end;
 ```
 
+```{julia}
+#| include: false
+m_zcp2 = let
+  form = @formula rt ~ 1 + CTR * cardinal * size  +
+              zerocorr(1 + CTR + cardinal | Subj)
+  fit_or_restore("kkl15_m_zcp2.json", MixedModel, form, dat; contrasts)
+end
+```
 
 ```{julia}
 VarCorr(m_zcp2)
@@ -270,11 +336,21 @@ VarCorr(m_zcp2)
 The cardinal-related CPs are quite small. Do we need them?
 
 ```{julia}
+#| eval: false
 m_prm2 = let
   form = @formula(rt ~ 1 + CTR * cardinal * size  +
                       (1 + CTR | Subj) + (0 + cardinal | Subj))
   fit(MixedModel, form, dat; contrasts)
 end;
+```
+
+```{julia}
+#| include: false
+m_prm2 = let
+  form = @formula(rt ~ 1 + CTR * cardinal * size  +
+                      (1 + CTR | Subj) + (0 + cardinal | Subj))
+  fit_or_restore("kkl15_m_prm2.json", MixedModel, form, dat; contrasts)
+end
 ```
 
 ```{julia}
@@ -371,7 +447,7 @@ qqnorm(
 #| label: fig-caterpillarm1
 #| fig-cap: Prediction intervals of the subject random effects in model m1
 cm1 = only(ranefinfo(m_prm1))
-caterpillar!(Figure(; resolution=(800, 1200)), cm1; orderby=2)
+caterpillar!(Figure(; size=(800, 1200)), cm1; orderby=2)
 ```
 
 ## Shrinkage plot
@@ -381,7 +457,7 @@ caterpillar!(Figure(; resolution=(800, 1200)), cm1; orderby=2)
 #| code-fold: true
 #| label: fig-caterpillarm1L
 #| fig-cap: Shrinkage plots of the subject random effects in model m1L
-shrinkageplot!(Figure(; resolution=(1000, 1200)), m_prm1)
+shrinkageplot!(Figure(; size=(1000, 1200)), m_prm1)
 ```
 
 # Parametric bootstrap
@@ -396,6 +472,9 @@ Here we
 
 We generate 2500 samples for the 15 model parameters (4 fixed effect, 7 VCs, 15 CPs, and 1 residual).
 
+<!--
+FIXME: cache bootstrap!
+-->
 ```{julia}
 samp = parametricbootstrap(MersenneTwister(1234321), 2500, m_prm1;
                            optsum_overrides=(; ftol_rel=1e-8));
@@ -432,7 +511,7 @@ draw(
   data(tbl) *
   mapping(:σ => "Residual") *
   density();
-  figure=(; resolution=(800, 400)),
+  figure=(; size=(800, 400)),
 )
 ```
 
@@ -465,7 +544,7 @@ draw(
     "Experimental effects",
   ) *
   density();
-  figure=(; resolution=(800, 350)),
+  figure=(; size=(800, 350)),
 )
 ```
 
@@ -484,7 +563,7 @@ draw(
     "Variance components",
   ) *
   density();
-  figure=(; resolution=(800, 350)),
+  figure=(; size=(800, 350)),
 )
 ```
 
@@ -506,7 +585,7 @@ draw(
     "Correlation parameters",
   ) *
   density();
-  figure=(; resolution=(800, 350)),
+  figure=(; size=(800, 350)),
 )
 ```
 
