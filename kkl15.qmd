@@ -50,7 +50,7 @@ progress = isinteractive()
 
 ```{julia}
 #| echo: false
-using SMLP2026: fit_or_restore
+using SMLP2026: fit_or_restore, bootstrap_or_restore
 ```
 
 # Read data, compute and plot means
@@ -472,12 +472,16 @@ Here we
 
 We generate 2500 samples for the 15 model parameters (4 fixed effect, 7 VCs, 15 CPs, and 1 residual).
 
-<!--
-FIXME: cache bootstrap!
--->
 ```{julia}
+#| eval: false
 samp = parametricbootstrap(MersenneTwister(1234321), 2500, m_prm1;
                            optsum_overrides=(; ftol_rel=1e-8));
+```
+
+```{julia}
+#| include: false
+samp = bootstrap_or_restore("kkl15_m_prm1.arrow", MersenneTwister(1234321), 2500, m_prm1;
+                            optsum_overrides=(; ftol_rel=1e-8))
 ```
 
 ```{julia}

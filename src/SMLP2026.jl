@@ -9,6 +9,7 @@ using Markdown
 using MixedModels
 using MixedModelsDatasets
 using PooledArrays
+using Random
 using Scratch
 using SHA
 using TypedTables
@@ -44,12 +45,17 @@ export GENRES,
     fit_or_restore,
     fit_or_restore!
 
-function _normalize_model_cache_path(path)
+function _normalize_cache_path(path)
     dir, file = splitdir(path)
     if isempty(dir)
         path = joinpath(dirname(@__DIR__), "fits", file)
     end
 
+    return path
+end
+
+function _normalize_model_cache_path(path)
+    path = _normalize_cache_path(path)
     _, ext = splitext(path)
     if ext != ".zip"
         path = path * ".zip"
@@ -68,10 +74,10 @@ function fit_or_restore(fname, args...; contrasts=Dict{Symbol}(), kwargs...)
 end
 
 function fit_or_restore!(model::MixedModel, fname;
-                         force_fit=false, restore_kwargs=(; atol=1e-8), fit_kwargs...)
+                         force=false, restore_kwargs=(; atol=1e-8), fit_kwargs...)
     fname = _normalize_model_cache_path(fname)
     @debug "cache path: $(fname)"
-    if !isfile(fname) || force_fit
+    if !isfile(fname) || force
         @debug "fitting model"
         fit!(model; fit_kwargs...)
         zip = ZipFile.Writer(fname)
@@ -101,6 +107,24 @@ function fit_or_restore!(model::MixedModel, fname;
     return model
 end
 
-# TODO: wrapper function for bootstrap, which crosschecks the PRNG
+# TODO: cache invalidation if PRNG / replicates don't match
+function bootstrap_or_restore(fname,  args...; kwargs...)
+    return bootstrap_or_restore(fname, Random.default_rng(), args...; kwargs...)
+end
+function bootstrap_or_restore(fname, rng::AbstractRNG, n::Integer, model::MixedModel, args...;
+                              force=false, bootstrap_kwargs...)
+    fname = _normalize_cache_path(fname)
+    @debug "cache path: $(fname)"
+    if !isfile(fname) || force
+        @debug "performing bootstrap"
+        boot = parametricbootstrap(rng, n, model, args...; bootstrap_kwargs...)
+        savereplicates(fname, boot)
+    else
+        @debug "restoring from cache"
+        boot = restorereplicates(fname, model)
+    end
+
+    return boot
+end
 
 end # module EmbraceUncertainty
