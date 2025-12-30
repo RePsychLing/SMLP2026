@@ -116,7 +116,7 @@ boxplot(
       ],
     ),
   ),
-  figure=(; resolution=(800, 300)),
+  figure=(; size=(800, 300)),
 )
 ```
 
@@ -247,7 +247,7 @@ The caterpillar plot, @fig-m1caterpillar, also reveals the high correlation betw
 #| fig-cap: "Prediction intervals on the random effects for Subj in model m1"
 #| label: fig-m1caterpillar
 caterpillar!(
-  Figure(; resolution=(800, 1000)), ranefinfo(m1, :Subj); orderby=2
+  Figure(; size=(800, 1000)), ranefinfo(m1, :Subj); orderby=2
 )
 ```
 
@@ -260,7 +260,7 @@ The corresponding panel illustrates an *implosion* of conditional modes.
 #| code-fold: true
 #| fig-cap: "Shrinkage plot of the conditional means of the random effects for model m1"
 #| label: fig-m1shrinkage
-shrinkageplot!(Figure(; resolution=(1000, 1000)), m1)
+shrinkageplot!(Figure(; size=(1000, 1000)), m1)
 ```
 
 # Parametric bootstrap

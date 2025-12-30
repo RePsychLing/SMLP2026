@@ -193,7 +193,7 @@ let
       color=:isword,
       markersize=:msz,
     );
-    figure=(; resolution=(800, 450)),
+    figure=(; size=(800, 450)),
   )
 end
 ```
@@ -297,7 +297,7 @@ draw(
   data(pruned) *
   mapping(:rt => "Response time (ms.) for correct responses") *
   AlgebraOfGraphics.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 
@@ -314,7 +314,7 @@ draw(
   mapping(
     :rt => (x -> 1000 / x) => "Response speed (s⁻¹) for correct responses") *
   AlgebraOfGraphics.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 
@@ -562,7 +562,7 @@ A caterpillar plot, @fig-elm01caterpillarsubj,
 #| fig-cap: Conditional means and 95% prediction intervals for subject random effects in elm01.
 #| label: fig-elm01caterpillarsubj
 qqcaterpillar!(
-  Figure(resolution=(800, 650)),
+  Figure(size=(800, 650)),
   ranefinfo(elm01, :subj),
 )
 ```
@@ -577,7 +577,7 @@ Also, there is at least one outlier with a conditional mode over 1.0.
 #| fig-cap: Conditional means and 95% prediction intervals for subject random effects in elm02.
 #| label: fig-elm02caterpillarsubj
 qqcaterpillar!(
-  Figure(resolution=(800, 650)),
+  Figure(size=(800, 650)),
   ranefinfo(elm02, :subj),
 )
 ```

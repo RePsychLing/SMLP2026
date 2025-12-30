@@ -926,7 +926,7 @@ Let's take pictures.
 #| label: fig-caterpillarCohort
 #| fig-cap: Prediction intervals of the random effects for Cohort in model m1
 caterpillar!(
-  Figure(; resolution=(800, 400)), ranefinfo(m1, :Cohort)
+  Figure(; size=(800, 400)), ranefinfo(m1, :Cohort)
 )
 ```
 
@@ -938,14 +938,14 @@ These are just teasers. We will pick this up in a separate tutorial. Enjoy!
 #| code-fold: true
 #| label: fig-m1shrinkageCohort
 #| fig-cap: Shrinkage plot of the random effects for Cohort in model m1
-shrinkageplot!(Figure(; resolution=(800, 800)), m1, :Cohort)
+shrinkageplot!(Figure(; size=(800, 800)), m1, :Cohort)
 ```
 
 ```{julia}
 #| code-fold: true
 #| label: fig-m2shrinkageCohort
 #| fig-cap: Shrinkage plot of the random effects for Cohort in model m2
-shrinkageplot!(Figure(; resolution=(800, 800)), m2, :Cohort)
+shrinkageplot!(Figure(; size=(800, 800)), m2, :Cohort)
 ```
 
 ::: {#refs}

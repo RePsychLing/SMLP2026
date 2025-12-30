@@ -53,8 +53,8 @@ sleepstudy = DataFrame(dataset("sleepstudy"))
 let f = Figure(; size=(700, 400))
   yrange = maximum(sleepstudy.reaction) - minimum(sleepstudy.reaction)
   xrange = maximum(sleepstudy.days) - minimum(sleepstudy.days)
-  
-  reg = combine(groupby(sleepstudy, :subj), 
+
+  reg = combine(groupby(sleepstudy, :subj),
                 [:days, :reaction] => NamedTuple{(:intercept, :slope)} ∘ simplelinreg => AsTable)
   sort!(reg, :intercept)
 
@@ -70,7 +70,7 @@ let f = Figure(; size=(700, 400))
   # set up all the axes and plot the simple regression lines
   for row in eachrow(reg)
     pos = gridpos[row.subj]
-    ax = Axis(f[pos...]; title=row.subj, 
+    ax = Axis(f[pos...]; title=row.subj,
               autolimitaspect=xrange/yrange)
     if pos[1] == 1
       hidexdecorations!(ax; grid=false, ticks=false)
@@ -87,11 +87,11 @@ let f = Figure(; size=(700, 400))
     pos = gridpos[grouping.subj]
     scatter!(f[pos...], gdf.days, gdf.reaction)
   end
-  Label(f[end+1, :], "Days of sleep deprivation"; 
+  Label(f[end+1, :], "Days of sleep deprivation";
         tellwidth=false, tellheight=true)
-  Label(f[:, 0], "Average reaction time (ms)"; 
+  Label(f[:, 0], "Average reaction time (ms)";
         tellwidth=true, tellheight=false, rotation=pi/2)
-  
+
   linkaxes!(axes...)
 
   # tweak the layout a little
@@ -227,7 +227,7 @@ If the BLUPs are strongly shrunk towards zero then the additional complexity in 
 #| code-fold: true
 #| fig-cap: Shrinkage plot of means of the random effects in model m1
 #| label: fig-m1shrinkage
-shrinkageplot!(Figure(; resolution=(500, 500)), m1)
+shrinkageplot!(Figure(; size=(500, 500)), m1)
 ```
 
 ::: {.callout-note}
@@ -269,7 +269,7 @@ An empirical density plot of the estimates for the fixed-effects coefficients, @
 #| fig-cap: 'Empirical density plots of bootstrap replications of fixed-effects parameter estimates'
 #| label: fig-bsbetadensity
 begin
-  f1 = Figure(; resolution=(1000, 400))
+  f1 = Figure(; size=(1000, 400))
   CairoMakie.density!(
     Axis(f1[1, 1]; xlabel="Intercept [ms]"), tbl.β1
   )
@@ -301,7 +301,7 @@ hist(
   tbl.ρ1;
   bins=40,
   axis=(; xlabel="Estimated correlation of the random effects"),
-  figure=(; resolution=(500, 500)),
+  figure=(; size=(500, 500)),
 )
 ```
 
@@ -312,7 +312,7 @@ Finally, density plots for the variance components (but on the scale of the stan
 #| fig-cap: 'Empirical density plots of bootstrap replicates of standard deviation estimates'
 #| label: fig-bssigmadensity
 begin
-  f2 = Figure(; resolution=(1000, 300))
+  f2 = Figure(; size=(1000, 300))
   CairoMakie.density!(
     Axis(f2[1, 1]; xlabel="Residual σ"),
     tbl.σ,
@@ -344,7 +344,7 @@ let
     tbl.β1, tbl.β2,
     color=(:blue, 0.20),
     axis=(; xlabel="Intercept", ylabel="Coefficient of days"),
-    figure=(; resolution=(500, 500)),
+    figure=(; size=(500, 500)),
   )
   contour!(kde((tbl.β1, tbl.β2)))
   current_figure()

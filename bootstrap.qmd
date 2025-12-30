@@ -150,7 +150,7 @@ confint(samp; method=:shortest)
 ```{julia}
 draw(
   data(samp.β) * mapping(:β; color=:coefname) * AoG.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 

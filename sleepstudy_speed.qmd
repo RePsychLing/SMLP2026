@@ -95,7 +95,7 @@ The panels are arranged by increasing initial reaction speed starting at the low
 let
   ord = sortperm(first.(within.coef))
   labs = values(only.(keys(gdf)))[ord]       # labels for panels
-  f = clevelandaxes!(Figure(; resolution=(1000, 750)), labs, (2, 9))
+  f = clevelandaxes!(Figure(; size=(1000, 750)), labs, (2, 9))
   for (axs, sdf) in zip(f.content, gdf[ord]) # iterate over the panels and groups
     scatter!(axs, sdf.day, sdf.speed)      # add the points
     coef = simplelinreg(sdf.day, sdf.speed)
@@ -176,7 +176,7 @@ caterpillar(m2)
 #| code-fold: true
 #| fig-cap: "Shrinkage plot of the means of the random effects in model m2"
 #| label: fig-shrinkagem2
-shrinkageplot!(Figure(; resolution=(500, 500)), m2)
+shrinkageplot!(Figure(; size=(500, 500)), m2)
 ```
 
 # References

@@ -117,7 +117,7 @@ To review:
 #| code-fold: true
 #| fig-cap: "ζ versus the value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data."
 #| label: fig-kb07zetabeta
-zetaplot!(Figure(; resolution=(1200, 350)), pr01; ptyp='β')
+zetaplot!(Figure(; size=(1200, 350)), pr01; ptyp='β')
 ```
 
 The lines on these panels are read like normal probability plots, i.e. QQ plots against a standard normal distribution.
@@ -137,7 +137,7 @@ as shown in @fig-kb07abszetabeta, which shows the absolute value of $\zeta$, whi
 #| code-fold: true
 #| fig-cap: "Absolute value of ζ versus value of the coefficient for the fixed-effects parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
 #| label: fig-kb07abszetabeta
-zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='β', absv=true)
+zetaplot!(Figure(; size=(1200, 330)), pr01; ptyp='β', absv=true)
 ```
 
 The 95% confidence intervals are the second horizontal lines from the top in each panel, at 1.96 on the vertical scale.
@@ -146,7 +146,7 @@ The 95% confidence intervals are the second horizontal lines from the top in eac
 #| code-fold: true
 #| fig-cap: "Absolute value of ζ versus value of the coefficient for the variance component parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
 #| label: fig-kb07abszetasigma
-zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='σ', absv=true)
+zetaplot!(Figure(; size=(1200, 330)), pr01; ptyp='σ', absv=true)
 ```
 
 @fig-kb07abszetasigma shows similar confidence intervals on the parameters representing standard deviations as does @fig-kb07abszetatheta for the $\theta$ parameters.
@@ -155,7 +155,7 @@ zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='σ', absv=true)
 #| code-fold: true
 #| fig-cap: "Absolute value of ζ versus parameter value for the θ parameters in a model of response speed for the kb07 data.  The horizontal lines are confidence intervals with nominal 50%, 80%, 90%, 95% and 99% confidence."
 #| label: fig-kb07abszetatheta
-zetaplot!(Figure(; resolution=(1200, 330)), pr01; ptyp='θ', absv=true)
+zetaplot!(Figure(; size=(1200, 330)), pr01; ptyp='θ', absv=true)
 ```
 
 # Comparisons with the parametric bootstrap
@@ -192,7 +192,7 @@ The profile-$\zeta$ function can be transformed to an equivalent density functio
 #| code-fold: true
 #| fig-cap: "Density functions of the marginal distribution of the estimators of variance component parameters in a model of response speed in the kb07 data."
 #| label: fig-kb07densigma
-profiledensity!(Figure(; resolution=(1200, 300)), pr01; share_y_scale=false)
+profiledensity!(Figure(; size=(1200, 300)), pr01; share_y_scale=false)
 ```
 
 Alternatively we can see the skewness in the plots of $\zeta$
@@ -201,7 +201,7 @@ Alternatively we can see the skewness in the plots of $\zeta$
 #| code-fold: true
 #| label: fig-kb07zetasigma
 #| fig-cap: "Plot of ζ scores for the variance component parameters in a model of response speed for the kb07 data"
-zetaplot!(Figure(; resolution=(1100, 330)), pr01; ptyp='σ')
+zetaplot!(Figure(; size=(1100, 330)), pr01; ptyp='σ')
 ```
 
 The skewness is less obvious in @fig-kb07bskdesigma because of the stochastic nature of the bootstrap sample and the kernel density estimators.
