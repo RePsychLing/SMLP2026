@@ -34,6 +34,7 @@ We will use the latest stable release of Julia. We recommend using [Juliaup](htt
 
 There are resources available online for new Julia users and several specialize in Julia for R users:
 
+- [Introduction to Julia for R users](https://nrennie.rbind.io/blog/introduction-julia-r-users/)
 - [Using Julia as a R user](https://stateofther.github.io/finistR2024/plotting_with_julia-1.html)
 - [Julia: Noteworthy differences from R](https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-differences-from-R)
 - [PumasAI: Introduction to Julia](https://tutorials.pumas.ai/html/LearningPaths/01-LP/01-Module/mod1-julia_intro.html)
