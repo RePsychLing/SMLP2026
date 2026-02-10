@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2025-12-17">
+<meta name="dcterms.date" content="2025-12-26">
 
 <title>RePsychLing Masson, Rabe, &amp; Kliegl, 2017) with Julia: Specification and selection – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -71,18 +71,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./largescaledesigned.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c14437fb6b91143e7001f9d38c9f7e9f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-733ba71642a15eef7a739ba86ed356fd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-c14437fb6b91143e7001f9d38c9f7e9f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ce07e61083fc25b73dbfbd85fa521c82.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a294f41b3fbff9a01cdae2b25e346e90.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-ce07e61083fc25b73dbfbd85fa521c82.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -586,7 +587,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-12-17</p>
+      <p class="date">2025-12-26</p>
     </div>
   </div>
   
@@ -602,7 +603,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="1"><span class="header-section-number">1</span> Setup</h1>
 <p>Packages we (might) use.</p>
 <div id="2" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span>
@@ -610,17 +611,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span>: mean, std</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>false</code></pre>
 </div>
 </div>
 <div id="4" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="op">:</span>mrk17_exp1))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="op">:</span>mrk17_exp1))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(dat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>9×7 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small">
 <thead>
 <tr class="columnLabelRow header">
 <th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
@@ -848,16 +849,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>lagQlty</code> and <code>lagTrgt</code> refer to experimental conditions in the last trial.</p>
 <p>Corresponding indicator variables (-1/+1):</p>
 <div id="6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cells <span class="op">=</span> <span class="fu">combine</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cells <span class="op">=</span> <span class="fu">combine</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(dat, [<span class="op">:</span>F, <span class="op">:</span>P, <span class="op">:</span>Q, <span class="op">:</span>lQ, <span class="op">:</span>lT]),</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  nrow <span class="op">=&gt;</span> <span class="op">:</span>n,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>rt <span class="op">=&gt;</span> mean <span class="op">=&gt;</span> <span class="op">:</span>rt_m,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>rt <span class="op">=&gt;</span> std <span class="op">=&gt;</span> <span class="op">:</span>rt_sd</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>cells</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>cells</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>32×8 DataFrame</span></div><div style="float: right; font-style: italic;"><span>7 rows omitted</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small">
 <thead>
 <tr class="columnLabelRow header">
 <th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
@@ -1182,7 +1183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-fit" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">4.1</span> Model fit</h2>
 <div id="8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="op">=</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Dict</span>( <span class="op">:</span>F <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; levels<span class="op">=</span>[<span class="st">"LF"</span>, <span class="st">"HF"</span>]) ,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="op">:</span>P <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; levels<span class="op">=</span>[<span class="st">"unr"</span>, <span class="st">"rel"</span>]),</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="op">:</span>Q <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; levels<span class="op">=</span>[<span class="st">"deg"</span>, <span class="st">"clr"</span>]),</span>
@@ -1197,26 +1198,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320197</td>
-<td style="text-align: right;">0.05658591</td>
+<td style="text-align: right;">0.00320188</td>
+<td style="text-align: right;">0.05658516</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1226,8 +1227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00012890</td>
-<td style="text-align: right;">0.01135339</td>
+<td style="text-align: right;">0.00012875</td>
+<td style="text-align: right;">0.01134682</td>
 <td style="text-align: right;">+0.05</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1237,8 +1238,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00016010</td>
-<td style="text-align: right;">0.01265320</td>
+<td style="text-align: right;">0.00015998</td>
+<td style="text-align: right;">0.01264834</td>
 <td style="text-align: right;">+0.36</td>
 <td style="text-align: right;">+0.38</td>
 <td style="text-align: right;"></td>
@@ -1248,9 +1249,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00003528</td>
-<td style="text-align: right;">0.00593999</td>
-<td style="text-align: right;">+0.37</td>
+<td style="text-align: right;">0.00003481</td>
+<td style="text-align: right;">0.00590013</td>
+<td style="text-align: right;">+0.38</td>
 <td style="text-align: right;">+0.03</td>
 <td style="text-align: right;">+0.03</td>
 <td style="text-align: right;"></td>
@@ -1259,8 +1260,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00015722</td>
-<td style="text-align: right;">0.01253868</td>
+<td style="text-align: right;">0.00015737</td>
+<td style="text-align: right;">0.01254466</td>
 <td style="text-align: right;">-0.11</td>
 <td style="text-align: right;">-0.87</td>
 <td style="text-align: right;">-0.01</td>
@@ -1270,8 +1271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03062637</td>
-<td style="text-align: right;">0.17500392</td>
+<td style="text-align: right;">0.03061307</td>
+<td style="text-align: right;">0.17496591</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1281,8 +1282,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">F: HF</td>
-<td style="text-align: right;">0.00004632</td>
-<td style="text-align: right;">0.00680610</td>
+<td style="text-align: right;">0.00004640</td>
+<td style="text-align: right;">0.00681152</td>
 <td style="text-align: right;">+0.35</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1292,8 +1293,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00012558</td>
-<td style="text-align: right;">0.01120617</td>
+<td style="text-align: right;">0.00012546</td>
+<td style="text-align: right;">0.01120094</td>
 <td style="text-align: right;">+0.35</td>
 <td style="text-align: right;">+0.89</td>
 <td style="text-align: right;"></td>
@@ -1303,8 +1304,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00079013</td>
-<td style="text-align: right;">0.02810932</td>
+<td style="text-align: right;">0.00078993</td>
+<td style="text-align: right;">0.02810564</td>
 <td style="text-align: right;">+0.41</td>
 <td style="text-align: right;">+0.43</td>
 <td style="text-align: right;">+0.74</td>
@@ -1314,19 +1315,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00011717</td>
-<td style="text-align: right;">0.01082471</td>
+<td style="text-align: right;">0.00011722</td>
+<td style="text-align: right;">0.01082688</td>
 <td style="text-align: right;">+0.06</td>
 <td style="text-align: right;">+0.13</td>
-<td style="text-align: right;">+0.19</td>
+<td style="text-align: right;">+0.18</td>
 <td style="text-align: right;">+0.57</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00104659</td>
-<td style="text-align: right;">0.03235111</td>
+<td style="text-align: right;">0.00104599</td>
+<td style="text-align: right;">0.03234177</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">-0.06</td>
 <td style="text-align: right;">-0.04</td>
@@ -1336,8 +1337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08569796</td>
-<td style="text-align: right;">0.29274214</td>
+<td style="text-align: right;">0.08569900</td>
+<td style="text-align: right;">0.29274391</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1349,30 +1350,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="10" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>true</code></pre>
 </div>
 </div>
 <div id="12" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">PCA</span>(m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">PCA</span>(m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>(item = 
 Principal components based on correlation matrix
  (Intercept)   1.0     .      .      .      .
  P: rel        0.05   1.0     .      .      .
  Q: clr        0.36   0.38   1.0     .      .
- lQ: clr       0.37   0.03   0.03   1.0     .
+ lQ: clr       0.38   0.03   0.03   1.0     .
  lT: WD       -0.11  -0.87  -0.01  -0.35   1.0
 
 Normalized cumulative variances:
-[0.4221, 0.686, 0.9051, 1.0, 1.0]
+[0.4221, 0.6866, 0.9056, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5
  (Intercept)  -0.3   -0.67   0.02  -0.67   0.07
- P: rel       -0.6    0.38   0.22  -0.05   0.67
- Q: clr       -0.31  -0.34   0.7    0.47  -0.28
+ P: rel       -0.6    0.38   0.21  -0.05   0.67
+ Q: clr       -0.31  -0.34   0.7    0.46  -0.28
  lQ: clr      -0.31  -0.41  -0.62   0.55   0.2
  lT: WD        0.6   -0.34   0.27   0.15   0.66, subj = 
 Principal components based on correlation matrix
@@ -1380,16 +1381,16 @@ Principal components based on correlation matrix
  F: HF         0.35   1.0     .      .      .     .
  P: rel        0.35   0.89   1.0     .      .     .
  Q: clr        0.41   0.43   0.74   1.0     .     .
- lQ: clr       0.06   0.13   0.19   0.57   1.0    .
+ lQ: clr       0.06   0.13   0.18   0.57   1.0    .
  lT: WD        0.26  -0.06  -0.04   0.37   0.5   1.0
 
 Normalized cumulative variances:
-[0.4751, 0.733, 0.8783, 0.9457, 0.9999, 1.0]
+[0.475, 0.733, 0.8783, 0.9457, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5    PC6
  (Intercept)  -0.34   0.03   0.83   0.29  -0.31  -0.08
- F: HF        -0.45   0.42  -0.1   -0.51  -0.35   0.48
+ F: HF        -0.45   0.42  -0.1   -0.51  -0.36   0.48
  P: rel       -0.52   0.35  -0.17  -0.06   0.25  -0.72
  Q: clr       -0.52  -0.15  -0.12   0.44   0.52   0.47
  lQ: clr      -0.31  -0.52  -0.43   0.22  -0.61  -0.16
@@ -1403,27 +1404,27 @@ Component loadings
 <h2 data-number="4.2" class="anchored" data-anchor-id="vcs-and-cps"><span class="header-section-number">4.2</span> VCs and CPs</h2>
 <p>We can also look separately at item- and subj-related VCs and CPs for subjects and items.</p>
 <div id="14" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(m_cpx.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(m_cpx.λ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>5×5 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
-  0.193296      ⋅             ⋅           ⋅          ⋅ 
-  0.0020979    0.0387261      ⋅           ⋅          ⋅ 
-  0.0156057    0.0156812     0.0371321    ⋅          ⋅ 
-  0.00756068   0.000110154  -0.0024608   0.0186678   ⋅ 
- -0.00485665  -0.0369802     0.01735    -0.0119339  0.0</code></pre>
+  0.193292      ⋅             ⋅            ⋅          ⋅ 
+  0.00210297   0.0387031      ⋅            ⋅          ⋅ 
+  0.0156122    0.0156204     0.0371353     ⋅          ⋅ 
+  0.00756357   0.000119917  -0.00251744   0.0185108   ⋅ 
+ -0.00485048  -0.0370793     0.0173409   -0.0117126  0.0</code></pre>
 </div>
 </div>
 <p>VP is zero for last diagonal entry; not supported by data.</p>
 <div id="16" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">last</span>(m_cpx.λ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">last</span>(m_cpx.λ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>6×6 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
- 0.597809      ⋅           ⋅           ⋅           ⋅          ⋅ 
- 0.00815402   0.0217727    ⋅           ⋅           ⋅          ⋅ 
- 0.0134843    0.0312673   0.0174896    ⋅           ⋅          ⋅ 
- 0.039272     0.0296599   0.0714437   0.0411557    ⋅          ⋅ 
- 0.00204162   0.00439008  0.00579478  0.0342807   0.0116236   ⋅ 
- 0.0283568   -0.0180685   0.00121043  0.0795929  -0.0582267  0.0368125</code></pre>
+ 0.597676      ⋅           ⋅            ⋅           ⋅          ⋅ 
+ 0.00815845   0.0217907    ⋅            ⋅           ⋅          ⋅ 
+ 0.0134813    0.031265    0.0174566     ⋅           ⋅          ⋅ 
+ 0.0392816    0.0297303   0.0712947    0.041323     ⋅          ⋅ 
+ 0.00203827   0.00441267  0.00549068   0.0346559   0.010631    ⋅ 
+ 0.0283584   -0.0179546   0.000622605  0.0801719  -0.0681255  0.0031337</code></pre>
 </div>
 </div>
 <p>VP is zero for fourth diagonal entry; not supported by data.</p>
@@ -1435,7 +1436,7 @@ Component loadings
 <h2 data-number="5.1" class="anchored" data-anchor-id="model-fit-1"><span class="header-section-number">5.1</span> Model fit</h2>
 <p>We take out correlation parameters.</p>
 <div id="18" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m_zcp <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>m_zcp <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span><span class="op">+</span>F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>  <span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT <span class="op">|</span> item);</span>
@@ -1444,7 +1445,7 @@ Component loadings
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp)</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m_zcp)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">PCA</span>(m_zcp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">PCA</span>(m_zcp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>(item = 
 Principal components based on correlation matrix
@@ -1460,10 +1461,10 @@ Normalized cumulative variances:
 Component loadings
                PC1   PC2   PC3   PC4   PC5
  (Intercept)  1.0   0.0   0.0   0.0   0.0
- P: rel       0.0   1.0   0.0   0.0   0.0
- Q: clr       0.0   0.0   1.0   0.0   0.0
- lQ: clr      0.0   0.0   0.0   1.0   0.0
- lT: WD       0.0   0.0   0.0   0.0   1.0, subj = 
+ P: rel       0.0   0.0   0.0   1.0   0.0
+ Q: clr       0.0   1.0   0.0   0.0   0.0
+ lQ: clr      0.0   0.0   0.0   0.0   1.0
+ lT: WD       0.0   0.0   1.0   0.0   0.0, subj = 
 Principal components based on correlation matrix
  (Intercept)  1.0  .    .    .    .    .
  F: HF        0.0  1.0  .    .    .    .
@@ -1486,17 +1487,17 @@ Component loadings
 </div>
 </div>
 <div id="20" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp, m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">model-dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + F + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lQ + lT | item)</td>
@@ -1520,31 +1521,31 @@ Component loadings
 </div>
 <p>Looks ok. It might be a good idea to prune the LMM by removing small VCs.</p>
 <div id="22" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m_zcp2 <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m_zcp2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>  <span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>  <span class="op">+</span>P<span class="op">+</span>Q   <span class="op">+</span>lT <span class="op">|</span> item);</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320202</td>
-<td style="text-align: right;">0.05658637</td>
+<td style="text-align: right;">0.00320203</td>
+<td style="text-align: right;">0.05658648</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1554,7 +1555,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
 <td style="text-align: right;">0.00007138</td>
-<td style="text-align: right;">0.00844840</td>
+<td style="text-align: right;">0.00844841</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1563,8 +1564,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00014720</td>
-<td style="text-align: right;">0.01213251</td>
+<td style="text-align: right;">0.00014719</td>
+<td style="text-align: right;">0.01213220</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -1573,8 +1574,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00011708</td>
-<td style="text-align: right;">0.01082036</td>
+<td style="text-align: right;">0.00011707</td>
+<td style="text-align: right;">0.01082006</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1583,8 +1584,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061084</td>
-<td style="text-align: right;">0.17495954</td>
+<td style="text-align: right;">0.03061051</td>
+<td style="text-align: right;">0.17495860</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1594,7 +1595,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
 <td style="text-align: right;">0.00009921</td>
-<td style="text-align: right;">0.00996047</td>
+<td style="text-align: right;">0.00996049</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1604,7 +1605,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.00077305</td>
-<td style="text-align: right;">0.02780383</td>
+<td style="text-align: right;">0.02780380</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -1614,7 +1615,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
 <td style="text-align: right;">0.00011890</td>
-<td style="text-align: right;">0.01090422</td>
+<td style="text-align: right;">0.01090430</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1624,7 +1625,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.00106148</td>
-<td style="text-align: right;">0.03258037</td>
+<td style="text-align: right;">0.03258035</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -1633,8 +1634,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08591586</td>
-<td style="text-align: right;">0.29311407</td>
+<td style="text-align: right;">0.08591587</td>
+<td style="text-align: right;">0.29311409</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1645,17 +1646,17 @@ Component loadings
 </div>
 </div>
 <div id="24" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp2, m_zcp, m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">model-dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + P + Q + lQ + lT | subj) + zerocorr(1 + P + Q + lT | item)</td>
@@ -1687,36 +1688,36 @@ Component loadings
 </div>
 <p>We can perhaps remove some more.</p>
 <div id="26" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>m_zcp3 <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>m_zcp3 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>    <span class="op">+</span>Q   <span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032049</td>
-<td style="text-align: right;">0.0566118</td>
+<td style="text-align: right;">0.0566119</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306166</td>
-<td style="text-align: right;">0.1749760</td>
+<td style="text-align: right;">0.0306168</td>
+<td style="text-align: right;">0.1749765</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1724,7 +1725,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007629</td>
-<td style="text-align: right;">0.0276199</td>
+<td style="text-align: right;">0.0276198</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1749,17 +1750,17 @@ Component loadings
 </div>
 </div>
 <div id="28" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">model-dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + Q + lT | subj) + (1 | item)</td>
@@ -1799,41 +1800,41 @@ Component loadings
 </div>
 <p>And another iteration.</p>
 <div id="30" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m_zcp4 <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m_zcp4 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">zerocorr</span>(<span class="fl">1</span>         <span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032067</td>
-<td style="text-align: right;">0.0566278</td>
+<td style="text-align: right;">0.0566279</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306610</td>
-<td style="text-align: right;">0.1751028</td>
+<td style="text-align: right;">0.0306608</td>
+<td style="text-align: right;">0.1751023</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.0010896</td>
-<td style="text-align: right;">0.0330098</td>
+<td style="text-align: right;">0.0010897</td>
+<td style="text-align: right;">0.0330099</td>
 <td style="text-align: right;">.</td>
 </tr>
 <tr class="odd">
@@ -1848,17 +1849,17 @@ Component loadings
 </div>
 </div>
 <div id="32" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp4, m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp4, m_zcp3, m_zcp2, m_zcp, m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">model-dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + lT | subj) + (1 | item)</td>
@@ -1906,22 +1907,22 @@ Component loadings
 </div>
 <p>Too much removed. Stay with <code>m_zcp3</code>, but extend with CPs.</p>
 <div id="34" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
@@ -1934,8 +1935,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306214</td>
-<td style="text-align: right;">0.1749898</td>
+<td style="text-align: right;">0.0306221</td>
+<td style="text-align: right;">0.1749917</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1943,7 +1944,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276156</td>
+<td style="text-align: right;">0.0276154</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1951,7 +1952,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325896</td>
+<td style="text-align: right;">0.0325895</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -1970,22 +1971,22 @@ Component loadings
 <section id="post-hoc-lmm" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="post-hoc-lmm"><span class="header-section-number">5.1.1</span> post-hoc LMM</h3>
 <div id="36" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>m_prm <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="op">+</span>F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
@@ -1998,8 +1999,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306214</td>
-<td style="text-align: right;">0.1749898</td>
+<td style="text-align: right;">0.0306221</td>
+<td style="text-align: right;">0.1749917</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2007,7 +2008,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276156</td>
+<td style="text-align: right;">0.0276154</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2015,7 +2016,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325896</td>
+<td style="text-align: right;">0.0325895</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -2036,17 +2037,17 @@ Component loadings
 <section id="vcs-and-cps-1" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="vcs-and-cps-1"><span class="header-section-number">5.2</span> VCs and CPs</h2>
 <div id="38" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">model-dof</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">model-dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">:(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + zerocorr(1 + Q + lT | subj) + (1 | item)</td>
@@ -2070,7 +2071,7 @@ Component loadings
 <td style="text-align: right;">-7148</td>
 <td style="text-align: right;">33</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: left;">0.2904</td>
+<td style="text-align: left;">0.2903</td>
 </tr>
 </tbody>
 </table>
@@ -2078,7 +2079,7 @@ Component loadings
 </div>
 <p>The LRT favors the complex LMM, but not that χ² &lt; 2*(χ²-dof); AIC and BIC suggest against selection.</p>
 <div id="40" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gof_summary <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gof_summary <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  nms <span class="op">=</span> [<span class="op">:</span>m_zcp3, <span class="op">:</span>m_prm, <span class="op">:</span>m_cpx]</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  mods <span class="op">=</span> <span class="fu">eval</span>.(nms)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  lrt <span class="op">=</span> MixedModels.<span class="fu">likelihoodratiotest</span>(m_zcp3, m_prm, m_cpx)</span>
@@ -2094,10 +2095,10 @@ Component loadings
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># StatsBase.PValue includes some pretty-printing methods</span></span>
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., StatsBase.<span class="fu">PValue</span>.(<span class="fu">collect</span>(lrt.lrt.pval[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>])))</span>
 <span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>3×9 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small">
 <thead>
 <tr class="columnLabelRow header">
 <th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
@@ -2159,7 +2160,7 @@ Component loadings
 <td style="text-align: right;">7817.0</td>
 <td style="text-align: left;">-33</td>
 <td style="text-align: left;">29</td>
-<td style="text-align: left;">0.2904</td>
+<td style="text-align: left;">0.2903</td>
 </tr>
 </tbody>
 </table>
@@ -2174,23 +2175,23 @@ Component loadings
 <section id="crossed-fixed-effects" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="crossed-fixed-effects"><span class="header-section-number">6.1</span> Crossed fixed effects</h2>
 <div id="42" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_crossed <span class="op">=</span><span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_crossed <span class="op">=</span><span class="kw">let</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> F<span class="op">*</span>P<span class="op">*</span>Q<span class="op">*</span>lQ<span class="op">*</span>lT <span class="op">+</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_prm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: left;" data-quarto-table-cell-role="th">Column</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Variance</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Corr.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th"></td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">item</td>
@@ -2203,8 +2204,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306214</td>
-<td style="text-align: right;">0.1749898</td>
+<td style="text-align: right;">0.0306221</td>
+<td style="text-align: right;">0.1749917</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2212,7 +2213,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.0007626</td>
-<td style="text-align: right;">0.0276156</td>
+<td style="text-align: right;">0.0276154</td>
 <td style="text-align: right;">+0.42</td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2220,7 +2221,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325896</td>
+<td style="text-align: right;">0.0325895</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -2237,7 +2238,7 @@ Component loadings
 </div>
 </div>
 <div id="44" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m_mrk17_crossed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m_mrk17_crossed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood
  :(1000 / rt) ~ 1 + F + P + Q + lQ + lT + F &amp; P + F &amp; Q + P &amp; Q + F &amp; lQ + P &amp; lQ + Q &amp; lQ + F &amp; lT + P &amp; lT + Q &amp; lT + lQ &amp; lT + F &amp; P &amp; Q + F &amp; P &amp; lQ + F &amp; Q &amp; lQ + P &amp; Q &amp; lQ + F &amp; P &amp; lT + F &amp; Q &amp; lT + P &amp; Q &amp; lT + F &amp; lQ &amp; lT + P &amp; lQ &amp; lT + Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ + F &amp; P &amp; Q &amp; lT + F &amp; P &amp; lQ &amp; lT + F &amp; Q &amp; lQ &amp; lT + P &amp; Q &amp; lQ &amp; lT + F &amp; P &amp; Q &amp; lQ &amp; lT + (1 + Q | subj) + zerocorr(0 + lT | subj) + zerocorr(1 + P | item)
@@ -2246,50 +2247,50 @@ Component loadings
 
 Variance components:
             Column    Variance   Std.Dev.    Corr.
-item     (Intercept)  0.00320567 0.05661866
-         P: rel       0.00006693 0.00818081   .  
-subj     (Intercept)  0.03061757 0.17497878
-         Q: clr       0.00076248 0.02761311 +0.42
-         lT: WD       0.00106208 0.03258956   .     .  
-Residual              0.08640801 0.29395239
+item     (Intercept)  0.00320566 0.05661851
+         P: rel       0.00006694 0.00818147   .  
+subj     (Intercept)  0.03061725 0.17497785
+         Q: clr       0.00076248 0.02761307 +0.42
+         lT: WD       0.00106211 0.03259008   .     .  
+Residual              0.08640800 0.29395237
  Number of obs: 16409; levels of grouping factors: 240, 73
 
   Fixed-effects parameters:
 ─────────────────────────────────────────────────────────────────────────────────────
                                                    Coef.  Std. Error      z  Pr(&gt;|z|)
 ─────────────────────────────────────────────────────────────────────────────────────
-(Intercept)                                  1.63743      0.0209303   78.23    &lt;1e-99
-F: HF                                        0.019366     0.00431955   4.48    &lt;1e-05
-P: rel                                       0.0188081    0.00236113   7.97    &lt;1e-14
-Q: clr                                       0.042901     0.00396828  10.81    &lt;1e-26
+(Intercept)                                  1.63743      0.0209302   78.23    &lt;1e-99
+F: HF                                        0.019366     0.00431954   4.48    &lt;1e-05
+P: rel                                       0.0188081    0.00236114   7.97    &lt;1e-14
+Q: clr                                       0.042901     0.00396827  10.81    &lt;1e-26
 lQ: clr                                      0.00174653   0.00231531   0.75    0.4506
-lT: WD                                       0.00836023   0.0044618    1.87    0.0610
-F: HF &amp; P: rel                              -0.00711249   0.00236171  -3.01    0.0026
+lT: WD                                       0.00836023   0.00446186   1.87    0.0610
+F: HF &amp; P: rel                              -0.00711249   0.00236172  -3.01    0.0026
 F: HF &amp; Q: clr                              -0.00141259   0.00230067  -0.61    0.5392
-P: rel &amp; Q: clr                              0.00134142   0.00230239   0.58    0.5601
+P: rel &amp; Q: clr                              0.00134142   0.00230239   0.58    0.5602
 F: HF &amp; lQ: clr                             -0.00105227   0.00232139  -0.45    0.6503
 P: rel &amp; lQ: clr                            -0.00240742   0.00232056  -1.04    0.2995
 Q: clr &amp; lQ: clr                             0.00759804   0.00231922   3.28    0.0011
-F: HF &amp; lT: WD                               0.000536556  0.00231365   0.23    0.8166
-P: rel &amp; lT: WD                              2.93226e-5   0.00231751   0.01    0.9899
+F: HF &amp; lT: WD                               0.000536555  0.00231365   0.23    0.8166
+P: rel &amp; lT: WD                              2.93213e-5   0.00231751   0.01    0.9899
 Q: clr &amp; lT: WD                              0.00185532   0.00231773   0.80    0.4234
-lQ: clr &amp; lT: WD                            -0.00524632   0.00231608  -2.27    0.0235
-F: HF &amp; P: rel &amp; Q: clr                     -0.000362238  0.00230272  -0.16    0.8750
+lQ: clr &amp; lT: WD                            -0.00524633   0.00231608  -2.27    0.0235
+F: HF &amp; P: rel &amp; Q: clr                     -0.000362239  0.00230272  -0.16    0.8750
 F: HF &amp; P: rel &amp; lQ: clr                    -0.00117754   0.00232025  -0.51    0.6118
 F: HF &amp; Q: clr &amp; lQ: clr                     0.00273699   0.00232283   1.18    0.2387
-P: rel &amp; Q: clr &amp; lQ: clr                   -0.00393229   0.0023222   -1.69    0.0904
+P: rel &amp; Q: clr &amp; lQ: clr                   -0.0039323    0.0023222   -1.69    0.0904
 F: HF &amp; P: rel &amp; lT: WD                      0.0019864    0.00231879   0.86    0.3916
-F: HF &amp; Q: clr &amp; lT: WD                     -0.00112586   0.00231657  -0.49    0.6270
-P: rel &amp; Q: clr &amp; lT: WD                     0.000261826  0.00231924   0.11    0.9101
+F: HF &amp; Q: clr &amp; lT: WD                     -0.00112587   0.00231657  -0.49    0.6270
+P: rel &amp; Q: clr &amp; lT: WD                     0.000261828  0.00231924   0.11    0.9101
 F: HF &amp; lQ: clr &amp; lT: WD                     0.00150677   0.00232198   0.65    0.5164
-P: rel &amp; lQ: clr &amp; lT: WD                    8.67965e-5   0.00232177   0.04    0.9702
+P: rel &amp; lQ: clr &amp; lT: WD                    8.6797e-5    0.00232177   0.04    0.9702
 Q: clr &amp; lQ: clr &amp; lT: WD                    0.00916751   0.00231827   3.95    &lt;1e-04
 F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr           -0.00234443   0.00231978  -1.01    0.3122
-F: HF &amp; P: rel &amp; Q: clr &amp; lT: WD            -0.00148721   0.00232057  -0.64    0.5216
+F: HF &amp; P: rel &amp; Q: clr &amp; lT: WD            -0.00148722   0.00232057  -0.64    0.5216
 F: HF &amp; P: rel &amp; lQ: clr &amp; lT: WD            0.00308764   0.00232145   1.33    0.1835
 F: HF &amp; Q: clr &amp; lQ: clr &amp; lT: WD            0.00393598   0.00232128   1.70    0.0900
 P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD           0.00202623   0.00232125   0.87    0.3827
-F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.00231838   0.62    0.5320
+F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144887   0.00231838   0.62    0.5320
 ─────────────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
 </div>
@@ -2298,22 +2299,22 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <section id="nested-fixed-effects" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="nested-fixed-effects"><span class="header-section-number">6.2</span> Nested fixed effects</h2>
 <div id="46" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Q<span class="op">/</span>(F<span class="op">/</span>P) <span class="op">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Est.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">SE</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">z</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">p</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_item</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_item</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
@@ -2426,22 +2427,22 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <h2 data-number="7.1" class="anchored" data-anchor-id="nesting-within-products-of-factors"><span class="header-section-number">7.1</span> Nesting within products of factors</h2>
 <p>Include parenthesis</p>
 <div id="48" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m_mrk17_nested <span class="op">=</span><span class="kw">let</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>   form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Q<span class="op">/</span>(F<span class="op">/</span>P) <span class="op">+</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        (<span class="fl">1</span><span class="op">+</span>Q <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">0</span><span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> P <span class="op">|</span> item) ;</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Est.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">SE</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">z</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">p</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_item</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_item</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
@@ -2550,7 +2551,7 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <section id="selection-in-fixed-effects" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="selection-in-fixed-effects"><span class="header-section-number">7.2</span> Selection in fixed effects</h2>
 <div id="50" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RegressionFormulae</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RegressionFormulae</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># m_prm_5 is equivalent to m_prm</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>m_prm_5 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span><span class="fu">+</span>(F<span class="op">+</span>P<span class="op">+</span>Q<span class="op">+</span>lQ<span class="op">+</span>lT)<span class="op">^</span><span class="fl">5</span> <span class="op">+</span> (<span class="fl">1</span><span class="op">+</span>Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
@@ -2594,10 +2595,10 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># StatsBase.PValue includes some pretty-printing methods</span></span>
 <span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>    pvalue<span class="op">=</span><span class="fu">vcat</span>(<span class="op">:</span>., StatsBase.<span class="fu">PValue</span>.(<span class="fu">collect</span>(lrt.lrt.pval[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>])))</span>
 <span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div><div style="float: left;"><span>5×9 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="data-frame caption-top table table-sm table-striped small">
 <thead>
 <tr class="columnLabelRow header">
 <th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
@@ -2696,22 +2697,22 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <h2 data-number="7.3" class="anchored" data-anchor-id="posthoc-lmm"><span class="header-section-number">7.3</span> Posthoc LMM</h2>
 <p>We are using only three factors for the illustruation.</p>
 <div id="52" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>m_prm3 <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>m_prm3 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> lT<span class="op">*</span>lQ<span class="op">*</span>Q <span class="op">+</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Est.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">SE</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">z</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">p</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_item</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_item</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
@@ -2800,22 +2801,22 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 </div>
 <p>The <code>lT &amp; lQ &amp; Q</code> interactions is significant. Let’s follow it up with a post-hoc LMM, that is looking at the <code>lQ &amp; Q</code> interaction in the two levels of whether the last word was a target or not.</p>
 <div id="54" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>m_prm3_posthoc <span class="op">=</span> <span class="kw">let</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>m_prm3_posthoc <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    form <span class="op">=</span> <span class="pp">@formula</span> (<span class="fl">1000</span><span class="op">/</span>rt) <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> lT<span class="op">/</span>(lQ<span class="op">*</span>Q) <span class="op">+</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                               (<span class="fl">1</span><span class="op">+</span>    Q<span class="op">+</span>lT <span class="op">|</span> subj) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> item);</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(MixedModel, form, dat; contrasts, progress)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="caption-top table table-sm table-striped small">
 <tbody>
 <tr class="odd">
-<td style="text-align: left;" data-quarto-table-cell-role="th"></td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">Est.</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">SE</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">z</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">p</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_item</td>
-<td style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</td>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_item</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_subj</th>
 </tr>
 <tr class="even">
 <td style="text-align: left;">(Intercept)</td>
@@ -2914,18 +2915,18 @@ F: HF &amp; P: rel &amp; Q: clr &amp; lQ: clr &amp; lT: WD   0.00144888   0.0023
 <p>The source of the interaction are trials where the last trial was a word target; there is no evidence for the interaction when the last trial was a nonword target.</p>
 <p>The original and post-hoc LMM have the same goodness of fit.</p>
 <div id="56" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>[<span class="fu">objective</span>(m_prm3), <span class="fu">objective</span>(m_prm3_posthoc)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>[<span class="fu">objective</span>(m_prm3), <span class="fu">objective</span>(m_prm3_posthoc)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2-element Vector{Float64}:
- 7291.145437442885
- 7291.14543744171</code></pre>
+ 7291.145437469002
+ 7291.145437442687</code></pre>
 </div>
 </div>
 </section>
 <section id="info" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="info"><span class="header-section-number">7.4</span> Info</h2>
 <div id="58" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">versioninfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Julia Version 1.12.3
 Commit 966d0af0fdf (2025-12-15 11:20 UTC)
@@ -2933,19 +2934,19 @@ Build Info:
   Official https://julialang.org release
 Platform Info:
   OS: Linux (x86_64-linux-gnu)
-  CPU: 16 × Intel(R) Xeon(R) E-2288G CPU @ 3.70GHz
+  CPU: 8 × 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
   WORD_SIZE: 64
-  LLVM: libLLVM-18.1.7 (ORCJIT, skylake)
+  LLVM: libLLVM-18.1.7 (ORCJIT, tigerlake)
   GC: Built with stock GC
-Threads: 16 default, 1 interactive, 16 GC (on 16 virtual cores)
+Threads: 8 default, 1 interactive, 8 GC (on 8 virtual cores)
 Environment:
   JULIA_PROJECT = @.
   JULIA_LOAD_PATH = @:@stdlib</code></pre>
 </div>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/60d6e27
-">60d6e27
-</a> using Quarto 1.7.33.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/f875caa
+">f875caa
+</a> using Quarto 1.8.26.</em></p>
 
 
 </section>
@@ -3016,13 +3017,14 @@ Environment:
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
