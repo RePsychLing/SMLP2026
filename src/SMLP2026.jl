@@ -87,8 +87,9 @@ function fit_or_restore!(model::MixedModel, fname;
                 saveoptsum(f, model)
                 return nothing
             end
-        catch
-            error("Something went wrong in saving the model cache")
+        catch ex
+            @error "Something went wrong in saving the model cache"
+            rethrow(ex)
         finally
             close(zip)
         end
@@ -97,8 +98,9 @@ function fit_or_restore!(model::MixedModel, fname;
         zip = ZipFile.Reader(fname)
         try
             restoreoptsum!(model, only(zip.files); restore_kwargs...)
-        catch
-            error("Something went wrong in reading the model cache")
+        catch ex
+            @error "Something went wrong in reading the model cache"
+            rethrow(ex)
         finally
             close(zip)
         end
