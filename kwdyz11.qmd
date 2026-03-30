@@ -42,7 +42,7 @@ using Distributions
 using MixedModels
 using MixedModelsMakie
 using Random
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 using StatsBase
 ```
 
@@ -129,12 +129,24 @@ A better alternative to the boxplot is a dotplot. It also displays subjects' con
 # Linear mixed model
 
 ```{julia}
+#| eval: false
 contrasts = Dict(
   :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
 )
 m1 = let
   form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
   fit(MixedModel, form, dat; contrasts)
+end
+```
+
+```{julia}
+#| include: false
+contrasts = Dict(
+  :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
+)
+m1 = let
+  form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
+  fit_or_restore("kwdyz11_m1.json", MixedModel, form, dat; contrasts)
 end
 ```
 

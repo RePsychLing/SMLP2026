@@ -39,7 +39,7 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie   # plots specific to mixed-effects models using Makie
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 ```
 
 # Preprocessing
@@ -108,9 +108,18 @@ end
 # Basic LMM
 
 ```{julia}
+#| eval: false
 m1 = let
   form = @formula speed ~ 1 + day + (1 + day | Subj)
   fit(MixedModel, form, df)
+end
+```
+
+```{julia}
+#| include: false
+m1 = let
+  form = @formula speed ~ 1 + day + (1 + day | Subj)
+  fit_or_restore("sleepstudy_speed_m1.json", MixedModel, form, df)
 end
 ```
 
@@ -125,9 +134,18 @@ The within-subject correlation of the random effects for intercept and slope is 
 The `zerocorr` function applied to a random-effects term estimates one parameter less than LMM `m1`-- the CP is now fixed to zero.
 
 ```{julia}
+#| eval: false
 m2 = let
   form = @formula speed ~ 1 + day + zerocorr(1 + day | Subj)
   fit(MixedModel, form, df)
+end
+```
+
+```{julia}
+#| include: false
+m2 = let
+  form = @formula speed ~ 1 + day + zerocorr(1 + day | Subj)
+  fit_or_restore("sleepstudy_speed_m2.json", MixedModel, form, df)
 end
 ```
 

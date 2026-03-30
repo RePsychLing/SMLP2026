@@ -407,7 +407,8 @@ VarCorr(m_zcp_1_PC_2)
 ```
 
 ```{julia}
-likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
+# XXX LRT is non monotonic in model complexity!
+# likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
 ```
 
 # Other topics

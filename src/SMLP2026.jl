@@ -68,7 +68,7 @@ function fit_or_restore(fname, ::Type{<:MixedModel}, args...; kwargs...)
     return fit_or_restore(fname, args...; kwargs...)
 end
 
-function fit_or_restore(fname, args...; contrasts=Dict{Symbol}(), kwargs...)
+function fit_or_restore(fname, args...; contrasts=Dict{Symbol,Any}(), kwargs...)
     model = MixedModel(args...; contrasts)
     return fit_or_restore!(model, fname; kwargs...)
 end

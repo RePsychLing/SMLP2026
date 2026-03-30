@@ -38,7 +38,7 @@ using DataFrames
 using MixedModels
 using MixedModelsMakie
 using Random
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 
 using AlgebraOfGraphics: AlgebraOfGraphics as AoG
 const progress=false
@@ -77,10 +77,19 @@ The `EffectsCoding` contrast is used with these to create a ±1 encoding.
 We can look at an initial fit of moderate complexity:
 
 ```{julia}
+#| eval: false
 form = @formula(rt_trunc ~ 1 + spkr * prec * load +
                           (1 + spkr + prec + load | subj) +
                           (1 + spkr + prec + load | item))
 m0 = fit(MixedModel, form, kb07; contrasts, progress)
+```
+
+```{julia}
+#| include: false
+form = @formula(rt_trunc ~ 1 + spkr * prec * load +
+                          (1 + spkr + prec + load | subj) +
+                          (1 + spkr + prec + load | item))
+m0 = fit_or_restore("bootstrap_m0.json", MixedModel, form, kb07; contrasts, progress)
 ```
 
 The default display in Quarto uses the [pretty MIME show method](https://juliastats.org/MixedModels.jl/v4.7.1/mime/) for the model and omits the estimated correlations of the random effects.
@@ -95,10 +104,19 @@ None of the two-factor or three-factor interaction terms in the fixed-effects ar
 In the random-effects terms only the scalar random effects and the `prec` random effect for `item` appear to be warranted, leading to the reduced formula
 
 ```{julia}
+#| eval: false
 # formula f4 from https://doi.org/10.33016/nextjournal.100002
 form = @formula(rt_trunc ~ 1 + spkr * prec * load + (1 | subj) + (1 + prec | item))
 
 m1 = fit(MixedModel, form, kb07; contrasts, progress)
+```
+
+```{julia}
+#| include: false
+# formula f4 from https://doi.org/10.33016/nextjournal.100002
+form = @formula(rt_trunc ~ 1 + spkr * prec * load + (1 | subj) + (1 + prec | item))
+
+m1 = fit_or_restore("bootstrap_m1.json", MixedModel, form, kb07; contrasts, progress)
 ```
 
 ```{julia}
@@ -173,8 +191,15 @@ ridgeplot(samp; show_intercept=false)
 Let's consider the classic dysetuff dataset:
 
 ```{julia}
+#| eval: false
 dyestuff = dataset(:dyestuff)
 mdye = fit(MixedModel, @formula(yield ~ 1 + (1 | batch)), dyestuff)
+```
+
+```{julia}
+#| include: false
+dyestuff = dataset(:dyestuff)
+mdye = fit_or_restore("bootstrap_mdye.json", MixedModel, @formula(yield ~ 1 + (1 | batch)), dyestuff)
 ```
 
 
@@ -204,9 +229,18 @@ However, it is not as straightforward to detect singularity in vector-valued ran
 
 For example, if we bootstrap a model fit to the `sleepstudy` data
 ```{julia}
+#| eval: false
 sleepstudy = dataset(:sleepstudy)
 msleep = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)),
              sleepstudy)
+```
+
+```{julia}
+#| include: false
+sleepstudy = dataset(:sleepstudy)
+msleep = fit_or_restore("bootstrap_msleep.json", MixedModel,
+                        @formula(reaction ~ 1 + days + (1 + days | subj)),
+                        sleepstudy)
 ```
 
 ```{julia}

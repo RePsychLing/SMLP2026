@@ -15,7 +15,7 @@ using MixedModels
 using MixedModelsMakie
 using StatsBase
 
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 using Statistics: mean, std
 
 const progress = isinteractive()
@@ -138,7 +138,10 @@ contrasts =
           :lQ =>EffectsCoding(; levels=["deg", "clr"]),
           :lT =>EffectsCoding(; levels=["NW", "WD"])
           );
+```
 
+```{julia}
+#| eval: false
 m_cpx = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                                (1+F+P+Q+lQ+lT | subj) +
@@ -147,6 +150,16 @@ m_cpx = let
 end
 
 VarCorr(m_cpx)
+```
+
+```{julia}
+#| include: false
+m_cpx = let
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                               (1+F+P+Q+lQ+lT | subj) +
+                               (1  +P+Q+lQ+lT | item);
+    fit_or_restore("mrk17_m_cpx.json", MixedModel, form, dat; contrasts, progress)
+end
 ```
 
 ```{julia}
@@ -183,6 +196,7 @@ VP is zero for fourth diagonal entry; not supported by data.
 We take out correlation parameters.
 
 ```{julia}
+#| eval: false
 m_zcp = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1+F+P+Q+lQ+lT | subj) +
@@ -196,12 +210,23 @@ MixedModels.PCA(m_zcp)
 ```
 
 ```{julia}
+#| include: false
+m_zcp = let
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1+F+P+Q+lQ+lT | subj) +
+                       zerocorr(1  +P+Q+lQ+lT | item);
+    fit_or_restore("mrk17_m_zcp.json", MixedModel, form, dat; contrasts, progress)
+end
+```
+
+```{julia}
 MixedModels.likelihoodratiotest(m_zcp, m_cpx)
 ```
 
 Looks ok. It might be a good idea to prune the LMM by removing small VCs.
 
 ```{julia}
+#| eval: false
 m_zcp2 = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1  +P+Q+lQ+lT | subj) +
@@ -212,12 +237,23 @@ VarCorr(m_zcp2)
 ```
 
 ```{julia}
+#| include: false
+m_zcp2 = let
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1  +P+Q+lQ+lT | subj) +
+                       zerocorr(1  +P+Q   +lT | item);
+    fit_or_restore("mrk17_m_zcp2.json", MixedModel, form, dat; contrasts, progress)
+end
+```
+
+```{julia}
 MixedModels.likelihoodratiotest(m_zcp2, m_zcp, m_cpx)
 ```
 
 We can perhaps remove some more.
 
 ```{julia}
+#| eval: false
 m_zcp3 = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1    +Q   +lT | subj) + (1 | item);
@@ -227,12 +263,22 @@ VarCorr(m_zcp3)
 ```
 
 ```{julia}
+#| include: false
+m_zcp3 = let
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1    +Q   +lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_zcp3.json", MixedModel, form, dat; contrasts, progress)
+end
+```
+
+```{julia}
 MixedModels.likelihoodratiotest(m_zcp3, m_zcp2, m_zcp, m_cpx)
 ```
 
 And another iteration.
 
 ```{julia}
+#| eval: false
 m_zcp4 = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1         +lT | subj) + (1 | item);
@@ -242,12 +288,22 @@ VarCorr(m_zcp4)
 ```
 
 ```{julia}
+#| include: false
+m_zcp4 = let
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1         +lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_zcp4.json", MixedModel, form, dat; contrasts, progress)
+end
+```
+
+```{julia}
 MixedModels.likelihoodratiotest(m_zcp4, m_zcp3, m_zcp2, m_zcp, m_cpx)
 ```
 
 Too much removed. Stay with `m_zcp3`, but extend with CPs.
 
 ```{julia}
+#| eval: false
 m_prm = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                                (1+    Q+lT | subj) + (1 | item);
@@ -255,8 +311,20 @@ m_prm = let
 end
 VarCorr(m_prm)
 ```
-### post-hoc LMM
+
 ```{julia}
+#| include: false
+m_prm = let
+    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+                               (1+    Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm.json", MixedModel, form, dat; contrasts, progress)
+end
+```
+
+### post-hoc LMM
+
+```{julia}
+#| eval: false
 m_prm = let
     form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
                                (1+    Q+lT | subj) + (1 | item);
@@ -300,6 +368,7 @@ The LMM is not nested in the previous sequence.
 ## Crossed fixed effects
 
 ```{julia}
+#| eval: false
 m_mrk17_crossed =let
    form = @formula (1000/rt) ~ 1 + F*P*Q*lQ*lT +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
@@ -307,6 +376,15 @@ m_mrk17_crossed =let
 end
 
 VarCorr(m_prm)
+```
+
+```{julia}
+#| include: false
+m_mrk17_crossed =let
+   form = @formula (1000/rt) ~ 1 + F*P*Q*lQ*lT +
+        (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
+    fit_or_restore("mrk17_m_mrk17_crossed.json", MixedModel, form, dat; contrasts, progress)
+end
 ```
 
 ```{julia}
@@ -318,10 +396,20 @@ Finally, a look at the fixed effects. The four-factor interaction reported in Ma
 ## Nested fixed effects
 
 ```{julia}
+#| eval: false
 m_mrk17_nested =let
    form = @formula (1000/rt) ~ 1 + Q/(F/P) +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
     fit(MixedModel, form, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_mrk17_nested =let
+   form = @formula (1000/rt) ~ 1 + Q/(F/P) +
+        (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
+    fit_or_restore("mrk17_m_mrk17_nested.json", MixedModel, form, dat; contrasts, progress)
 end
 ```
 
@@ -332,6 +420,7 @@ end
 Include parenthesis
 
 ```{julia}
+#| eval: false
 m_mrk17_nested =let
    form = @formula (1000/rt) ~ 1 + Q/(F/P) +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
@@ -342,6 +431,7 @@ end
 ## Selection in fixed effects
 
 ```{julia}
+#| eval: false
 using RegressionFormulae
 # m_prm_5 is equivalent to m_prm
 m_prm_5 = let
@@ -389,6 +479,55 @@ gof_summary = let
 end
 ```
 
+```{julia}
+#| include: false
+using RegressionFormulae
+# m_prm_5 is equivalent to m_prm
+m_prm_5 = let
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^5 + (1+Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm_5.json", MixedModel, form, dat; contrasts, progress)
+end
+
+m_prm_4 = let
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^4 + (1+Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm_4.json", MixedModel, form, dat; contrasts, progress)
+end
+
+m_prm_3 = let
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^3 + (1+Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm_3.json", MixedModel, form, dat; contrasts, progress)
+end
+
+m_prm_2 = let
+    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^2 + (1+Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm_2.json", MixedModel, form, dat; contrasts, progress)
+end
+
+m_prm_1 = let
+    form = @formula (1000/rt) ~ 1+ F+P+Q+lQ+lT +   (1+Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm_1.json", MixedModel, form, dat; contrasts, progress)
+end
+
+# Compare the fits
+gof_summary = let
+  nms = [:m_prm_1, :m_prm_2, :m_prm_3, :m_prm_4, :m_prm_5]
+  mods = eval.(nms)
+  lrt = MixedModels.likelihoodratiotest(m_prm_1, m_prm_2, m_prm_3, m_prm_4, m_prm_5)
+  DataFrame(;
+    name = nms,
+    dof=dof.(mods),
+    deviance=deviance.(mods),
+    AIC=aic.(mods),
+    AICc=aicc.(mods),
+    BIC=bic.(mods),
+    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
+    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
+    # StatsBase.PValue includes some pretty-printing methods
+    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
+  )
+end
+```
+
 Depending on the level of precision of your hypothesis. You could stay with main effect (BIC), include 2-factor interactions (AIC; also called _simple_ interactions) or include 3-factor interactions [χ² < 2*(χ²-dof); also called _2-way_ interactions].
 
 ## Posthoc LMM
@@ -396,6 +535,7 @@ Depending on the level of precision of your hypothesis. You could stay with main
 We are using only three factors for the illustruation.
 
 ```{julia}
+#| eval: false
 m_prm3 = let
     form = @formula (1000/rt) ~ 1 + lT*lQ*Q +
                                (1+    Q+lT | subj) + (1 | item);
@@ -403,13 +543,32 @@ m_prm3 = let
 end
 ```
 
+```{julia}
+#| include: false
+m_prm3 = let
+    form = @formula (1000/rt) ~ 1 + lT*lQ*Q +
+                               (1+    Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm3.json", MixedModel, form, dat; contrasts, progress)
+end
+```
+
 The `lT & lQ & Q` interactions is significant. Let's follow it up with a post-hoc LMM, that is looking at the `lQ & Q` interaction in the two levels of whether the last word was a target or not.
 
 ```{julia}
+#| eval: false
 m_prm3_posthoc = let
     form = @formula (1000/rt) ~ 1 + lT/(lQ*Q) +
                                (1+    Q+lT | subj) + (1 | item);
     fit(MixedModel, form, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_prm3_posthoc = let
+    form = @formula (1000/rt) ~ 1 + lT/(lQ*Q) +
+                               (1+    Q+lT | subj) + (1 | item);
+    fit_or_restore("mrk17_m_prm3_posthoc.json", MixedModel, form, dat; contrasts, progress)
 end
 ```
 

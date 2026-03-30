@@ -34,7 +34,7 @@ using MixedModelsMakie # diagnostic plots
 using Random           # random number generators
 using RCall            # call R from Julia
 using MixedModelsMakie: simplelinreg
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 ```
 
 The `sleepstudy` data are one of the datasets available with the `MixedModels` package.  It is re-exported by the `SMLP2026` package's `dataset` function.
@@ -114,10 +114,19 @@ There are some deviations from linearity within the panels but the deviations ar
 # Fitting an initial model
 
 ```{julia}
+#| eval: false
 #| lst-label: m1
 contrasts = Dict{Symbol,Any}(:subj => Grouping())
 m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
   fit(MixedModel, f, sleepstudy; contrasts)
+end
+```
+
+```{julia}
+#| include: false
+contrasts = Dict{Symbol,Any}(:subj => Grouping())
+m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
+  fit_or_restore("sleepstudy_m1.json", MixedModel, f, sleepstudy; contrasts)
 end
 ```
 
@@ -158,9 +167,17 @@ caterpillar(m1; vline_at_zero=true)
 The `zerocorr` function applied to a random-effects term creates uncorrelated vector-valued per-subject random effects.
 
 ```{julia}
+#| eval: false
 #| lst-label: m2
 m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
   fit(MixedModel, f, sleepstudy; contrasts)
+end
+```
+
+```{julia}
+#| include: false
+m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
+  fit_or_restore("sleepstudy_m2.json", MixedModel, f, sleepstudy; contrasts)
 end
 ```
 

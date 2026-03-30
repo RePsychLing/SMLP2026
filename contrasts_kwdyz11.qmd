@@ -15,7 +15,7 @@ using CairoMakie
 using Chain
 using DataFrames
 using MixedModels
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 using StatsBase
 using StatsModels
 
@@ -89,11 +89,22 @@ The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
 The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
+#| eval: false
 m1 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => SeqDiffCoding(; levels),
   )
   fit(MixedModel, form, dat1; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m1 = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => SeqDiffCoding(; levels),
+  )
+  fit_or_restore("contrasts_kwdyz11_m1.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
@@ -112,6 +123,7 @@ Grand Mean is mean of condition means.
 `HypothesisCoding` is the most general option available. We can implement all "canned" contrasts ourselves. The next example reproduces the test statistics from `SeqDiffCoding` - with a minor modification illustrating the flexibility of going beyond the default version.
 
 ```{julia}
+#| eval: false
 m1b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -128,6 +140,24 @@ m1b = let levels = ["val", "sod", "dos", "dod"]
 end
 ```
 
+```{julia}
+#| include: false
+m1b = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        -1  1 0  0
+         0 -1 1  0
+         0  0 1 -1
+      ];
+      levels,
+      labels=["spt", "obj", "grv"],
+    ),
+  )
+  fit_or_restore("contrasts_kwdyz11_m1b.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 The difference to the preprogrammed `SeqDiffCoding` is that for the third contrast we changed the direction of the contrast such that the sign of the effect is positive when the result is in agreement with theoretical expectation, that is we subtract the fourth level from the third, not the third level from the fourth.
 
 ## DummyCoding
@@ -135,9 +165,18 @@ The difference to the preprogrammed `SeqDiffCoding` is that for the third contra
 This contrast corresponds to `contr.treatment()` in R
 
 ```{julia}
+#| eval: false
 m2 = let
   contrasts = Dict(:CTR => DummyCoding(; base="val"))
   fit(MixedModel, form, dat1; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m2 = let
+  contrasts = Dict(:CTR => DummyCoding(; base="val"))
+  fit_or_restore("contrasts_kwdyz11_m2.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
@@ -149,6 +188,7 @@ The contrasts returned by `DummyCoding` may be exactly what we want.
 Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HypothesisCoding` to achieve this outcome.
 
 ```{julia}
+#| eval: false
 m2b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -165,9 +205,28 @@ m2b = let levels = ["val", "sod", "dos", "dod"]
 end
 ```
 
+```{julia}
+#| include: false
+m2b = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        -1 1 0 0
+        -1 0 1 0
+        -1 0 0 1
+      ];
+      levels,
+      labels=levels[2:end],
+    )
+  )
+  fit_or_restore("contrasts_kwdyz11_m2b.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 We can simply move the column with -1s for a different base.
 
 ```{julia}
+#| eval: false
 m2c = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -184,9 +243,28 @@ m2c = let levels = ["val", "sod", "dos", "dod"]
 end
 ```
 
+```{julia}
+#| include: false
+m2c = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+       1 -1  0  0
+       0 -1  1  0
+       0 -1  0  1
+      ];
+      levels,
+      labels=["val", "dos", "dod"],
+    )
+  )
+  fit_or_restore("contrasts_kwdyz11_m2c.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 We can simply relevel the factor with a different base.
 
 ```{julia}
+#| eval: false
 m2d = let levels = ["sod", "val", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -203,29 +281,66 @@ m2d = let levels = ["sod", "val", "dos", "dod"]
 end
 ```
 
+```{julia}
+#| include: false
+m2d = let levels = ["sod", "val", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        -1 1 0 0
+        -1 0 1 0
+        -1 0 0 1
+      ];
+      levels,
+      labels=levels[2:end],
+    )
+  )
+  fit_or_restore("contrasts_kwdyz11_m2d.json", MixedModel, form, dat1; contrasts)
+end
+```
+
 ## EffectsCoding
 
 `EffectsCoding` estimates the difference between the Grand Mean and three of the four levels. The difference of the fourth levels can be computed from the Grand Mean and these three differences. 
 
 ```{julia}
+#| eval: false
 m3 = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(:CTR => EffectsCoding(; levels, base="val"))
   fit(MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
+```{julia}
+#| include: false
+m3 = let levels = ["val", "sod", "dos",  "dod"]
+  contrasts = Dict(:CTR => EffectsCoding(; levels, base="val"))
+  fit_or_restore("contrasts_kwdyz11_m3.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 This contrast corresponds almost to `contr.sum()` in R. The "almost" qualification refers to the fact that `EffectsCoding` uses the first level as default base; `contr.sum()` uses the last factor level.
 
 ```{julia}
+#| eval: false
 m3b = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(:CTR => EffectsCoding(; levels, base = "dod"))
   fit(MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
+```{julia}
+#| include: false
+m3b = let levels = ["val", "sod", "dos",  "dod"]
+  contrasts = Dict(:CTR => EffectsCoding(; levels, base = "dod"))
+  fit_or_restore("contrasts_kwdyz11_m3b.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 How could we achieve the default result with HypothesisCoding?
 
 ```{julia}
+#| eval: false
 m3c = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -242,15 +357,42 @@ m3c = let levels = ["val", "sod", "dos",  "dod"]
 end
 ```
 
+```{julia}
+#| include: false
+m3c = let levels = ["val", "sod", "dos",  "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+         -1/4   3/4 -1/4  -1/4   # b - GM = b - (a+b+c+d)/4 =>  -1/4*a + 3/4*b - 1/4*c - 1/4*d
+         -1/4  -1/4  3/4  -1/4   # c - GM = c - (a+b+c+d)/4 =>  -1/4*a - 1/4*b + 3/4*c - 1/4*d
+         -1/4  -1/4 -1/4   3/4   # d - GM = d - (a+b+c+d)/4 =>  -1/4*a - 1/4*b - 1/4*c + 3/4*d
+      ];
+      levels,
+      labels=levels[2:end],
+    )
+  )
+  fit_or_restore("contrasts_kwdyz11_m3c.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 
 ## HelmertCoding
 
 `HelmertCoding` codes each level as the difference from the average of the lower levels. With the default order of `CTR` levels we get the following test statistics. These contrasts are orthogonal.
 
 ```{julia}
+#| eval: false
 m4 = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(:CTR => HelmertCoding(; levels))
   fit(MixedModel, form, dat1; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m4 = let levels = ["val", "sod", "dos",  "dod"]
+  contrasts = Dict(:CTR => HelmertCoding(; levels))
+  fit_or_restore("contrasts_kwdyz11_m4.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
@@ -263,14 +405,15 @@ end
 We can reconstruct the estimates, but they are scaled by the number of levels involved. With `HypothesisCoding` we can estimate the "unscaled" differences. Also the labeling of the contrasts is not as informative as they could be.
 
 ```{julia}
+#| eval: false
 m4b = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
-          -1    1    0   0 
+          -1    1    0   0
          -1/2 -1/2   1   0
          -1/3 -1/3 -1/3  1
-        
+
       ];
       levels,
       labels= ["2-1", "3-21", "4-321"]
@@ -280,14 +423,42 @@ m4b = let levels = ["val", "sod", "dos",  "dod"]
 end
 ```
 
+```{julia}
+#| include: false
+m4b = let levels = ["val", "sod", "dos",  "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+          -1    1    0   0
+         -1/2 -1/2   1   0
+         -1/3 -1/3 -1/3  1
+
+      ];
+      levels,
+      labels= ["2-1", "3-21", "4-321"]
+    )
+  )
+  fit_or_restore("contrasts_kwdyz11_m4b.json", MixedModel, form, dat1; contrasts, progress)
+end
+```
+
 ## Reverse HelmertCoding
 
 `Reverse HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
 
 ```{julia}
+#| eval: false
 m4c = let levels = reverse(StatsModels.levels(dat1.CTR))
   contrasts = Dict(:CTR => HelmertCoding(; levels))
   fit(MixedModel, form, dat1; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m4c = let levels = reverse(StatsModels.levels(dat1.CTR))
+  contrasts = Dict(:CTR => HelmertCoding(; levels))
+  fit_or_restore("contrasts_kwdyz11_m4c.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
@@ -300,11 +471,12 @@ end
 ... and the unscaled-by-number-of-levels estimates.
 
 ```{julia}
+#| eval: false
 m4d = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
       [
-        0    0     1   -1 
+        0    0     1   -1
         0    1   -1/2 -1/2
         1  -1/3  -1/3 -1/3
       ];
@@ -313,6 +485,24 @@ m4d = let levels = ["val", "sod", "dos",  "dod"]
     )
   )
   fit(MixedModel, form, dat1; contrasts)
+end
+```
+
+```{julia}
+#| include: false
+m4d = let levels = ["val", "sod", "dos",  "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        0    0     1   -1
+        0    1   -1/2 -1/2
+        1  -1/3  -1/3 -1/3
+      ];
+      levels,
+      labels= ["3-4", "2-34", "1-234"]
+    )
+  )
+  fit_or_restore("contrasts_kwdyz11_m4d.json", MixedModel, form, dat1; contrasts)
 end
 ```
 
@@ -362,6 +552,7 @@ In a figure With A on the x-axis and the levels of B shown as two lines, the int
 A positive coefficient implies overadditivity (diverging lines toward the right) and a negative coefficient underadditivity (converging lines).
 
 ```{julia}
+#| eval: false
 m5 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -375,6 +566,24 @@ m5 = let levels = ["val", "sod", "dos", "dod"]
     ),
   )
   fit(MixedModel, form, dat1; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m5 = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        -1 -1 +1 +1          # A
+        -1 +1 -1 +1          # B
+        +1 -1 -1 +1          # A x B
+      ];
+      levels,
+      labels=["A", "B", "AxB"],
+    ),
+  )
+  fit_or_restore("contrasts_kwdyz11_m5.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
@@ -408,7 +617,7 @@ The following contrast specification returns an estimate for the main effect of 
 In a figure With A on the x-axis and the levels of B shown as two lines, the second contrast tests whether A1-B1 is different from A1-B2 and the third contrast tests whether A2-B1 is different from A2-B2.
 
 ```{julia}
-
+#| eval: false
 m6 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -422,6 +631,24 @@ m6 = let levels = ["val", "sod", "dos", "dod"]
     ),
   )
   fit(MixedModel, form, dat1; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m6 = let levels = ["val", "sod", "dos", "dod"]
+  contrasts = Dict(
+    :CTR => HypothesisCoding(
+      [
+        -1 -1 +1 +1
+        -1 +1  0  0
+         0  0 +1 -1
+      ];
+      levels,
+      labels=["do_so", "spt", "grv"],
+    ),
+  )
+  fit_or_restore("contrasts_kwdyz11_m6.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
@@ -451,15 +678,26 @@ cntrst2 = Dict(
   )
 
 f6_cpx = @formula dv ~ 1 + Group*A*B   + (1 + A+B | Subj);
+f6_zcp = @formula dv ~ 1 + Group*A*B   + zerocorr(1 + A+B | Subj);
+f6_ovi = @formula dv ~ 1 + Group*A*B   +  (1 | Subj);
+```
+
+```{julia}
+#| eval: false
 m6_cpx = fit(MixedModel, f6_cpx, dat2; contrasts=cntrst2)
 issingular(m6_cpx)
 
-f6_zcp = @formula dv ~ 1 + Group*A*B   + zerocorr(1 + A+B | Subj);
 m6_zcp = fit(MixedModel, f6_zcp, dat2; contrasts=cntrst2)
 issingular(m6_zcp)
 
-f6_ovi = @formula dv ~ 1 + Group*A*B   +  (1 | Subj);
 m6_ovi = fit(MixedModel, f6_ovi, dat2; contrasts=cntrst2)
+```
+
+```{julia}
+#| include: false
+m6_cpx = fit_or_restore("contrasts_kwdyz11_m6_cpx.json", MixedModel, f6_cpx, dat2; contrasts=cntrst2)
+m6_zcp = fit_or_restore("contrasts_kwdyz11_m6_zcp.json", MixedModel, f6_zcp, dat2; contrasts=cntrst2)
+m6_ovi = fit_or_restore("contrasts_kwdyz11_m6_ovi.json", MixedModel, f6_ovi, dat2; contrasts=cntrst2)
 ```
 
 ```{julia}

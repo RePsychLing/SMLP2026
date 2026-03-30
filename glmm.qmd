@@ -19,7 +19,7 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 
 const progress=false
 ```
@@ -36,9 +36,19 @@ sleepstudy = DataFrame(dataset(:sleepstudy))
 ```
 
 ```{julia}
+#| eval: false
 contrasts = Dict(:subj => Grouping())
 m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
   fit(MixedModel, f, sleepstudy; contrasts, progress)
+end
+println(m1)
+```
+
+```{julia}
+#| include: false
+contrasts = Dict(:subj => Grouping())
+m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
+  fit_or_restore("glmm_m1.json", MixedModel, f, sleepstudy; contrasts, progress)
 end
 println(m1)
 ```
@@ -235,6 +245,7 @@ draw(
 ```
 
 ```{julia}
+#| eval: false
 contrasts = Dict(
   :dist => Grouping(),
   :urban => HelmertCoding(),
@@ -247,6 +258,23 @@ gm1 = let
     use ~ 1 + age + abs2(age) + urban + livch + (1 | dist)
   )
   fit(MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+contrasts = Dict(
+  :dist => Grouping(),
+  :urban => HelmertCoding(),
+  :livch => DummyCoding(), # default, but no harm in being explicit
+)
+nAGQ = 9
+dist = Bernoulli()
+gm1 = let
+  form = @formula(
+    use ~ 1 + age + abs2(age) + urban + livch + (1 | dist)
+  )
+  fit_or_restore("glmm_gm1.json", MixedModel, form, contra, dist; nAGQ, contrasts, progress)
 end
 ```
 
@@ -276,6 +304,7 @@ contrasts[:children] = EffectsCoding()
 ```
 
 ```{julia}
+#| eval: false
 gm2 = let
   form = @formula(
     use ~
@@ -287,6 +316,22 @@ gm2 = let
       (1 | dist)
   )
   fit(MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+gm2 = let
+  form = @formula(
+    use ~
+      1 +
+      age * children +
+      abs2(age) +
+      children +
+      urban +
+      (1 | dist)
+  )
+  fit_or_restore("glmm_gm2.json", MixedModel, form, contra, dist; nAGQ, contrasts, progress)
 end
 ```
 
@@ -318,6 +363,7 @@ It turns out that there can be more difference between urban and rural settings 
 To model this difference we build a model with `urban&dist` as a grouping factor.
 
 ```{julia}
+#| eval: false
 gm3 = let
   form = @formula(
     use ~
@@ -329,6 +375,22 @@ gm3 = let
       (1 | urban & dist)
   )
   fit(MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+gm3 = let
+  form = @formula(
+    use ~
+      1 +
+      age * children +
+      abs2(age) +
+      children +
+      urban +
+      (1 | urban & dist)
+  )
+  fit_or_restore("glmm_gm3.json", MixedModel, form, contra, dist; nAGQ, contrasts, progress)
 end
 ```
 

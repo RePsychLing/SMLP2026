@@ -20,7 +20,7 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsSim
 using StatsBase
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 using Random
 
 const progress=false
@@ -31,6 +31,7 @@ const progress=false
 Let us consider the `kb07` dataset.
 
 ```{julia}
+#| eval: false
 kb07 = dataset(:kb07)
 contrasts = Dict(:spkr => EffectsCoding(),
                  :prec => EffectsCoding(),
@@ -40,6 +41,19 @@ fm1 = fit(MixedModel,
                              (1 | subj) +
                              (1 | item)),
           kb07; contrasts, progress)
+```
+
+```{julia}
+#| include: false
+kb07 = dataset(:kb07)
+contrasts = Dict(:spkr => EffectsCoding(),
+                 :prec => EffectsCoding(),
+                 :load => EffectsCoding())
+fm1 = fit_or_restore("power_simulation_fm1.json", MixedModel,
+                     @formula(rt_trunc ~ 1 * spkr * prec * load +
+                                        (1 | subj) +
+                                        (1 | item)),
+                     kb07; contrasts, progress)
 ```
 
 We can perform a *parametric bootstrap* on the model to get estimates of our uncertainty.
