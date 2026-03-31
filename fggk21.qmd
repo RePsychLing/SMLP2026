@@ -34,7 +34,7 @@ using MixedModelsMakie: simplelinreg
 using Random
 using Statistics
 using StatsBase
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 
 const progress=false
 ```
@@ -287,9 +287,18 @@ In its random-effect structure (RES) we only vary intercepts (i.e., Grand Means)
 It is well known that such a simple RES is likely to be anti-conservative with respect to fixed-effect test statistics.
 
 ```{julia}
+#| eval: false
 m_ovi = let
   f = @formula zScore ~ 1 + Test * Sex * a1 + (1 | School)
   fit(MixedModel, f, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_ovi = let
+  f = @formula zScore ~ 1 + Test * Sex * a1 + (1 | School)
+  fit_or_restore("fggk21_m_ovi.json", MixedModel, f, dat; contrasts, progress)
 end
 ```
 
@@ -309,12 +318,24 @@ In this LMM we allow that schools differ not only in `GM`, but also in the size 
 We assume that there is covariance associated with these CPs beyond residual noise, that is we assume that there is no detectable evidence in the data that the CPs are different from zero.
 
 ```{julia}
+#| eval: false
 m_zcp = let
   f = @formula(
     zScore ~
       1 + Test * Sex * a1 + zerocorr(1 + Test + Sex + a1 | School)
   )
   fit(MixedModel, f, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_zcp = let
+  f = @formula(
+    zScore ~
+      1 + Test * Sex * a1 + zerocorr(1 + Test + Sex + a1 | School)
+  )
+  fit_or_restore("fggk21_m_zcp.json", MixedModel, f, dat; contrasts, progress)
 end
 ```
 
@@ -329,11 +350,22 @@ issingular(m_zcp)
 In the complex LMM investigated in this sequence we give up the assumption of zero-correlation between VCs.
 
 ```{julia}
+#| eval: false
 m_cpx = let
   f = @formula(
     zScore ~ 1 + Test * Sex * a1 + (1 + Test + Sex + a1 | School)
   )
   fit(MixedModel, f, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_cpx = let
+  f = @formula(
+    zScore ~ 1 + Test * Sex * a1 + (1 + Test + Sex + a1 | School)
+  )
+  fit_or_restore("fggk21_m_cpx.json", MixedModel, f, dat; contrasts, progress)
 end
 ```
 
@@ -438,9 +470,18 @@ As an illustration, we fit a full CP matrix for the `Cohort`.
 As there are only nine cohorts in the data, we may be asking too much to estimate 5*6/2 = 15 VC/CP parameters.
 
 ```{julia}
+#| eval: false
 m_cpxCohort = let
   f = @formula zScore ~ 1 + Test * a1 * Sex + (1 + Test | Cohort)
   fit(MixedModel, f, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_cpxCohort = let
+  f = @formula zScore ~ 1 + Test * a1 * Sex + (1 + Test | Cohort)
+  fit_or_restore("fggk21_m_cpxCohort.json", MixedModel, f, dat; contrasts, progress)
 end
 ```
 
@@ -456,11 +497,22 @@ The model is overparameterized with several CPs estimated between |.98| and |1.0
 How about the **zero-correlation parameter** (zcp) version of this LMM?
 
 ```{julia}
+#| eval: false
 m_zcpCohort = let
   f = @formula(
     zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Cohort)
   )
   fit(MixedModel, f, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_zcpCohort = let
+  f = @formula(
+    zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Cohort)
+  )
+  fit_or_restore("fggk21_m_zcpCohort.json", MixedModel, f, dat; contrasts, progress)
 end
 ```
 
@@ -472,9 +524,18 @@ This `zcpLMM`  is also singular. Three of the five VCs are estimated as zero.
 This raises the possibility that LMM `m_oviCohort`  might fit as well as LMM `m_zcpCohort`.
 
 ```{julia}
+#| eval: false
 m_oviCohort = let
   f = @formula zScore ~ 1 + Test * a1 * Sex + (1 | Cohort)
   fit(MixedModel, f, dat; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m_oviCohort = let
+  f = @formula zScore ~ 1 + Test * a1 * Sex + (1 | Cohort)
+  fit_or_restore("fggk21_m_oviCohort.json", MixedModel, f, dat; contrasts, progress)
 end
 ```
 
@@ -926,7 +987,7 @@ Let's take pictures.
 #| label: fig-caterpillarCohort
 #| fig-cap: Prediction intervals of the random effects for Cohort in model m1
 caterpillar!(
-  Figure(; resolution=(800, 400)), ranefinfo(m1, :Cohort)
+  Figure(; size=(800, 400)), ranefinfo(m1, :Cohort)
 )
 ```
 
@@ -938,14 +999,14 @@ These are just teasers. We will pick this up in a separate tutorial. Enjoy!
 #| code-fold: true
 #| label: fig-m1shrinkageCohort
 #| fig-cap: Shrinkage plot of the random effects for Cohort in model m1
-shrinkageplot!(Figure(; resolution=(800, 800)), m1, :Cohort)
+shrinkageplot!(Figure(; size=(800, 800)), m1, :Cohort)
 ```
 
 ```{julia}
 #| code-fold: true
 #| label: fig-m2shrinkageCohort
 #| fig-cap: Shrinkage plot of the random effects for Cohort in model m2
-shrinkageplot!(Figure(; resolution=(800, 800)), m2, :Cohort)
+shrinkageplot!(Figure(; size=(800, 800)), m2, :Cohort)
 ```
 
 ::: {#refs}

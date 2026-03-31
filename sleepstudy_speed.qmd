@@ -39,7 +39,7 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie   # plots specific to mixed-effects models using Makie
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 ```
 
 # Preprocessing
@@ -95,7 +95,7 @@ The panels are arranged by increasing initial reaction speed starting at the low
 let
   ord = sortperm(first.(within.coef))
   labs = values(only.(keys(gdf)))[ord]       # labels for panels
-  f = clevelandaxes!(Figure(; resolution=(1000, 750)), labs, (2, 9))
+  f = clevelandaxes!(Figure(; size=(1000, 750)), labs, (2, 9))
   for (axs, sdf) in zip(f.content, gdf[ord]) # iterate over the panels and groups
     scatter!(axs, sdf.day, sdf.speed)      # add the points
     coef = simplelinreg(sdf.day, sdf.speed)
@@ -108,9 +108,18 @@ end
 # Basic LMM
 
 ```{julia}
+#| eval: false
 m1 = let
   form = @formula speed ~ 1 + day + (1 + day | Subj)
   fit(MixedModel, form, df)
+end
+```
+
+```{julia}
+#| include: false
+m1 = let
+  form = @formula speed ~ 1 + day + (1 + day | Subj)
+  fit_or_restore("sleepstudy_speed_m1.json", MixedModel, form, df)
 end
 ```
 
@@ -125,9 +134,18 @@ The within-subject correlation of the random effects for intercept and slope is 
 The `zerocorr` function applied to a random-effects term estimates one parameter less than LMM `m1`-- the CP is now fixed to zero.
 
 ```{julia}
+#| eval: false
 m2 = let
   form = @formula speed ~ 1 + day + zerocorr(1 + day | Subj)
   fit(MixedModel, form, df)
+end
+```
+
+```{julia}
+#| include: false
+m2 = let
+  form = @formula speed ~ 1 + day + zerocorr(1 + day | Subj)
+  fit_or_restore("sleepstudy_speed_m2.json", MixedModel, form, df)
 end
 ```
 
@@ -176,7 +194,7 @@ caterpillar(m2)
 #| code-fold: true
 #| fig-cap: "Shrinkage plot of the means of the random effects in model m2"
 #| label: fig-shrinkagem2
-shrinkageplot!(Figure(; resolution=(500, 500)), m2)
+shrinkageplot!(Figure(; size=(500, 500)), m2)
 ```
 
 # References

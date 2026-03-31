@@ -47,6 +47,7 @@ using DataFrames
 using DataFrameMacros
 using MixedModels
 using ProgressMeter
+using StableRNGs
 using Statistics
 using StatsBase
 
@@ -54,6 +55,11 @@ using MixedModels: likelihoodratiotest
 using SMLP2026: dataset
 
 progress = isinteractive()
+```
+
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
 ```
 
 ## Readme for `dataset("fggk21")`
@@ -96,7 +102,7 @@ We extract a random sample of 500 children from the Sex (2)  x Test (5) cells of
 dat = @chain df begin
   @transform(:Sex = :Sex == "female" ? "Girls" : "Boys")
   @groupby(:Test, :Sex)
-  combine(x -> x[sample(1:nrow(x), 500), :])
+  combine(x -> x[sample(StableRNG(32123), 1:nrow(x), 500), :])
 end
 ```
 
@@ -108,7 +114,7 @@ select!(groupby(dat, :Test), :, :score => zscore => :zScore) # z-score
 ```
 
 ```{julia}
-dat2 = combine(
+combine(
   groupby(dat, [:Test, :Sex]),
   :score => mean,
   :score => std,
@@ -160,8 +166,16 @@ contr1 = Dict(
 ```
 
 ```{julia}
+#| eval: false
 m_ovi_SeqDiff_1 = lmm(@formula(zScore ~ 1 + Test + (1 | Child)),
                       dat; contrasts=contr1, progress)
+```
+
+```{julia}
+#| include: false
+m_ovi_SeqDiff_1 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_1.json",
+                                  @formula(zScore ~ 1 + Test + (1 | Child)),
+                                  dat; contrasts=contr1, progress)
 ```
 
 In this case, any differences between tests identified by the contrasts would be  spurious because each test was standardized (i.e., _M_=0, $SD$=1). The differences could also be due to an imbalance in the number of boys and girls or in the number of missing observations for each test.
@@ -169,8 +183,16 @@ In this case, any differences between tests identified by the contrasts would be
 The primary interest in this study related to interactions of the test contrasts with and `age` and `Sex`. We start with age (linear) and its interaction with the four test contrasts.
 
 ```{julia}
+#| eval: false
 m_ovi_SeqDiff_2 = lmm(@formula(zScore ~ 1 + Test * a1 + (1 | Child)),
                       dat; contrasts=contr1, progress)
+```
+
+```{julia}
+#| include: false
+m_ovi_SeqDiff_2 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_2.json",
+                                  @formula(zScore ~ 1 + Test * a1 + (1 | Child)),
+                                  dat; contrasts=contr1, progress)
 ```
 
 The difference between older and younger children is larger for `Star_r` than for `Run` (0.2473).  `S20_r` did not differ significantly from `Star_r` (-0.0377) and `SLJ` (-0.0113) The largest difference in developmental gain was between `BPT` and `SLJ` (0.3355).
@@ -180,8 +202,16 @@ The difference between older and younger children is larger for `Star_r` than fo
 Next we add the main effect of `Sex` and its interaction with the four test contrasts.
 
 ```{julia}
+#| eval: false
 m_ovi_SeqDiff_3 = lmm(@formula(zScore ~ 1 + Test * (a1 + Sex) + (1 | Child)),
                       dat; contrasts=contr1, progress)
+```
+
+```{julia}
+#| include: false
+m_ovi_SeqDiff_3 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_3.json",
+                                  @formula(zScore ~ 1 + Test * (a1 + Sex) + (1 | Child)),
+                                  dat; contrasts=contr1, progress)
 ```
 
 The significant interactions with `Sex` reflect mostly differences related to muscle power, where the physiological constitution gives boys an advantage. The sex difference is smaller when coordination and cognition play a role -- as in the `Star_r` test. (Caveat: SEs are estimated with an underspecified RES.)
@@ -192,7 +222,16 @@ The final step in this first series is to add the interactions between the three
 # we'll be re-using this formula with other contrast specifications,
 # so we assign it to its own variable
 f_ovi = @formula(zScore ~ 1 + Test * a1 * Sex + (1 | Child))
+```
+
+```{julia}
+#| eval: false
 m_ovi_SeqDiff = lmm(f_ovi, dat; contrasts=contr1, progress)
+```
+
+```{julia}
+#| include: false
+m_ovi_SeqDiff = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff.json", f_ovi, dat; contrasts=contr1, progress)
 ```
 
 The results are very clear: Despite an abundance of statistical power there is no evidence for the differences between boys and girls in how much they gain in the ninth year of life in these five tests. The authors argue that, in this case, absence of evidence looks very much like evidence of absence of a hypothesized interaction.
@@ -230,7 +269,13 @@ contr2 = Dict(
 ```
 
 ```{julia}
+#| eval: false
 m_ovi_Helmert = lmm(f_ovi, dat; contrasts=contr2, progress)
+```
+
+```{julia}
+#| include: false
+m_ovi_Helmert = fit_or_restore("contrasts_fggk21_m_ovi_Helmert.json", f_ovi, dat; contrasts=contr2, progress)
 ```
 
 We forego a detailed discussion of the effects, but note that again none of the interactions between `age x Sex` with the four test contrasts was significant.
@@ -267,7 +312,13 @@ contr3 = Dict(
 ```
 
 ```{julia}
+#| eval: false
 m_ovi_Hypo = lmm(f_ovi, dat; contrasts=contr3, progress)
+```
+
+```{julia}
+#| include: false
+m_ovi_Hypo = fit_or_restore("contrasts_fggk21_m_ovi_Hypo.json", f_ovi, dat; contrasts=contr3, progress)
 ```
 
 With _HypothesisCoding_ we must generate our own labels for the contrasts. The default labeling of contrasts is usually not interpretable. Therefore, we provide our own.
@@ -291,22 +342,52 @@ contr1b = Dict(
 ```
 
 ```{julia}
+#| eval: false
 m_ovi_SeqDiff_v2 = lmm(f_ovi, dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
+#| include: false
+m_ovi_SeqDiff_v2 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_v2.json", f_ovi, dat; contrasts=contr1b, progress)
+```
+
+```{julia}
+#| eval: false
 m_zcp_SeqD = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child)),
                  dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
+#| include: false
+m_zcp_SeqD = fit_or_restore("contrasts_fggk21_m_zcp_SeqD.json",
+                             @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child)),
+                             dat; contrasts=contr1b, progress)
+```
+
+```{julia}
+#| eval: false
 m_zcp_SeqD_2 = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
                    dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
+#| include: false
+m_zcp_SeqD_2 = fit_or_restore("contrasts_fggk21_m_zcp_SeqD_2.json",
+                               @formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
+                               dat; contrasts=contr1b, progress)
+```
+
+```{julia}
+#| eval: false
 m_cpx_0_SeqDiff = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
                       dat; contrasts=contr1b, progress)
+```
+
+```{julia}
+#| include: false
+m_cpx_0_SeqDiff = fit_or_restore("contrasts_fggk21_m_cpx_0_SeqDiff.json",
+                                  @formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
+                                  dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
@@ -319,7 +400,16 @@ m_cpx_0_SeqDiff.PCA
 
 ```{julia}
 f_cpx_1 = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
+```
+
+```{julia}
+#| eval: false
 m_cpx_1_SeqDiff = lmm(f_cpx_1, dat; contrasts=contr1b, progress)
+```
+
+```{julia}
+#| include: false
+m_cpx_1_SeqDiff = fit_or_restore("contrasts_fggk21_m_cpx_1_SeqDiff.json", f_cpx_1, dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
@@ -354,7 +444,13 @@ contr4 = Dict(
 ```
 
 ```{julia}
+#| eval: false
 m_cpx_1_PC = lmm(f_cpx_1, dat; contrasts=contr4, progress)
+```
+
+```{julia}
+#| include: false
+m_cpx_1_PC = fit_or_restore("contrasts_fggk21_m_cpx_1_PC.json", f_cpx_1, dat; contrasts=contr4, progress)
 ```
 
 ```{julia}
@@ -384,8 +480,14 @@ contr4b = Dict(
 ```
 
 ```{julia}
+#| eval: false
 # LN_NEWUOA does a poor job here
 m_cpx_1_PC_2 = lmm(f_cpx_1, dat; contrasts=contr4b, progress, optimizer=:LN_BOBYQA)
+```
+
+```{julia}
+#| include: false
+m_cpx_1_PC_2 = fit_or_restore("contrasts_fggk21_m_cpx_1_PC_2.json", f_cpx_1, dat; contrasts=contr4b, progress, optimizer=:LN_BOBYQA)
 ```
 
 ```{julia}
@@ -397,9 +499,17 @@ m_cpx_1_PC_2.PCA
 ```
 
 ```{julia}
+#| eval: false
 # LN_BOBYQA does a poor job here
 m_zcp_1_PC_2 = lmm(@formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child)),
                    dat; contrasts=contr4b, progress, optimizer=:LN_NEWUOA)
+```
+
+```{julia}
+#| include: false
+m_zcp_1_PC_2 = fit_or_restore("contrasts_fggk21_m_zcp_1_PC_2.json",
+                               @formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child)),
+                               dat; contrasts=contr4b, progress, optimizer=:LN_NEWUOA)
 ```
 
 ```{julia}
@@ -430,12 +540,21 @@ Trivially, the meaning of a contrast depends on its definition. Consequently, th
 
 <!-- These optima are really poorly defined! The choice of optimizer makes a big difference -->
 ```{julia}
-#| output: false
+#| eval: false
 f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
 m_Child_SDC = lmm(f_Child, dat; contrasts=contr1, progress, optimizer=:LN_BOBYQA)
 m_Child_HeC = lmm(f_Child, dat; contrasts=contr2, progress, optimizer=:LN_NELDERMEAD)
 m_Child_HyC = lmm(f_Child, dat; contrasts=contr3, progress, optimizer=:LN_NELDERMEAD)
 m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD)
+```
+
+```{julia}
+#| include: false
+f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
+m_Child_SDC = fit_or_restore("contrasts_fggk21_m_Child_SDC.json", f_Child, dat; contrasts=contr1, progress, optimizer=:LN_BOBYQA)
+m_Child_HeC = fit_or_restore("contrasts_fggk21_m_Child_HeC.json", f_Child, dat; contrasts=contr2, progress, optimizer=:LN_NELDERMEAD)
+m_Child_HyC = fit_or_restore("contrasts_fggk21_m_Child_HyC.json", f_Child, dat; contrasts=contr3, progress, optimizer=:LN_NELDERMEAD)
+m_Child_PCA = fit_or_restore("contrasts_fggk21_m_Child_PCA.json", f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD)
 ```
 
 ```{julia}
@@ -459,12 +578,21 @@ The CPs for the various contrasts are in line with expectations. For the SDC we 
 Do these differences in CPs imply that we can move to zcpLMMs when we have orthogonal contrasts? We pursue this question with by refitting the four LMMs with zerocorr() and compare the goodness of fit.
 
 ```{julia}
-#| output: false
+#| eval: false
 f_Child0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child))
 m_Child_SDC0 = lmm(f_Child0, dat; contrasts=contr1, progress, optimizer=:LN_NEWUOA)
 m_Child_HeC0 = lmm(f_Child0, dat; contrasts=contr2, progress, optimizer=:LN_NEWUOA)
 m_Child_HyC0 = lmm(f_Child0, dat; contrasts=contr3, progress, optimizer=:LN_NEWUOA)
 m_Child_PCA0 = lmm(f_Child0, dat; contrasts=contr4, progress, optimizer=:LN_NEWUOA)
+```
+
+```{julia}
+#| include: false
+f_Child0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child))
+m_Child_SDC0 = fit_or_restore("contrasts_fggk21_m_Child_SDC0.json", f_Child0, dat; contrasts=contr1, progress, optimizer=:LN_NEWUOA)
+m_Child_HeC0 = fit_or_restore("contrasts_fggk21_m_Child_HeC0.json", f_Child0, dat; contrasts=contr2, progress, optimizer=:LN_NEWUOA)
+m_Child_HyC0 = fit_or_restore("contrasts_fggk21_m_Child_HyC0.json", f_Child0, dat; contrasts=contr3, progress, optimizer=:LN_NEWUOA)
+m_Child_PCA0 = fit_or_restore("contrasts_fggk21_m_Child_PCA0.json", f_Child0, dat; contrasts=contr4, progress, optimizer=:LN_NEWUOA)
 ```
 
 ```{julia}
@@ -511,12 +639,21 @@ The effect of `age` (i.e., developmental gain) varies within `School`.
 Therefore, we also include its VCs and CPs in this model; the school-related VC for `Sex` was not significant.
 
 ```{julia}
-#| output: false
+#| eval: false
 f_School = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test + a1 | School))
 m_School_SeqDiff = lmm(f_School, dat; contrasts=contr1, progress)
 m_School_Helmert = lmm(f_School, dat; contrasts=contr2, progress)
 m_School_Hypo = lmm(f_School, dat; contrasts=contr3, progress)
 m_School_PCA = lmm(f_School, dat; contrasts=contr4, progress)
+```
+
+```{julia}
+#| include: false
+f_School = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test + a1 | School))
+m_School_SeqDiff = fit_or_restore("contrasts_fggk21_m_School_SeqDiff.json", f_School, dat; contrasts=contr1)
+m_School_Helmert = fit_or_restore("contrasts_fggk21_m_School_Helmert.json", f_School, dat; contrasts=contr2)
+m_School_Hypo = fit_or_restore("contrasts_fggk21_m_School_Hypo.json", f_School, dat; contrasts=contr3)
+m_School_PCA = fit_or_restore("contrasts_fggk21_m_School_PCA.json", f_School, dat; contrasts=contr4)
 ```
 
 ```{julia}
@@ -538,12 +675,24 @@ VarCorr(m_School_PCA)
 We compare again how much of the fit resides in the CPs.
 
 ```{julia}
+#| eval: false
 f_School0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test + a1 | School))
 m_School_SDC0 = lmm(f_School0, dat; contrasts=contr1, progress)
 m_School_HeC0 = lmm(f_School0, dat; contrasts=contr2, progress)
 m_School_HyC0 = lmm(f_School0, dat; contrasts=contr3, progress)
 m_School_PCA0 = lmm(f_School0, dat; contrasts=contr4, progress)
+```
 
+```{julia}
+#| include: false
+f_School0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test + a1 | School))
+m_School_SDC0 = fit_or_restore("contrasts_fggk21_m_School_SDC0.json", f_School0, dat; contrasts=contr1, progress)
+m_School_HeC0 = fit_or_restore("contrasts_fggk21_m_School_HeC0.json", f_School0, dat; contrasts=contr2, progress)
+m_School_HyC0 = fit_or_restore("contrasts_fggk21_m_School_HyC0.json", f_School0, dat; contrasts=contr3, progress)
+m_School_PCA0 = fit_or_restore("contrasts_fggk21_m_School_PCA0.json", f_School0, dat; contrasts=contr4, progress)
+```
+
+```{julia}
 zcpLMM2 = ["SDC0", "HeC0", "HyC0", "PCA0"]
 mods2 = [
   m_School_SDC0, m_School_HeC0, m_School_HyC0, m_School_PCA0

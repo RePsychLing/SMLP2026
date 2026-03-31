@@ -47,20 +47,37 @@ using DataFrames
 using Effects
 using MixedModels
 using StandardizedPredictors
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 ```
 
 ```{julia}
-slp = fit(MixedModel, 
+#| eval: false
+slp = fit(MixedModel,
           @formula(reaction ~ 1 + days + (1 + days |subj)),
           dataset(:sleepstudy))
 ```
 
 ```{julia}
-days_centered = fit(MixedModel, 
+#| include: false
+slp = fit_or_restore("transformation_slp.json", MixedModel,
+                     @formula(reaction ~ 1 + days + (1 + days |subj)),
+                     dataset(:sleepstudy))
+```
+
+```{julia}
+#| eval: false
+days_centered = fit(MixedModel,
                     @formula(reaction ~ 1 + days + (1 + days |subj)),
                     dataset(:sleepstudy);
                     contrasts=Dict(:days => Center()))
+```
+
+```{julia}
+#| include: false
+days_centered = fit_or_restore("transformation_days_centered.json", MixedModel,
+                               @formula(reaction ~ 1 + days + (1 + days |subj)),
+                               dataset(:sleepstudy);
+                               contrasts=Dict(:days => Center()))
 ```
 
 If we look at the log-likelihood, AIC, BIC, etc. of these two models, we see that they are the same:
@@ -155,9 +172,17 @@ While useful at times, speed has a natural interpretation and so we instead use 
 Because `reaction` is stored in milliseconds, we use `1000 / reaction` instead of `1 / reaction` so that our speed units are responses per second.
 
 ```{julia}
+#| eval: false
 model_bc = fit(MixedModel,
                @formula(1000 / reaction ~ 1 + days + (1 + days | subj)),
-                dataset(:sleepstudy))
+               dataset(:sleepstudy))
+```
+
+```{julia}
+#| include: false
+model_bc = fit_or_restore("transformation_model_bc.json", MixedModel,
+                          @formula(1000 / reaction ~ 1 + days + (1 + days | subj)),
+                          dataset(:sleepstudy))
 ```
 
 For our original model on the untransformed scale, the intercept was approximately 250, which means that the average response time was about 250 milliseconds.

@@ -6,8 +6,10 @@ using DataFrames
 using Dates
 using Downloads
 using Markdown
+using MixedModels
 using MixedModelsDatasets
 using PooledArrays
+using Random
 using Scratch
 using SHA
 using TypedTables
@@ -39,6 +41,89 @@ end
 
 export GENRES,
     age_at_event,
-    tagpad
+    tagpad,
+    fit_or_restore,
+    fit_or_restore!
+
+function _normalize_cache_path(path)
+    dir, file = splitdir(path)
+    if isempty(dir)
+        path = joinpath(dirname(@__DIR__), "fits", file)
+    end
+
+    return path
+end
+
+function _normalize_model_cache_path(path)
+    path = _normalize_cache_path(path)
+    _, ext = splitext(path)
+    if ext != ".zip"
+        path = path * ".zip"
+    end
+
+    return path
+end
+
+function fit_or_restore(fname, ::Type{<:MixedModel}, args...; kwargs...)
+    return fit_or_restore(fname, args...; kwargs...)
+end
+
+function fit_or_restore(fname, args...; contrasts=Dict{Symbol,Any}(), kwargs...)
+    model = MixedModel(args...; contrasts)
+    return fit_or_restore!(model, fname; kwargs...)
+end
+
+function fit_or_restore!(model::MixedModel, fname;
+                         force=false, restore_kwargs=(; atol=1e-8), fit_kwargs...)
+    fname = _normalize_model_cache_path(fname)
+    @debug "cache path: $(fname)"
+    if !isfile(fname) || force
+        @debug "fitting model"
+        fit!(model; fit_kwargs...)
+        zip = ZipFile.Writer(fname)
+        try
+            f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
+            saveoptsum(f, model)
+        catch ex
+            @error "Something went wrong in saving the model cache to $(fname)"
+            rethrow(ex)
+        finally
+            close(zip)
+        end
+    else
+        @debug "restoring from cache"
+        zip = ZipFile.Reader(fname)
+        try
+            restoreoptsum!(model, only(zip.files); restore_kwargs...)
+        catch ex
+            @error "Something went wrong in reading the model cache from $(fname)"
+            rethrow(ex)
+        finally
+            close(zip)
+        end
+    end
+
+    return model
+end
+
+# TODO: cache invalidation if PRNG / replicates don't match
+function bootstrap_or_restore(fname,  args...; kwargs...)
+    return bootstrap_or_restore(fname, Random.default_rng(), args...; kwargs...)
+end
+function bootstrap_or_restore(fname, rng::AbstractRNG, n::Integer, model::MixedModel, args...;
+                              force=false, bootstrap_kwargs...)
+    fname = _normalize_cache_path(fname)
+    @debug "cache path: $(fname)"
+    if !isfile(fname) || force
+        @debug "performing bootstrap"
+        boot = parametricbootstrap(rng, n, model, args...; bootstrap_kwargs...)
+        savereplicates(fname, boot)
+    else
+        @debug "restoring from cache"
+        boot = restorereplicates(fname, model)
+    end
+
+    return boot
+end
 
 end # module EmbraceUncertainty

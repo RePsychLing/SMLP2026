@@ -25,7 +25,7 @@ describe(df)
 ```{julia}
 #| eval: false
 let
-  fdensity = Figure(; resolution=(1000, 500))
+  fdensity = Figure(; size=(1000, 500))
   axs = Axis(fdensity[1, 1])
   tdf = filter(:Test => ==(test), df)
   colors = Makie.cgrad(:PuOr_4, 2; categorical=true, alpha=0.6)

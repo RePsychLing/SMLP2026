@@ -116,7 +116,7 @@ For the fixed-effects parameters the estimators are close to being normally dist
 #| label: fig-kbm02fedens
 draw(
   data(kbm02samp.β) * mapping(:β; color=:coefname) * AlgebraOfGraphics.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 
@@ -129,7 +129,7 @@ let pars = ["σ1", "σ2", "σ3"]
     data(kbm02tbl) *
     mapping(pars .=> "σ"; color=dims(1) => renamer(pars)) *
     AlgebraOfGraphics.density();
-    figure=(; resolution=(800, 450)),
+    figure=(; size=(800, 450)),
   )
 end
 ```
@@ -142,7 +142,7 @@ draw(
   data(kbm02tbl) *
   mapping(:ρ1 => "Correlation") *
   AlgebraOfGraphics.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 

@@ -22,11 +22,24 @@ using MixedModelsMakie
 const progress = isinteractive()
 ```
 
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
+```
+
 Fit a model for reaction time in the sleepstudy example.
 
 ```{julia}
+#| eval: false
 m01 = lmm(@formula(reaction ~ 1 + days + (1 + days|subj)), MixedModels.dataset(:sleepstudy); progress)
+```
 
+```{julia}
+#| include: false
+m01 = fit_or_restore("singularity_m01.json", @formula(reaction ~ 1 + days + (1 + days|subj)), MixedModels.dataset(:sleepstudy); progress)
+```
+
+```{julia}
 print(m01)
 ```
 

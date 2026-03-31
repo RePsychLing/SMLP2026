@@ -20,6 +20,7 @@ using MixedModels
 using MixedModelsMakie
 using Random
 using ProgressMeter
+using SMLP2026: fit_or_restore
 
 const progress = false
 ```
@@ -31,6 +32,7 @@ kb07 = MixedModels.dataset(:kb07)
 ```
 
 ```{julia}
+#| eval: false
 contrasts = Dict(
   :spkr => HelmertCoding(),
   :prec => HelmertCoding(),
@@ -45,6 +47,25 @@ m1 = let
       (1 + spkr + prec + load | item)
   )
   fit(MixedModel, form, kb07; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+contrasts = Dict(
+  :spkr => HelmertCoding(),
+  :prec => HelmertCoding(),
+  :load => HelmertCoding(),
+)
+m1 = let
+  form = @formula(
+    rt_trunc ~
+      1 +
+      spkr * prec * load +
+      (1 + spkr + prec + load | subj) +
+      (1 + spkr + prec + load | item)
+  )
+  fit_or_restore("shrinkageplot_m1.json", MixedModel, form, kb07; contrasts, progress)
 end
 ```
 
@@ -125,12 +146,24 @@ X1 * X1'
   - For the `item` both the intercept and the `spkr` appear to be contributing
 
 ```{julia}
+#| eval: false
 m2 = let
   form = @formula(
     rt_trunc ~
       1 + prec * spkr * load + (1 | subj) + (1 + prec | item)
   )
   fit(MixedModel, form, kb07; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m2 = let
+  form = @formula(
+    rt_trunc ~
+      1 + prec * spkr * load + (1 | subj) + (1 + prec | item)
+  )
+  fit_or_restore("shrinkageplot_m2.json", MixedModel, form, kb07; contrasts, progress)
 end
 ```
 
@@ -146,6 +179,7 @@ shrinkageplot(m2)
 ```
 
 ```{julia}
+#| eval: false
 #| lst-label: m1def
 m3 = let
   form = @formula(
@@ -153,6 +187,17 @@ m3 = let
       1 + prec + spkr + load + (1 | subj) + (1 + prec | item)
   )
   fit(MixedModel, form, kb07; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m3 = let
+  form = @formula(
+    rt_trunc ~
+      1 + prec + spkr + load + (1 | subj) + (1 + prec | item)
+  )
+  fit_or_restore("shrinkageplot_m3.json", MixedModel, form, kb07; contrasts, progress)
 end
 ```
 
@@ -185,12 +230,24 @@ ridgeplot(m3btstrp; show_intercept=false)
 ```
 
 ```{julia}
+#| eval: false
 m4 = let
   form = @formula(
     rt_trunc ~
       1 + prec + spkr + load + (1 + prec | item) + (1 | subj)
   )
   fit(MixedModel, form, kb07; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m4 = let
+  form = @formula(
+    rt_trunc ~
+      1 + prec + spkr + load + (1 + prec | item) + (1 | subj)
+  )
+  fit_or_restore("shrinkageplot_m4.json", MixedModel, form, kb07; contrasts, progress)
 end
 ```
 

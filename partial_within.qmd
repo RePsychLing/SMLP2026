@@ -18,6 +18,7 @@ using MixedModelsMakie
 using MixedModelsSim
 using ProgressMeter
 using Random
+using SMLP2026: fit_or_restore
 
 const progress=false
 ```
@@ -39,12 +40,23 @@ unique!(select(design, :item, :frequency))
 ```
 
 ```{julia}
+#| eval: false
 #| code-fold: true
 m0 = let contrasts, form
     contrasts = Dict(:frequency => HelmertCoding(base="high"))
     form = @formula(dv ~ 1 + frequency +
                     (1 + frequency | subj))
     fit(MixedModel, form, design; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m0 = let contrasts, form
+    contrasts = Dict(:frequency => HelmertCoding(base="high"))
+    form = @formula(dv ~ 1 + frequency +
+                    (1 + frequency | subj))
+    fit_or_restore("partial_within_m0.json", MixedModel, form, design; contrasts, progress)
 end
 ```
 
@@ -103,13 +115,23 @@ sort!(unique!(select(design_partial, :subj, :frequency)), :subj)
 ```
 
 ```{julia}
+#| eval: false
 #| code-fold: true
-
 m1 = let contrasts, form
     contrasts = Dict(:frequency => HelmertCoding(base="high"))
     form = @formula(dv ~ 1 + frequency +
                     (1 + frequency | subj))
     fit(MixedModel, form, design_partial; contrasts, progress)
+end
+```
+
+```{julia}
+#| include: false
+m1 = let contrasts, form
+    contrasts = Dict(:frequency => HelmertCoding(base="high"))
+    form = @formula(dv ~ 1 + frequency +
+                    (1 + frequency | subj))
+    fit_or_restore("partial_within_m1.json", MixedModel, form, design_partial; contrasts, progress)
 end
 ```
 

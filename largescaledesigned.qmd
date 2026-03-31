@@ -19,7 +19,7 @@ using DataFrames
 using Effects
 using MixedModels
 using MixedModelsMakie
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 using StandardizedPredictors
 using StatsBase
 ```
@@ -193,7 +193,7 @@ let
       color=:isword,
       markersize=:msz,
     );
-    figure=(; resolution=(800, 450)),
+    figure=(; size=(800, 450)),
   )
 end
 ```
@@ -297,7 +297,7 @@ draw(
   data(pruned) *
   mapping(:rt => "Response time (ms.) for correct responses") *
   AlgebraOfGraphics.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 
@@ -314,7 +314,7 @@ draw(
   mapping(
     :rt => (x -> 1000 / x) => "Response speed (s⁻¹) for correct responses") *
   AlgebraOfGraphics.density();
-  figure=(; resolution=(800, 450)),
+  figure=(; size=(800, 450)),
 )
 ```
 
@@ -427,11 +427,22 @@ contrasts = Dict(
 and fit a first model with simple, scalar, random effects for `subj` and `item`.
 
 ```{julia}
+#| eval: false
 elm01 = let
   form = @formula(
     1000 / rt ~ 1 + isword * wrdlen + (1 | item) + (1 | subj)
   )
   fit(MixedModel, form, pruned; contrasts, progress=false)
+end
+```
+
+```{julia}
+#| include: false
+elm01 = let
+  form = @formula(
+    1000 / rt ~ 1 + isword * wrdlen + (1 | item) + (1 | subj)
+  )
+  fit_or_restore("largescaledesigned_elm01.json", MixedModel, form, pruned; contrasts, progress=false)
 end
 ```
 
@@ -445,12 +456,24 @@ effects(Dict(:isword => [false, true], :wrdlen => 4:2:12), elm01)
 If we restrict to only those subjects with 80% accuracy or greater the model becomes
 
 ```{julia}
+#| eval: false
 elm02 = let
   form = @formula(
     1000 / rt ~ 1 + isword * wrdlen + (1 | item) + (1 | subj)
   )
   dat = @subset(pruned, :spropacc > 0.8)
   fit(MixedModel, form, dat; contrasts, progress=false)
+end
+```
+
+```{julia}
+#| include: false
+elm02 = let
+  form = @formula(
+    1000 / rt ~ 1 + isword * wrdlen + (1 | item) + (1 | subj)
+  )
+  dat = @subset(pruned, :spropacc > 0.8)
+  fit_or_restore("largescaledesigned_elm02.json", MixedModel, form, dat; contrasts, progress=false)
 end
 ```
 
@@ -562,7 +585,7 @@ A caterpillar plot, @fig-elm01caterpillarsubj,
 #| fig-cap: Conditional means and 95% prediction intervals for subject random effects in elm01.
 #| label: fig-elm01caterpillarsubj
 qqcaterpillar!(
-  Figure(resolution=(800, 650)),
+  Figure(size=(800, 650)),
   ranefinfo(elm01, :subj),
 )
 ```
@@ -577,7 +600,7 @@ Also, there is at least one outlier with a conditional mode over 1.0.
 #| fig-cap: Conditional means and 95% prediction intervals for subject random effects in elm02.
 #| label: fig-elm02caterpillarsubj
 qqcaterpillar!(
-  Figure(resolution=(800, 650)),
+  Figure(size=(800, 650)),
   ranefinfo(elm02, :subj),
 )
 ```

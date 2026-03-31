@@ -42,7 +42,7 @@ using Distributions
 using MixedModels
 using MixedModelsMakie
 using Random
-using SMLP2026: dataset
+using SMLP2026: dataset, fit_or_restore
 using StatsBase
 ```
 
@@ -116,7 +116,7 @@ boxplot(
       ],
     ),
   ),
-  figure=(; resolution=(800, 300)),
+  figure=(; size=(800, 300)),
 )
 ```
 
@@ -129,12 +129,24 @@ A better alternative to the boxplot is a dotplot. It also displays subjects' con
 # Linear mixed model
 
 ```{julia}
+#| eval: false
 contrasts = Dict(
   :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
 )
 m1 = let
   form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
   fit(MixedModel, form, dat; contrasts)
+end
+```
+
+```{julia}
+#| include: false
+contrasts = Dict(
+  :CTR => SeqDiffCoding(; levels=["val", "sod", "dos", "dod"]),
+)
+m1 = let
+  form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
+  fit_or_restore("kwdyz11_m1.json", MixedModel, form, dat; contrasts)
 end
 ```
 
@@ -247,7 +259,7 @@ The caterpillar plot, @fig-m1caterpillar, also reveals the high correlation betw
 #| fig-cap: "Prediction intervals on the random effects for Subj in model m1"
 #| label: fig-m1caterpillar
 caterpillar!(
-  Figure(; resolution=(800, 1000)), ranefinfo(m1, :Subj); orderby=2
+  Figure(; size=(800, 1000)), ranefinfo(m1, :Subj); orderby=2
 )
 ```
 
@@ -260,7 +272,7 @@ The corresponding panel illustrates an *implosion* of conditional modes.
 #| code-fold: true
 #| fig-cap: "Shrinkage plot of the conditional means of the random effects for model m1"
 #| label: fig-m1shrinkage
-shrinkageplot!(Figure(; resolution=(1000, 1000)), m1)
+shrinkageplot!(Figure(; size=(1000, 1000)), m1)
 ```
 
 # Parametric bootstrap
