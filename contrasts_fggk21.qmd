@@ -47,6 +47,7 @@ using DataFrames
 using DataFrameMacros
 using MixedModels
 using ProgressMeter
+using StableRNGs
 using Statistics
 using StatsBase
 
@@ -101,7 +102,7 @@ We extract a random sample of 500 children from the Sex (2)  x Test (5) cells of
 dat = @chain df begin
   @transform(:Sex = :Sex == "female" ? "Girls" : "Boys")
   @groupby(:Test, :Sex)
-  combine(x -> x[sample(1:nrow(x), 500), :])
+  combine(x -> x[sample(StableRNG(32123), 1:nrow(x), 500), :])
 end
 ```
 
@@ -113,7 +114,7 @@ select!(groupby(dat, :Test), :, :score => zscore => :zScore) # z-score
 ```
 
 ```{julia}
-dat2 = combine(
+combine(
   groupby(dat, [:Test, :Sex]),
   :score => mean,
   :score => std,

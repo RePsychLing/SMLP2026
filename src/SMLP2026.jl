@@ -82,13 +82,10 @@ function fit_or_restore!(model::MixedModel, fname;
         fit!(model; fit_kwargs...)
         zip = ZipFile.Writer(fname)
         try
-            mktempdir() do dir
-                f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
-                saveoptsum(f, model)
-                return nothing
-            end
+            f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
+            saveoptsum(f, model)
         catch ex
-            @error "Something went wrong in saving the model cache"
+            @error "Something went wrong in saving the model cache to $(fname)"
             rethrow(ex)
         finally
             close(zip)
@@ -99,7 +96,7 @@ function fit_or_restore!(model::MixedModel, fname;
         try
             restoreoptsum!(model, only(zip.files); restore_kwargs...)
         catch ex
-            @error "Something went wrong in reading the model cache"
+            @error "Something went wrong in reading the model cache from $(fname)"
             rethrow(ex)
         finally
             close(zip)
