@@ -2,15 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday, Douglas Bates, and Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-02-09">
+<meta name="dcterms.date" content="2026-03-31">
 
 <title>The sleepstudy: Speed - for a change … – SMLP2026: Advanced Frequentist Track</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -91,19 +94,18 @@ div.csl-indent {
 <link href="./sleepstudy.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ce07e61083fc25b73dbfbd85fa521c82.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-a294f41b3fbff9a01cdae2b25e346e90.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-ce07e61083fc25b73dbfbd85fa521c82.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-7692942acc74b2099579cecbd3e903d1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -588,7 +590,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-02-09</p>
+      <p class="date">2026-03-31</p>
     </div>
   </div>
   
@@ -633,7 +635,7 @@ div.csl-indent {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span>   <span class="co"># plots specific to mixed-effects models using Makie</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset, fit_or_restore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -1049,7 +1051,7 @@ div.csl-indent {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  ord <span class="op">=</span> <span class="fu">sortperm</span>(<span class="fu">first</span>.(within.coef))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  labs <span class="op">=</span> <span class="fu">values</span>(<span class="fu">only</span>.(<span class="fu">keys</span>(gdf)))[ord]       <span class="co"># labels for panels</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  f <span class="op">=</span> <span class="fu">clevelandaxes!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">1000</span>, <span class="fl">750</span>)), labs, (<span class="fl">2</span>, <span class="fl">9</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  f <span class="op">=</span> <span class="fu">clevelandaxes!</span>(<span class="fu">Figure</span>(; size<span class="op">=</span>(<span class="fl">1000</span>, <span class="fl">750</span>)), labs, (<span class="fl">2</span>, <span class="fl">9</span>))</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (axs, sdf) <span class="kw">in</span> <span class="fu">zip</span>(f.content, gdf[ord]) <span class="co"># iterate over the panels and groups</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scatter!</span>(axs, sdf.day, sdf.speed)      <span class="co"># add the points</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    coef <span class="op">=</span> <span class="fu">simplelinreg</span>(sdf.day, sdf.speed)</span>
@@ -1060,9 +1062,7 @@ div.csl-indent {
 </details>
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
-<pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>Found `resolution` in the theme when creating a `Scene`. The `resolution` keyword for `Scene`s and `Figure`s has been deprecated. Use `Figure(; size = ...` or `Scene(; size = ...)` instead, which better reflects that this is a unitless size and not a pixel resolution. The key could also come from `set_theme!` calls or related theming functions.
-<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ Makie ~/.julia/packages/Makie/FUAHr/src/scenes.jl:238</span>
-<span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>abline! is deprecated and will be removed in the future. Use ablines / ablines! instead.
+<pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>abline! is deprecated and will be removed in the future. Use ablines / ablines! instead.
 <span class="ansi-yellow-fg ansi-bold">│ </span>  caller = top-level scope at sleepstudy_speed.qmd:102
 <span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ Core ~/Work/SMLP2026/sleepstudy_speed.qmd:102</span>
 </pre>
@@ -1083,59 +1083,11 @@ Figure&nbsp;1: Reaction speed (s⁻¹) versus days of sleep deprivation by subje
 </section>
 <section id="basic-lmm" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Basic LMM</h1>
-<div id="14" class="cell" data-execution_count="1">
+<div id="14" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> speed <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> day <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> day <span class="op">|</span> Subj)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, df)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-green-fg">Minimizing 2    Time: 0:00:00 (96.41 ms/it)</span>
-<span class="ansi-blue-fg">   objective: 161.44951571694108</span>
-
-
-<span class="ansi-green-fg">Minimizing 65    Time: 0:00:00 ( 5.94 ms/it)</span>
-</pre>
-</div>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Subj</th>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">3.9658</td>
-<td style="text-align: right;">0.1056</td>
-<td style="text-align: right;">37.55</td>
-<td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">0.4190</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">day</td>
-<td style="text-align: right;">-0.1110</td>
-<td style="text-align: right;">0.0151</td>
-<td style="text-align: right;">-7.37</td>
-<td style="text-align: right;">&lt;1e-12</td>
-<td style="text-align: right;">0.0566</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Residual</td>
-<td style="text-align: right;">0.2698</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>This model includes fixed effects for the intercept which estimates the average speed on the baseline day of the experiment prior to sleep deprivation, and the slowing per day of sleep deprivation. In this case about -0.11/second.</p>
 <p>The random effects represent shifts from the typical behavior for each subject.The shift in the intercept has a standard deviation of about 0.42/s.</p>
@@ -1144,52 +1096,14 @@ Figure&nbsp;1: Reaction speed (s⁻¹) versus days of sleep deprivation by subje
 <section id="no-correlation-parameter-zcp-lmm" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> No correlation parameter: zcp LMM</h1>
 <p>The <code>zerocorr</code> function applied to a random-effects term estimates one parameter less than LMM <code>m1</code>– the CP is now fixed to zero.</p>
-<div id="16" class="cell" data-execution_count="1">
+<div id="18" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> <span class="kw">let</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  form <span class="op">=</span> <span class="pp">@formula</span> speed <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> day <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> day <span class="op">|</span> Subj)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(MixedModel, form, df)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Subj</th>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">3.9658</td>
-<td style="text-align: right;">0.1033</td>
-<td style="text-align: right;">38.38</td>
-<td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">0.4085</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">day</td>
-<td style="text-align: right;">-0.1110</td>
-<td style="text-align: right;">0.0147</td>
-<td style="text-align: right;">-7.53</td>
-<td style="text-align: right;">&lt;1e-13</td>
-<td style="text-align: right;">0.0550</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Residual</td>
-<td style="text-align: right;">0.2706</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <p>LMM <code>m2</code> has a slghtly lower log-likelihood than LMM <code>m1</code> but also one fewer parameters. A likelihood-ratio test is used to compare these nested models.</p>
-<div id="18" class="cell" data-execution_count="1">
+<div id="22" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m2, m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1226,7 +1140,7 @@ Figure&nbsp;1: Reaction speed (s⁻¹) versus days of sleep deprivation by subje
 </div>
 </div>
 <p>Alternatively, the AIC, AICc, and BIC values can be compared. They are on a scale where “smaller is better”. All three model-fit statistics prefer the zcpLMM <code>m2</code>.</p>
-<div id="20" class="cell" data-execution_count="1">
+<div id="24" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span></span>
@@ -1312,15 +1226,8 @@ Figure&nbsp;2: Prediction intervals on the random effects in model m2
 <div id="cell-fig-shrinkagem2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shrinkageplot!</span>(<span class="fu">Figure</span>(; resolution<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">500</span>)), m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shrinkageplot!</span>(<span class="fu">Figure</span>(; size<span class="op">=</span>(<span class="fl">500</span>, <span class="fl">500</span>)), m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>Found `resolution` in the theme when creating a `Scene`. The `resolution` keyword for `Scene`s and `Figure`s has been deprecated. Use `Figure(; size = ...` or `Scene(; size = ...)` instead, which better reflects that this is a unitless size and not a pixel resolution. The key could also come from `set_theme!` calls or related theming functions.
-<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ Makie ~/.julia/packages/Makie/FUAHr/src/scenes.jl:238</span>
-</pre>
-</div>
-</div>
 <div id="fig-shrinkagem2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-shrinkagem2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1346,9 +1253,9 @@ Belenky, G., Wesensten, N. J., Thorne, D. R., Thomas, M. L., Sing, H. C., Redmon
 Dinges, D. F., &amp; Powell, J. W. (1985). Microcomputer analyses of performance on a portable, simple visual <span>RT</span> task during sustained operations. <em>Behavior Research Methods, Instruments, and Computers</em>, <em>17</em>(6), 652–655. <a href="https://doi.org/10.3758/bf03200977">https://doi.org/10.3758/bf03200977</a>
 </div>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/f875caa
-">f875caa
-</a> using Quarto 1.8.26.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/962c418
+">962c418
+</a> using Quarto 1.9.36.</em></p>
 
 
 </section>
