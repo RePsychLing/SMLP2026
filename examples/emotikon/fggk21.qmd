@@ -36,7 +36,7 @@ using Statistics
 using StatsBase
 using SMLP2026: dataset, fit_or_restore, DATADIR
 
-const progress=false
+const progress = isinteractive()
 ```
 
 # Readme

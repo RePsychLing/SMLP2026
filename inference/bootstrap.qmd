@@ -41,7 +41,7 @@ using Random
 using SMLP2026: dataset, fit_or_restore
 
 using AlgebraOfGraphics: AlgebraOfGraphics as AoG
-const progress=false
+const progress = isinteractive()
 ```
 
 Note that the precise stream of random numbers generated for a given seed can change between Julia versions.

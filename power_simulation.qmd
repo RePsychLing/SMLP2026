@@ -23,7 +23,7 @@ using StatsBase
 using SMLP2026: dataset, fit_or_restore
 using Random
 
-const progress=false
+const progress = isinteractive()
 ```
 
 # The Parametric Bootstrap

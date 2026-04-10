@@ -18,10 +18,16 @@ using MixedModelsMakie
 using MixedModelsSim
 using ProgressMeter
 using Random
-using SMLP2026: fit_or_restore
+using StableRNGs
 
-const progress=false
+const progress = isinteractive()
 ```
+
+```{julia}
+#| include: false
+using SMLP2026: fit_or_restore
+```
+
 
 ```{julia}
 #| code-fold: true
