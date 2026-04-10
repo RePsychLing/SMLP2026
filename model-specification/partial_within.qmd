@@ -35,7 +35,7 @@ n_subj = 40
 n_item = 3
 # things are expressed as "between", so "within subjects" is "between items"
 item_btwn = Dict(:frequency => ["high", "medium", "low"])
-design = simdat_crossed(MersenneTwister(42), n_subj, n_item;
+design = simdat_crossed(StableRNG(42), n_subj, n_item;
                         item_btwn = item_btwn)
 design = DataFrame(design)
 ```

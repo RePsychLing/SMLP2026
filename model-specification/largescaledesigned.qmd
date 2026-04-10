@@ -27,7 +27,7 @@ using StatsBase
 
 ```{julia}
 #| echo: false
-using SMLP: fit_or_restore
+using SMLP2026: fit_or_restore
 ```
 
 The English Lexicon Project [@Balota_2007] was a large-scale multicenter study to examine properties of English words.
