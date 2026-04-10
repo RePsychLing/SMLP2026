@@ -40,7 +40,7 @@ using DataFrameMacros
 using DataFrames
 using Downloads
 using KernelDensity
-using RCall   # access R from within Julia
+using RData   # load RDS files
 using SMLP2026
 using StatsBase
 
@@ -51,14 +51,19 @@ using AlgebraOfGraphics: density
 # Downloading and importing the RDS file
 
 This is similar to some of the code shown by Julius Krumbiegel on Monday.
-In the data directory of the emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/].  Note that we want version 2 of this file.
+In the data directory of the Emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/].  Note that we want version 2 of this file.
 
 ```{julia}
-fn = Downloads.download("https://osf.io/xawdb/download?version=2");
+# downloads the file to a temporary directory
+fn = joinpath(DATADIR, "emotikon.rds")
+if !isfile(fn)
+  @info "Downloading Emotikon data"
+  Downloads.download("https://osf.io/xawdb/download?version=2", fn)
+end
 ```
 
 ```{julia}
-dfrm = rcopy(reval("""readRDS("$(fn)")"""))
+dfrm = load(fn)
 ```
 
 Now write this file as a Arrow file and read it back in.
