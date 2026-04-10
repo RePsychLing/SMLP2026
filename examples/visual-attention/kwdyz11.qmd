@@ -1,5 +1,5 @@
 ---
-title: "RePsychLing Kliegl et al. (2011)"
+title: "Visual Attention Effects: Kliegl et al. (2011)"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
@@ -397,6 +397,11 @@ Two of the CPs stand out positively.
 First, the correlation between GM and the spatial effect is well defined.
 Second, as discussed throughout this script, the CP between spatial and attraction effect is close to the 1.0 border and clearly not well defined.
 Therefore, this CP will be replicated with a larger sample in script `kkl15.jl` [@Kliegl2015].
+
+# See Also
+
+- [Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)](kkl15.qmd) — direct replication and follow-up of this experiment, with an additional focus on reducing model complexity.
+- [Contrast Coding of Visual Attention Effects](../../contrasts/contrasts_kwdyz11.qmd) — applies _a priori_ contrast coding to this same dataset to test theoretically motivated hypotheses.
 
 # References
 

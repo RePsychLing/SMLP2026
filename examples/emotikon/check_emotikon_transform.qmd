@@ -1,5 +1,5 @@
 ---
-title: Transformed and original metrics in Emotikon
+title: "Emotikon: Comparing Original and Transformed Metrics"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
@@ -43,13 +43,6 @@ describe(dat)
 ```
 
 ### Data and figure with z-scores based on original metric
-
-```{julia}
-# dat_om = rcopy(R"readRDS('./data/fggk21_om.rds')");  #Don't know what the _om is
-# @transform!(dat_om, :a1 = :age - 8.5);
-# select!(groupby(dat_om, :Test), :, :score => zscore => :zScore);
-# describe(dat_om)
-```
 
 ## LMMs
 

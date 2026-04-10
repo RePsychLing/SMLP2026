@@ -1,5 +1,5 @@
 ---
-title: "RePsychLing Masson, Rabe, & Kliegl, 2017) with Julia: Specification and selection"
+title: "Model Specification and Selection: Masson, Rabe & Kliegl (2017)"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]

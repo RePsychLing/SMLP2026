@@ -1,5 +1,5 @@
 ---
-title: "The sleepstudy: Speed - for a change ..."
+title: "The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]

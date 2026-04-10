@@ -146,6 +146,11 @@ draw(
 )
 ```
 
+# See Also
+
+- [More on Shrinkage Plots](../visualization/shrinkageplot.qmd) — uses the same kb07 dataset to visualize how the model shrinks random effects toward zero.
+- [Parametric Bootstrap for Mixed-Effects Models](bootstrap.qmd) — conceptual introduction to the bootstrap method applied here.
+
 # References
 
 ::: {#refs}

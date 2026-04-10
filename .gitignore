@@ -51,3 +51,4 @@ site_libs/
 
 
 **/*.quarto_ipynb
+.claude/settings.local.json

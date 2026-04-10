@@ -18,6 +18,9 @@ using ZipFile
 const CACHE = Ref("")
 const MMDS = String[]
 
+const DATADIR = joinpath(dirname(@__DIR__), "data")
+export DATADIR
+
 function __init__()
     CACHE[] = @get_scratch!("data")
     mkpath(CACHE[])

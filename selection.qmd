@@ -9,10 +9,11 @@ julia:
 using Arrow
 using CairoMakie
 using DataFrames
+using SMLP2026
 ```
 
 ```{julia}
-tbl = Arrow.Table("./data/fggk21.arrow")
+tbl = Arrow.Table(joinpath(DATADIR, "fggk21.arrow"))
 ```
 
 ```{julia}
