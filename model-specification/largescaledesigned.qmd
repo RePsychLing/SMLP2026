@@ -20,9 +20,14 @@ using DataFrames
 using Effects
 using MixedModels
 using MixedModelsMakie
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset, FITSDIR
 using StandardizedPredictors
 using StatsBase
+```
+
+```{julia}
+#| echo: false
+using SMLP: fit_or_restore
 ```
 
 The English Lexicon Project [@Balota_2007] was a large-scale multicenter study to examine properties of English words.
@@ -547,8 +552,8 @@ The amount of time to fit more complex models will be much greater so we may wan
 We can split the tasks of fitting and analyzing a model between computers by saving the optimization summary after the model fit and later creating the `MixedModel` object followed by restoring the `optsum` object.
 
 ```{julia}
-if !isfile("./fits/elm01.json")
-  saveoptsum("./fits/elm01.json", elm01);
+if !isfile(joinpath(FITSDIR, "elm01.json"))
+  saveoptsum(joinpath(FITSDIR, "elm01.json"), elm01);
 end
 ```
 
@@ -560,7 +565,7 @@ elm01a = restoreoptsum!(
     )
     MixedModel(form, pruned; contrasts)
   end,
-  "./fits/elm01.json",
+  joinpath(FITSDIR, "elm01.json"),
 )
 ```
 

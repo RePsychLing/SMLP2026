@@ -25,7 +25,7 @@ using DataFrameMacros
 using MixedModels
 using MixedModelsMakie
 using RCall
-using SMLP2026: dataset
+using SMLP2026: dataset, FITSDIR
 using Serialization
 using StatsBase
 ```
@@ -73,7 +73,7 @@ f1 = @formula zScore ~
 
 ```{julia}
 m1x = LinearMixedModel(f1, dat; contrasts)
-restoreoptsum!(m1x, "./fits/fggk21_m1_optsum.json")
+restoreoptsum!(m1x, joinpath(FITSDIR, "fggk21_m1_optsum.json"))
 ```
 
 ```{julia}
@@ -84,22 +84,22 @@ VarCorr(m1x)
 
   - Command for fitting LMM m1_om = fit(MixedModel, f1, dat_om, contrasts=contr)
   - Minimizing 10502 Time: 0 Time: 2:09:40 ( 0.74  s/it)
-  - Store with: julia> saveoptsum("./fits/fggk21_m1_om_optsum.json", m1_om)
-  - Only for short-term and when desperate: julia> serialize("./fits/m1_om.jls", m1_om);
+  - Store with: julia> saveoptsum(joinpath(FITSDIR, "fggk21_m1_om_optsum.json"), m1_om)
+  - Only for short-term and when desperate: julia> serialize(joinpath(FITSDIR, "m1_om.jls"), m1_om);
 
 #### ... restoreoptsum!()
 
 ```{julia}
 #| eval: false
 m1_om = LinearMixedModel(f1, dat; contrasts);
-restoreoptsum!(m1_om, "./fits/fggk21_m1_om_optsum.json");
+restoreoptsum!(m1_om, joinpath(FITSDIR, "fggk21_m1_om_optsum.json"));
 ```
 
 #### ... deserialize()
 
 ```{julia}
 #| eval: false
-m1x_om = deserialize("./fits/m1_om.jls")
+m1x_om = deserialize(joinpath(FITSDIR, "m1_om.jls"))
 ```
 
 ```{julia}

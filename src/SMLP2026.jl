@@ -19,7 +19,8 @@ const CACHE = Ref("")
 const MMDS = String[]
 
 const DATADIR = joinpath(dirname(@__DIR__), "data")
-export DATADIR
+const FITSDIR = joinpath(dirname(@__DIR__), "fits")
+export DATADIR, FITSDIR
 
 function __init__()
     CACHE[] = @get_scratch!("data")
@@ -51,7 +52,7 @@ export GENRES,
 function _normalize_cache_path(path)
     dir, file = splitdir(path)
     if isempty(dir)
-        path = joinpath(dirname(@__DIR__), "fits", file)
+        path = joinpath(FITSDIR, file)
     end
 
     return path
