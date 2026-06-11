@@ -4,10 +4,6 @@ subtitle: "Or how I learned how to stop worrying and love the bootstrap"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
-format:
-  html:
-    embed-resources: true
-    css: styles.css
 ---
 
 ```{julia}

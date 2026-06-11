@@ -35,6 +35,7 @@ project:
   - inference/bootstrap.qmd
   - inference/profiling.qmd
   - inference/kb07.qmd
+  - inference/power_simulation.qmd
   - glmm/glmm.qmd
   - visualization/shrinkageplot.qmd
   - visualization/AoGPlots.qmd
@@ -110,6 +111,7 @@ website:
         - inference/bootstrap.qmd
         - inference/profiling.qmd
         - inference/kb07.qmd
+        - inference/power_simulation.qmd
       - section: "Generalized Linear Mixed Models"
         contents:
         - glmm/glmm.qmd
