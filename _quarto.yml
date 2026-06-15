@@ -18,31 +18,31 @@ project:
   execute-dir: project
   output-dir: _build/
   render:
-  - about.qmd
-  - AoGPlots.qmd
-  - arrow.qmd
-  - bootstrap.qmd
-  - check_emotikon_transform.qmd
-  - contrasts_fggk21.qmd
-  - contrasts_kwdyz11.qmd
-  - fggk21.qmd
-  - glmm.qmd
   - index.qmd
-  - kb07.qmd
-  - kkl15.qmd
-  - kwdyz11.qmd
-  - largescaledesigned.qmd
-  - mrk17.qmd
-  - partial_within.qmd
-  - pkg.qmd
-  - profiling.qmd
-  - selection.qmd
-  - shrinkageplot.qmd
-  - singularity.qmd
-  - sleepstudy.qmd
-  - sleepstudy_speed.qmd
-  - transformation.qmd
-  - useful_packages.qmd
+  - getting-started/about.qmd
+  - getting-started/useful_packages.qmd
+  - getting-started/pkg.qmd
+  - getting-started/arrow.qmd
+  - lmm-intro/sleepstudy.qmd
+  - lmm-intro/singularity.qmd
+  - model-specification/partial_within.qmd
+  - model-specification/mrk17.qmd
+  - model-specification/largescaledesigned.qmd
+  - contrasts/transformation.qmd
+  - contrasts/contrasts_fggk21.qmd
+  - contrasts/contrasts_kwdyz11.qmd
+  - contrasts/sleepstudy_speed.qmd
+  - inference/bootstrap.qmd
+  - inference/profiling.qmd
+  - inference/kb07.qmd
+  - inference/power_simulation.qmd
+  - glmm/glmm.qmd
+  - visualization/shrinkageplot.qmd
+  - visualization/AoGPlots.qmd
+  - examples/emotikon/fggk21.qmd
+  - examples/emotikon/check_emotikon_transform.qmd
+  - examples/visual-attention/kwdyz11.qmd
+  - examples/visual-attention/kkl15.qmd
 
 # editor_options:
 #   chunk_output_type: console
@@ -84,33 +84,48 @@ website:
     search: true
     collapse-level: 1
     contents:
-      - section: "Getting started with Julia"
+      - section: "Getting Started"
         contents:
-        - useful_packages.qmd
-        - pkg.qmd
-        - arrow.qmd
-      - section: "Worked examples"
+        - index.qmd
+        - getting-started/about.qmd
+        - getting-started/useful_packages.qmd
+        - getting-started/pkg.qmd
+        - getting-started/arrow.qmd
+      - section: "Introduction to Linear Mixed Models"
         contents:
-        - sleepstudy.qmd
-        - sleepstudy_speed.qmd
-        - kwdyz11.qmd
-        - kkl15.qmd
-        - largescaledesigned.qmd
-        - mrk17.qmd
-        - partial_within.qmd
-      - section: "Contrast coding and transformations"
+        - lmm-intro/sleepstudy.qmd
+        - lmm-intro/singularity.qmd
+      - section: "Model Specification and Random Effects"
         contents:
-        - contrasts_fggk21.qmd
-        - contrasts_kwdyz11.qmd
-        - transformation.qmd
-      - glmm.qmd
-      - section: "Bootstrap and profiling"
+        - model-specification/partial_within.qmd
+        - model-specification/mrk17.qmd
+        - model-specification/largescaledesigned.qmd
+      - section: "Contrast Coding and Transformations"
         contents:
-        - bootstrap.qmd
-        - profiling.qmd
-        - kb07.qmd
-      - section: "Visualizations and diagnostics"
+        - contrasts/transformation.qmd
+        - contrasts/contrasts_fggk21.qmd
+        - contrasts/contrasts_kwdyz11.qmd
+        - contrasts/sleepstudy_speed.qmd
+      - section: "Inference: Uncertainty Quantification"
         contents:
-        - singularity.qmd
-        - shrinkageplot.qmd
-        - AoGPlots.qmd
+        - inference/bootstrap.qmd
+        - inference/profiling.qmd
+        - inference/kb07.qmd
+        - inference/power_simulation.qmd
+      - section: "Generalized Linear Mixed Models"
+        contents:
+        - glmm/glmm.qmd
+      - section: "Visualization and Diagnostics"
+        contents:
+        - visualization/shrinkageplot.qmd
+        - visualization/AoGPlots.qmd
+      - section: "Extended Worked Examples"
+        contents:
+        - section: "The Emotikon Project"
+          contents:
+          - examples/emotikon/fggk21.qmd
+          - examples/emotikon/check_emotikon_transform.qmd
+        - section: "Visual Attention Experiments"
+          contents:
+          - examples/visual-attention/kwdyz11.qmd
+          - examples/visual-attention/kkl15.qmd

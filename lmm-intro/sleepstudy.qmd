@@ -368,6 +368,11 @@ let
 end
 ```
 
+# See Also
+
+- [The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons](../contrasts/sleepstudy_speed.qmd) — re-analyzes a related sleep-deprivation dataset using a speed (1/RT) transformation of the response.
+- [Convergence, Singularity, and All That](singularity.qmd) — uses the sleepstudy data to illustrate what happens when a model's random-effects covariance structure is degenerate.
+
 # References
 
 ::: {#refs}

@@ -4,10 +4,6 @@ subtitle: "Or how I learned how to stop worrying and love the bootstrap"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
-format:
-  html:
-    embed-resources: true
-    css: styles.css
 ---
 
 ```{julia}
@@ -23,7 +19,7 @@ using StatsBase
 using SMLP2026: dataset, fit_or_restore
 using Random
 
-const progress=false
+const progress = isinteractive()
 ```
 
 # The Parametric Bootstrap

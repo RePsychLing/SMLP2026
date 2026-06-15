@@ -1,4 +1,7 @@
-author: "Phillip Alday, Douglas Bates, and Reinhold Kliegl"
+author: 
+  - "Phillip Alday"
+  - "Douglas Bates" 
+  - "Reinhold Kliegl"
 format:
   html:
     toc: true

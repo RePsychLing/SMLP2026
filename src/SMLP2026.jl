@@ -18,6 +18,10 @@ using ZipFile
 const CACHE = Ref("")
 const MMDS = String[]
 
+const DATADIR = joinpath(dirname(@__DIR__), "data")
+const FITSDIR = joinpath(dirname(@__DIR__), "fits")
+export DATADIR, FITSDIR
+
 function __init__()
     CACHE[] = @get_scratch!("data")
     mkpath(CACHE[])
@@ -48,7 +52,7 @@ export GENRES,
 function _normalize_cache_path(path)
     dir, file = splitdir(path)
     if isempty(dir)
-        path = joinpath(dirname(@__DIR__), "fits", file)
+        path = joinpath(FITSDIR, file)
     end
 
     return path

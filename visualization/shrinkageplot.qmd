@@ -20,10 +20,15 @@ using MixedModels
 using MixedModelsMakie
 using Random
 using ProgressMeter
-using SMLP2026: fit_or_restore
 
-const progress = false
+const progress = isinteractive()
 ```
+
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
+```
+
 
 Load the kb07 data set (don't tell Reinhold that I used these data).
 

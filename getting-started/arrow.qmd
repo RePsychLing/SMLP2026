@@ -40,7 +40,8 @@ using DataFrameMacros
 using DataFrames
 using Downloads
 using KernelDensity
-using RCall   # access R from within Julia
+using RData   # load RDS files
+using SMLP2026
 using StatsBase
 
 CairoMakie.activate!(; type="svg")
@@ -50,20 +51,25 @@ using AlgebraOfGraphics: density
 # Downloading and importing the RDS file
 
 This is similar to some of the code shown by Julius Krumbiegel on Monday.
-In the data directory of the emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/].  Note that we want version 2 of this file.
+In the data directory of the Emotikon project on osf.io under Data, the url for the rds data file is found to be [https://osf.io/xawdb/].  Note that we want version 2 of this file.
 
 ```{julia}
-fn = Downloads.download("https://osf.io/xawdb/download?version=2");
+# downloads the file to a temporary directory
+fn = joinpath(DATADIR, "emotikon.rds")
+if !isfile(fn)
+  @info "Downloading Emotikon data"
+  Downloads.download("https://osf.io/xawdb/download?version=2", fn)
+end
 ```
 
 ```{julia}
-dfrm = rcopy(reval("""readRDS("$(fn)")"""))
+dfrm = load(fn)
 ```
 
 Now write this file as a Arrow file and read it back in.
 
 ```{julia}
-arrowfn = joinpath("data", "fggk21.arrow")
+arrowfn = joinpath(DATADIR, "fggk21.arrow")
 Arrow.write(arrowfn, dfrm; compress=:lz4)
 tbl = Arrow.Table(arrowfn)
 ```
@@ -106,14 +112,14 @@ length(unique(Child.Child))  # should be 108295
 
 ```{julia}
 filesize(
-  Arrow.write("./data/fggk21_Child.arrow", Child; compress=:lz4)
+  Arrow.write(joinpath(DATADIR, "fggk21_Child.arrow"), Child; compress=:lz4)
 )
 ```
 
 ```{julia}
 filesize(
   Arrow.write(
-    "./data/fggk21_Score.arrow",
+    joinpath(DATADIR, "fggk21_Score.arrow"),
     select(df, :Child, :Test, :score);
     compress=:lz4,
   ),
@@ -127,7 +133,7 @@ A careful examination of the file sizes versus that of `./data/fggk21.arrow` wil
 Now read the Arrow tables in and reassemble the original table.
 
 ```{julia}
-Score = DataFrame(Arrow.Table("./data/fggk21_Score.arrow"))
+Score = DataFrame(Arrow.Table(joinpath(DATADIR, "fggk21_Score.arrow")))
 ```
 
 At this point we can create the z-score column by standardizing the scores for each `Test`.
@@ -138,7 +144,7 @@ The code to do this follows Julius's presentation on Monday.
 ```
 
 ```{julia}
-Child = DataFrame(Arrow.Table("./data/fggk21_Child.arrow"))
+Child = DataFrame(Arrow.Table(joinpath(DATADIR, "fggk21_Child.arrow")))
 ```
 
 ```{julia}
@@ -194,13 +200,13 @@ There are Arrow implementations for R (the `arrow` package) and for Python (`pya
 ```{python}
 #| eval: false
 import pyarrow.feather: read_table
-read_table("./data/fggk21.arrow")
+read_table("fggk21.arrow")
 ```
 
 ```{r}
 #| eval: false
 library(arrow)
-read_ipc_file("./data/fggk21.arrow")
+read_ipc_file("fggk21.arrow")
 ```
 
 

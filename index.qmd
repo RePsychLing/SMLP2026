@@ -1,7 +1,9 @@
 ---
 title: "Tenth Summer School on Statistical Methods for Linguistics and Psychology"
 subtitle: "Advanced methods in frequentist statistics with Julia"
-author: "Phillip Alday and Reinhold Kliegl"
+author:
+  - "Phillip Alday"
+  - "Reinhold Kliegl"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
@@ -43,6 +45,38 @@ There are resources available online for new Julia users and several specialize 
 ## Quarto
 
 The web site and other documents for this course are rendered using a `knitr`-like system called Quarto. You can download the version appropriate for your setup from here: [quarto](https://quarto.org/docs/get-started/)
+
+### Command line
+
+From the root of the cloned repository, two commands cover most workflows:
+
+```sh
+quarto preview
+```
+
+`quarto preview` renders the site and opens it in a browser, then watches for changes and re-renders automatically. It is the most convenient way to work on materials locally.
+
+```sh
+quarto render
+```
+
+`quarto render` renders the entire site once to the `_build/` output directory. Use this to do a clean full build, e.g. before checking the final output.
+
+Both commands accept a single file as an argument to work on just that document:
+
+```sh
+quarto preview lmm-intro/sleepstudy.qmd
+quarto render lmm-intro/sleepstudy.qmd
+```
+
+### VS Code Quarto extension
+
+Install the [Quarto extension for VS Code](https://marketplace.visualstudio.com/items?itemName=quarto.quarto) (`quarto.quarto`) from the Extensions panel. It provides:
+
+- **Preview** (`Ctrl+Shift+K` / `Cmd+Shift+K`): renders the current `.qmd` file and shows a live preview in a side panel, updating on save.
+- **Render** (`Ctrl+Shift+P` → *Quarto: Render*): renders the current file to its output format.
+- **Render Project** (`Ctrl+Shift+P` → *Quarto: Render Project*): equivalent to `quarto render` from the command line.
+- Syntax highlighting, code completion, and cell execution for Julia code chunks directly in the editor.
 
 ## Integrated Development Environment (IDE)
 

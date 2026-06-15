@@ -1,5 +1,5 @@
 ---
-title: Basics with Emotikon Project
+title: "The Emotikon Project: Model Complexification and PCA"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
@@ -34,9 +34,9 @@ using MixedModelsMakie: simplelinreg
 using Random
 using Statistics
 using StatsBase
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset, fit_or_restore, DATADIR
 
-const progress=false
+const progress = isinteractive()
 ```
 
 # Readme
@@ -849,7 +849,7 @@ bic(m1)  # objective(m1) + dof(m1)*log(nobs(m1))
 ```
 + julia> coeftable(m1)     # StatsBase.coeftable: fixed-effects statiscs;
 						     default level=0.95
-+ julia> Arrow.write("./data/m_cpx_fe.arrow", DataFrame(coeftable(m1)));
++ julia> Arrow.write(joinpath(DATADIR, "m_cpx_fe.arrow"), DataFrame(coeftable(m1)));
 + julia> coef(m1)          # StatsBase.coef - parts of the table
 + julia> fixef(m1)         # MixedModels.fixef: not the same as coef()
                              for rank-deficient case
@@ -865,7 +865,7 @@ coeftable(m1) # StatsBase.coeftable: fixed-effects statiscs; default level=0.95
 ```
 
 ```{julia}
-#Arrow.write("./data/m_cpx_fe.arrow", DataFrame(coeftable(m1)));
+#Arrow.write(joinpath(DATADIR, "m_cpx_fe.arrow"), DataFrame(coeftable(m1)));
 ```
 
 ```{julia}
@@ -1008,6 +1008,12 @@ shrinkageplot!(Figure(; size=(800, 800)), m1, :Cohort)
 #| fig-cap: Shrinkage plot of the random effects for Cohort in model m2
 shrinkageplot!(Figure(; size=(800, 800)), m2, :Cohort)
 ```
+
+## See Also
+
+- [Mixed Models Tutorial: Contrast Coding](../../contrasts/contrasts_fggk21.qmd) — applies a full range of contrast schemes (effect, Helmert, hypothesis, PCA-based) to the same Emotikon dataset.
+- [Emotikon: Comparing Original and Transformed Metrics](check_emotikon_transform.qmd) — investigates whether the age × Sex × Test interaction changes when tasks are analyzed in their original time metric rather than speed.
+- [Creating Multi-Panel Plots](../../visualization/AoGPlots.qmd) — reproduces the publication figure from @Fuehner2021 using AlgebraOfGraphics.
 
 ::: {#refs}
 :::

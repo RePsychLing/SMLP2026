@@ -21,7 +21,7 @@ using MixedModels
 using MixedModelsMakie
 using SMLP2026: dataset, fit_or_restore
 
-const progress=false
+const progress = isinteractive()
 ```
 
   - A GLMM (Generalized Linear Mixed Model) is used instead of a LMM (Linear Mixed Model) when the response is binary or, perhaps, a count with a low expected count.

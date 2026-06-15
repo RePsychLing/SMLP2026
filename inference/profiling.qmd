@@ -36,7 +36,7 @@ using MixedModelsMakie
 using Random
 using SMLP2026: dataset, fit_or_restore
 
-const progress=false
+const progress = isinteractive()
 ```
 
 Load the data and define the contrasts so that the coefficients for each of the experimental variables, `load`, `spkr` and `prec`, are positive.

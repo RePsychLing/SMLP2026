@@ -17,7 +17,7 @@ using MixedModels
 using Random
 using SMLP2026: dataset
 
-const progress=false
+const progress = isinteractive()
 ```
 
 # Data set and model
@@ -145,6 +145,11 @@ draw(
   figure=(; size=(800, 450)),
 )
 ```
+
+# See Also
+
+- [More on Shrinkage Plots](../visualization/shrinkageplot.qmd) — uses the same kb07 dataset to visualize how the model shrinks random effects toward zero.
+- [Parametric Bootstrap for Mixed-Effects Models](bootstrap.qmd) — conceptual introduction to the bootstrap method applied here.
 
 # References
 

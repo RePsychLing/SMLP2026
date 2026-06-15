@@ -51,3 +51,8 @@ site_libs/
 
 
 **/*.quarto_ipynb
+.claude/settings.local.json
+data/emotikon.rds
+data/fggk21_Child.arrow
+data/fggk21_Score.arrow
+data/fggk21.arrow

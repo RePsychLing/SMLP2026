@@ -41,7 +41,7 @@ using Random
 using SMLP2026: dataset, fit_or_restore
 
 using AlgebraOfGraphics: AlgebraOfGraphics as AoG
-const progress=false
+const progress = isinteractive()
 ```
 
 Note that the precise stream of random numbers generated for a given seed can change between Julia versions.
@@ -286,6 +286,11 @@ This operation is encapsulated in a method for the `issingular` function that wo
 ```{julia}
 count(issingular(sampsleep))
 ```
+
+# See Also
+
+- [Confidence Intervals from Profiled Objective](profiling.qmd) — an alternative approach to uncertainty quantification via likelihood profiling rather than simulation.
+- [Bootstrapping a Fitted Model](kb07.qmd) — a practical worked example applying parametric bootstrap to the Kronmueller & Barr (2007) dataset.
 
 # References
 

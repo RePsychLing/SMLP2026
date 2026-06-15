@@ -50,11 +50,10 @@ using ProgressMeter
 using StableRNGs
 using Statistics
 using StatsBase
-
 using MixedModels: likelihoodratiotest
 using SMLP2026: dataset
 
-progress = isinteractive()
+const progress = isinteractive()
 ```
 
 ```{julia}
