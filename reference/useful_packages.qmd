@@ -54,7 +54,7 @@ julia > lm(@formula(y ~ 1 + x), data)
 julia > glm(@formula(y ~ 1 + x), data, Binomial(), LogitLink())
 ```
 
-but the more general modelling API (also used by MixedModels.jl) is also supported:
+but the more general modeling API (also used by MixedModels.jl) is also supported:
 
 ```julia
 julia > fit(LinearModel, @formula(y ~ 1 + x), mydata)

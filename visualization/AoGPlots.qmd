@@ -14,7 +14,7 @@ julia:
 :::
 
 ::: {.callout-note title="Before you start"}
-**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd) for the modelling vocabulary; see also [Useful packages](../reference/useful_packages.qmd) for the plotting stack.
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd) for the modeling vocabulary; see also [Useful packages](../reference/useful_packages.qmd) for the plotting stack.
 
 **Datasets used:** `fggk21` (see the [dataset catalog](../getting-started/datasets.qmd)).
 :::
@@ -111,10 +111,10 @@ end
 
 ## Exercises
 
-1. **Add an aesthetic.** Extend the plot by mapping a grouping variable (for example `Sex`) to colour. How does the `mapping(...)` call change?
+1. **Add an aesthetic.** Extend the plot by mapping a grouping variable (for example `Sex`) to color. How does the `mapping(...)` call change?
 
 ::: {.callout-note collapse="true" title="Solution"}
-Add the variable as a `color` argument to `mapping`. AlgebraOfGraphics then draws one coloured series per level and adds a legend automatically.
+Add the variable as a `color` argument to `mapping`. AlgebraOfGraphics then draws one colored series per level and adds a legend automatically.
 
 ```{julia}
 #| eval: false

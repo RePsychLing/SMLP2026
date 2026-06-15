@@ -175,7 +175,7 @@ draw(
 1. **Replicate count and stability.** Re-run the bootstrap with a larger number of replicates. How stable are the confidence-interval endpoints as the replicate count grows?
 
 ::: {.callout-note collapse="true" title="Solution"}
-Interval endpoints are noisy at small replicate counts and settle as the count increases; the tails (and thus 95% endpoints) need more replicates than the centre to stabilize. Doubling the replicates and watching the endpoints converge is a practical way to judge "enough".
+Interval endpoints are noisy at small replicate counts and settle as the count increases; the tails (and thus 95% endpoints) need more replicates than the center to stabilize. Doubling the replicates and watching the endpoints converge is a practical way to judge "enough".
 :::
 
 2. **Why cache?** This page uses `bootstrap_or_restore` to save and reload the bootstrap sample. What does that buy you when re-rendering or re-running the analysis, and what is the risk to watch for?

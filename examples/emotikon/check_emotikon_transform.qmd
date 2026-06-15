@@ -20,7 +20,7 @@ julia:
 
 In @Fuehner2021 the original metric of two tasks (Star, S20) is time, but they were transformed to speed scores in the publication prior to computing z-scores.
 The critical result is the absence of evidence for the age x Sex x Test interaction.
-Is this interaction significant if we analyse all tasks in their original metric?
+Is this interaction significant if we analyze all tasks in their original metric?
 
 Fitting the LMM of the publication takes time, roughly 1 hour.
 However, if you save the model parameters (and other relevant information), you can restore the fitted model object very quickly.
@@ -149,7 +149,7 @@ Residual plots for LMM with Star and Speed in original metric.
 
 ## Exercises
 
-1. **Does the conclusion hold?** State, in one sentence, whether the age-by-sex-by-test interaction is significant when the two timed tasks are analysed in their original (time) metric rather than transformed to speed. What does that imply about the robustness of the published conclusion?
+1. **Does the conclusion hold?** State, in one sentence, whether the age-by-sex-by-test interaction is significant when the two timed tasks are analyzed in their original (time) metric rather than transformed to speed. What does that imply about the robustness of the published conclusion?
 
 ::: {.callout-note collapse="true" title="Solution"}
 The page's analysis lets you check whether the absence of evidence for the three-way interaction survives using the original metric. If the conclusion is the same under both metrics, it is robust to the transformation; if it flips, the transformation is doing substantive work and must be justified on measurement grounds, not convenience.
