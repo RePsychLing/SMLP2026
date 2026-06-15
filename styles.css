@@ -8,21 +8,5 @@
     margin-right: 5%;
 }
 
-/* "Learning objectives" / orientation box shown at the top of a page.
-   Visually distinct from the inline .callout-* notes used within the prose. */
-.objectives {
-    border: 1px solid #b58a3c;
-    border-left: 6px solid #b58a3c;
-    border-radius: 4px;
-    background-color: #faf6ee;
-    padding: 0.8em 1.1em;
-    margin: 0 0 1.5em 0;
-}
-
-.objectives > :first-child {
-    margin-top: 0;
-}
-
-.objectives > :last-child {
-    margin-bottom: 0;
-}
+/* NOTE: the `.objectives` box is styled in theme.scss / theme-dark.scss so it can
+   adapt to the light and dark themes via the Bootstrap `$primary` color. */

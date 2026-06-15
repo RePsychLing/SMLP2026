@@ -39,6 +39,7 @@ format:
     theme:
       light: [sandstone, theme.scss]
       dark: [darkly, theme-dark.scss]
+    css: styles.css
     # defaults, can be overridden
     toc: true
     toc-depth: 2
