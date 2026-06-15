@@ -327,4 +327,6 @@ shrinkageplot(m)
 Heavy shrinkage toward a lower-dimensional subspace (a line, or the origin) means that random-effects term is contributing little — it is close to "inert". The likelihood gains little from letting it vary, so the estimates are pulled strongly toward zero. This is a visual cue to consider simplifying the random-effects structure.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

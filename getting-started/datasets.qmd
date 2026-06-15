@@ -148,3 +148,7 @@ describe(DataFrame(dataset(:kkl15)))
 ```
 
 **Used in:** [replication & model reduction](../examples/visual-attention/kkl15.qmd), and as the larger companion to [`kwdyz11`](../examples/visual-attention/kwdyz11.qmd).
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

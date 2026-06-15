@@ -614,4 +614,6 @@ The relatedness, frequency, and quality manipulations are crossed with both subj
 The maximal model gives every within-grouping factor (and their interactions) a random slope for both `subj` and `item`; the parsimonious version wraps the random-effects term in `zerocorr(...)` to drop the correlation parameters that are typically the hardest to estimate. See [Convergence, singularity and all that](../lmm-intro/singularity.qmd) for why the maximal model is often singular in practice.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

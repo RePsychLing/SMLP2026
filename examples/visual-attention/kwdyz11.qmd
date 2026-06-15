@@ -436,4 +436,6 @@ The spatial–attraction correlation parameter is estimated at the boundary (±1
 A near-zero fixed effect means the *average* attraction effect across subjects is small; a reliable variance component means individuals nonetheless differ substantially — some show positive, some negative effects that cancel in the mean. Ignoring the variance component would wrongly conclude the effect is simply absent.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

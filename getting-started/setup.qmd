@@ -121,4 +121,6 @@ versions the materials were written against, so your environment matches ours. F
 how Julia environments work and why this matters for reproducibility, see
 [Package management and reproducible environments](../reference/pkg.qmd).
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

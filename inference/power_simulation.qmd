@@ -329,4 +329,6 @@ Power increases monotonically with effect size, tracing an S-shaped curve from t
 For a fixed target power, required sample size grows rapidly as the effect size shrinks (roughly inversely with the square of the effect size). Simulating a grid over both lets you read off feasible design points rather than relying on a single closed-form approximation.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

@@ -135,4 +135,6 @@ save("fggk21_panels.png", fg; px_per_unit=2)
 ```
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

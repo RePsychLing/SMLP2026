@@ -161,4 +161,6 @@ The page's analysis lets you check whether the absence of evidence for the three
 Compare residual diagnostics (symmetry, homoscedasticity, normal quantile plots) between the two fits, since the metrics are not nested and cannot be compared by likelihood directly. The metric whose residuals better satisfy the model assumptions is preferable on statistical grounds.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

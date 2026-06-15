@@ -747,4 +747,6 @@ Different full-rank coding schemes for the same factor span the same model space
 `HypothesisCoding` lets you state the contrasts directly: you supply a matrix whose rows are the comparisons you care about (and, for interpretability, ensure they are sensibly scaled). The PCA-based `HypothesisCoding` variant on this page shows one way to derive such contrasts empirically.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

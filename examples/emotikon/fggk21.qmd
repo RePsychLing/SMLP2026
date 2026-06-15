@@ -1046,4 +1046,6 @@ If the first few components account for nearly all of the random-effects varianc
 Because re-coding a factor does not change the model fit, the omnibus conclusions (and the age-by-sex interaction) are unaffected; what changes is which specific comparison each `Test` coefficient reports. Use this to confirm that your substantive comparison is or is not significant without disturbing the rest of the model. See [Mixed Models Tutorial: Contrast Coding](../../contrasts/contrasts_fggk21.qmd).
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

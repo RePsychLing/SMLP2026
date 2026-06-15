@@ -184,4 +184,6 @@ Interval endpoints are noisy at small replicate counts and settle as the count i
 Caching avoids recomputing an expensive bootstrap on every render, which keeps the site fast to build. The risk is staleness: if the model, the RNG seed, or the replicate count changes, a cached sample no longer matches the current model and must be regenerated (the `force=true` path, or deleting the cache file).
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

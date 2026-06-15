@@ -88,4 +88,6 @@ New here? Head to **[Setup: installing the tools](getting-started/setup.qmd)** t
 Julia, and Quarto working before the course, then read **[About](getting-started/about.qmd)**
 for the course framing and instructor bios.
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

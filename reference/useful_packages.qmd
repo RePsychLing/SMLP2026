@@ -130,4 +130,6 @@ For MATLAB users, there is also [MATLAB.jl](https://github.com/JuliaInterop/MATL
 
 Support for calling C and Fortran is [part of the Julia standard library](https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/).
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

@@ -35,4 +35,6 @@ Occasionally the `Pkg.status` function call will give info about new versions be
 This is to be expected - the package system is large and the web of dependencies are complex.
 Generally the Julia package system is very good at resolving dependencies.
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

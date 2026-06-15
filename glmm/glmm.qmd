@@ -469,4 +469,6 @@ Coefficients are additive on the log-odds (logit) scale; exponentiating gives an
 A GLMM adds (i) a conditional distribution for the response (e.g. `Bernoulli()`, `Poisson()`) and (ii) a link function relating the linear predictor to the conditional mean. Both are passed to `fit`/`GeneralizedLinearMixedModel` — the distribution as a positional argument and the link via the `link` keyword (each distribution has a canonical default link).
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

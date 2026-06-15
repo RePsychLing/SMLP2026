@@ -260,4 +260,6 @@ Profile and bootstrap intervals usually agree closely for well-identified fixed 
 A straight zeta profile means the likelihood is well approximated by a quadratic, so a symmetric Wald (standard-error) interval is adequate. A curved profile means the interval is asymmetric — the parameter is better constrained on one side than the other — and the profile- or bootstrap-based interval should be preferred over a symmetric one.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

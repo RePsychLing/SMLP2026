@@ -631,4 +631,6 @@ Compare the candidate reduced model to the current one with `likelihoodratiotest
 With more subjects and more conditions, the critical correlation parameter is estimated away from the ±1 boundary, so the model is non-singular and the parameter becomes interpretable. This is the payoff of the replication: a quantity that was unidentifiable in the original study is now reliably estimated.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

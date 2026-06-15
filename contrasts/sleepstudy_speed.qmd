@@ -230,4 +230,6 @@ On the speed scale the effect of deprivation has the opposite sign — performan
 Usually the fixed-effect estimates and their standard errors are nearly unchanged when you drop a weakly-identified correlation parameter, while the model becomes easier to fit and less prone to singularity. Compare them with `likelihoodratiotest` and inspect whether the correlation was well determined in the first place.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

@@ -334,4 +334,6 @@ DataFrame(shortestcovint(boot))
 `count(issingular, boot)` (or inspecting the relevant column) gives the number of singular replicates. A large fraction of singular fits means the correlation parameter is poorly identified, so its bootstrap distribution piles up at ±1 and its confidence interval should be read with caution.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

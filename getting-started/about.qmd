@@ -9,7 +9,7 @@ See the [home page](../index.qmd) for what the stream covers and a suggested pat
 
 ## Phillip Alday
 
-Phillip Alday is an applied statistician and cognitive neuroscientist whose research spans mixed-effects modelling, EEG/M-EEG signal analysis, and the neuroscience of language processing.
+Phillip Alday is an applied statistician and cognitive neuroscientist whose research spans mixed-effects modelling, EEG signal processing, and the neuroscience of language processing.
 Over the course of his career, he's moved from mathematics through linguistics to cognitive neuroscience, with a sustained interest in developing better statistical tools for behavioural and neural data.
 
 He is a core developer of [MixedModels.jl](https://github.com/JuliaStats/MixedModels.jl) — the Julia successor to the widely used R package `lme4` — and has authored or co-authored a family of related packages including [MixedModelsMakie.jl](https://github.com/palday/MixedModelsMakie.jl) (model visualisation), [Effects.jl](https://github.com/beacon-biosignals/Effects.jl) (effect estimation and plotting), and [MixedModelsExtras.jl](https://github.com/palday/MixedModelsExtras.jl).
@@ -34,3 +34,14 @@ He is a founding contributor to SMLP and has taught the Advanced Frequentist Tra
 
 - University page: [uni-potsdam.de](https://www.uni-potsdam.de/en/cognitive-psychology/staff/kliegl-reinhold)
 - Google Scholar: [scholar.google.com](https://scholar.google.com/citations?user=nxD9IfcAAAAJ)
+
+---
+
+**References**
+
+::: {#refs}
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

@@ -179,4 +179,6 @@ A factor can have a by-subject random slope only if it varies *within* subjects 
 With very few items the by-item variance components and any item-level correlations are poorly estimated and the fit is prone to singularity; increasing `n_item` gives the model more information per item-level effect and generally stabilizes those estimates. Try `n_item = 3, 10, 30` and compare `issingular` and the estimated item variance.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

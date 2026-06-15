@@ -199,4 +199,6 @@ issingular(m), m.σρs
 A correlation of ±1 means the estimated 2×2 random-effects covariance is rank-deficient (degenerate) — the random intercept and slope are perfectly collinear, so the data do not support two independent random-effect dimensions. A reasonable response is to simplify the random-effects structure (e.g. a zero-correlation parametrization `zerocorr(...)` or dropping the random slope) rather than treating the correlation as a substantive estimate.
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*
