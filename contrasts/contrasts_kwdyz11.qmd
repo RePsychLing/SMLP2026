@@ -99,7 +99,6 @@ Controlling the ordering of levels for contrasts:
 ## SeqDiffCoding
 
 The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
-The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
 #| eval: false

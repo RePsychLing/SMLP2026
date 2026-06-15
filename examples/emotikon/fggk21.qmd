@@ -257,8 +257,6 @@ The motivation also encompasses theoretically motivated interactions with `Sex`.
 The order of levels can also be explicitly specified during contrast construction.
 This is very useful if levels are in a different order in the dataframe.
 
-Note that random factors `Child`, `School`, and `Cohort` are declared as `Grouping` variables. Technically, this specification is required for variables with a very large number of levels (e.g., 100K+ children). We recommend the explicit specification for all random factors as a general coding style.
-
 The first command recodes names indicating the physical fitness components used in the above figures and tables back to the shorter actual test names. This reduces  clutter in LMM outputs.
 
 ```{julia}

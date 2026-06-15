@@ -51,18 +51,16 @@ sleepstudy = DataFrame(dataset(:sleepstudy))
 
 ```{julia}
 #| eval: false
-contrasts = Dict(:subj => Grouping())
 m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
-  fit(MixedModel, f, sleepstudy; contrasts, progress)
+  fit(MixedModel, f, sleepstudy; progress)
 end
 println(m1)
 ```
 
 ```{julia}
 #| include: false
-contrasts = Dict(:subj => Grouping())
 m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
-  fit_or_restore("glmm_m1.json", MixedModel, f, sleepstudy; contrasts, progress)
+  fit_or_restore("glmm_m1.json", MixedModel, f, sleepstudy; progress)
 end
 println(m1)
 ```
@@ -261,7 +259,6 @@ draw(
 ```{julia}
 #| eval: false
 contrasts = Dict(
-  :dist => Grouping(),
   :urban => HelmertCoding(),
   :livch => DummyCoding(), # default, but no harm in being explicit
 )
@@ -278,7 +275,6 @@ end
 ```{julia}
 #| include: false
 contrasts = Dict(
-  :dist => Grouping(),
   :urban => HelmertCoding(),
   :livch => DummyCoding(), # default, but no harm in being explicit
 )
