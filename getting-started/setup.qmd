@@ -116,6 +116,8 @@ julia> exit()
 ~/SMLP2026$ quarto preview
 ```
 
+<!-- TODO: either check in a manifest or change the description here-->
+
 `Pkg.instantiate()` reads the project's `Manifest.toml` and installs precisely the package
 versions the materials were written against, so your environment matches ours. For more on
 how Julia environments work and why this matters for reproducibility, see
