@@ -6,7 +6,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - build a tidy summary `DataFrame` suitable for plotting;
 - compose a multi-panel figure with [AlgebraOfGraphics](../reference/useful_packages.qmd);

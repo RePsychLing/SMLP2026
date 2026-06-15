@@ -8,7 +8,7 @@ fig-format: png
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - specify and compare a range of contrast schemes (sequential-difference, hypothesis, dummy, effects, Helmert, and others) in Julia;
 - map theoretically motivated contrasts onto a four-level factor;

@@ -7,7 +7,7 @@ author: "Reinhold Kliegl"
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - apply sequential-difference, Helmert, and hypothesis contrast coding to a multi-level factor;
 - interpret the fixed-effect parameters produced by each coding scheme;

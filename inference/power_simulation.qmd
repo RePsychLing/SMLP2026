@@ -7,7 +7,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - use simulation and the parametric bootstrap to estimate power and uncertainty;
 - simulate data from scratch for a planned design;

@@ -7,7 +7,7 @@ fig-format: png
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - read a longitudinal, repeated-measures dataset into a `DataFrame` and plot per-subject trends;
 - fit a linear mixed model with a correlated random intercept and slope using MixedModels.jl;

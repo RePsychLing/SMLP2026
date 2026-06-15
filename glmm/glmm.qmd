@@ -9,7 +9,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - explain how GLMMs extend LMMs through a link function and a non-Gaussian conditional distribution;
 - contrast the role of the linear predictor in LMMs and GLMMs;

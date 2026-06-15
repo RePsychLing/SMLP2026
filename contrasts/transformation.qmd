@@ -7,7 +7,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - explain how linear transformations (centering, scaling, $z$-scoring) of predictors change coefficient *interpretation* without changing model fit;
 - choose interpretable centering points and scales for continuous predictors;

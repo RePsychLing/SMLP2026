@@ -6,7 +6,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - distinguish within-unit from between-unit factors and identify a partially-within design;
 - simulate data for such a design with MixedModelsSim;

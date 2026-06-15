@@ -7,7 +7,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - profile the objective function of a fitted model to assess parameter variability;
 - read profile zeta plots;

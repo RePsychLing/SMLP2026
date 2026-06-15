@@ -6,7 +6,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - re-express reaction time as speed and discuss when a response transformation aids interpretation;
 - compare within-subject simple regressions with a mixed-model fit;

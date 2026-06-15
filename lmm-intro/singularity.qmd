@@ -7,7 +7,7 @@ julia:
 ---
 
 ::: {.objectives}
-**Learning objectives** — after working through this page you will be able to:
+**Learning objectives:** after working through this page you will be able to:
 
 - explain what it means for a converged mixed model to be *singular*;
 - recognize singularity from the estimated variance components and correlation parameters;
