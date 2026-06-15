@@ -5,6 +5,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- explain what the parametric bootstrap does and why it can give more accurate intervals than standard-error or profile methods;
+- run a parametric bootstrap on a fitted `MixedModel`;
+- summarize bootstrap replicates into confidence intervals and spot singular fits among them.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd).
+
+**Datasets used:** `sleepstudy` and `kb07` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 The speed of MixedModels.jl relative to its predecessors makes the parametric bootstrap much more computationally tractable.
 This is valuable because the parametric bootstrap can be used to produce more accurate confidence intervals than methods based on standard errors or profiling of the likelihood surface.
 
@@ -295,6 +309,29 @@ count(issingular(sampsleep))
 # References
 
 ::: {#refs}
+:::
+
+## Exercises
+
+1. **A small bootstrap.** Run a parametric bootstrap with a modest number of replicates on the `sleepstudy` random-slope model and report a 95% confidence interval for the `days` effect.
+
+::: {.callout-note collapse="true" title="Solution"}
+Use a fixed RNG for reproducibility and `shortestcovint` (or the `confint` method) on the bootstrap object.
+
+```{julia}
+#| eval: false
+using Random
+df = DataFrame(dataset(:sleepstudy))
+m = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), df)
+boot = parametricbootstrap(MersenneTwister(42), 1000, m)
+DataFrame(shortestcovint(boot))
+```
+:::
+
+2. **Count the singular fits.** Of your bootstrap replicates, how many produced a singular fit? Why does that matter for interpreting the bootstrap distribution of the correlation parameter?
+
+::: {.callout-note collapse="true" title="Solution"}
+`count(issingular, boot)` (or inspecting the relevant column) gives the number of singular replicates. A large fraction of singular fits means the correlation parameter is poorly identified, so its bootstrap distribution piles up at ±1 and its confidence interval should be read with caution.
 :::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

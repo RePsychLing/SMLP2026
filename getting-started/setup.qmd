@@ -1,0 +1,124 @@
+---
+title: "Setup: installing the tools"
+author:
+  - "Phillip Alday"
+  - "Reinhold Kliegl"
+---
+
+::: {.objectives}
+**Before the course**, get the toolchain working on your own machine. By the end of this
+page you will have:
+
+- `git` (and `git-lfs`) installed and this repository cloned,
+- a working Julia installation managed with Juliaup,
+- Quarto installed, with an IDE (VS Code or Positron) configured for Julia and Quarto,
+- the project's Julia packages installed via `Pkg.instantiate()`.
+:::
+
+This section of the summer school will use the [Julia programming language](https://julialang.org/) and related tools.
+Because most students in the course will have more experience with [R](https://r-project.org) and the [RStudio](https://rstudio.com) integrated development environment (IDE), it is necessary to install and configure several software systems prior to the course.
+
+::: {.callout-tip}
+We assume everybody will succeed with the installations. If not, please get in touch! You
+may also want to give it a try to get these tools to play nicely with each other — but
+don't spend too much time on this.
+:::
+
+# git
+
+We will assume that you have git installed and are able to clone a repository from github.
+If not, [Happy Git with R](https://happygitwithr.com/) is a good place to learn about git for data science.
+
+The example data stored in the `data` folder is stored with [git-lfs](https://git-lfs.com/). You will need to install git-lfs to access this data, but then everything will "just" work.
+
+This website is built using [quarto](https://quarto.org), described below, from the [repository](https://github.com/RePsychLing/SMLP2026).
+Clone this repository with, e.g.
+
+```sh
+git clone https://github.com/RePsychLing/SMLP2026
+```
+
+# Julia Programming Language
+
+We will use the latest stable release of Julia. We recommend using [Juliaup](https://github.com/JuliaLang/juliaup) to install and manage Julia versions. Juliaup makes it trivial to upgrade to new Julia releases or even use old ones. Alternatively, you can download the version appropriate for your setup from here: [Julia Programming Language](https://julialang.org/downloads/)
+
+There are resources available online for new Julia users and several specialize in Julia for R users:
+
+- [Introduction to Julia for R users](https://nrennie.rbind.io/blog/introduction-julia-r-users/)
+- [Using Julia as a R user](https://stateofther.github.io/finistR2024/plotting_with_julia-1.html)
+- [Julia: Noteworthy differences from R](https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-differences-from-R)
+- [PumasAI: Introduction to Julia](https://tutorials.pumas.ai/html/LearningPaths/01-LP/01-Module/mod1-julia_intro.html)
+- [PumasAI: Data Wrangling and Visualization in Julia](https://tutorials.pumas.ai/html/LearningPaths/01-LP/02-Module/mod2-data-wrangling-visualization.html)
+
+# Quarto
+
+The web site and other documents for this course are rendered using a `knitr`-like system called Quarto. You can download the version appropriate for your setup from here: [quarto](https://quarto.org/docs/get-started/)
+
+## Command line
+
+From the root of the cloned repository, two commands cover most workflows:
+
+```sh
+quarto preview
+```
+
+`quarto preview` renders the site and opens it in a browser, then watches for changes and re-renders automatically. It is the most convenient way to work on materials locally.
+
+```sh
+quarto render
+```
+
+`quarto render` renders the entire site once to the `_build/` output directory. Use this to do a clean full build, e.g. before checking the final output.
+
+Both commands accept a single file as an argument to work on just that document:
+
+```sh
+quarto preview lmm-intro/sleepstudy.qmd
+quarto render lmm-intro/sleepstudy.qmd
+```
+
+## VS Code Quarto extension
+
+Install the [Quarto extension for VS Code](https://marketplace.visualstudio.com/items?itemName=quarto.quarto) (`quarto.quarto`) from the Extensions panel. It provides:
+
+- **Preview** (`Ctrl+Shift+K` / `Cmd+Shift+K`): renders the current `.qmd` file and shows a live preview in a side panel, updating on save.
+- **Render** (`Ctrl+Shift+P` → *Quarto: Render*): renders the current file to its output format.
+- **Render Project** (`Ctrl+Shift+P` → *Quarto: Render Project*): equivalent to `quarto render` from the command line.
+- Syntax highlighting, code completion, and cell execution for Julia code chunks directly in the editor.
+
+# Integrated Development Environment (IDE)
+
+An integrated development environment (IDE) makes editing and running Julia and Quarto source files easier.
+The "integrated development" portion is a clue to what makes them different than a text editor (even a text editor with syntax highlighting): they have tools for suggesting code completion, interacting with and running code and much more.
+Popular ones for R and Python include RStudio and Spyder. For Julia, we recommend [VS Code](https://code.visualstudio.com/download) or [Positron](https://github.com/posit-dev/positron/wiki#installing-positron).
+VS Code is widely used in the Julia community, while Positron is a new fork of VS Code aimed at data scientists and developed by the Posit, the folks behind RStudio and Quarto.
+
+Whatever IDE you use, make sure to install the necessary extensions for Quarto and Julia.
+
+# Installing the project's packages
+
+Once Julia is installed and the repository cloned, install the exact set of packages this
+course uses. From the root of the cloned repository:
+
+```sh
+~/SMLP2026$ julia
+
+julia> using Pkg
+
+julia> Pkg.activate(".")
+  Activating project at `~/SMLP2026`
+
+julia> Pkg.instantiate()
+< lots of output >
+
+julia> exit()
+
+~/SMLP2026$ quarto preview
+```
+
+`Pkg.instantiate()` reads the project's `Manifest.toml` and installs precisely the package
+versions the materials were written against, so your environment matches ours. For more on
+how Julia environments work and why this matters for reproducibility, see
+[Package management and reproducible environments](../reference/pkg.qmd).
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

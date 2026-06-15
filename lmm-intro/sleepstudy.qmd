@@ -6,6 +6,21 @@ julia:
 fig-format: png
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- read a longitudinal, repeated-measures dataset into a `DataFrame` and plot per-subject trends;
+- fit a linear mixed model with a correlated random intercept and slope using MixedModels.jl;
+- interpret the fixed effects, variance components, and correlation parameter;
+- compare models with and without a random slope.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Setup: installing the tools](../getting-started/setup.qmd). This is the first analysis page — no prior pages required.
+
+**Datasets used:** `sleepstudy` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 The `sleepstudy` data are from a study of the effects of sleep deprivation on response time reported in  @Balkin2000 and in @Belenky2003.
 Eighteen subjects were allowed only 3 hours of time to sleep each night for 9 successive nights.
 Their reaction time was measured each day, starting the day before the first night of sleep deprivation, when the subjects were on their regular sleep schedule.
@@ -376,6 +391,37 @@ end
 # References
 
 ::: {#refs}
+:::
+
+## Exercises
+
+Work through these by running the code yourself; expand the solution only after you have an answer.
+
+1. **Centering.** Refit the model with `days` centered at the baseline (day 2 in the corrected description) instead of day 0. What changes — the slope, the intercept, or both — and how does the intercept's interpretation change?
+
+::: {.callout-note collapse="true" title="Solution"}
+Only the intercept (and its standard error) changes: it now estimates the fitted reaction time at day 2 rather than day 0. The slope is unchanged because centering is a linear shift of the predictor. This is the practical point of [transformations](../contrasts/transformation.qmd): coding changes interpretation, not fit.
+
+```{julia}
+#| eval: false
+df = DataFrame(dataset(:sleepstudy))
+df.days_c = df.days .- 2
+fit(MixedModel, @formula(reaction ~ 1 + days_c + (1 + days_c | subj)), df)
+```
+:::
+
+2. **Does the random slope earn its keep?** Fit a model with only a random intercept, `(1 | subj)`, and compare it to the random-slope model. Which would you keep, and on what evidence?
+
+::: {.callout-note collapse="true" title="Solution"}
+The random-slope model fits substantially better here: subjects differ not just in baseline reaction time but in how strongly sleep deprivation affects them. A likelihood-ratio test makes the comparison explicit.
+
+```{julia}
+#| eval: false
+df = DataFrame(dataset(:sleepstudy))
+m_int   = fit(MixedModel, @formula(reaction ~ 1 + days + (1 | subj)), df)
+m_slope = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), df)
+MixedModels.likelihoodratiotest(m_int, m_slope)
+```
 :::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

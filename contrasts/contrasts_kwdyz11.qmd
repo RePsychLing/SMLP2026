@@ -7,6 +7,19 @@ julia:
 fig-format: png
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- specify and compare a range of contrast schemes (sequential-difference, hypothesis, dummy, effects, Helmert, and others) in Julia;
+- map theoretically motivated contrasts onto a four-level factor;
+- read off the hypothesis tested by each coding from the model output.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Transformations of the predictors and the response](transformation.qmd).
+
+**Datasets used:** `kwdyz11` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
 
 ```{julia}
 #| code-fold: true
@@ -758,5 +771,19 @@ If you do, it's good practice to specify the levels corresponding to the rows of
 **HypothesisCoding()**
 
 A better way to specify manual contrasts is via `HypothesisCoding`, where each row of the matrix corresponds to the weights given to the cell means of the levels corresponding to each column (see @Schad2020 for more information).
+
+## Exercises
+
+1. **Intercept meaning.** Fit the model once with `DummyCoding` and once with `EffectsCoding` for the four-level CTR factor. What does the intercept estimate in each case?
+
+::: {.callout-note collapse="true" title="Solution"}
+With `DummyCoding` the intercept is the mean of the reference level; with `EffectsCoding` it is the grand mean (the unweighted average across levels). The slopes change meaning accordingly — differences from the reference level versus deviations from the grand mean.
+:::
+
+2. **Custom contrasts.** Define a `HypothesisCoding` that encodes the spatial, object-based, and attraction comparisons described in the text, and verify that the resulting coefficients match those comparisons.
+
+::: {.callout-note collapse="true" title="Solution"}
+Supply a 3×4 hypothesis matrix whose rows correspond to the three theoretically motivated comparisons (in the appropriately ordered factor levels). After fitting, check that each estimated coefficient equals the corresponding difference of cell means — a good habit for confirming a custom coding does what you intended.
+:::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

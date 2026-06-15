@@ -5,6 +5,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- translate an experimental design into a mixed-model specification (response, covariates, factors, grouping);
+- distinguish between-unit and within-unit factors and map them to fixed and random effects;
+- reason about the variance components and correlation parameters implied by a factorial design.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd); [Transformations of the predictors and the response](../contrasts/transformation.qmd) is helpful.
+
+**Datasets used:** `mrk17` (the `mrk17_exp1` dataset; see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 # Setup
 
 Packages we (might) use.
@@ -585,5 +599,19 @@ The original and post-hoc LMM have the same goodness of fit.
 ```{julia}
 versioninfo()
 ```
+
+## Exercises
+
+1. **Map the design.** List the experimental factors in `mrk17` and label each as between- or within-subject and between- or within-item. Which factors are therefore eligible for by-subject and by-item random slopes?
+
+::: {.callout-note collapse="true" title="Solution"}
+The relatedness, frequency, and quality manipulations are crossed with both subjects and items in this repeated-measures design, so they vary within subjects and within items and are eligible for both by-subject and by-item random slopes. Factors that are properties of the item (e.g. target frequency) vary between items but within subjects, so they support a by-subject slope but not a by-item slope. Writing this table out is the first step in choosing a defensible random-effects structure.
+:::
+
+2. **Write the maximal model.** Based on your classification, write the formula for the maximal random-effects structure, then a more parsimonious alternative using `zerocorr`.
+
+::: {.callout-note collapse="true" title="Solution"}
+The maximal model gives every within-grouping factor (and their interactions) a random slope for both `subj` and `item`; the parsimonious version wraps the random-effects term in `zerocorr(...)` to drop the correlation parameters that are typically the hardest to estimate. See [Convergence, singularity and all that](../lmm-intro/singularity.qmd) for why the maximal model is often singular in practice.
+:::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

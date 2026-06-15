@@ -4,93 +4,88 @@ subtitle: "Advanced methods in frequentist statistics with Julia"
 author:
   - "Phillip Alday"
   - "Reinhold Kliegl"
-engine: julia
-julia:
-  exeflags: ["--project", "--threads=auto"]
 ---
 
 This site provides materials for the **Advanced frequentist methods** stream of the [Summer School on Statistical Methods](https://vasishth.github.io/SMLP2026/) to be held at the University of Potsdam, 24--28 August 2026.
+The stream focuses on fitting, evaluating, and interpreting linear and generalized linear mixed-effects models using the [Julia programming language](https://julialang.org) and the [MixedModels.jl](https://juliastats.org/MixedModels.jl/stable/) package.
 
-# Installation of tools prior to the course
+# How to use these materials
 
-This section of the summer school will use the [Julia programming language](https://julialang.org/) and related tools.
-Because most students in the course will have more experience with [R](https://r-project.org) and the [RStudio](https://rstudio.com) integrated development environment (IDE), it is necessary to install and configure several software systems prior to the course.
+Every page is a complete, runnable analysis. You can engage with them two ways:
 
-## git
+- **Read along.** The rendered website shows all code and its output, so you can follow the
+  reasoning without running anything. Good for a first pass.
+- **Run locally.** Clone the repository and execute the code yourself — change things, break
+  things, and do the [exercises](#exercises-and-self-check) at the bottom of each core page.
+  This is where the learning happens. Start with [Setup: installing the tools](getting-started/setup.qmd).
 
-We will assume that you have git installed and are able to clone a repository from github.
-If not, [Happy Git with R](https://happygitwithr.com/) is a good place to learn about git for data science.
+Most pages in the core path open with a **Learning objectives** box (what you'll be able to
+do afterwards) and a **Before you start** box (which pages to read first and which datasets
+are used), so you can navigate and pace yourself without an instructor in the room.
 
-The example data stored in the `data` folder is stored with [git-lfs](https://git-lfs.com/). You will need to install git-lfs to access this data, but then everything will "just" work.
+::: {.callout-tip title="I just need to look something up"}
+The [Reference & Appendix](reference/useful_packages.qmd) section is lookup material, not a
+lesson sequence: a tour of [useful Julia packages](reference/useful_packages.qmd), how to
+[save and load data with Arrow](reference/arrow.qmd), and
+[package management for reproducible environments](reference/pkg.qmd). Dip in as needed.
+:::
 
-This website is built using [quarto](https://quarto.org), described below, from the [repository](https://github.com/RePsychLing/SMLP2026).
-Clone this repository with, e.g.
+# Suggested path
 
-```sh
-git clone https://github.com/RePsychLing/SMLP2026
+1. **[Start Here](getting-started/setup.qmd)** — install the tools, meet the instructors, and skim the [dataset catalog](getting-started/datasets.qmd).
+2. **Foundations: Linear Mixed Models** — fit and interpret your first mixed model ([sleepstudy](lmm-intro/sleepstudy.qmd)) and learn to recognize [singular fits](lmm-intro/singularity.qmd).
+3. **Seeing Your Model** — [shrinkage plots](visualization/shrinkageplot.qmd) and [multi-panel graphics](visualization/AoGPlots.qmd); diagnostic tools you'll reuse everywhere.
+4. **Building Models** — random-effects [specification](model-specification/partial_within.qmd) and selection for [designed](model-specification/mrk17.qmd) and [large-scale](model-specification/largescaledesigned.qmd) experiments.
+5. **Contrast Coding & Transformations** — make your coefficients answer the questions you actually care about ([transformations](contrasts/transformation.qmd), contrast schemes).
+6. **Inference & Uncertainty** — [bootstrap](inference/bootstrap.qmd), [profiling](inference/profiling.qmd), and [power simulation](inference/power_simulation.qmd).
+7. **Generalized Linear Mixed Models** — [extending to non-Gaussian responses](glmm/glmm.qmd).
+8. **Capstone Worked Examples** — full analyses that pull the pieces together: the [Emotikon project](examples/emotikon/fggk21.qmd) and the [visual-attention experiments](examples/visual-attention/kwdyz11.qmd).
+
+# Dependency map
+
+The core path is roughly linear, but not strictly: once you have the Foundations, several
+sections can be read in any order. The arrows show what each section assumes you've already
+seen.
+
+```{mermaid}
+flowchart TD
+    F["Foundations:<br/>Linear Mixed Models"]
+    V["Seeing Your Model:<br/>Visualization & Diagnostics"]
+    B["Building Models:<br/>Specification & Random Effects"]
+    C["Contrast Coding<br/>& Transformations"]
+    I["Inference &<br/>Uncertainty"]
+    G["Generalized Linear<br/>Mixed Models"]
+    X["Capstone<br/>Worked Examples"]
+
+    F --> V
+    F --> B
+    F --> C
+    F --> G
+    B --> I
+    V --> X
+    C --> X
+    I --> X
 ```
 
-## Julia Programming Language
+# Datasets at a glance
 
-We will use the latest stable release of Julia. We recommend using [Juliaup](https://github.com/JuliaLang/juliaup) to install and manage Julia versions. Juliaup makes it trivial to upgrade to new Julia releases or even use old ones. Alternatively, you can download the version appropriate for your setup from here: [Julia Programming Language](https://julialang.org/downloads/)
+A handful of datasets recur across the course. The [dataset catalog](getting-started/datasets.qmd)
+describes each one — its design, variables, citation, and how to load it. Here is where each
+appears:
 
-There are resources available online for new Julia users and several specialize in Julia for R users:
+| Dataset | Used in |
+|:--------|:--------|
+| `sleepstudy` | [sleepstudy](lmm-intro/sleepstudy.qmd), [singularity](lmm-intro/singularity.qmd), [transformations](contrasts/transformation.qmd), [speed metrics](contrasts/sleepstudy_speed.qmd), [bootstrap](inference/bootstrap.qmd), [GLMM](glmm/glmm.qmd) |
+| `kb07` | [shrinkage plots](visualization/shrinkageplot.qmd), [bootstrap](inference/bootstrap.qmd), [profiling](inference/profiling.qmd), [kb07](inference/kb07.qmd), [power simulation](inference/power_simulation.qmd) |
+| `fggk21` (Emotikon) | [contrast coding](contrasts/contrasts_fggk21.qmd), [AoG plots](visualization/AoGPlots.qmd), [Emotikon capstone](examples/emotikon/fggk21.qmd), [transform check](examples/emotikon/check_emotikon_transform.qmd) |
+| `kwdyz11` | [contrast coding](contrasts/contrasts_kwdyz11.qmd), [visual-attention capstone](examples/visual-attention/kwdyz11.qmd) |
+| `kkl15` | [replication & model reduction](examples/visual-attention/kkl15.qmd) |
+| `mrk17` | [model specification](model-specification/mrk17.qmd) |
 
-- [Introduction to Julia for R users](https://nrennie.rbind.io/blog/introduction-julia-r-users/)
-- [Using Julia as a R user](https://stateofther.github.io/finistR2024/plotting_with_julia-1.html)
-- [Julia: Noteworthy differences from R](https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-differences-from-R)
-- [PumasAI: Introduction to Julia](https://tutorials.pumas.ai/html/LearningPaths/01-LP/01-Module/mod1-julia_intro.html)
-- [PumasAI: Data Wrangling and Visualization in Julia](https://tutorials.pumas.ai/html/LearningPaths/01-LP/02-Module/mod2-data-wrangling-visualization.html)
+# Getting started
 
-## Quarto
-
-The web site and other documents for this course are rendered using a `knitr`-like system called Quarto. You can download the version appropriate for your setup from here: [quarto](https://quarto.org/docs/get-started/)
-
-### Command line
-
-From the root of the cloned repository, two commands cover most workflows:
-
-```sh
-quarto preview
-```
-
-`quarto preview` renders the site and opens it in a browser, then watches for changes and re-renders automatically. It is the most convenient way to work on materials locally.
-
-```sh
-quarto render
-```
-
-`quarto render` renders the entire site once to the `_build/` output directory. Use this to do a clean full build, e.g. before checking the final output.
-
-Both commands accept a single file as an argument to work on just that document:
-
-```sh
-quarto preview lmm-intro/sleepstudy.qmd
-quarto render lmm-intro/sleepstudy.qmd
-```
-
-### VS Code Quarto extension
-
-Install the [Quarto extension for VS Code](https://marketplace.visualstudio.com/items?itemName=quarto.quarto) (`quarto.quarto`) from the Extensions panel. It provides:
-
-- **Preview** (`Ctrl+Shift+K` / `Cmd+Shift+K`): renders the current `.qmd` file and shows a live preview in a side panel, updating on save.
-- **Render** (`Ctrl+Shift+P` → *Quarto: Render*): renders the current file to its output format.
-- **Render Project** (`Ctrl+Shift+P` → *Quarto: Render Project*): equivalent to `quarto render` from the command line.
-- Syntax highlighting, code completion, and cell execution for Julia code chunks directly in the editor.
-
-## Integrated Development Environment (IDE)
-
-An integrated development environment (IDE) makes editing and running Julia and Quarto source files easier.
-The "integrated development" portion is a clue to what makes them different than a text editor (even a text editor with syntax highlighting): they have tools for suggesting code completion, interacting with and running code and much more.
-Popular ones for R and Python include RStudio and Spyder. For Julia, we recommend [VS Code](https://code.visualstudio.com/download) or [Positron](https://github.com/posit-dev/positron/wiki#installing-positron).
-VS Code is widely used in the Julia community, while Positron is a new fork of VS Code aimed at data scientists and developed by the Posit, the folks behind RStudio and Quarto.
-
-Whatever IDE you use, make sure to install the necessary extensions for Quarto and Julia.
-
-# Summary
-
-We assume everybody will succeed with the installations. If not, please get in touch!
-
-You may also want to give it a try to get these tools to play nicely with each other -- but don't spend too much time on this.
+New here? Head to **[Setup: installing the tools](getting-started/setup.qmd)** to get git,
+Julia, and Quarto working before the course, then read **[About](getting-started/about.qmd)**
+for the course framing and instructor bios.
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

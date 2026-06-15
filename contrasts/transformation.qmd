@@ -6,6 +6,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- explain how linear transformations (centering, scaling, $z$-scoring) of predictors change coefficient *interpretation* without changing model fit;
+- choose interpretable centering points and scales for continuous predictors;
+- recognize when a nonlinear transformation of the response is warranted (and what it costs).
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd).
+
+**Datasets used:** `sleepstudy` and small illustrative examples (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 ## Predictors
 
 When dealing with categorical variables, the choice of contrast coding impacts the interpretation of the coefficients of the fitted model but does not impact the predictions made by the model nor its general goodness of it. 
@@ -232,6 +246,20 @@ f
 ```
 
 :::{refs}
+:::
+
+## Exercises
+
+1. **Compare scales.** Take a continuous predictor and fit the model twice — once in raw units and once $z$-scored. Which quantities change (coefficients, standard errors, $t$-values, log-likelihood) and which do not?
+
+::: {.callout-note collapse="true" title="Solution"}
+The coefficient and its standard error change because the unit of the predictor changed, but the $t$-value (estimate divided by its SE) and the model's fit (log-likelihood, fitted values, residuals) are invariant under a linear transformation. $z$-scoring only re-expresses the same model in standard-deviation units, which makes coefficients comparable across predictors.
+:::
+
+2. **When to transform the response.** Reaction times are right-skewed. Give one statistical and one interpretive consideration when deciding whether to model `reaction` directly, `1/reaction` (speed), or `log(reaction)`.
+
+::: {.callout-note collapse="true" title="Solution"}
+Statistically, a transformation that makes the residuals more symmetric and homoscedastic better satisfies the model's assumptions. Interpretively, a nonlinear transform changes what the coefficients *mean* (e.g. additive effects on log-RT are multiplicative on RT) and changes the model's predictions — so it must be motivated by theory and the measurement, not chosen purely for convenience. See [The Belenky Sleep Study](sleepstudy_speed.qmd) for a worked speed-metric example.
 :::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

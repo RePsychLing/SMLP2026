@@ -5,6 +5,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- build a tidy summary `DataFrame` suitable for plotting;
+- compose a multi-panel figure with [AlgebraOfGraphics](../reference/useful_packages.qmd);
+- reproduce a publication-style faceted plot.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd) for the modelling vocabulary; see also [Useful packages](../reference/useful_packages.qmd) for the plotting stack.
+
+**Datasets used:** `fggk21` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 This notebook shows creating a multi-panel plot similar to Figure 2 of @Fuehner2021.
 
 The data are available from the SMLP2026 example datasets.
@@ -93,6 +107,32 @@ end
   - TBD: Move legend in plot?
 
 ::: {#refs}
+:::
+
+## Exercises
+
+1. **Add an aesthetic.** Extend the plot by mapping a grouping variable (for example `Sex`) to colour. How does the `mapping(...)` call change?
+
+::: {.callout-note collapse="true" title="Solution"}
+Add the variable as a `color` argument to `mapping`. AlgebraOfGraphics then draws one coloured series per level and adds a legend automatically.
+
+```{julia}
+#| eval: false
+# inside the existing plot, change the mapping to something like:
+mapping(:age, :score; color=:Sex, layout=:Test)
+```
+:::
+
+2. **Save the figure.** Write the final figure to a PNG file at a chosen resolution.
+
+::: {.callout-note collapse="true" title="Solution"}
+`draw` returns a Makie figure-axis-legend object; `save` writes it out.
+
+```{julia}
+#| eval: false
+fg = draw(plt)            # plt = your AlgebraOfGraphics layer expression
+save("fggk21_panels.png", fg; px_per_unit=2)
+```
 :::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

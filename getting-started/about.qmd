@@ -3,7 +3,7 @@ title: "About"
 ---
 
 These materials support the **Advanced Frequentist Methods** stream of the [Summer School on Statistical Methods for Linguistics and Psychology (SMLP)](https://vasishth.github.io/SMLP2026/), held at the University of Potsdam, 24--28 August 2026.
-The stream focuses on fitting, evaluating, and interpreting linear and generalized linear mixed-effects models using the [Julia programming language](https://julialang.org) and the [MixedModels.jl](https://juliastats.org/MixedModels.jl/stable/) package.
+See the [home page](../index.qmd) for what the stream covers and a suggested path through the materials, and [Setup](setup.qmd) to get the tools installed.
 
 # Instructors
 

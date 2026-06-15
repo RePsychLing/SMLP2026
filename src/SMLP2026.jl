@@ -78,33 +78,36 @@ function fit_or_restore(fname, args...; contrasts=Dict{Symbol,Any}(), kwargs...)
 end
 
 function fit_or_restore!(model::MixedModel, fname;
-                         force=false, restore_kwargs=(; atol=1e-8), fit_kwargs...)
+                         force=false, restore_kwargs=(; atol=1e-8), 
+                         fallback_to_new_fit=true, fit_kwargs...)
     fname = _normalize_model_cache_path(fname)
     @debug "cache path: $(fname)"
-    if !isfile(fname) || force
-        @debug "fitting model"
-        fit!(model; fit_kwargs...)
-        zip = ZipFile.Writer(fname)
-        try
-            f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
-            saveoptsum(f, model)
-        catch ex
-            @error "Something went wrong in saving the model cache to $(fname)"
-            rethrow(ex)
-        finally
-            close(zip)
-        end
-    else
+    if isfile(fname) && !force
         @debug "restoring from cache"
         zip = ZipFile.Reader(fname)
         try
             restoreoptsum!(model, only(zip.files); restore_kwargs...)
+            return model
         catch ex
             @error "Something went wrong in reading the model cache from $(fname)"
-            rethrow(ex)
+            fallback_to_new_fit || rethrow(ex)
+            @error "Trying a new fit..."
         finally
             close(zip)
         end
+    end
+
+    @debug "fitting model"
+    fit!(model; fit_kwargs...)
+    zip = ZipFile.Writer(fname)
+    try
+        f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
+        saveoptsum(f, model)
+    catch ex
+        @error "Something went wrong in saving the model cache to $(fname)"
+        @error string(ex)
+    finally
+        close(zip)
     end
 
     return model

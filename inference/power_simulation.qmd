@@ -6,6 +6,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- use simulation and the parametric bootstrap to estimate power and uncertainty;
+- simulate data from scratch for a planned design;
+- interpret the simulated distributions to inform design decisions.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Parametric bootstrap for mixed-effects models](bootstrap.qmd).
+
+**Datasets used:** `kb07` and simulated data (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 ```{julia}
 #| output: false
 using AlgebraOfGraphics
@@ -300,5 +314,19 @@ dat[!, :n] = rand(RNG, Poisson(), nrow(dat)) .+ 3
 ```{julia}
 dat[!, :dv] = rand.(RNG, Binomial.(dat[!, :n])) ./ dat[!, :n]
 ```
+
+## Exercises
+
+1. **Effect size and power.** Re-run the simulation across a range of assumed effect sizes, holding the sample size fixed. Plot estimated power against effect size. What shape do you expect?
+
+::: {.callout-note collapse="true" title="Solution"}
+Power increases monotonically with effect size, tracing an S-shaped curve from the nominal false-positive rate (when the true effect is zero) toward 1 (for large effects). The interesting region is the middle, where small design changes move power the most.
+:::
+
+2. **Sample size.** Now hold the effect size fixed and vary the number of subjects. How does required sample size trade off against effect size for a target power (say 0.8)?
+
+::: {.callout-note collapse="true" title="Solution"}
+For a fixed target power, required sample size grows rapidly as the effect size shrinks (roughly inversely with the square of the effect size). Simulating a grid over both lets you read off feasible design points rather than relying on a single closed-form approximation.
+:::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

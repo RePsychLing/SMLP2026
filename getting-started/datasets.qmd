@@ -1,0 +1,150 @@
+---
+title: "Dataset catalog"
+engine: julia
+julia:
+  exeflags: ["--project", "--threads=auto"]
+---
+
+::: {.objectives}
+A reference for the datasets that recur throughout these materials. For each one you'll find
+what it is, where it came from, how to load it, and which pages use it. Skim it now to get a
+feel for the recurring examples, and come back whenever you need the details for a particular
+analysis.
+:::
+
+# How datasets are loaded
+
+All example datasets are loaded through a single function re-exported by the course package:
+
+```{julia}
+#| output: false
+using DataFrames
+using SMLP2026: dataset
+```
+
+```{julia}
+sleepstudy = DataFrame(dataset(:sleepstudy))
+first(sleepstudy, 5)
+```
+
+`dataset(name)` resolves a name from one of two sources:
+
+1. **Datasets re-exported from [MixedModelsDatasets.jl](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/)** — the standard collection bundled with the Julia mixed-models ecosystem (e.g. `sleepstudy`, `kb07`, `mrk17_exp1`).
+2. **Course-specific datasets hosted on [OSF](https://osf.io/)** — downloaded on first use, checksum-verified, and cached locally (e.g. `fggk21`, `kwdyz11`, `kkl15`). The download is automatic; you don't need to fetch anything by hand.
+
+To list everything available in this project:
+
+```{julia}
+using SMLP2026
+sort(SMLP2026.datasets())
+```
+
+::: {.callout-note}
+A few datasets in these materials are also distributed as files under `data/` (e.g. the raw
+Emotikon data as `emotikon.rds`). Those are used in the data-wrangling example
+[Saving data with Arrow](../reference/arrow.qmd); for everyday analysis prefer
+`dataset(...)`.
+:::
+
+# Datasets bundled with MixedModelsDatasets.jl
+
+These three are documented in full upstream — design, every column, and the primary
+citation — in the [MixedModelsDatasets.jl dataset reference](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/).
+We summarize their role in this course and link out for the details.
+
+## `sleepstudy`
+
+Reaction times from a sleep-deprivation study: average response time per day for 18 subjects
+restricted to 3 hours in bed per night. The canonical first example for a linear mixed model
+with a random slope for time. See the [upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#sleepstudy).
+
+**Used in:** [sleepstudy](../lmm-intro/sleepstudy.qmd), [singularity](../lmm-intro/singularity.qmd), [transformations](../contrasts/transformation.qmd), [speed metrics](../contrasts/sleepstudy_speed.qmd), [bootstrap](../inference/bootstrap.qmd), [GLMM](../glmm/glmm.qmd).
+
+## `kb07`
+
+Response times from Kronmüller & Barr (2007), a 2×2×2 visual-world experiment widely used to
+illustrate maximal versus parsimonious random-effects structures. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#kb07).
+
+**Used in:** [shrinkage plots](../visualization/shrinkageplot.qmd), [bootstrap](../inference/bootstrap.qmd), [profiling](../inference/profiling.qmd), [kb07](../inference/kb07.qmd), [power simulation](../inference/power_simulation.qmd).
+
+## `mrk17_exp1`
+
+Lexical-decision response times from Masson, Rabe & Kliegl (2017), Experiment 1 — a 2×2×2
+design that is a standard benchmark for high-dimensional crossed random effects. The course
+refers to it as **`mrk17`**. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#mrk17_exp1).
+
+**Used in:** [model specification](../model-specification/mrk17.qmd).
+
+# Course-specific datasets
+
+These datasets are hosted on OSF and downloaded automatically by `dataset(...)`. Column
+summaries below are generated directly from the data, so they stay accurate as the datasets
+are updated.
+
+## `fggk21` (the Emotikon project)
+
+**Full name:** Physical fitness of third-graders (Emotikon study)
+
+Physical-fitness component scores from @Fuehner2021: 108,295 third-graders from 515 primary
+schools across 9 cohorts, tested on a battery of fitness tasks (running, jumping, balancing,
+and so on). The size and nested structure (children within schools within cohorts) make it a
+realistic large-scale example for contrast coding of a multi-level factor (`Test`), for
+PCA-guided model complexification, and for visualization at scale.
+
+**Citation:** @Fuehner2021.
+
+```{julia}
+#| code-fold: true
+#| code-summary: "columns of fggk21"
+describe(DataFrame(dataset(:fggk21)))
+```
+
+**Used in:** [contrast coding](../contrasts/contrasts_fggk21.qmd), [AoG plots](../visualization/AoGPlots.qmd), [Emotikon capstone](../examples/emotikon/fggk21.qmd), [comparing transformed metrics](../examples/emotikon/check_emotikon_transform.qmd).
+
+::: {.callout-note title="Related files"}
+Pre-aggregated variants `fggk21_Child` and `fggk21_Score` are also available via
+`dataset(...)`, and the raw `emotikon.rds` lives under `data/`. The data-wrangling steps that
+produce the Arrow files are walked through in [Saving data with Arrow](../reference/arrow.qmd).
+:::
+
+## `kwdyz11`
+
+**Full name:** Kliegl, Wei, Dambacher, Yan & Zhou (2011) visual-attention experiment
+
+Reaction times from a cueing experiment with four cue-target relations (CTRs), used to
+estimate spatial, object-based, and attractor-like effects of visual attention together with
+the individual differences in those effects. A key teaching point: the attraction effect is
+near zero as a fixed effect but has a reliable variance component, and the originally reported
+model turned out to be singular — motivating the replication in `kkl15`.
+
+**Citation:** @Kliegl2011.
+
+```{julia}
+#| code-fold: true
+#| code-summary: "columns of kwdyz11"
+describe(DataFrame(dataset(:kwdyz11)))
+```
+
+**Used in:** [contrast coding of visual-attention effects](../contrasts/contrasts_kwdyz11.qmd), [visual-attention capstone](../examples/visual-attention/kwdyz11.qmd).
+
+## `kkl15`
+
+**Full name:** Kliegl, Kushela & Laubrock (2015) replication and extension
+
+A larger conceptual replication of `kwdyz11` [@Kliegl2015], run at Potsdam with additional
+manipulations of target size and rectangle orientation. With more data and more conditions it
+estimates the theoretically critical spatial–attraction correlation parameter that was the
+source of the singularity in the original study, and is the running example for principled
+reduction of model complexity.
+
+**Citation:** @Kliegl2015.
+
+```{julia}
+#| code-fold: true
+#| code-summary: "columns of kkl15"
+describe(DataFrame(dataset(:kkl15)))
+```
+
+**Used in:** [replication & model reduction](../examples/visual-attention/kkl15.qmd), and as the larger companion to [`kwdyz11`](../examples/visual-attention/kwdyz11.qmd).

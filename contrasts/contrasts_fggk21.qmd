@@ -6,6 +6,20 @@ julia:
 author: "Reinhold Kliegl"
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- apply sequential-difference, Helmert, and hypothesis contrast coding to a multi-level factor;
+- interpret the fixed-effect parameters produced by each coding scheme;
+- derive a set of contrasts from a PCA of the data.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Transformations of the predictors and the response](transformation.qmd).
+
+**Datasets used:** `fggk21` (Emotikon; see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 This script uses a subset of data reported in @Fuehner2021.
 
 To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication.
@@ -717,6 +731,20 @@ That's it for this tutorial. It is time to try your own contrast coding. You can
 Have fun!
 
 ::: {#refs}
+:::
+
+## Exercises
+
+1. **Same fit, different coefficients.** Fit the model with two different contrast schemes for `Test` (e.g. `SeqDiffCoding` and `HelmertCoding`). Confirm that the log-likelihood is identical while the fixed-effect coefficients differ, and explain why.
+
+::: {.callout-note collapse="true" title="Solution"}
+Different full-rank coding schemes for the same factor span the same model space, so the fitted values and log-likelihood are identical; only the parametrization (which comparisons the coefficients represent) changes. Choose the scheme whose coefficients answer your research question directly.
+:::
+
+2. **Match coding to a hypothesis.** Suppose you want each coefficient to test a specific, theory-driven comparison among the levels of `Test`. Which coding scheme on this page supports that, and what do you have to supply?
+
+::: {.callout-note collapse="true" title="Solution"}
+`HypothesisCoding` lets you state the contrasts directly: you supply a matrix whose rows are the comparisons you care about (and, for interpretability, ensure they are sensibly scaled). The PCA-based `HypothesisCoding` variant on this page shows one way to derive such contrasts empirically.
 :::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*

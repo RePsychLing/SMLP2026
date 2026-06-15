@@ -5,6 +5,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives}
+**Learning objectives** — after working through this page you will be able to:
+
+- extract analysis-ready tables from a large raw dataset;
+- explore and model trial-level data from a large designed experiment (the English Lexicon Project);
+- fit models with scalar random effects at scale and relate the random effects to covariates.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd); [Model Specification and Selection](mrk17.qmd).
+
+**Datasets used:** the English Lexicon Project lexical-decision data (`ELP_ldt_trial`, `ELP_ldt_item`, `ELP_ldt_subj`; see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 # A large-scale designed experiment {#sec-largescaledesigned}
 
 Load the packages to be used.
@@ -691,5 +705,19 @@ draw(
   ) * visual(Scatter; alpha=0.2)
 )
 ```
+
+## Exercises
+
+1. **Why scalar random effects first?** At this scale, why is it sensible to start with scalar (intercept-only) random effects for subject and item before adding random slopes?
+
+::: {.callout-note collapse="true" title="Solution"}
+Scalar random effects are cheap to estimate and almost always well supported, so they give a stable, fast baseline that confirms the data pipeline and the fixed-effects structure before you spend computation on the much larger vector-valued random-effects models. They also provide a reference point for judging whether added complexity actually improves the fit.
+:::
+
+2. **Relate random effects to covariates.** Extract the conditional modes of the by-item intercepts and check whether they are related to an item-level covariate. What would a strong relationship suggest?
+
+::: {.callout-note collapse="true" title="Solution"}
+A clear relationship between the by-item random intercepts and an item-level covariate suggests that covariate should be added as a *fixed* effect: the random intercepts are absorbing systematic, explainable variation that a predictor could capture directly. Use `raneftables` (or `ranef`) to pull the conditional modes and join them to the item covariates.
+:::
 
 *This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
