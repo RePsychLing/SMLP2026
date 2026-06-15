@@ -6,7 +6,7 @@ julia:
 ---
 
 ::: {.objectives}
-A reference for the datasets that recur throughout these materials. For each one you'll find
+This is a reference for the datasets that recur throughout these materials. For each one you'll find
 what it is, where it came from, how to load it, and which pages use it. Skim it now to get a
 feel for the recurring examples, and come back whenever you need the details for a particular
 analysis.
