@@ -6,8 +6,8 @@ julia:
 fig-format: png
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - read a longitudinal, repeated-measures dataset into a `DataFrame` and plot per-subject trends;
 - fit a linear mixed model with a correlated random intercept and slope using MixedModels.jl;
@@ -16,7 +16,7 @@ fig-format: png
 :::
 
 ::: {.callout-note title="Before you start"}
-**Prerequisites:** [Setup: installing the tools](../getting-started/setup.qmd). This is the first analysis page — no prior pages required.
+**Prerequisites:** [Setup: installing the tools](../getting-started/setup.qmd).
 
 **Datasets used:** `sleepstudy` (see the [dataset catalog](../getting-started/datasets.qmd)).
 :::
@@ -25,15 +25,16 @@ The `sleepstudy` data are from a study of the effects of sleep deprivation on re
 Eighteen subjects were allowed only 3 hours of time to sleep each night for 9 successive nights.
 Their reaction time was measured each day, starting the day before the first night of sleep deprivation, when the subjects were on their regular sleep schedule.
 
-::: {.callout-note}
-This description is inaccurate.
+::: {.callout-note collapse="true" title="Small infelicities"}
+This standard description is slightly inaccurate.
 In fact the first two days were acclimatization, the third was a baseline and sleep deprivation was only enforced after day 2.
 To allow for comparison with earlier analyses of these data we retain the old data description for this notebook only.
+See [lme4 GitHub issue #615](https://github.com/lme4/lme4/issues/615) for more information.
 :::
 
 # Loading the data
 
-First attach the MixedModels package and other packages for plotting.
+First load the MixedModels package and other packages for plotting.
 The CairoMakie package allows the Makie graphics system [@Danisch2021] to generate high quality static images.
 Activate that package with the SVG (Scalable Vector Graphics) backend.
 
@@ -58,7 +59,7 @@ The `sleepstudy` data are one of the datasets available with the `MixedModels` p
 sleepstudy = DataFrame(dataset("sleepstudy"))
 ```
 
-@fig-reaction_vs_days_by_subject displays the data in a multi-panel plot created with the `lattice` package in `R` [@Sarkar2008], using [RCall.jl](https://github.com/JuliaInterop/RCall.jl).
+@fig-reaction_vs_days_by_subject displays the data in a multi-panel plot.
 
 ```{julia}
 #| code-fold: true

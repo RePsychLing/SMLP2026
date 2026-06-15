@@ -20,6 +20,15 @@ $code-bg: #000000;
   padding: 0.8em 1.1em;
   margin: 0 0 1.5em 0;
 
+  // Optional title via `::: {.objectives title="…"}`, rendered as a bold header.
+  &[title]::before {
+    content: attr(title);
+    display: block;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 0.4em;
+  }
+
   > :first-child { margin-top: 0; }
   > :last-child { margin-bottom: 0; }
 }

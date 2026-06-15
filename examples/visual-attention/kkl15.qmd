@@ -5,8 +5,8 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - apply principled model reduction to a larger replication dataset;
 - estimate the spatial–attraction correlation parameter with more data and more conditions;

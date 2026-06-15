@@ -5,8 +5,8 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - fit the `kb07` model and draw a parametric bootstrap sample from it;
 - cache and restore expensive bootstrap results to keep re-runs fast;

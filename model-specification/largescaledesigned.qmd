@@ -5,8 +5,8 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - extract analysis-ready tables from a large raw dataset;
 - explore and model trial-level data from a large designed experiment (the English Lexicon Project);

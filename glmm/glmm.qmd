@@ -8,8 +8,8 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - explain how GLMMs extend LMMs through a link function and a non-Gaussian conditional distribution;
 - contrast the role of the linear predictor in LMMs and GLMMs;

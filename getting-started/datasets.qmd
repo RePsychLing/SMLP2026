@@ -42,7 +42,8 @@ sort(SMLP2026.datasets())
 ::: {.callout-note}
 A few datasets in these materials are also distributed as files under `data/` (e.g. the raw
 Emotikon data as `emotikon.rds`). Those are used in the data-wrangling example
-[Saving data with Arrow](../reference/arrow.qmd); for everyday analysis prefer
+[Saving data with Arrow](../reference/arrow.qmd). 
+Outside of that tutorial, prefer
 `dataset(...)`.
 :::
 
@@ -148,6 +149,13 @@ describe(DataFrame(dataset(:kkl15)))
 ```
 
 **Used in:** [replication & model reduction](../examples/visual-attention/kkl15.qmd), and as the larger companion to [`kwdyz11`](../examples/visual-attention/kwdyz11.qmd).
+
+---
+
+**References**
+
+::: {#refs}
+:::
 
 ---
 

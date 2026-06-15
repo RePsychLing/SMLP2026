@@ -5,8 +5,8 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - translate an experimental design into a mixed-model specification (response, covariates, factors, grouping);
 - distinguish between-unit and within-unit factors and map them to fixed and random effects;

@@ -6,8 +6,8 @@ julia:
 author: "Reinhold Kliegl"
 ---
 
-::: {.objectives}
-**Learning objectives:** after working through this page you will be able to:
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
 
 - reproduce the visual-attention analysis with theoretically motivated contrasts;
 - diagnose the singular fit and identify the critical spatial–attraction correlation parameter;
