@@ -8,8 +8,6 @@ fig-format: png
 
 ::: {.objectives title="Learning objectives"} 
 After working through this page you will be able to:
-
-- read a longitudinal, repeated-measures dataset into a `DataFrame` and plot per-subject trends;
 - fit a linear mixed model with a correlated random intercept and slope using MixedModels.jl;
 - interpret the fixed effects, variance components, and correlation parameter;
 - compare models with and without a random slope.
@@ -138,7 +136,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
   fit_or_restore("sleepstudy_m1.json", MixedModel, f, sleepstudy)
 end
@@ -174,6 +172,11 @@ By default, the levels of the grouping factor are sorted by increasing value of 
 caterpillar!(Figure(; size=(600, 400)), m1; vline_at_zero=true)
 ```
 
+::: {.callout-note}
+This plot could be drawn as `caterpillar(m1)`.
+The reason for explicitly creating a `Figure` to be modified by `caterpillar!` is to control the resolution.
+:::
+
 @fig-m1caterpillar reinforces the conclusion that there is little correlation between the random effect for intercept and the random effect for slope.
 
 # A model with uncorrelated random effects
@@ -189,7 +192,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
   fit_or_restore("sleepstudy_m2.json", MixedModel, f, sleepstudy)
 end
@@ -319,6 +322,17 @@ We define the 1-α `shortestcovint` to be the shortest interval that contains a 
 Table(shortestcovint(m1bstp))
 ```
 
+::: {.callout-note}
+MixedModels.jl also defines appropriate methods for `StatsAPI.confint` so that the above example could be written as
+
+```{julia}
+confint(m1bstp; method=:shortest)
+```
+
+<!-- TODO: add a section on the different methods to the bootstrap file and a xref here -->
+Later we discuss other available methods for computing confidence intervals.
+:::
+
 The intervals look reasonable except that the upper end point of the interval for ρ1, the correlation coefficient, is 1.0 .
 It turns out that the estimates of ρ have a great deal of variability.
 
@@ -416,9 +430,9 @@ The random-slope model fits substantially better here: subjects differ not just 
 
 ```{julia}
 #| eval: false
-df = DataFrame(dataset(:sleepstudy))
-m_int   = fit(MixedModel, @formula(reaction ~ 1 + days + (1 | subj)), df)
-m_slope = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), df)
+sleepstudy = dataset(:sleepstudy)
+m_int   = fit(MixedModel, @formula(reaction ~ 1 + days + (1 | subj)), sleepstudy)
+m_slope = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), sleepstudy)
 MixedModels.likelihoodratiotest(m_int, m_slope)
 ```
 :::
