@@ -132,26 +132,24 @@ There are some deviations from linearity within the panels but the deviations ar
 ```{julia}
 #| eval: false
 #| lst-label: m1
-contrasts = Dict{Symbol,Any}(:subj => Grouping())
 m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
-  fit(MixedModel, f, sleepstudy; contrasts)
+  fit(MixedModel, f, sleepstudy)
 end
 ```
 
 ```{julia}
 #| include: false
-contrasts = Dict{Symbol,Any}(:subj => Grouping())
 m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
-  fit_or_restore("sleepstudy_m1.json", MixedModel, f, sleepstudy; contrasts)
+  fit_or_restore("sleepstudy_m1.json", MixedModel, f, sleepstudy)
 end
 ```
 
 This model includes fixed effects for the intercept, representing the typical reaction time at the beginning of the experiment with zero days of sleep deprivation, and the slope w.r.t. days of sleep deprivation.
-The parameter estimates are about 250 ms. typical reaction time without deprivation and a typical increase of 10.5 ms. per day of sleep deprivation.
+The parameter estimates are about 250 ms typical reaction time without deprivation and a typical increase of 10.5 ms per day of sleep deprivation.
 
 The random effects represent shifts from the typical behavior for each subject.
-The shift in the intercept has a standard deviation of about 24 ms. which would suggest a range of about 200 ms. to 300 ms. in the intercepts.
-Similarly within-subject slopes would be expected to have a range of about 0 ms./day up to 20 ms./day.
+The shift in the intercept has a standard deviation of about 24 ms which would suggest a range of about 200 ms to 300 ms in the intercepts.
+Similarly within-subject slopes would be expected to have a range of about 0 ms per day up to 20 ms per day.
 
 The random effects for the slope and for the intercept are allowed to be correlated within subject.
 The estimated correlation, 0.08, is small.
@@ -173,7 +171,7 @@ By default, the levels of the grouping factor are sorted by increasing value of 
 #| code-fold: true
 #| fig-cap: Prediction intervals on random effects for model m1
 #| label: fig-m1caterpillar
-caterpillar(m1; vline_at_zero=true)
+caterpillar!(Figure(; size=(600, 400)), m1; vline_at_zero=true)
 ```
 
 @fig-m1caterpillar reinforces the conclusion that there is little correlation between the random effect for intercept and the random effect for slope.
@@ -186,14 +184,14 @@ The `zerocorr` function applied to a random-effects term creates uncorrelated ve
 #| eval: false
 #| lst-label: m2
 m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
-  fit(MixedModel, f, sleepstudy; contrasts)
+  fit(MixedModel, f, sleepstudy)
 end
 ```
 
 ```{julia}
 #| include: false
 m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
-  fit_or_restore("sleepstudy_m2.json", MixedModel, f, sleepstudy; contrasts)
+  fit_or_restore("sleepstudy_m2.json", MixedModel, f, sleepstudy)
 end
 ```
 
@@ -302,7 +300,7 @@ An empirical density plot of the estimates for the fixed-effects coefficients, @
 #| fig-cap: 'Empirical density plots of bootstrap replications of fixed-effects parameter estimates'
 #| label: fig-bsbetadensity
 begin
-  f1 = Figure(; size=(1000, 400))
+  f1 = Figure(; size=(600, 300))
   CairoMakie.density!(
     Axis(f1[1, 1]; xlabel="Intercept [ms]"), tbl.β1
   )
@@ -334,7 +332,7 @@ hist(
   tbl.ρ1;
   bins=40,
   axis=(; xlabel="Estimated correlation of the random effects"),
-  figure=(; size=(500, 500)),
+  figure=(; size=(500, 300)),
 )
 ```
 
@@ -375,11 +373,11 @@ vcov(m1; corr=true)  # correlation estimate from the model
 let
   scatter(
     tbl.β1, tbl.β2,
-    color=(:blue, 0.20),
+    alpha=0.2,
     axis=(; xlabel="Intercept", ylabel="Coefficient of days"),
     figure=(; size=(500, 500)),
   )
-  contour!(kde((tbl.β1, tbl.β2)))
+  contour!(kde((tbl.β1, tbl.β2)); color=:black)
   current_figure()
 end
 ```
