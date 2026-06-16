@@ -11,6 +11,7 @@ using MixedModelsDatasets
 using PooledArrays
 using Random
 using Scratch
+using Suppressor
 using SHA
 using TypedTables
 using ZipFile
@@ -86,7 +87,7 @@ function fit_or_restore!(model::MixedModel, fname;
         @debug "restoring from cache"
         zip = ZipFile.Reader(fname)
         try
-            restoreoptsum!(model, only(zip.files); restore_kwargs...)
+            @suppress restoreoptsum!(model, only(zip.files); restore_kwargs...)
             return model
         catch ex
             @error "Something went wrong in reading the model cache from $(fname)"
