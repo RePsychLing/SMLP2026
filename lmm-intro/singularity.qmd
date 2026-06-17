@@ -1,6 +1,8 @@
 ---
 title: "Convergence, singularity and all that"
-author: "Douglas Bates"
+author: 
+- "Douglas Bates"
+- "Phillip Alday"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
