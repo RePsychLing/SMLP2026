@@ -93,6 +93,7 @@ function fit_or_restore!(model::MixedModel, fname;
             @error "Something went wrong in reading the model cache from $(fname)"
             fallback_to_new_fit || rethrow(ex)
             @error "Trying a new fit..."
+            MixedModels.unfit!(model)
         finally
             close(zip)
         end
