@@ -121,9 +121,9 @@ The `optsum.fitlog` property of the model is table that contains the value of th
 m01.optsum.fitlog
 ```
 
-There were 57 evaluations of the objective before convergence was declared, according to rather stringent convergence criteria.
+There were `{julia} length(m01.optsum.fitlog)` evaluations of the objective before convergence was declared, according to rather stringent convergence criteria.
 We can see that the last 10 evaluations only produced changes in the fourth decimal place of the objective or even smaller.
-That is, effective convergence occurred after about 40 or 45 evaluations.
+That is, effective convergence occurred a fair bit sooner.
 
 # A model that converges to a degenerate distribution
 
@@ -187,16 +187,16 @@ With little data the model often cannot estimate the intercept–slope correlati
 ```{julia}
 #| eval: false
 df = DataFrame(dataset(:sleepstudy))
-sub = filter(:subj => ∈(unique(df.subj)[1:6]), df)
+sub = filter(:subj => in(first(unique(df.subj), 3)), df)
 m = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), sub)
-issingular(m), m.σρs
+issingular(m)
 ```
 :::
 
 2. **Interpretation.** A converged model reports an intercept–slope correlation of exactly +1. What does that tell you about the estimated random-effects covariance, and what is a reasonable next step?
 
 ::: {.callout-note collapse="true" title="Solution"}
-A correlation of ±1 means the estimated 2×2 random-effects covariance is rank-deficient (degenerate) — the random intercept and slope are perfectly collinear, so the data do not support two independent random-effect dimensions. A reasonable response is to simplify the random-effects structure (e.g. a zero-correlation parametrization `zerocorr(...)` or dropping the random slope) rather than treating the correlation as a substantive estimate.
+A correlation of ±1 means the estimated random-effects covariance is rank-deficient (degenerate) — the random intercept and slope are perfectly collinear, so the data do not support two independent random-effect dimensions. A reasonable response is to simplify the random-effects structure (e.g. a zero-correlation parametrization `zerocorr(...)` or dropping the random slope) rather than treating the correlation as a substantive estimate. We will discuss this more in subsequent lessons.
 :::
 
 ---
