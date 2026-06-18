@@ -34,7 +34,7 @@ using CairoMakie
 using DataFrames
 using LinearAlgebra
 using MixedModels
-using MixedModelsDatasets: dataset
+using SMLP2026: dataset
 using MixedModelsMakie
 using Random
 using ProgressMeter

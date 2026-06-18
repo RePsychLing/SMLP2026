@@ -61,10 +61,8 @@ The first `:` indicates that all the existing columns should be included.
 The other expression can be pairs (created with the `=>` operator) of the form `:col => function` or of the form `:col => function => :newname`.
 (See the [documentation of the DataFrames package](http://juliadata.github.io/DataFrames.jl/stable/) for details.)
 
-In this case the function is an anonymous function of the form `round.(x, digits=1)` where "dot-broadcasting" is used to apply to the entire column (see [this documentation](https://docs.julialang.org/en/v1/manual/functions/#man-vectorized) for details).
-
 ```{julia}
-transform!(df, :age, :age => (x -> x .- 8.5) => :a1) # centered age (linear)
+transform!(df, :age, :age => ByRow(x -> x - 8.5) => :a1) # centered age (linear)
 select!(groupby(df, :Test), :, :score => zscore => :zScore) # z-score
 tlabels = [     # establish order and labels of tbl.Test
   "Run" => "Endurance",
@@ -94,36 +92,30 @@ The `AlgebraOfGraphics` package applies operators to the results of functions su
 
 ```{julia}
 let
-  design = mapping(:age, :zScore; color=:Sex, col=:Test)
+  design = mapping(:age => "Age", 
+                   :zScore => "Z Score"; 
+                   color=:Sex, 
+                   col=:Test => renamer(tlabels))
   lines = design * linear()
   means = design * visual(Scatter; markersize=5)
   draw(data(df2) * means + data(df) * lines)
 end
 ```
 
+  <!-- 
+  TODO 
   - TBD: Relabel factor levels (Boys, Girls; fitness components for Test)
   - TBD: Relevel factors; why not levels from Tables?
-  - TBD: Set range (7.8 to 9.2 and tick marks (8, 8.5, 9) of axes.
-  - TBD: Move legend in plot?
+  - TBD: Set range (7.8 to 9.2) and tick marks (8, 8.5, 9) of axes.
+  - TBD: Move legend in plot? 
+  -->
 
 ::: {#refs}
 :::
 
 ## Exercises
 
-1. **Add an aesthetic.** Extend the plot by mapping a grouping variable (for example `Sex`) to color. How does the `mapping(...)` call change?
-
-::: {.callout-note collapse="true" title="Solution"}
-Add the variable as a `color` argument to `mapping`. AlgebraOfGraphics then draws one colored series per level and adds a legend automatically.
-
-```{julia}
-#| eval: false
-# inside the existing plot, change the mapping to something like:
-mapping(:age, :score; color=:Sex, layout=:Test)
-```
-:::
-
-2. **Save the figure.** Write the final figure to a PNG file at a chosen resolution.
+1. **Save the figure.** Write the final figure to a PNG file at a chosen resolution.
 
 ::: {.callout-note collapse="true" title="Solution"}
 `draw` returns a Makie figure-axis-legend object; `save` writes it out.
