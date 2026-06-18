@@ -249,7 +249,7 @@ ridgeplot(m3btstrp)
 
 ```{julia}
 #| label: fig-ridgeplotnoint
-#| fig-cap: 'Ridge plot of the fixed-effects coefficients from the bootstrap sample (with the intercept)'
+#| fig-cap: 'Ridge plot of the fixed-effects coefficients from the bootstrap sample (without the intercept)'
 ridgeplot(m3btstrp; show_intercept=false)
 ```
 
