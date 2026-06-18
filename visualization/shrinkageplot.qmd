@@ -1,5 +1,5 @@
 ---
-title: "More on shrinkage plots"
+title: "Shrinkage plots"
 author: 
 - "Douglas Bates"
 - "Phillip Alday"
@@ -34,6 +34,7 @@ using CairoMakie
 using DataFrames
 using LinearAlgebra
 using MixedModels
+using MixedModelsDatasets: dataset
 using MixedModelsMakie
 using Random
 using ProgressMeter
@@ -47,10 +48,10 @@ using SMLP2026: fit_or_restore
 ```
 
 
-Load the kb07 data set (don't tell Reinhold that I used these data).
+Load the kb07 data set.
 
 ```{julia}
-kb07 = MixedModels.dataset(:kb07)
+kb07 = dataset(:kb07)
 ```
 
 ```{julia}
@@ -136,15 +137,16 @@ sqrt.(diag(Σ₁))
 
 ```{julia}
 #| label: fig-m1shrinkage
-#| fig-cap: Shrinkage plot of model m1
-#| code-fold: true
-shrinkageplot(m1)
+#| fig-cap: Shrinkage plot of model m1 for the `:subj` grouping term
+shrinkageplot!(Figure(; size=(500, 500)), m1)
 ```
 
 The upper left panel shows the perfect negative correlation for those two components of the random effects.
 
 ```{julia}
-shrinkageplot(m1, :item)
+#| label: fig-m1shrinkage-item
+#| fig-cap: Shrinkage plot of model m1 for the `:item` grouping term
+shrinkageplot!(Figure(; size=(500, 500)), m1, :item)
 ```
 
 ```{julia}
@@ -197,7 +199,7 @@ VarCorr(m2)
 #| fig-cap: Shrinkage plot of model m2
 #| label: fig-m2shrinkage
 #| code-fold: true
-shrinkageplot(m2)
+shrinkageplot!(Figure(; size=(250, 250)), m2)
 ```
 
 ```{julia}
@@ -306,7 +308,10 @@ end
 ```{julia}
 #| label: fig-scatterm4
 #| fig-cap: Residuals versus fitted values for model m4
-scatter(fitted(m4), residuals(m4))
+fig = Figure(; size=(400, 400))
+ax = fig[1, 1] = Axis(fig)
+scatter!(ax, fitted(m4), residuals(m4); alpha=0.5)
+fig
 ```
 
 ## Exercises
@@ -320,7 +325,7 @@ The `sleepstudy` random effects are well supported by the data, so the condition
 #| eval: false
 df = DataFrame(dataset(:sleepstudy))
 m = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), df)
-shrinkageplot(m)
+shrinkageplot!(Figure(; size=(500, 500)), m)
 ```
 :::
 
