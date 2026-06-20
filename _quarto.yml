@@ -84,9 +84,9 @@ website:
         - visualization/AoGPlots.qmd
       - section: "Building Models: Specification & Random Effects"
         contents:
-        - model-specification/partial_within.qmd
         - model-specification/mrk17.qmd
         - model-specification/largescaledesigned.qmd
+        - model-specification/partial_within.qmd
       - section: "Contrast Coding & Transformations"
         contents:
         - contrasts/transformation.qmd
