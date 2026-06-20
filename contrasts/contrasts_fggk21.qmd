@@ -22,9 +22,6 @@ After working through this page you will be able to:
 
 This script uses a subset of data reported in @Fuehner2021.
 
-To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication.
-All the data to reproduce the models in the publication are used here, too; the script requires only a few changes to specify the more complex models in the paper.
-
 All children were between 6.0 and 6.99 years at legal keydate (30 September) of school enrollment, that is in their ninth year of life in the third grade.
 To avoid delays associated with model fitting we work with a reduced data set and less complex models than those in the reference publication.
 The script requires only a few changes to specify the more complex models in the paper.
@@ -144,17 +141,17 @@ The main results of relevance here are shown in Figure 2 of [Scientific Reports 
 
 Contrast coding is part of `StatsModels.jl`. Here is the primary author's (i.e., Dave Kleinschmidt's) documentation of  [Modeling Categorical Data](https://juliastats.org/StatsModels.jl/stable/contrasts/#Modeling-categorical-data).
 
-A couple of general remarks about the following examples. First, all contrasts defined in this tutorial return an estimate of the _Grand Mean_ (GM) in the intercept, that is they are so-called sum-to-zero contrasts. In both `Julia` and `R` the default contrast is _Dummy_ coding which is not a sum-to-zero contrast, but returns the mean of the reference (control) group - unfortunately for (quasi-)experimentally minded scientists.
+A couple of general remarks about the following examples. First, all contrasts defined in this tutorial return an estimate of the Grand Mean (GM) in the intercept, that is they are so-called sum-to-zero contrasts. In both `Julia` and `R` the default contrast is dummy coding which is not a sum-to-zero contrast, but returns the mean of the reference (control) group - unfortunately for (quasi-)experimentally minded scientists.
 
-Second, The factor `Sex` has only two levels. We use _EffectCoding_ (also known as _Sum_ coding in `R`) to estimate the difference of the levels from the Grand Mean. Unlike in `R`, the default sign of the effect is for the second level (_base_ is the first,  not the last level), but this can be changed with the `base` kwarg in the command. _Effect_ coding is a sum-to-zero contrast, but when applied to factors with more than two levels does not yield orthogonal contrasts.
+Second, the factor `Sex` has only two levels. We use effects coding (also known as sum coding in `R`) to estimate the difference of the levels from the Grand Mean. Unlike in `R`, the default sign of the effect is for the second level (the base level is the first,  not the last level), but this can be changed with the `base` kwarg in the command. Effects coding is a sum-to-zero contrast, but when applied to factors with more than two levels does not yield orthogonal contrasts.
 
 Finally, contrasts for the five levels of the fixed factor `Test` represent the hypotheses about differences between them. In this tutorial, we use this factor to illustrate various options.
 
 **We (initially) include only `Test` as fixed factor and `Child` as random factor. More complex LMMs can be specified by simply adding other fixed or random factors to the formula.**
 
-## _SeqDiffCoding_: `contr1`
+## Sequential difference coding: `contr1`
 
-_SeqDiffCoding_ was used in the publication. This specification tests pairwise differences between the five neighboring levels of `Test`, that is:
+Sequential difference coding was used in the publication. This specification tests pairwise differences between the five neighboring levels of `Test`, that is:
 
   - SDC1: 2-1
   - SDC2: 3-2
@@ -163,7 +160,7 @@ _SeqDiffCoding_ was used in the publication. This specification tests pairwise d
 
 The levels were sorted such that these contrasts map onto four  _a priori_ hypotheses; in other words, they are _theoretically_ motivated pairwise comparisons. The motivation also encompasses theoretically motivated interactions with `Sex`. The order of levels can also be explicitly specified during contrast construction. This is very useful if levels are in a different order in the dataframe. We recommend the explicit specification to increase transparency of the code.
 
-The statistical disadvantage of _SeqDiffCoding_ is that the contrasts are not orthogonal, that is the contrasts are correlated. This is obvious from the fact that levels 2, 3, and 4 are all used in two contrasts. One consequence of this is that correlation parameters estimated between neighboring contrasts (e.g., 2-1 and 3-2) are difficult to interpret. Usually, they will be negative because assuming some practical limitation on the overall range (e.g., between levels 1 and 3), a small "2-1" effect "correlates" negatively with a larger "3-2" effect for mathematical reasons.
+The statistical disadvantage of sequential difference coding is that the contrasts are not orthogonal, that is the contrasts are correlated. This is obvious from the fact that levels 2, 3, and 4 are all used in two contrasts. One consequence of this is that correlation parameters estimated between neighboring contrasts (e.g., 2-1 and 3-2) are difficult to interpret. Usually, they will be negative because assuming some practical limitation on the overall range (e.g., between levels 1 and 3), a small "2-1" effect "correlates" negatively with a larger "3-2" effect for mathematical reasons.
 
 Obviously, the tradeoff between theoretical motivation and statistical purity is something that must be considered carefully when planning the analysis.
 
@@ -183,7 +180,7 @@ m_ovi_SeqDiff_1 = lmm(@formula(zScore ~ 1 + Test + (1 | Child)),
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_SeqDiff_1 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_1.json",
                                   @formula(zScore ~ 1 + Test + (1 | Child)),
                                   dat; contrasts=contr1, progress)
@@ -200,7 +197,7 @@ m_ovi_SeqDiff_2 = lmm(@formula(zScore ~ 1 + Test * a1 + (1 | Child)),
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_SeqDiff_2 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_2.json",
                                   @formula(zScore ~ 1 + Test * a1 + (1 | Child)),
                                   dat; contrasts=contr1, progress)
@@ -219,7 +216,7 @@ m_ovi_SeqDiff_3 = lmm(@formula(zScore ~ 1 + Test * (a1 + Sex) + (1 | Child)),
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_SeqDiff_3 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_3.json",
                                   @formula(zScore ~ 1 + Test * (a1 + Sex) + (1 | Child)),
                                   dat; contrasts=contr1, progress)
@@ -241,7 +238,7 @@ m_ovi_SeqDiff = lmm(f_ovi, dat; contrasts=contr1, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_SeqDiff = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff.json", f_ovi, dat; contrasts=contr1, progress)
 ```
 
@@ -249,9 +246,9 @@ The results are very clear: Despite an abundance of statistical power there is n
 
 In the next two sections we use different contrasts. Does this have a bearing on this result?  We still ignore for now that we are looking at anti-conservative test statistics.
 
-## _HelmertCoding_: `contr2`
+## _Helmert coding: `contr2`
 
-The second set of contrasts uses _HelmertCoding_. Helmert coding codes each level as the difference from the average of the lower levels. With the default order of `Test` levels we get the following test statistics which we describe in reverse order of appearance in model output
+The second set of contrasts uses Helmert coding. Helmert coding encodes each level as the difference from the average of the lower levels. With the default order of `Test` levels we get the following test statistics which we describe in reverse order of appearance in model output
 
   - HeC4: 5 - mean(1,2,3,4)
   - HeC3: 4 - mean(1,2,3)
@@ -268,7 +265,7 @@ The justification for HeC3 is that`Run` (1) and `Star_r` (2) draw more strongly 
 
 Finally, HeC1 contrasts the fitness components Endurance, indicated best by Run (1), and Coordination, indicated by `Star_r` (2). Endurance (i.e., running for 6 minutes) is considered to be the best indicator of health-related status among the five tests because it is a rather pure measure of cardiorespiratory fitness. The `Star_r` test requires execution of a pre-instructed sequence of forward, sideways, and backward runs. This coordination of body movements implies a demand on working memory (i.e., remembering the order of these subruns) and executive control processes, but performance also depends on endurance. HeC1 yields a measure of Coordination "corrected" for the contribution of Endurance.
 
-The statistical advantage of _HelmertCoding_ is that the resulting contrasts are orthogonal (uncorrelated). This allows for optimal partitioning of variance and statistical power. It is also more efficient to estimate "orthogonal" than "non-orthogonal" random-effect structures.
+The statistical advantage of Helmert coding is that the resulting contrasts are orthogonal (uncorrelated). This allows for optimal partitioning of variance and statistical power. It is also more efficient to estimate "orthogonal" than "non-orthogonal" random-effect structures.
 
 ```{julia}
 contr2 = Dict(
@@ -285,7 +282,7 @@ m_ovi_Helmert = lmm(f_ovi, dat; contrasts=contr2, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_Helmert = fit_or_restore("contrasts_fggk21_m_ovi_Helmert.json", f_ovi, dat; contrasts=contr2, progress)
 ```
 
@@ -297,9 +294,9 @@ The default labeling of Helmert contrasts may lead to confusions with other cont
 
 Once the order of levels is memorized the proposed labelling is very transparent.
 
-## _HypothesisCoding_: `contr3`
+## Hypothesis coding: `contr3`
 
-The third set of contrasts uses _HypothesisCoding_. _Hypothesis coding_ allows the user to specify their own _a priori_ contrast matrix, subject to the mathematical constraint that the matrix has full rank. For example, sport scientists agree that the first four tests can be contrasted with `BPT`, because the difference is akin to a correction of overall physical fitness. However, they want to keep the pairwise comparisons for the first four tests.
+The third set of contrasts uses hypothesis coding. Hypothesis coding allows the user to specify their own _a priori_ contrast matrix, subject to the mathematical constraint that the matrix has full rank. For example, sport scientists agree that the first four tests can be contrasted with `BPT`, because the difference is akin to a correction of overall physical fitness. However, they want to keep the pairwise comparisons for the first four tests.
 
   - HyC1: `BPT` - mean(1,2,3,4)
   - HyC2: `Star_r` - `Run_r`
@@ -328,11 +325,11 @@ m_ovi_Hypo = lmm(f_ovi, dat; contrasts=contr3, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_Hypo = fit_or_restore("contrasts_fggk21_m_ovi_Hypo.json", f_ovi, dat; contrasts=contr3, progress)
 ```
 
-With _HypothesisCoding_ we must generate our own labels for the contrasts. The default labeling of contrasts is usually not interpretable. Therefore, we provide our own.
+With hypothesis coding we must generate our own labels for the contrasts. The default labeling of contrasts is usually not interpretable. Therefore, we provide our own.
 
 Anyway, none of the interactions between `age` x `Sex` with the four `Test` contrasts was significant for these contrasts.
 
@@ -358,7 +355,7 @@ m_ovi_SeqDiff_v2 = lmm(f_ovi, dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_ovi_SeqDiff_v2 = fit_or_restore("contrasts_fggk21_m_ovi_SeqDiff_v2.json", f_ovi, dat; contrasts=contr1b, progress)
 ```
 
@@ -369,7 +366,7 @@ m_zcp_SeqD = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Chi
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp_SeqD = fit_or_restore("contrasts_fggk21_m_zcp_SeqD.json",
                              @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child)),
                              dat; contrasts=contr1b, progress)
@@ -382,7 +379,7 @@ m_zcp_SeqD_2 = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp_SeqD_2 = fit_or_restore("contrasts_fggk21_m_zcp_SeqD_2.json",
                                @formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
                                dat; contrasts=contr1b, progress)
@@ -395,7 +392,7 @@ m_cpx_0_SeqDiff = lmm(@formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_cpx_0_SeqDiff = fit_or_restore("contrasts_fggk21_m_cpx_0_SeqDiff.json",
                                   @formula(zScore ~ 1 + Test * a1 * Sex + (0 + Test | Child)),
                                   dat; contrasts=contr1b, progress)
@@ -419,7 +416,7 @@ m_cpx_1_SeqDiff = lmm(f_cpx_1, dat; contrasts=contr1b, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_cpx_1_SeqDiff = fit_or_restore("contrasts_fggk21_m_cpx_1_SeqDiff.json", f_cpx_1, dat; contrasts=contr1b, progress)
 ```
 
@@ -427,9 +424,9 @@ m_cpx_1_SeqDiff = fit_or_restore("contrasts_fggk21_m_cpx_1_SeqDiff.json", f_cpx_
 m_cpx_1_SeqDiff.PCA
 ```
 
-## _PCA-based HypothesisCoding_: `contr4`
+## PCA-based hypothesis coding: `contr4`
 
-The fourth set of contrasts uses _HypothesisCoding_ to specify the set of contrasts implementing the loadings of the four principal components of the published LMM based on test scores, not test effects (contrasts) &mdash; coarse-grained, that is roughly according to their signs. This is actually a very interesting and plausible solution nobody had proposed _a priori_.
+The fourth set of contrasts uses hypothesis coding to specify the set of contrasts implementing the loadings of the four principal components of the published LMM based on test scores, not test effects (contrasts); in other words, roughly according to their signs. This is actually a very interesting and plausible solution nobody had proposed _a priori_.
 
   - PC1: `BPT` - `Run_r`
   - PC2: (`Star_r` + `S20_r` + `SLJ`) - (`BPT` + `Run_r`)
@@ -460,7 +457,7 @@ m_cpx_1_PC = lmm(f_cpx_1, dat; contrasts=contr4, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_cpx_1_PC = fit_or_restore("contrasts_fggk21_m_cpx_1_PC.json", f_cpx_1, dat; contrasts=contr4, progress)
 ```
 
@@ -497,7 +494,7 @@ m_cpx_1_PC_2 = lmm(f_cpx_1, dat; contrasts=contr4b, progress, optimizer=:LN_BOBY
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_cpx_1_PC_2 = fit_or_restore("contrasts_fggk21_m_cpx_1_PC_2.json", f_cpx_1, dat; contrasts=contr4b, progress, optimizer=:LN_BOBYQA)
 ```
 
@@ -517,7 +514,7 @@ m_zcp_1_PC_2 = lmm(@formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp_1_PC_2 = fit_or_restore("contrasts_fggk21_m_zcp_1_PC_2.json",
                                @formula(zScore ~ 1 + Test*a1*Sex + zerocorr(1 + Test | Child)),
                                dat; contrasts=contr4b, progress, optimizer=:LN_NEWUOA)
@@ -535,7 +532,7 @@ likelihoodratiotest(m_zcp_1_PC_2, m_cpx_1_PC_2)
 
 ## Contrasts are re-parameterizations of the same model
 
-The choice of contrast does not affect the model objective, in other words, they  all yield the same goodness of fit. It does not matter whether a contrast is orthogonal or not.
+The choice of contrast does not affect the model objective, in other words, they all yield the same goodness of fit. It does not matter whether a contrast is orthogonal or not.
 
 ```{julia}
 [
@@ -556,16 +553,16 @@ f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
 m_Child_SDC = lmm(f_Child, dat; contrasts=contr1, progress, optimizer=:LN_BOBYQA)
 m_Child_HeC = lmm(f_Child, dat; contrasts=contr2, progress, optimizer=:LN_NELDERMEAD)
 m_Child_HyC = lmm(f_Child, dat; contrasts=contr3, progress, optimizer=:LN_NELDERMEAD)
-m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD)
+m_Child_PCA = lmm(f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD);
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 f_Child = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test | Child))
 m_Child_SDC = fit_or_restore("contrasts_fggk21_m_Child_SDC.json", f_Child, dat; contrasts=contr1, progress, optimizer=:LN_BOBYQA)
 m_Child_HeC = fit_or_restore("contrasts_fggk21_m_Child_HeC.json", f_Child, dat; contrasts=contr2, progress, optimizer=:LN_NELDERMEAD)
 m_Child_HyC = fit_or_restore("contrasts_fggk21_m_Child_HyC.json", f_Child, dat; contrasts=contr3, progress, optimizer=:LN_NELDERMEAD)
-m_Child_PCA = fit_or_restore("contrasts_fggk21_m_Child_PCA.json", f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD)
+m_Child_PCA = fit_or_restore("contrasts_fggk21_m_Child_PCA.json", f_Child, dat; contrasts=contr4, progress, optimizer=:LN_NELDERMEAD);
 ```
 
 ```{julia}
@@ -598,7 +595,7 @@ m_Child_PCA0 = lmm(f_Child0, dat; contrasts=contr4, progress, optimizer=:LN_NEWU
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 f_Child0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test | Child))
 m_Child_SDC0 = fit_or_restore("contrasts_fggk21_m_Child_SDC0.json", f_Child0, dat; contrasts=contr1, progress, optimizer=:LN_NEWUOA)
 m_Child_HeC0 = fit_or_restore("contrasts_fggk21_m_Child_HeC0.json", f_Child0, dat; contrasts=contr2, progress, optimizer=:LN_NEWUOA)
@@ -639,7 +636,7 @@ gof_summary = sort!(
 )
 ```
 
-The best fit was obtained for the PCA-based zcpLMM. Somewhat surprisingly the second best fit was obtained for the SDC. The relatively poor performance of HeC-based zcpLMM is puzzling to me. I thought it might be related to imbalance in design in the present data, but this does not appear to be the case. The same comparison of _SequentialDifferenceCoding_ and _Helmert Coding_ also showed a worse fit for the zcp-HeC LMM than the zcp-SDC LMM.
+The best fit was obtained for the PCA-based zcpLMM. Somewhat surprisingly the second best fit was obtained for the SDC. The relatively poor performance of HeC-based zcpLMM is puzzling to me. I thought it might be related to imbalance in design in the present data, but this does not appear to be the case. The same comparison of sequential difference and Helmert coding also showed a worse fit for the zcp-HeC LMM than the zcp-SDC LMM.
 
 ## VCs and CPs depend on random factor
 
@@ -655,16 +652,16 @@ f_School = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test + a1 | School))
 m_School_SeqDiff = lmm(f_School, dat; contrasts=contr1, progress)
 m_School_Helmert = lmm(f_School, dat; contrasts=contr2, progress)
 m_School_Hypo = lmm(f_School, dat; contrasts=contr3, progress)
-m_School_PCA = lmm(f_School, dat; contrasts=contr4, progress)
+m_School_PCA = lmm(f_School, dat; contrasts=contr4, progress);
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 f_School = @formula(zScore ~ 1 + Test * a1 * Sex + (1 + Test + a1 | School))
 m_School_SeqDiff = fit_or_restore("contrasts_fggk21_m_School_SeqDiff.json", f_School, dat; contrasts=contr1)
 m_School_Helmert = fit_or_restore("contrasts_fggk21_m_School_Helmert.json", f_School, dat; contrasts=contr2)
 m_School_Hypo = fit_or_restore("contrasts_fggk21_m_School_Hypo.json", f_School, dat; contrasts=contr3)
-m_School_PCA = fit_or_restore("contrasts_fggk21_m_School_PCA.json", f_School, dat; contrasts=contr4)
+m_School_PCA = fit_or_restore("contrasts_fggk21_m_School_PCA.json", f_School, dat; contrasts=contr4);
 ```
 
 ```{julia}
@@ -691,16 +688,16 @@ f_School0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test + a1 | Sch
 m_School_SDC0 = lmm(f_School0, dat; contrasts=contr1, progress)
 m_School_HeC0 = lmm(f_School0, dat; contrasts=contr2, progress)
 m_School_HyC0 = lmm(f_School0, dat; contrasts=contr3, progress)
-m_School_PCA0 = lmm(f_School0, dat; contrasts=contr4, progress)
+m_School_PCA0 = lmm(f_School0, dat; contrasts=contr4, progress);
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 f_School0 = @formula(zScore ~ 1 + Test * a1 * Sex + zerocorr(1 + Test + a1 | School))
 m_School_SDC0 = fit_or_restore("contrasts_fggk21_m_School_SDC0.json", f_School0, dat; contrasts=contr1, progress)
 m_School_HeC0 = fit_or_restore("contrasts_fggk21_m_School_HeC0.json", f_School0, dat; contrasts=contr2, progress)
 m_School_HyC0 = fit_or_restore("contrasts_fggk21_m_School_HyC0.json", f_School0, dat; contrasts=contr3, progress)
-m_School_PCA0 = fit_or_restore("contrasts_fggk21_m_School_PCA0.json", f_School0, dat; contrasts=contr4, progress)
+m_School_PCA0 = fit_or_restore("contrasts_fggk21_m_School_PCA0.json", f_School0, dat; contrasts=contr4, progress);
 ```
 
 ```{julia}
