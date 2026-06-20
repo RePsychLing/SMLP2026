@@ -45,7 +45,7 @@ In other words, from an interpretability standpoint, many continuous variables r
 
 ::: {.callout-note collapse="true" title="Scaling can also help numerical aspects of model fitting"}
 
-From a practical perspective, linear transformations of the predicots may also make model fitting easier.
+From a practical perspective, linear transformations of the predictors may also make model fitting easier.
 In an abstract mathematical sense, the scale of the variables does not matter, but computers and hence our software exist in a less idealized realm. 
 In an intuitive sense, we can think of rounding error -- if we are dealing with quantities on widely different scales, then the quantities on the larger scale will tend to dominate the quantities on the smaller scale. 
 This is why many guides on how to deal with convergence issues suggest scaling your variables.
@@ -62,20 +62,23 @@ using Effects
 using MixedModels
 using StandardizedPredictors
 using SMLP2026: dataset, fit_or_restore
+const progress = isinteractive()
 ```
 
 ```{julia}
 #| eval: false
 slp = fit(MixedModel,
           @formula(reaction ~ 1 + days + (1 + days |subj)),
-          dataset(:sleepstudy))
+          dataset(:sleepstudy),
+          progress)
 ```
 
 ```{julia}
 #| include: false
 slp = fit_or_restore("transformation_slp.json", MixedModel,
                      @formula(reaction ~ 1 + days + (1 + days |subj)),
-                     dataset(:sleepstudy))
+                     dataset(:sleepstudy);
+                     progress)
 ```
 
 ```{julia}
@@ -83,7 +86,8 @@ slp = fit_or_restore("transformation_slp.json", MixedModel,
 days_centered = fit(MixedModel,
                     @formula(reaction ~ 1 + days + (1 + days |subj)),
                     dataset(:sleepstudy);
-                    contrasts=Dict(:days => Center()))
+                    contrasts=Dict(:days => Center()),
+                    progress)
 ```
 
 ```{julia}
@@ -91,7 +95,8 @@ days_centered = fit(MixedModel,
 days_centered = fit_or_restore("transformation_days_centered.json", MixedModel,
                                @formula(reaction ~ 1 + days + (1 + days |subj)),
                                dataset(:sleepstudy);
-                               contrasts=Dict(:days => Center()))
+                               contrasts=Dict(:days => Center()),
+                               progress)
 ```
 
 If we look at the log-likelihood, AIC, BIC, etc. of these two models, we see that they are the same:
@@ -145,19 +150,20 @@ In other words, we can only check the quality of a given $\lambda$ by fitting a 
 Fortunately, [`BoxCox.jl`](https://palday.github.io/BoxCox.jl/v0.3.3/) makes this easy.
 
 The `fit` function takes two arguments:
-- the transformation to be fit (i.e. `BoxCoxTransformation`)
-- the model fit to the original data
+
+1. the transformation to be fit (i.e. `BoxCoxTransformation`)
+2. the model fit to the original data
 
 ```{julia}
 using BoxCox
-bc = fit(BoxCoxTransformation, slp)
+bc = fit(BoxCoxTransformation, slp; progress)
 ```
 
 :::{callout-note}
 For large models, fitting the `BoxCoxTransformation` can take a while because a mixed model must be repeatedly fit after each intermediate transformation.
 :::
 
-Although we receive a single "best" value (approximately -1.0747) from the fitting process, it is worthwhile to look at the profile likelihood plot for the transformation:
+Although we receive a single "best" value (approximately -1.1) from the fitting process, it is worthwhile to look at the profile likelihood plot for the transformation:
 
 ```{julia}
 # we need a plotting backend loaded before we can use plotting functionality
