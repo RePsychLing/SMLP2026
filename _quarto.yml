@@ -90,9 +90,9 @@ website:
       - section: "Contrast Coding & Transformations"
         contents:
         - contrasts/transformation.qmd
-        - contrasts/contrasts_fggk21.qmd
-        - contrasts/contrasts_kwdyz11.qmd
         - contrasts/sleepstudy_speed.qmd
+        - contrasts/contrasts_kwdyz11.qmd
+        - contrasts/contrasts_fggk21.qmd
       - section: "Inference & Uncertainty Quantification"
         contents:
         - inference/bootstrap.qmd
