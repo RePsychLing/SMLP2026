@@ -1,6 +1,9 @@
 ---
 title: "Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---

@@ -1,9 +1,11 @@
 ---
 title: "Visual Attention Effects: Kliegl et al. (2011)"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
-author: "Reinhold Kliegl"
 ---
 
 ::: {.objectives title="Learning objectives"} 

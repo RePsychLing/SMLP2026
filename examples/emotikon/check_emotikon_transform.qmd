@@ -1,6 +1,9 @@
 ---
 title: "Emotikon: Comparing Original and Transformed Metrics"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---

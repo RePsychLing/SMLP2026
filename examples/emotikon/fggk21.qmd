@@ -1,6 +1,9 @@
 ---
 title: "The Emotikon Project: Model Complexification and PCA"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---
