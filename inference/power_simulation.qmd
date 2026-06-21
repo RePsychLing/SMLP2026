@@ -30,10 +30,15 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsSim
 using StatsBase
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset
 using Random
 
 const progress = isinteractive()
+```
+
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
 ```
 
 # The Parametric Bootstrap
@@ -82,7 +87,7 @@ pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1;
 
 :::{.callout-tip collapse=true, title="`optsum_overrides`"}
 The option `optsum_overrides` allows us to pass additional arguments for controlling the model fitting of each simulation replicate.
-`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's acceptable tradeoff in order to get many more replicates.
+`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's acceptable tradeoff in order to get many more replicates. The MixedModels.jl documentation also includes a little note on the [reduced precision bootstrap](https://juliastats.org/MixedModels.jl/stable/bootstrap/#Reduced-Precision-Bootstrap)
 :::
 
 Now, if we look at the docstring for `parametricbootstrap`, we see that there are keyword-arguments for the various model parameters:
