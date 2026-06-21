@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
-<meta name="dcterms.date" content="2025-09-03">
+<meta name="dcterms.date" content="2026-06-21">
 
 <title>Useful packages – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -70,22 +70,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../getting-started/pkg.html" rel="next">
-<link href="../getting-started/about.html" rel="prev">
+<link href="../reference/arrow.html" rel="next">
+<link href="../examples/visual-attention/kkl15.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7692942acc74b2099579cecbd3e903d1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -118,6 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -316,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">Getting Started</a></li><li class="breadcrumb-item"><a href="../getting-started/useful_packages.html">Useful packages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Useful packages</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -338,13 +339,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Getting Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Start Here</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
@@ -359,20 +360,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/useful_packages.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Useful packages</span></a>
+  <a href="../getting-started/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup: installing the tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/pkg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package management and reproducible environments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../getting-started/arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Saving data with Arrow</span></a>
+  <a href="../getting-started/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dataset catalog</span></a>
   </div>
 </li>
       </ul>
@@ -380,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Introduction to Linear Mixed Models</span></a>
+ <span class="menu-text">Foundations: Linear Mixed Models</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -403,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Model Specification and Random Effects</span></a>
+ <span class="menu-text">Seeing Your Model: Visualization &amp; Diagnostics</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -411,20 +406,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Partially-within subjects designs</span></a>
+  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage plots</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../model-specification/largescaledesigned.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large-Scale Designed Experiments: The English Lexicon Project</span></a>
+  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
       </ul>
@@ -432,12 +421,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Contrast Coding and Transformations</span></a>
+ <span class="menu-text">Building Models: Specification &amp; Random Effects</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Contrast Coding &amp; Transformations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contrasts/transformation.html" class="sidebar-item-text sidebar-link">
@@ -446,8 +452,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -458,21 +464,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
+  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Inference: Uncertainty Quantification</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Inference &amp; Uncertainty Quantification</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../inference/bootstrap.html" class="sidebar-item-text sidebar-link">
@@ -487,21 +493,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../inference/kb07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bootstrapping a fitted model</span></a>
+  <a href="../inference/power_simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using simulation to estimate uncertainty and power</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">Generalized Linear Mixed Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../glmm/glmm.html" class="sidebar-item-text sidebar-link">
@@ -512,31 +518,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Visualization and Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">More on shrinkage plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Creating multi-panel plots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
- <span class="menu-text">Extended Worked Examples</span></a>
+ <span class="menu-text">Capstone Worked Examples</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -590,6 +573,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference &amp; Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Useful packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/pkg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package management and reproducible environments</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -621,13 +633,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#connecting-to-other-languages" id="toc-connecting-to-other-languages" class="nav-link" data-scroll-target="#connecting-to-other-languages"><span class="header-section-number">4</span> Connecting to Other Languages</a></li>
   </ul>
-<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/useful_packages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/useful_packages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">Getting Started</a></li><li class="breadcrumb-item"><a href="../getting-started/useful_packages.html">Useful packages</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Useful packages</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Useful packages</h1>
 </div>
@@ -646,7 +658,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-09-03</p>
+      <p class="date">2026-06-21</p>
     </div>
   </div>
   
@@ -689,7 +701,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The basic functionality looks quite similar to R, e.g.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x), data)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">glm</span>(<span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x), data, <span class="fu">Binomial</span>(), <span class="fu">LogitLink</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>but the more general modelling API (also used by MixedModels.jl) is also supported:</p>
+<p>but the more general modeling API (also used by MixedModels.jl) is also supported:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">fit</span>(LinearModel, <span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x), mydata)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">fit</span>(</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  GeneralizedLinearModel,</span>
@@ -754,9 +766,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For MATLAB users, there is also <a href="https://github.com/JuliaInterop/MATLAB.jl">MATLAB.jl</a></p>
 <p><a href="https://juliainterop.github.io/Cxx.jl/stable/">Cxx.jl</a> provides interoperability with C++. It also provides a C++ REPL mode, making it possible to treat C++ much more like a dynamic language than the traditional compiler toolchain would allow.</p>
 <p>Support for calling C and Fortran is <a href="https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/">part of the Julia standard library</a>.</p>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/0e399c4
-">0e399c4
-</a> using Quarto 1.9.36.</em></p>
+<hr>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
+">e563d55
+</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
 
 
 </section>
@@ -1177,13 +1190,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../getting-started/about.html" class="pagination-link" aria-label="About">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About</span>
+      <a href="../examples/visual-attention/kkl15.html" class="pagination-link" aria-label="Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../getting-started/pkg.html" class="pagination-link" aria-label="Package management and reproducible environments">
-        <span class="nav-page-text">Package management and reproducible environments</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/arrow.html" class="pagination-link" aria-label="Saving data with Arrow">
+        <span class="nav-page-text">Saving data with Arrow</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1192,4 +1205,4 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/useful_packages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/useful_packages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

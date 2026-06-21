@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-04-10">
+<meta name="author" content="Reinhold Kliegl">
+<meta name="author" content="Phillip Alday">
+<meta name="dcterms.date" content="2026-06-21">
 
 <title>The Emotikon Project: Model Complexification and PCA – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -63,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -89,21 +92,21 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../examples/emotikon/check_emotikon_transform.html" rel="next">
-<link href="../../visualization/AoGPlots.html" rel="prev">
+<link href="../../glmm/glmm.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-7692942acc74b2099579cecbd3e903d1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -139,6 +142,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -337,7 +341,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Extended Worked Examples</li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project</a></li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project: Model Complexification and PCA</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Capstone Worked Examples</li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project</a></li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project: Model Complexification and PCA</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -360,7 +364,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Getting Started</span></a>
+ <span class="menu-text">Start Here</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -380,20 +384,14 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../getting-started/useful_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Useful packages</span></a>
+  <a href="../../getting-started/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup: installing the tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../getting-started/pkg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package management and reproducible environments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../getting-started/arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Saving data with Arrow</span></a>
+  <a href="../../getting-started/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dataset catalog</span></a>
   </div>
 </li>
       </ul>
@@ -401,7 +399,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Introduction to Linear Mixed Models</span></a>
+ <span class="menu-text">Foundations: Linear Mixed Models</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -424,7 +422,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Model Specification and Random Effects</span></a>
+ <span class="menu-text">Seeing Your Model: Visualization &amp; Diagnostics</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -432,20 +430,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Partially-within subjects designs</span></a>
+  <a href="../../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage plots</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../model-specification/largescaledesigned.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large-Scale Designed Experiments: The English Lexicon Project</span></a>
+  <a href="../../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
       </ul>
@@ -453,12 +445,29 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Contrast Coding and Transformations</span></a>
+ <span class="menu-text">Building Models: Specification &amp; Random Effects</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Contrast Coding &amp; Transformations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contrasts/transformation.html" class="sidebar-item-text sidebar-link">
@@ -467,8 +476,8 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="../../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -479,21 +488,21 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
+  <a href="../../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Inference: Uncertainty Quantification</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Inference &amp; Uncertainty Quantification</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../inference/bootstrap.html" class="sidebar-item-text sidebar-link">
@@ -508,21 +517,21 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../inference/kb07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bootstrapping a fitted model</span></a>
+  <a href="../../inference/power_simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using simulation to estimate uncertainty and power</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">Generalized Linear Mixed Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../glmm/glmm.html" class="sidebar-item-text sidebar-link">
@@ -533,31 +542,8 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Visualization and Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">More on shrinkage plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Creating multi-panel plots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">Extended Worked Examples</span></a>
+ <span class="menu-text">Capstone Worked Examples</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -611,6 +597,35 @@ div.csl-indent {
   </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reference &amp; Appendix</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../reference/useful_packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Useful packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../reference/arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../reference/pkg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package management and reproducible environments</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -650,6 +665,7 @@ div.csl-indent {
   <li><a href="#covariance-parameter-estimates" id="toc-covariance-parameter-estimates" class="nav-link" data-scroll-target="#covariance-parameter-estimates"><span class="header-section-number">6.3</span> Covariance parameter estimates</a></li>
   <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">6.4</span> Model “predictions”</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also"><span class="header-section-number">6.5</span> See Also</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.6</span> Exercises</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/examples/emotikon/fggk21.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -658,7 +674,7 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Extended Worked Examples</li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project</a></li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project: Model Complexification and PCA</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Capstone Worked Examples</li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project</a></li><li class="breadcrumb-item"><a href="../../examples/emotikon/fggk21.html">The Emotikon Project: Model Complexification and PCA</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">The Emotikon Project: Model Complexification and PCA</h1>
 </div>
@@ -667,11 +683,18 @@ div.csl-indent {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Reinhold Kliegl </p>
+             <p>Phillip Alday </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-04-10</p>
+      <p class="date">2026-06-21</p>
     </div>
   </div>
   
@@ -683,7 +706,29 @@ div.csl-indent {
 </header>
 
 
-<p>This script uses a subset of data reported in <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span>. To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication. All the data to reproduce the models in the publication are used here, too; the script requires only a few changes to specify the more complex models in the article.</p>
+<div class="objectives">
+<p><strong>Learning objectives</strong> — this capstone pulls the course together on a large dataset. After working through it you will be able to:</p>
+<ul>
+<li>carry out a complete analysis: data preparation, plotting the main results, contrast specification, and model complexification;</li>
+<li>use PCA of the random effects to guide the random-effects structure;</li>
+<li>interpret a parsimonious model for the Emotikon fitness data.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Prerequisites:</strong> <a href="../../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a>; <a href="../../visualization/AoGPlots.html">Creating multi-panel plots</a>.</p>
+<p><strong>Datasets used:</strong> <code>fggk21</code> (Emotikon; see the <a href="../../getting-started/datasets.html">dataset catalog</a>).</p>
+</div>
+</div>
+<p>This script uses a subset of data reported in <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span>. To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication. All the data to reproduce the models in the publication are used here, too; the script requires only a few changes to specify the more complex models in the article.</p>
 <p>The script is structured in four main sections:</p>
 <ol type="1">
 <li><strong>Setup</strong> with reading and examining the data, plotting the main results, and specifying the contrasts for the fixed factor <code>Test</code></li>
@@ -714,6 +759,14 @@ div.csl-indent {
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   7964.1 ms<span class="ansi-green-fg">  ✓ </span>SMLP2026
+  1 dependency successfully precompiled in 8 seconds. 397 already precompiled.
+</pre>
+</div>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>false</code></pre>
 </div>
@@ -1202,7 +1255,7 @@ div.csl-indent {
 <section id="extract-a-stratified-subsample" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="extract-a-stratified-subsample"><span class="header-section-number">3.2</span> Extract a stratified subsample</h2>
 <p>For the prupose of the tutorial, we extract a random sample of 1000 boys and 1000 girls. <code>Child</code>, <code>School</code>, and <code>Cohort</code> are grouping variables. Traditionally, they are called random factors because the units (levels) of the factor are assumed to be a random sample from the population of their units (levels).</p>
-<p>Cohort has only nine “groups” and could have been included as a set of polynomical fixed-effect contrasts rather than a random factor. This choice warrants a short excursion: The secular trends are very different for different tests and require the inclusion of interaction terms with <code>Test</code> contrasts (see Figure 4 in <span class="citation" data-cites="Fuehner2021">[@Fuehner2021]</span>. The authors opted to absorb these effects in cohort-related variance components for the <code>Test</code> contrasts and plan to address the details of secular changes in a separate analysis.</p>
+<p>Cohort has only nine “groups” and could have been included as a set of polynomical fixed-effect contrasts rather than a random factor. This choice warrants a short excursion: The secular trends are very different for different tests and require the inclusion of interaction terms with <code>Test</code> contrasts (see Figure 4 in <span class="citation" data-cites="Fuehner2021">(<a href="#ref-Fuehner2021" role="doc-biblioref">Fühner et al., 2021</a>)</span>. The authors opted to absorb these effects in cohort-related variance components for the <code>Test</code> contrasts and plan to address the details of secular changes in a separate analysis.</p>
 <p>For complex designs, when they are in the theoretical focus of an article, factors and covariates should be specified as part of the fixed effects. If they are not in the theoretical focus, but serve as statistical control variables, they could be put in the RES - if supported by the data.</p>
 <p><strong>Stratified sampling:</strong> We generate a <code>Child</code> table with information about children. <code>MersenneTwister(42)</code> specifies <strong>42</strong> as the seed for the random number generator to ensure reproducibility of the stratification. For a different pattern of results choose, for example, <strong>84</strong>. We randomly sample 1000 boys and 1000 girls from this table; they are stored in <code>samp</code>. Then, we extract the corresponding subset of these children’s test scores from <code>df</code> and store them <code>dat</code>.</p>
 <div id="8" class="cell" data-execution_count="1">
@@ -1785,7 +1838,7 @@ div.csl-indent {
 </div>
 <section id="figures-of-interaction" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="figures-of-interaction"><span class="header-section-number">3.3.1</span> Figure(s) of interaction</h3>
-<p>The core results of the article are reported in Figure 2 of <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span>. In summary:</p>
+<p>The core results of the article are reported in Figure 2 of <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span>. In summary:</p>
 <ul>
 <li>Main effects of <code>age</code> and <code>Sex</code>: There are developmental gains in the ninth year of life; boys outperform girls. There is no main effect of <code>Test</code> because of z-scoring.</li>
 <li>Interactions of <code>Test</code> and <code>age</code>: Tests differ in how much children improve during the year (i.e., the magnitude of developmental gain), that is slopes depend on <code>Test</code>.</li>
@@ -2293,7 +2346,6 @@ Figure&nbsp;2: Age trends by sex for each Test for the stratified sample
 <li>H4: <code>BPT</code> - <code>SLJ</code> (5-4)</li>
 </ul>
 <p>The levels were sorted such that these contrasts map onto four <em>a priori</em> hypotheses; in other words, they are <em>theoretically</em> motivated pairwise comparisons. The motivation also encompasses theoretically motivated interactions with <code>Sex</code>. The order of levels can also be explicitly specified during contrast construction. This is very useful if levels are in a different order in the dataframe.</p>
-<p>Note that random factors <code>Child</code>, <code>School</code>, and <code>Cohort</code> are declared as <code>Grouping</code> variables. Technically, this specification is required for variables with a very large number of levels (e.g., 100K+ children). We recommend the explicit specification for all random factors as a general coding style.</p>
 <p>The first command recodes names indicating the physical fitness components used in the above figures and tables back to the shorter actual test names. This reduces clutter in LMM outputs.</p>
 <div id="22" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">recode!</span>(</span>
@@ -2890,7 +2942,7 @@ Figure&nbsp;2: Age trends by sex for each Test for the stratified sample
 </div>
 </div>
 <p>The three models usually do <strong>not</strong> differ in fixed-effect estimates. For main effects of <code>age</code> and <code>Sex</code>, z-values decrease strongly with the complexity of the model (i.e., standard errors are larger). For other coefficients, the changes are not very large and not consistent.</p>
-<p>In general, dropping significant variance components and/or correlation parameters may lead to anti-conservative estimates of fixed effects <span class="citation" data-cites="Schielzeth2008">[e.g., @Schielzeth2008]</span>. Basically, some of the variance allocated to <code>age</code> and <code>Sex</code> in LMM <code>m_ovi</code> could also be due to differences between schools. This ambiguity increased the uncertainty of the respective fixed effects in the other two LMMs.</p>
+<p>In general, dropping significant variance components and/or correlation parameters may lead to anti-conservative estimates of fixed effects <span class="citation" data-cites="Schielzeth2008">(e.g., <a href="#ref-Schielzeth2008" role="doc-biblioref">Schielzeth &amp; Forstmeier, 2008</a>)</span>. Basically, some of the variance allocated to <code>age</code> and <code>Sex</code> in LMM <code>m_ovi</code> could also be due to differences between schools. This ambiguity increased the uncertainty of the respective fixed effects in the other two LMMs.</p>
 </section>
 </section>
 <section id="fitting-an-overparameterized-lmm" class="level2" data-number="4.5">
@@ -3130,7 +3182,7 @@ Warning
 <p>The following LMMs <code>m1</code>, <code>m2</code>, etc. take a bit longer (e.g., close to 6 minutes in the Pluto notebook, close to 3 minutes in the REPL on a MacBook Pro).</p>
 </div>
 </div>
-<p>LMM <code>m1</code> reported in <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span> included random factors for <code>School</code>, <code>Child</code>, and <code>Cohort</code>. The RES for <code>School</code> was specified like in LMM <code>m_cpx</code>. The RES for <code>Child</code> included VCs and CPs for <code>Test</code>, but not for linear developmental gain in the ninth year of life <code>a1</code> or <code>Sex</code>; they are between-<code>Child</code> effects.</p>
+<p>LMM <code>m1</code> reported in <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span> included random factors for <code>School</code>, <code>Child</code>, and <code>Cohort</code>. The RES for <code>School</code> was specified like in LMM <code>m_cpx</code>. The RES for <code>Child</code> included VCs and CPs for <code>Test</code>, but not for linear developmental gain in the ninth year of life <code>a1</code> or <code>Sex</code>; they are between-<code>Child</code> effects.</p>
 <p>The RES for <code>Cohort</code> included only VCs, no CPs for <code>Test</code>. The <em>parsimony</em> was due to the small number of nine levels for this grouping factor.</p>
 <p>Here we fit this LMM <code>m1</code> for the reduced data. For a different subset of similar size on MacBook Pro [13 | 15 | 16] this took [303 | 250 | 244 ] s; for LMM <code>m1a</code> (i.e., dropping 1 school-relate VC for <code>Sex</code>), times are [212 | 165 | 160] s. The corresponding <code>lme4</code> times for LMM <code>m1</code> are [397 | 348 | 195].</p>
 <p>Finally, times for fitting the full set of data –not in this script–, for LMM <code>m1</code>are [60 | 62 | 85] minutes (!); for LMM <code>m1a</code> the times were [46 | 48 | 34] minutes. It was not possible to fit the full set of data with <code>lme4</code>; after about 13 to 18 minutes the program stopped with: <code>Error in eval_f(x, ...) : Downdated VtV is not positive definite.</code></p>
@@ -4128,7 +4180,7 @@ Caution
 <section id="principle-component-analysis-of-random-effect-structure-repca" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="principle-component-analysis-of-random-effect-structure-repca"><span class="header-section-number">4.7</span> Principle Component Analysis of Random Effect Structure (rePCA)</h2>
 <p>The <code>ìssingular()</code> command is sort of a shortcut for a quick inspection of the principle components (PCs) of the variance-covariance matrix of the RES. With the <code>MixedModels.PCA()</code> command, we also obtain information about the amount of cumulative variance accounted for as we add PCs.</p>
-<p>The output also provides PC loadings which may facilitate interpretation of the CP matrices (if estimated). This topic will be picked uo in a separate vignette. See also <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span> for an application.</p>
+<p>The output also provides PC loadings which may facilitate interpretation of the CP matrices (if estimated). This topic will be picked uo in a separate vignette. See also <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span> for an application.</p>
 </section>
 <section id="effects-in-res" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="effects-in-res"><span class="header-section-number">4.8</span> Effects in RES</h2>
@@ -4767,6 +4819,22 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">ftol_zero_abs</td>
 <td style="text-align: left;">1.0e-5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pirls_maxiter</td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pirls_ftol_rel</td>
+<td style="text-align: left;">1.4901161193847656e-8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pirls_ftol_abs</td>
+<td style="text-align: left;">1.0e-5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pirls_maxhalfstep</td>
+<td style="text-align: left;">10</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Result</strong></td>
@@ -5959,14 +6027,61 @@ Figure&nbsp;5: Shrinkage plot of the random effects for Cohort in model m2
 <ul>
 <li><a href="../../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a> — applies a full range of contrast schemes (effect, Helmert, hypothesis, PCA-based) to the same Emotikon dataset.</li>
 <li><a href="../../examples/emotikon/check_emotikon_transform.html">Emotikon: Comparing Original and Transformed Metrics</a> — investigates whether the age × Sex × Test interaction changes when tasks are analyzed in their original time metric rather than speed.</li>
-<li><a href="../../visualization/AoGPlots.html">Creating Multi-Panel Plots</a> — reproduces the publication figure from <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span> using AlgebraOfGraphics.</li>
+<li><a href="../../visualization/AoGPlots.html">Creating Multi-Panel Plots</a> — reproduces the publication figure from <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span> using AlgebraOfGraphics.</li>
 </ul>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Fuehner2021" class="csl-entry" role="listitem">
+Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. <em>Scientific Reports</em>, <em>11</em>(1). <a href="https://doi.org/10.1038/s41598-021-97000-4">https://doi.org/10.1038/s41598-021-97000-4</a>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/0e399c4
-">0e399c4
-</a> using Quarto 1.9.36.</em></p>
+<div id="ref-Schielzeth2008" class="csl-entry" role="listitem">
+Schielzeth, H., &amp; Forstmeier, W. (2008). Conclusions beyond support: Overconfident estimates in mixed models. <em>Behavioral Ecology</em>, <em>20</em>(2), 416–420. <a href="https://doi.org/10.1093/beheco/arn145">https://doi.org/10.1093/beheco/arn145</a>
+</div>
+</div>
+</section>
+<section id="exercises" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.6</span> Exercises</h2>
+<ol type="1">
+<li><strong>Read the PCA.</strong> Inspect the principal-components decomposition of the random effects. How many components carry most of the variance, and how does that inform which random-effects terms to keep?</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If the first few components account for nearly all of the random-effects variance, the remaining dimensions are effectively redundant — the data do not support a full-rank random-effects covariance. That is the quantitative basis for reducing the random-effects structure (e.g.&nbsp;dropping near-zero components or correlation parameters) rather than guessing.</p>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><strong>Add a comparison.</strong> Add a contrast for the <code>Test</code> factor that encodes a comparison you find substantively interesting, refit, and check whether it changes the conclusions about the age-by-sex interaction.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Because re-coding a factor does not change the model fit, the omnibus conclusions (and the age-by-sex interaction) are unaffected; what changes is which specific comparison each <code>Test</code> coefficient reports. Use this to confirm that your substantive comparison is or is not significant without disturbing the rest of the model. See <a href="../../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a>.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
+">e563d55
+</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
 
 
 </section>
@@ -6388,8 +6503,8 @@ Figure&nbsp;5: Shrinkage plot of the random effects for Cohort in model m2
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../visualization/AoGPlots.html" class="pagination-link" aria-label="Creating multi-panel plots">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Creating multi-panel plots</span>
+      <a href="../../glmm/glmm.html" class="pagination-link" aria-label="Generalized linear mixed models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Generalized linear mixed models</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

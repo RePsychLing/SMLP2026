@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-04-10">
+<meta name="author" content="Phillip Alday">
+<meta name="author" content="Reinhold Kliegl">
+<meta name="dcterms.date" content="2026-06-21">
 
 <title>Large-Scale Designed Experiments: The English Lexicon Project – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -59,7 +61,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -69,22 +91,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../contrasts/transformation.html" rel="next">
-<link href="../model-specification/mrk17.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7692942acc74b2099579cecbd3e903d1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -120,6 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -318,7 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../model-specification/partial_within.html">Model Specification and Random Effects</a></li><li class="breadcrumb-item"><a href="../model-specification/largescaledesigned.html">Large-Scale Designed Experiments: The English Lexicon Project</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Large-Scale Designed Experiments: The English Lexicon Project</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -341,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Getting Started</span></a>
+ <span class="menu-text">Start Here</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -361,20 +382,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/useful_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Useful packages</span></a>
+  <a href="../getting-started/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup: installing the tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/pkg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package management and reproducible environments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../getting-started/arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Saving data with Arrow</span></a>
+  <a href="../getting-started/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dataset catalog</span></a>
   </div>
 </li>
       </ul>
@@ -382,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Introduction to Linear Mixed Models</span></a>
+ <span class="menu-text">Foundations: Linear Mixed Models</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -404,29 +419,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Model Specification and Random Effects</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Seeing Your Model: Visualization &amp; Diagnostics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Partially-within subjects designs</span></a>
+  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage plots</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../model-specification/largescaledesigned.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Large-Scale Designed Experiments: The English Lexicon Project</span></a>
+  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
       </ul>
@@ -434,12 +443,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Contrast Coding and Transformations</span></a>
+ <span class="menu-text">Building Models: Specification &amp; Random Effects</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Contrast Coding &amp; Transformations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contrasts/transformation.html" class="sidebar-item-text sidebar-link">
@@ -448,8 +474,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -460,21 +486,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
+  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Inference: Uncertainty Quantification</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Inference &amp; Uncertainty Quantification</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../inference/bootstrap.html" class="sidebar-item-text sidebar-link">
@@ -489,21 +515,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../inference/kb07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bootstrapping a fitted model</span></a>
+  <a href="../inference/power_simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using simulation to estimate uncertainty and power</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">Generalized Linear Mixed Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../glmm/glmm.html" class="sidebar-item-text sidebar-link">
@@ -514,31 +540,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Visualization and Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">More on shrinkage plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Creating multi-panel plots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
- <span class="menu-text">Extended Worked Examples</span></a>
+ <span class="menu-text">Capstone Worked Examples</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -592,6 +595,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reference &amp; Appendix</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Useful packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/pkg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package management and reproducible environments</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -609,6 +641,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-ldtinitialexplore" id="toc-sec-ldtinitialexplore" class="nav-link" data-scroll-target="#sec-ldtinitialexplore"><span class="header-section-number">2.2</span> Initial data exploration</a></li>
   <li><a href="#sec-ldtinitialmodel" id="toc-sec-ldtinitialmodel" class="nav-link" data-scroll-target="#sec-ldtinitialmodel"><span class="header-section-number">2.3</span> Models with scalar random effects</a></li>
   <li><a href="#random-effects-from-the-simple-model-related-to-covariates" id="toc-random-effects-from-the-simple-model-related-to-covariates" class="nav-link" data-scroll-target="#random-effects-from-the-simple-model-related-to-covariates"><span class="header-section-number">2.4</span> Random effects from the simple model related to covariates</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.5</span> Exercises</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/model-specification/largescaledesigned.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -617,7 +650,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../model-specification/partial_within.html">Model Specification and Random Effects</a></li><li class="breadcrumb-item"><a href="../model-specification/largescaledesigned.html">Large-Scale Designed Experiments: The English Lexicon Project</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Large-Scale Designed Experiments: The English Lexicon Project</h1>
 </div>
@@ -626,11 +659,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Phillip Alday </p>
+             <p>Reinhold Kliegl </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-04-10</p>
+      <p class="date">2026-06-21</p>
     </div>
   </div>
   
@@ -642,6 +682,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="objectives" title="Learning objectives">
+<p>After working through this page you will be able to:</p>
+<ul>
+<li>extract analysis-ready tables from a large raw dataset;</li>
+<li>explore and model trial-level data from a large designed experiment (the English Lexicon Project);</li>
+<li>fit models with scalar random effects at scale and relate the random effects to covariates.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Prerequisites:</strong> <a href="../lmm-intro/sleepstudy.html">Analysis of the sleepstudy data</a>; <a href="../model-specification/mrk17.html">Model Specification and Selection</a>.</p>
+<p><strong>Datasets used:</strong> the English Lexicon Project lexical-decision data (<code>ELP_ldt_trial</code>, <code>ELP_ldt_item</code>, <code>ELP_ldt_subj</code>; see the <a href="../getting-started/datasets.html">dataset catalog</a>).</p>
+</div>
+</div>
 <section id="sec-largescaledesigned" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> A large-scale designed experiment</h1>
 <p>Load the packages to be used.</p>
@@ -661,7 +723,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>The English Lexicon Project <span class="citation" data-cites="Balota_2007">[@Balota_2007]</span> was a large-scale multicenter study to examine properties of English words. It incorporated both a lexical decision task and a word recognition task. Different groups of subjects participated in the different tasks.</p>
+<p>The English Lexicon Project <span class="citation" data-cites="Balota_2007">(<a href="#ref-Balota_2007" role="doc-biblioref">Balota et al., 2007</a>)</span> was a large-scale multicenter study to examine properties of English words. It incorporated both a lexical decision task and a word recognition task. Different groups of subjects participated in the different tasks.</p>
 </section>
 <section id="extracting-data-tables-from-the-raw-data" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Extracting data tables from the raw data</h1>
@@ -1597,7 +1659,7 @@ with metadata given by a Base.ImmutableDict{String, String} with 3 entries:
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1606,7 +1668,7 @@ with metadata given by a Base.ImmutableDict{String, String} with 3 entries:
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The named argument <code>error=false</code> is required because there is one column, <code>acc</code>, that does incorporate missing values. If <code>error=false</code> were not given then the error thrown when trying to <code>disallowmissing</code> on the <code>acc</code> column would be propagated and the top-level call would fail.</p>
 </div>
@@ -2071,7 +2133,7 @@ Figure&nbsp;3: Median response time versus proportion accurate by subject in the
 </figure>
 </div>
 </div>
-<p>As described in <span class="citation" data-cites="Balota_2007">@Balota_2007</span>, the participants performed the trials in blocks of 250 followed by a short break. During the break they were given feedback concerning accuracy and response latency in the previous block of trials. If the accuracy was less than 80% the participant was encouraged to improve their accuracy. Similarly, if the mean response latency was greater than 1000 ms, the participant was encouraged to decrease their response time. During the trials immediate feedback was given if the response was incorrect.</p>
+<p>As described in <span class="citation" data-cites="Balota_2007">Balota et al. (<a href="#ref-Balota_2007" role="doc-biblioref">2007</a>)</span>, the participants performed the trials in blocks of 250 followed by a short break. During the break they were given feedback concerning accuracy and response latency in the previous block of trials. If the accuracy was less than 80% the participant was encouraged to improve their accuracy. Similarly, if the mean response latency was greater than 1000 ms, the participant was encouraged to decrease their response time. During the trials immediate feedback was given if the response was incorrect.</p>
 <p>Nevertheless, approximately 15% of the subjects were unable to maintain 80% accuracy on their trials</p>
 <div id="30" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(<span class="fu">&lt;</span>(<span class="fl">0.8</span>), bysubj.spropacc) <span class="op">/</span> <span class="fu">nrow</span>(bysubj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2086,7 +2148,7 @@ Figure&nbsp;3: Median response time versus proportion accurate by subject in the
 <pre><code>505.0</code></pre>
 </div>
 </div>
-<p>It is common in analyses of response latency in a lexical discrimination task to consider only the latencies on correct identifications and to trim outliers. In <span class="citation" data-cites="Balota_2007">@Balota_2007</span> a two-stage outlier removal strategy was used; first removing responses less than 200 ms or greater than 3000 ms then removing responses more than three standard deviations from the participant’s mean response.</p>
+<p>It is common in analyses of response latency in a lexical discrimination task to consider only the latencies on correct identifications and to trim outliers. In <span class="citation" data-cites="Balota_2007">Balota et al. (<a href="#ref-Balota_2007" role="doc-biblioref">2007</a>)</span> a two-stage outlier removal strategy was used; first removing responses less than 200 ms or greater than 3000 ms then removing responses more than three standard deviations from the participant’s mean response.</p>
 <p>As described in <a href="#sec-ldtrtscale" class="quarto-xref">Section&nbsp;2.2.3</a> we will analyze these data on a speed scale (the inverse of response time) using only the first-stage outlier removal of response latencies less than 200 ms or greater than 3000 ms. On the speed scale the limits are 0.333 per second up to 5 per second.</p>
 <p>To examine the effects of the fast but inaccurate responders we will fit models to the data from all the participants and to the data from the 85% of participants who maintained an overall accuracy of 80% or greater.</p>
 <div id="34" class="cell" data-execution_count="1">
@@ -2285,7 +2347,7 @@ Figure&nbsp;5: Kernel density plot of the pruned response speed in the LDT.
 </div>
 <p>so the exact position of the lower cut-off point on the response latencies is unlikely to be very important.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2294,7 +2356,7 @@ Figure&nbsp;5: Kernel density plot of the pruned response speed in the LDT.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you examine the code for <a href="#fig-elpldtspeeddens" class="quarto-xref">Figure&nbsp;5</a>, you will see that the conversion from <code>rt</code> to speed is done inline rather than creating and storing a new variable in the DataFrame.</p>
 <p>I prefer to keep the DataFrame simple with the integer variables (e.g.&nbsp;<code>:rt</code>) if possible.</p>
@@ -2305,7 +2367,7 @@ Figure&nbsp;5: Kernel density plot of the pruned response speed in the LDT.
 </section>
 <section id="transformation-of-response-and-the-form-of-the-model" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="transformation-of-response-and-the-form-of-the-model"><span class="header-section-number">2.2.4</span> Transformation of response and the form of the model</h3>
-<p>As noted in <span class="citation" data-cites="Box1964">@Box1964</span>, a transformation of the response that produces a more Gaussian distribution often will also produce a simpler model structure. For example, <a href="#fig-ldtrtvswrdlen" class="quarto-xref">Figure&nbsp;6</a> shows the smoothed relationship between word length and response time for words and non-words separately,</p>
+<p>As noted in <span class="citation" data-cites="Box1964">Box &amp; Cox (<a href="#ref-Box1964" role="doc-biblioref">1964</a>)</span>, a transformation of the response that produces a more Gaussian distribution often will also produce a simpler model structure. For example, <a href="#fig-ldtrtvswrdlen" class="quarto-xref">Figure&nbsp;6</a> shows the smoothed relationship between word length and response time for words and non-words separately,</p>
 <div id="cell-fig-ldtrtvswrdlen" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2386,7 +2448,7 @@ Figure&nbsp;8: Empirical density of response speed versus word length by word/no
 <section id="sec-ldtinitialmodel" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="sec-ldtinitialmodel"><span class="header-section-number">2.3</span> Models with scalar random effects</h2>
 <p>A major purpose of the English Lexicon Project is to characterize the items (words or nonwords) according to the observed accuracy of identification and to response latency, taking into account subject-to-subject variability, and to relate these to lexical characteristics of the items.</p>
-<p>In <span class="citation" data-cites="Balota_2007">@Balota_2007</span> the item response latency is characterized by the average response latency from the correct trials after outlier removal.</p>
+<p>In <span class="citation" data-cites="Balota_2007">Balota et al. (<a href="#ref-Balota_2007" role="doc-biblioref">2007</a>)</span> the item response latency is characterized by the average response latency from the correct trials after outlier removal.</p>
 <p>Mixed-effects models allow us greater flexibility and, we hope, precision in characterizing the items by controlling for subject-to-subject variability and for item characteristics such as word/nonword and item length.</p>
 <p>We begin with a model that has scalar random effects for item and for subject and incorporates fixed-effects for word/nonword and for item length and for the interaction of these terms.</p>
 <section id="establish-the-contrasts" class="level3" data-number="2.3.1">
@@ -2757,7 +2819,7 @@ Note
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>optsum was saved with an older version of MixedModels.jl: consider resaving.
-<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ MixedModels ~/.julia/packages/MixedModels/ACdLy/src/serialization.jl:91</span>
+<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ MixedModels ~/.julia/packages/MixedModels/QWl8z/src/serialization.jl:95</span>
 </pre>
 </div>
 </div>
@@ -3746,15 +3808,65 @@ Figure&nbsp;15: Random effect in model elm01 versus mean bigram frequency, by wo
 </figure>
 </div>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/0e399c4
-">0e399c4
-</a> using Quarto 1.9.36.</em></p>
+</section>
+<section id="exercises" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.5</span> Exercises</h2>
+<ol type="1">
+<li><strong>Why scalar random effects first?</strong> At this scale, why is it sensible to start with scalar (intercept-only) random effects for subject and item before adding random slopes?</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Scalar random effects are cheap to estimate and almost always well supported, so they give a stable, fast baseline that confirms the data pipeline and the fixed-effects structure before you spend computation on the much larger vector-valued random-effects models. They also provide a reference point for judging whether added complexity actually improves the fit.</p>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><strong>Relate random effects to covariates.</strong> Extract the conditional modes of the by-item intercepts and check whether they are related to an item-level covariate. What would a strong relationship suggest?</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A clear relationship between the by-item random intercepts and an item-level covariate suggests that covariate should be added as a <em>fixed</em> effect: the random intercepts are absorbing systematic, explainable variation that a predictor could capture directly. Use <code>raneftables</code> (or <code>ranef</code>) to pull the conditional modes and join them to the item covariates.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
+">e563d55
+</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+
 
 
 </section>
 </section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Balota_2007" class="csl-entry" role="listitem">
+Balota, D. A., Yap, M. J., Hutchison, K. A., Cortese, M. J., Kessler, B., Loftis, B., Neely, J. H., Nelson, D. L., Simpson, G. B., &amp; Treiman, R. (2007). The english lexicon project. <em>Behavior Research Methods</em>, <em>39</em>(3), 445–459. <a href="https://doi.org/10.3758/bf03193014">https://doi.org/10.3758/bf03193014</a>
+</div>
+<div id="ref-Box1964" class="csl-entry" role="listitem">
+Box, G. E. P., &amp; Cox, D. R. (1964). An analysis of transformations. <em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, <em>26</em>(2), 211–243. <a href="https://doi.org/10.1111/j.2517-6161.1964.tb00553.x">https://doi.org/10.1111/j.2517-6161.1964.tb00553.x</a>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -4168,18 +4280,6 @@ Figure&nbsp;15: Random effect in model elm01 versus mean bigram frequency, by wo
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../model-specification/mrk17.html" class="pagination-link" aria-label="Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../contrasts/transformation.html" class="pagination-link" aria-label="Transformations of the predictors and the response">
-        <span class="nav-page-text">Transformations of the predictors and the response</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

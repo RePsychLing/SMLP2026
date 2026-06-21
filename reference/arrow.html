@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-04-10">
+<meta name="author" content="Phillip Alday">
+<meta name="author" content="Reinhold Kliegl">
+<meta name="dcterms.date" content="2026-06-21">
 
 <title>Saving data with Arrow – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -63,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -88,22 +91,22 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../lmm-intro/sleepstudy.html" rel="next">
-<link href="../getting-started/pkg.html" rel="prev">
+<link href="../reference/pkg.html" rel="next">
+<link href="../reference/useful_packages.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7692942acc74b2099579cecbd3e903d1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -139,6 +142,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -337,7 +341,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">Getting Started</a></li><li class="breadcrumb-item"><a href="../getting-started/arrow.html">Saving data with Arrow</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/arrow.html">Saving data with Arrow</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -359,13 +363,13 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Getting Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Start Here</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
@@ -380,20 +384,14 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/useful_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Useful packages</span></a>
+  <a href="../getting-started/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup: installing the tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/pkg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package management and reproducible environments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../getting-started/arrow.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Saving data with Arrow</span></a>
+  <a href="../getting-started/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dataset catalog</span></a>
   </div>
 </li>
       </ul>
@@ -401,7 +399,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Introduction to Linear Mixed Models</span></a>
+ <span class="menu-text">Foundations: Linear Mixed Models</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -424,7 +422,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Model Specification and Random Effects</span></a>
+ <span class="menu-text">Seeing Your Model: Visualization &amp; Diagnostics</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -432,20 +430,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Partially-within subjects designs</span></a>
+  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage plots</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../model-specification/largescaledesigned.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large-Scale Designed Experiments: The English Lexicon Project</span></a>
+  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
       </ul>
@@ -453,12 +445,29 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Contrast Coding and Transformations</span></a>
+ <span class="menu-text">Building Models: Specification &amp; Random Effects</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Contrast Coding &amp; Transformations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contrasts/transformation.html" class="sidebar-item-text sidebar-link">
@@ -467,8 +476,8 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -479,21 +488,21 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
+  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Inference: Uncertainty Quantification</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Inference &amp; Uncertainty Quantification</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../inference/bootstrap.html" class="sidebar-item-text sidebar-link">
@@ -508,21 +517,21 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../inference/kb07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bootstrapping a fitted model</span></a>
+  <a href="../inference/power_simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using simulation to estimate uncertainty and power</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">Generalized Linear Mixed Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../glmm/glmm.html" class="sidebar-item-text sidebar-link">
@@ -533,31 +542,8 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Visualization and Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">More on shrinkage plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Creating multi-panel plots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
- <span class="menu-text">Extended Worked Examples</span></a>
+ <span class="menu-text">Capstone Worked Examples</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -611,6 +597,35 @@ div.csl-indent {
   </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference &amp; Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Useful packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/pkg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package management and reproducible environments</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -630,13 +645,13 @@ div.csl-indent {
   <li><a href="#reading-arrow-files-in-other-languages" id="toc-reading-arrow-files-in-other-languages" class="nav-link" data-scroll-target="#reading-arrow-files-in-other-languages"><span class="header-section-number">7</span> Reading Arrow files in other languages</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
   </ul>
-<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/arrow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/arrow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">Getting Started</a></li><li class="breadcrumb-item"><a href="../getting-started/arrow.html">Saving data with Arrow</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/arrow.html">Saving data with Arrow</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Saving data with Arrow</h1>
 </div>
@@ -645,11 +660,18 @@ div.csl-indent {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Phillip Alday </p>
+             <p>Reinhold Kliegl </p>
+          </div>
+  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-04-10</p>
+      <p class="date">2026-06-21</p>
     </div>
   </div>
   
@@ -670,7 +692,7 @@ div.csl-indent {
 </section>
 <section id="the-emotikon-data" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> The Emotikon data</h1>
-<p>The <a href="https://github.com/RePsychling/SMLP2021">SMLP2021 repository</a> contains a version of the data from <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span> in <code>notebooks/data/fggk21.arrow</code>. After that file was created there were changes in the master RDS file on the <a href="https://osf.io/2d8rj/">osf.io site</a> for the project. We will recreate the Arrow file here then split it into two separate tables, one with a row for each child in the study and one with a row for each test result.</p>
+<p>The <a href="https://github.com/RePsychling/SMLP2021">SMLP2021 repository</a> contains a version of the data from <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span> in <code>notebooks/data/fggk21.arrow</code>. After that file was created there were changes in the master RDS file on the <a href="https://osf.io/2d8rj/">osf.io site</a> for the project. We will recreate the Arrow file here then split it into two separate tables, one with a row for each child in the study and one with a row for each test result.</p>
 <p>The <code>Arrow</code> package for Julia does not export any function names, which means that the function to read an Arrow file must be called as <code>Arrow.Table</code>. It returns a <em>column table</em>, as described in the <a href="https://github.com/JuliaData/Tables.jl">Tables package</a>. This is like a read-only data frame, which can be easily converted to a full-fledged <code>DataFrame</code> if desired.</p>
 <p>This arrangement allows for the <code>Arrow</code> package not to depend on the <code>DataFrames</code> package, which is a heavy-weight dependency, but still easily produce a <code>DataFrame</code> if warranted.</p>
 <p>Load the packages to be used.</p>
@@ -3380,12 +3402,15 @@ Note
 </section>
 <section id="references" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> References</h1>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Fuehner2021" class="csl-entry" role="listitem">
+Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. <em>Scientific Reports</em>, <em>11</em>(1). <a href="https://doi.org/10.1038/s41598-021-97000-4">https://doi.org/10.1038/s41598-021-97000-4</a>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/0e399c4
-">0e399c4
-</a> using Quarto 1.9.36.</em></p>
+</div>
+<hr>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
+">e563d55
+</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
 
 
 </section>
@@ -3806,13 +3831,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../getting-started/pkg.html" class="pagination-link" aria-label="Package management and reproducible environments">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Package management and reproducible environments</span>
+      <a href="../reference/useful_packages.html" class="pagination-link" aria-label="Useful packages">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Useful packages</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../lmm-intro/sleepstudy.html" class="pagination-link" aria-label="Analysis of the sleepstudy data">
-        <span class="nav-page-text">Analysis of the sleepstudy data</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/pkg.html" class="pagination-link" aria-label="Package management and reproducible environments">
+        <span class="nav-page-text">Package management and reproducible environments</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -3821,4 +3846,4 @@ Note
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/arrow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/arrow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

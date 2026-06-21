@@ -10,7 +10,7 @@
 <meta name="author" content="Reinhold Kliegl">
 <meta name="dcterms.date" content="2026-06-21">
 
-<title>Tenth Summer School on Statistical Methods for Linguistics and Psychology – SMLP2026: Advanced Frequentist Track</title>
+<title>Setup: installing the tools – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,34 +26,70 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./getting-started/about.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
-<script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
-<link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../getting-started/datasets.html" rel="next">
+<link href="../getting-started/about.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,12 +117,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -258,7 +291,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">SMLP2026: Advanced Frequentist Track</span>
     </a>
   </div>
@@ -285,7 +318,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Start Here</a></li><li class="breadcrumb-item"><a href="./index.html">Tenth Summer School on Statistical Methods for Linguistics and Psychology</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">Start Here</a></li><li class="breadcrumb-item"><a href="../getting-started/setup.html">Setup: installing the tools</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -316,25 +349,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tenth Summer School on Statistical Methods for Linguistics and Psychology</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started/about.html" class="sidebar-item-text sidebar-link">
+  <a href="../getting-started/about.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started/setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../getting-started/setup.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Setup: installing the tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started/datasets.html" class="sidebar-item-text sidebar-link">
+  <a href="../getting-started/datasets.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dataset catalog</span></a>
   </div>
 </li>
@@ -351,13 +384,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lmm-intro/sleepstudy.html" class="sidebar-item-text sidebar-link">
+  <a href="../lmm-intro/sleepstudy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Analysis of the sleepstudy data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lmm-intro/singularity.html" class="sidebar-item-text sidebar-link">
+  <a href="../lmm-intro/singularity.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Convergence, singularity and all that</span></a>
   </div>
 </li>
@@ -374,13 +407,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
+  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Shrinkage plots</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
+  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
@@ -397,7 +430,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
+  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
@@ -414,25 +447,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts/transformation.html" class="sidebar-item-text sidebar-link">
+  <a href="../contrasts/transformation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Transformations of the predictors and the response</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
+  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts/contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
+  <a href="../contrasts/contrasts_kwdyz11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Contrast Coding of Visual Attention Effects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
+  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
@@ -449,19 +482,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inference/bootstrap.html" class="sidebar-item-text sidebar-link">
+  <a href="../inference/bootstrap.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Parametric bootstrap for mixed-effects models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inference/profiling.html" class="sidebar-item-text sidebar-link">
+  <a href="../inference/profiling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Confidence intervals from profiled objective</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inference/power_simulation.html" class="sidebar-item-text sidebar-link">
+  <a href="../inference/power_simulation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Using simulation to estimate uncertainty and power</span></a>
   </div>
 </li>
@@ -478,7 +511,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./glmm/glmm.html" class="sidebar-item-text sidebar-link">
+  <a href="../glmm/glmm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generalized linear mixed models</span></a>
   </div>
 </li>
@@ -504,13 +537,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/emotikon/fggk21.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/emotikon/fggk21.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Emotikon Project: Model Complexification and PCA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/emotikon/check_emotikon_transform.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/emotikon/check_emotikon_transform.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Emotikon: Comparing Original and Transformed Metrics</span></a>
   </div>
 </li>
@@ -527,13 +560,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/visual-attention/kwdyz11.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/visual-attention/kwdyz11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Visual Attention Effects: Kliegl et al.&nbsp;(2011)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/visual-attention/kkl15.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/visual-attention/kkl15.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)</span></a>
   </div>
 </li>
@@ -552,19 +585,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reference/useful_packages.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reference/arrow.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reference/pkg.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/pkg.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package management and reproducible environments</span></a>
   </div>
 </li>
@@ -580,22 +613,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#how-to-use-these-materials" id="toc-how-to-use-these-materials" class="nav-link active" data-scroll-target="#how-to-use-these-materials"><span class="header-section-number">1</span> How to use these materials</a></li>
-  <li><a href="#suggested-path" id="toc-suggested-path" class="nav-link" data-scroll-target="#suggested-path"><span class="header-section-number">2</span> Suggested path</a></li>
-  <li><a href="#dependency-map" id="toc-dependency-map" class="nav-link" data-scroll-target="#dependency-map"><span class="header-section-number">3</span> Dependency map</a></li>
-  <li><a href="#datasets-at-a-glance" id="toc-datasets-at-a-glance" class="nav-link" data-scroll-target="#datasets-at-a-glance"><span class="header-section-number">4</span> Datasets at a glance</a></li>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">5</span> Getting started</a></li>
+  <li><a href="#git" id="toc-git" class="nav-link active" data-scroll-target="#git"><span class="header-section-number">1</span> git</a></li>
+  <li><a href="#julia-programming-language" id="toc-julia-programming-language" class="nav-link" data-scroll-target="#julia-programming-language"><span class="header-section-number">2</span> Julia Programming Language</a></li>
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="header-section-number">3</span> Quarto</a>
+  <ul class="collapse">
+  <li><a href="#command-line" id="toc-command-line" class="nav-link" data-scroll-target="#command-line"><span class="header-section-number">3.1</span> Command line</a></li>
+  <li><a href="#vs-code-quarto-extension" id="toc-vs-code-quarto-extension" class="nav-link" data-scroll-target="#vs-code-quarto-extension"><span class="header-section-number">3.2</span> VS Code Quarto extension</a></li>
+  </ul></li>
+  <li><a href="#integrated-development-environment-ide" id="toc-integrated-development-environment-ide" class="nav-link" data-scroll-target="#integrated-development-environment-ide"><span class="header-section-number">4</span> Integrated Development Environment (IDE)</a></li>
+  <li><a href="#installing-the-projects-packages" id="toc-installing-the-projects-packages" class="nav-link" data-scroll-target="#installing-the-projects-packages"><span class="header-section-number">5</span> Installing the project’s packages</a></li>
   </ul>
-<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Start Here</a></li><li class="breadcrumb-item"><a href="./index.html">Tenth Summer School on Statistical Methods for Linguistics and Psychology</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../index.html">Start Here</a></li><li class="breadcrumb-item"><a href="../getting-started/setup.html">Setup: installing the tools</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Tenth Summer School on Statistical Methods for Linguistics and Psychology</h1>
-<p class="subtitle lead">Advanced methods in frequentist statistics with Julia</p>
+<h1 class="title">Setup: installing the tools</h1>
 </div>
 
 
@@ -625,115 +661,96 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This site provides materials for the <strong>Advanced frequentist methods</strong> stream of the <a href="https://vasishth.github.io/SMLP2026/">Summer School on Statistical Methods</a> to be held at the University of Potsdam, 24–28 August 2026. The stream focuses on fitting, evaluating, and interpreting linear and generalized linear mixed-effects models using the <a href="https://julialang.org">Julia programming language</a> and the <a href="https://juliastats.org/MixedModels.jl/stable/">MixedModels.jl</a> package.</p>
-<section id="how-to-use-these-materials" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> How to use these materials</h1>
-<p>Every page is a complete, runnable analysis. You can engage with them two ways:</p>
+<div class="objectives">
+<p><strong>Before the course</strong>, get the toolchain working on your own machine. By the end of this page you will have:</p>
 <ul>
-<li><strong>Read along.</strong> The rendered website shows all code and its output, so you can follow the reasoning without running anything. Good for a first pass.</li>
-<li><strong>Run locally.</strong> Clone the repository and execute the code yourself — change things, break things, and do the <a href="#exercises-and-self-check">exercises</a> at the bottom of each core page. This is where the learning happens. Start with <a href="./getting-started/setup.html">Setup: installing the tools</a>.</li>
+<li><code>git</code> (and <code>git-lfs</code>) installed and this repository cloned,</li>
+<li>a working Julia installation managed with Juliaup,</li>
+<li>Quarto installed, with an IDE (VS Code or Positron) configured for Julia and Quarto,</li>
+<li>the project’s Julia packages installed via <code>Pkg.instantiate()</code>.</li>
 </ul>
-<p>Most pages in the core path open with a <strong>Learning objectives</strong> box (what you’ll be able to do afterwards) and a <strong>Before you start</strong> box (which pages to read first and which datasets are used), so you can navigate and pace yourself without an instructor in the room.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="I just need to look something up">
+</div>
+<p>This section of the summer school will use the <a href="https://julialang.org/">Julia programming language</a> and related tools. Because most students in the course will have more experience with <a href="https://r-project.org">R</a> and the <a href="https://rstudio.com">RStudio</a> integrated development environment (IDE), it is necessary to install and configure several software systems prior to the course.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>I just need to look something up
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <a href="./reference/useful_packages.html">Reference &amp; Appendix</a> section is lookup material, not a lesson sequence: a tour of <a href="./reference/useful_packages.html">useful Julia packages</a>, how to <a href="./reference/arrow.html">save and load data with Arrow</a>, and <a href="./reference/pkg.html">package management for reproducible environments</a>. Dip in as needed.</p>
+<p>We assume everybody will succeed with the installations. If not, please get in touch! You may also want to give it a try to get these tools to play nicely with each other — but don’t spend too much time on this.</p>
 </div>
 </div>
+<section id="git" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> git</h1>
+<p>We will assume that you have git installed and are able to clone a repository from github. If not, <a href="https://happygitwithr.com/">Happy Git with R</a> is a good place to learn about git for data science.</p>
+<p>The example data stored in the <code>data</code> folder is stored with <a href="https://git-lfs.com/">git-lfs</a>. You will need to install git-lfs to access this data, but then everything will “just” work.</p>
+<p>This website is built using <a href="https://quarto.org">quarto</a>, described below, from the <a href="https://github.com/RePsychLing/SMLP2026">repository</a>. Clone this repository with, e.g.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/RePsychLing/SMLP2026</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="suggested-path" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Suggested path</h1>
-<ol type="1">
-<li><strong><a href="./getting-started/setup.html">Start Here</a></strong> — install the tools, meet the instructors, and skim the <a href="./getting-started/datasets.html">dataset catalog</a>.</li>
-<li><strong>Foundations: Linear Mixed Models</strong> — fit and interpret your first mixed model (<a href="./lmm-intro/sleepstudy.html">sleepstudy</a>) and learn to recognize <a href="./lmm-intro/singularity.html">singular fits</a>.</li>
-<li><strong>Seeing Your Model</strong> — <a href="./visualization/shrinkageplot.html">shrinkage plots</a> and <a href="./visualization/AoGPlots.html">multi-panel graphics</a>; diagnostic tools you’ll reuse everywhere.</li>
-<li><strong>Building Models</strong> — random-effects <a href="./model-specification/partial_within.html">specification</a> and selection for <a href="./model-specification/mrk17.html">designed</a> and <a href="./model-specification/largescaledesigned.html">large-scale</a> experiments.</li>
-<li><strong>Contrast Coding &amp; Transformations</strong> — make your coefficients answer the questions you actually care about (<a href="./contrasts/transformation.html">transformations</a>, contrast schemes).</li>
-<li><strong>Inference &amp; Uncertainty</strong> — <a href="./inference/bootstrap.html">bootstrap</a>, <a href="./inference/profiling.html">profiling</a>, and <a href="./inference/power_simulation.html">power simulation</a>.</li>
-<li><strong>Generalized Linear Mixed Models</strong> — <a href="./glmm/glmm.html">extending to non-Gaussian responses</a>.</li>
-<li><strong>Capstone Worked Examples</strong> — full analyses that pull the pieces together: the <a href="./examples/emotikon/fggk21.html">Emotikon project</a> and the <a href="./examples/visual-attention/kwdyz11.html">visual-attention experiments</a>.</li>
-</ol>
+<section id="julia-programming-language" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Julia Programming Language</h1>
+<p>We will use the latest stable release of Julia. We recommend using <a href="https://github.com/JuliaLang/juliaup">Juliaup</a> to install and manage Julia versions. Juliaup makes it trivial to upgrade to new Julia releases or even use old ones. Alternatively, you can download the version appropriate for your setup from here: <a href="https://julialang.org/downloads/">Julia Programming Language</a></p>
+<p>There are resources available online for new Julia users and several specialize in Julia for R users:</p>
+<ul>
+<li><a href="https://nrennie.rbind.io/blog/introduction-julia-r-users/">Introduction to Julia for R users</a></li>
+<li><a href="https://stateofther.github.io/finistR2024/plotting_with_julia-1.html">Using Julia as a R user</a></li>
+<li><a href="https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-differences-from-R">Julia: Noteworthy differences from R</a></li>
+<li><a href="https://tutorials.pumas.ai/html/LearningPaths/01-LP/01-Module/mod1-julia_intro.html">PumasAI: Introduction to Julia</a></li>
+<li><a href="https://tutorials.pumas.ai/html/LearningPaths/01-LP/02-Module/mod2-data-wrangling-visualization.html">PumasAI: Data Wrangling and Visualization in Julia</a></li>
+</ul>
 </section>
-<section id="dependency-map" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Dependency map</h1>
-<p>The core path is roughly linear, but not strictly: once you have the Foundations, several sections can be read in any order. The arrows show what each section assumes you’ve already seen.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    F["Foundations:&lt;br/&gt;Linear Mixed Models"]
-    V["Seeing Your Model:&lt;br/&gt;Visualization &amp; Diagnostics"]
-    B["Building Models:&lt;br/&gt;Specification &amp; Random Effects"]
-    C["Contrast Coding&lt;br/&gt;&amp; Transformations"]
-    I["Inference &amp;&lt;br/&gt;Uncertainty"]
-    G["Generalized Linear&lt;br/&gt;Mixed Models"]
-    X["Capstone&lt;br/&gt;Worked Examples"]
-
-    F --&gt; V
-    F --&gt; B
-    F --&gt; C
-    F --&gt; G
-    B --&gt; I
-    V --&gt; X
-    C --&gt; X
-    I --&gt; X
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="quarto" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Quarto</h1>
+<p>The web site and other documents for this course are rendered using a <code>knitr</code>-like system called Quarto. You can download the version appropriate for your setup from here: <a href="https://quarto.org/docs/get-started/">quarto</a></p>
+<section id="command-line" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="command-line"><span class="header-section-number">3.1</span> Command line</h2>
+<p>From the root of the cloned repository, two commands cover most workflows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>quarto preview</code> renders the site and opens it in a browser, then watches for changes and re-renders automatically. It is the most convenient way to work on materials locally.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>quarto render</code> renders the entire site once to the <code>_build/</code> output directory. Use this to do a clean full build, e.g.&nbsp;before checking the final output.</p>
+<p>Both commands accept a single file as an argument to work on just that document:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview lmm-intro/sleepstudy.qmd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render lmm-intro/sleepstudy.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="datasets-at-a-glance" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Datasets at a glance</h1>
-<p>A handful of datasets recur across the course. The <a href="./getting-started/datasets.html">dataset catalog</a> describes each one — its design, variables, citation, and how to load it. Here is where each appears:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Dataset</th>
-<th style="text-align: left;">Used in</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>sleepstudy</code></td>
-<td style="text-align: left;"><a href="./lmm-intro/sleepstudy.html">sleepstudy</a>, <a href="./lmm-intro/singularity.html">singularity</a>, <a href="./contrasts/transformation.html">transformations</a>, <a href="./contrasts/sleepstudy_speed.html">speed metrics</a>, <a href="./inference/bootstrap.html">bootstrap</a>, <a href="./glmm/glmm.html">GLMM</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>kb07</code></td>
-<td style="text-align: left;"><a href="./visualization/shrinkageplot.html">shrinkage plots</a>, <a href="./inference/bootstrap.html">bootstrap</a>, <a href="./inference/profiling.html">profiling</a>, <a href="./inference/power_simulation.html">power simulation</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>fggk21</code> (Emotikon)</td>
-<td style="text-align: left;"><a href="./contrasts/contrasts_fggk21.html">contrast coding</a>, <a href="./visualization/AoGPlots.html">AoG plots</a>, <a href="./examples/emotikon/fggk21.html">Emotikon capstone</a>, <a href="./examples/emotikon/check_emotikon_transform.html">transform check</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>kwdyz11</code></td>
-<td style="text-align: left;"><a href="./contrasts/contrasts_kwdyz11.html">contrast coding</a>, <a href="./examples/visual-attention/kwdyz11.html">visual-attention capstone</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>kkl15</code></td>
-<td style="text-align: left;"><a href="./examples/visual-attention/kkl15.html">replication &amp; model reduction</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>mrk17</code></td>
-<td style="text-align: left;"><a href="./model-specification/mrk17.html">model specification</a></td>
-</tr>
-</tbody>
-</table>
+<section id="vs-code-quarto-extension" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="vs-code-quarto-extension"><span class="header-section-number">3.2</span> VS Code Quarto extension</h2>
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto extension for VS Code</a> (<code>quarto.quarto</code>) from the Extensions panel. It provides:</p>
+<ul>
+<li><strong>Preview</strong> (<code>Ctrl+Shift+K</code> / <code>Cmd+Shift+K</code>): renders the current <code>.qmd</code> file and shows a live preview in a side panel, updating on save.</li>
+<li><strong>Render</strong> (<code>Ctrl+Shift+P</code> → <em>Quarto: Render</em>): renders the current file to its output format.</li>
+<li><strong>Render Project</strong> (<code>Ctrl+Shift+P</code> → <em>Quarto: Render Project</em>): equivalent to <code>quarto render</code> from the command line.</li>
+<li>Syntax highlighting, code completion, and cell execution for Julia code chunks directly in the editor.</li>
+</ul>
 </section>
-<section id="getting-started" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Getting started</h1>
-<p>New here? Head to <strong><a href="./getting-started/setup.html">Setup: installing the tools</a></strong> to get git, Julia, and Quarto working before the course, then read <strong><a href="./getting-started/about.html">About</a></strong> for the course framing and instructor bios.</p>
+</section>
+<section id="integrated-development-environment-ide" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Integrated Development Environment (IDE)</h1>
+<p>An integrated development environment (IDE) makes editing and running Julia and Quarto source files easier. The “integrated development” portion is a clue to what makes them different than a text editor (even a text editor with syntax highlighting): they have tools for suggesting code completion, interacting with and running code and much more. Popular ones for R and Python include RStudio and Spyder. For Julia, we recommend <a href="https://code.visualstudio.com/download">VS Code</a> or <a href="https://github.com/posit-dev/positron/wiki#installing-positron">Positron</a>. VS Code is widely used in the Julia community, while Positron is a new fork of VS Code aimed at data scientists and developed by the Posit, the folks behind RStudio and Quarto.</p>
+<p>Whatever IDE you use, make sure to install the necessary extensions for Quarto and Julia.</p>
+</section>
+<section id="installing-the-projects-packages" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Installing the project’s packages</h1>
+<p>Once Julia is installed and the repository cloned, install the exact set of packages this course uses. From the root of the cloned repository:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/SMLP2026$</span> julia</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">julia</span><span class="op">&gt;</span> using Pkg</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">julia</span><span class="op">&gt;</span> Pkg.activate<span class="er">(</span><span class="st">"."</span><span class="kw">)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Activating</span> project at <span class="kw">`</span><span class="ex">~/SMLP2026</span><span class="kw">`</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">julia</span><span class="op">&gt;</span> Pkg.instantiate<span class="er">(</span><span class="kw">)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span> lots <span class="ex">of</span> output <span class="op">&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">julia</span><span class="op">&gt;</span> exit<span class="er">(</span><span class="kw">)</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="ex">~/SMLP2026$</span> quarto preview</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- TODO: either check in a manifest or change the description here-->
+<p><code>Pkg.instantiate()</code> reads the project’s <code>Manifest.toml</code> and installs precisely the package versions the materials were written against, so your environment matches ours. For more on how Julia environments work and why this matters for reproducibility, see <a href="../reference/pkg.html">Package management and reproducible environments</a>.</p>
 <hr>
 <p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
 ">e563d55
@@ -1158,10 +1175,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../getting-started/about.html" class="pagination-link" aria-label="About">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./getting-started/about.html" class="pagination-link" aria-label="About">
-        <span class="nav-page-text">About</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../getting-started/datasets.html" class="pagination-link" aria-label="Dataset catalog">
+        <span class="nav-page-text">Dataset catalog</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1170,4 +1190,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

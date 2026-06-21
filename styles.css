@@ -1,0 +1,12 @@
+/* css styles */
+
+#docstring{
+    border: solid black;
+    border-width: thick;
+    background-color: #f8f5f0;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+/* NOTE: the `.objectives` box is styled in theme.scss / theme-dark.scss so it can
+   adapt to the light and dark themes via the Bootstrap `$primary` color. */

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-04-10">
+<meta name="dcterms.date" content="2026-06-21">
 
 <title>Mixed Models Tutorial: Contrast Coding – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -89,22 +90,22 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../contrasts/contrasts_kwdyz11.html" rel="next">
-<link href="../contrasts/transformation.html" rel="prev">
+<link href="../inference/bootstrap.html" rel="next">
+<link href="../contrasts/contrasts_kwdyz11.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f418161beb48e0141c760e455f12af2c.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7692942acc74b2099579cecbd3e903d1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-f6653f237f04cf8a3016be17614a81b7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -169,6 +170,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -367,7 +369,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contrasts/transformation.html">Contrast Coding and Transformations</a></li><li class="breadcrumb-item"><a href="../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contrasts/transformation.html">Contrast Coding &amp; Transformations</a></li><li class="breadcrumb-item"><a href="../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -390,7 +392,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Getting Started</span></a>
+ <span class="menu-text">Start Here</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -410,20 +412,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/useful_packages.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Useful packages</span></a>
+  <a href="../getting-started/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setup: installing the tools</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../getting-started/pkg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package management and reproducible environments</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../getting-started/arrow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Saving data with Arrow</span></a>
+  <a href="../getting-started/datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dataset catalog</span></a>
   </div>
 </li>
       </ul>
@@ -431,7 +427,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Introduction to Linear Mixed Models</span></a>
+ <span class="menu-text">Foundations: Linear Mixed Models</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -454,7 +450,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Model Specification and Random Effects</span></a>
+ <span class="menu-text">Seeing Your Model: Visualization &amp; Diagnostics</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -462,33 +458,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Partially-within subjects designs</span></a>
+  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shrinkage plots</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../model-specification/largescaledesigned.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Large-Scale Designed Experiments: The English Lexicon Project</span></a>
+  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating multi-panel plots</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Contrast Coding and Transformations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Building Models: Specification &amp; Random Effects</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/mrk17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Contrast Coding &amp; Transformations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../contrasts/transformation.html" class="sidebar-item-text sidebar-link">
@@ -497,8 +504,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
+  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -509,21 +516,21 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contrasts/sleepstudy_speed.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons</span></a>
+  <a href="../contrasts/contrasts_fggk21.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Mixed Models Tutorial: Contrast Coding</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Inference: Uncertainty Quantification</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Inference &amp; Uncertainty Quantification</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../inference/bootstrap.html" class="sidebar-item-text sidebar-link">
@@ -538,21 +545,21 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../inference/kb07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bootstrapping a fitted model</span></a>
+  <a href="../inference/power_simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using simulation to estimate uncertainty and power</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">Generalized Linear Mixed Models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../glmm/glmm.html" class="sidebar-item-text sidebar-link">
@@ -563,31 +570,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Visualization and Diagnostics</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/shrinkageplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">More on shrinkage plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../visualization/AoGPlots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Creating multi-panel plots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
- <span class="menu-text">Extended Worked Examples</span></a>
+ <span class="menu-text">Capstone Worked Examples</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -641,6 +625,35 @@ window.Quarto = {
   </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reference &amp; Appendix</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Useful packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Saving data with Arrow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/pkg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package management and reproducible environments</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -659,10 +672,10 @@ window.Quarto = {
   </ul></li>
   <li><a href="#contrast-coding" id="toc-contrast-coding" class="nav-link" data-scroll-target="#contrast-coding"><span class="header-section-number">2</span> Contrast coding</a>
   <ul class="collapse">
-  <li><a href="#seqdiffcoding-contr1" id="toc-seqdiffcoding-contr1" class="nav-link" data-scroll-target="#seqdiffcoding-contr1"><span class="header-section-number">2.1</span> <em>SeqDiffCoding</em>: <code>contr1</code></a></li>
-  <li><a href="#helmertcoding-contr2" id="toc-helmertcoding-contr2" class="nav-link" data-scroll-target="#helmertcoding-contr2"><span class="header-section-number">2.2</span> <em>HelmertCoding</em>: <code>contr2</code></a></li>
-  <li><a href="#hypothesiscoding-contr3" id="toc-hypothesiscoding-contr3" class="nav-link" data-scroll-target="#hypothesiscoding-contr3"><span class="header-section-number">2.3</span> <em>HypothesisCoding</em>: <code>contr3</code></a></li>
-  <li><a href="#pca-based-hypothesiscoding-contr4" id="toc-pca-based-hypothesiscoding-contr4" class="nav-link" data-scroll-target="#pca-based-hypothesiscoding-contr4"><span class="header-section-number">2.4</span> <em>PCA-based HypothesisCoding</em>: <code>contr4</code></a></li>
+  <li><a href="#sequential-difference-coding-contr1" id="toc-sequential-difference-coding-contr1" class="nav-link" data-scroll-target="#sequential-difference-coding-contr1"><span class="header-section-number">2.1</span> Sequential difference coding: <code>contr1</code></a></li>
+  <li><a href="#helmert-coding-contr2" id="toc-helmert-coding-contr2" class="nav-link" data-scroll-target="#helmert-coding-contr2"><span class="header-section-number">2.2</span> _Helmert coding: <code>contr2</code></a></li>
+  <li><a href="#hypothesis-coding-contr3" id="toc-hypothesis-coding-contr3" class="nav-link" data-scroll-target="#hypothesis-coding-contr3"><span class="header-section-number">2.3</span> Hypothesis coding: <code>contr3</code></a></li>
+  <li><a href="#pca-based-hypothesis-coding-contr4" id="toc-pca-based-hypothesis-coding-contr4" class="nav-link" data-scroll-target="#pca-based-hypothesis-coding-contr4"><span class="header-section-number">2.4</span> PCA-based hypothesis coding: <code>contr4</code></a></li>
   </ul></li>
   <li><a href="#other-topics" id="toc-other-topics" class="nav-link" data-scroll-target="#other-topics"><span class="header-section-number">3</span> Other topics</a>
   <ul class="collapse">
@@ -670,7 +683,10 @@ window.Quarto = {
   <li><a href="#vcs-and-cps-depend-on-contrast-coding" id="toc-vcs-and-cps-depend-on-contrast-coding" class="nav-link" data-scroll-target="#vcs-and-cps-depend-on-contrast-coding"><span class="header-section-number">3.2</span> VCs and CPs depend on contrast coding</a></li>
   <li><a href="#vcs-and-cps-depend-on-random-factor" id="toc-vcs-and-cps-depend-on-random-factor" class="nav-link" data-scroll-target="#vcs-and-cps-depend-on-random-factor"><span class="header-section-number">3.3</span> VCs and CPs depend on random factor</a></li>
   </ul></li>
-  <li><a href="#thats-it" id="toc-thats-it" class="nav-link" data-scroll-target="#thats-it"><span class="header-section-number">4</span> That’s it</a></li>
+  <li><a href="#thats-it" id="toc-thats-it" class="nav-link" data-scroll-target="#thats-it"><span class="header-section-number">4</span> That’s it</a>
+  <ul class="collapse">
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.1</span> Exercises</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/contrasts/contrasts_fggk21.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -678,7 +694,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contrasts/transformation.html">Contrast Coding and Transformations</a></li><li class="breadcrumb-item"><a href="../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contrasts/transformation.html">Contrast Coding &amp; Transformations</a></li><li class="breadcrumb-item"><a href="../contrasts/contrasts_fggk21.html">Mixed Models Tutorial: Contrast Coding</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Mixed Models Tutorial: Contrast Coding</h1>
 </div>
@@ -697,7 +713,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-04-10</p>
+      <p class="date">2026-06-21</p>
     </div>
   </div>
   
@@ -709,8 +725,29 @@ window.Quarto = {
 </header>
 
 
-<p>This script uses a subset of data reported in <span class="citation" data-cites="Fuehner2021">@Fuehner2021</span>.</p>
-<p>To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication. All the data to reproduce the models in the publication are used here, too; the script requires only a few changes to specify the more complex models in the paper.</p>
+<div class="objectives" title="Learning objectives">
+<p>After working through this page you will be able to:</p>
+<ul>
+<li>apply sequential-difference, Helmert, and hypothesis contrast coding to a multi-level factor;</li>
+<li>interpret the fixed-effect parameters produced by each coding scheme;</li>
+<li>derive a set of contrasts from a PCA of the data.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Prerequisites:</strong> <a href="../contrasts/transformation.html">Transformations of the predictors and the response</a>.</p>
+<p><strong>Datasets used:</strong> <code>fggk21</code> (Emotikon; see the <a href="../getting-started/datasets.html">dataset catalog</a>).</p>
+</div>
+</div>
+<p>This script uses a subset of data reported in <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span>.</p>
 <p>All children were between 6.0 and 6.99 years at legal keydate (30 September) of school enrollment, that is in their ninth year of life in the third grade. To avoid delays associated with model fitting we work with a reduced data set and less complex models than those in the reference publication. The script requires only a few changes to specify the more complex models in the paper.</p>
 <p>The script is structured in three main sections:</p>
 <ol type="1">
@@ -1688,14 +1725,13 @@ window.Quarto = {
 <section id="contrast-coding" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Contrast coding</h1>
 <p>Contrast coding is part of <code>StatsModels.jl</code>. Here is the primary author’s (i.e., Dave Kleinschmidt’s) documentation of <a href="https://juliastats.org/StatsModels.jl/stable/contrasts/#Modeling-categorical-data">Modeling Categorical Data</a>.</p>
-<p>The random factors <code>Child</code>, <code>School</code>, and <code>Cohort</code> are assigned a <em>Grouping</em> contrast. This contrast is needed when the number of groups (i.e., units, levels) is very large. This is the case for <code>Child</code> (i.e., the 108,925 children in the full and probably also the 11,566 children in the reduced data set). The assignment is not necessary for the typical sample size of experiments. However, we use this coding of random factors irrespective of the number of units associated with them to be transparent about the distinction between random and fixed factors.</p>
-<p>A couple of general remarks about the following examples. First, all contrasts defined in this tutorial return an estimate of the <em>Grand Mean</em> (GM) in the intercept, that is they are so-called sum-to-zero contrasts. In both <code>Julia</code> and <code>R</code> the default contrast is <em>Dummy</em> coding which is not a sum-to-zero contrast, but returns the mean of the reference (control) group - unfortunately for (quasi-)experimentally minded scientists.</p>
-<p>Second, The factor <code>Sex</code> has only two levels. We use <em>EffectCoding</em> (also known as <em>Sum</em> coding in <code>R</code>) to estimate the difference of the levels from the Grand Mean. Unlike in <code>R</code>, the default sign of the effect is for the second level (<em>base</em> is the first, not the last level), but this can be changed with the <code>base</code> kwarg in the command. <em>Effect</em> coding is a sum-to-zero contrast, but when applied to factors with more than two levels does not yield orthogonal contrasts.</p>
+<p>A couple of general remarks about the following examples. First, all contrasts defined in this tutorial return an estimate of the Grand Mean (GM) in the intercept, that is they are so-called sum-to-zero contrasts. In both <code>Julia</code> and <code>R</code> the default contrast is dummy coding which is not a sum-to-zero contrast, but returns the mean of the reference (control) group - unfortunately for (quasi-)experimentally minded scientists.</p>
+<p>Second, the factor <code>Sex</code> has only two levels. We use effects coding (also known as sum coding in <code>R</code>) to estimate the difference of the levels from the Grand Mean. Unlike in <code>R</code>, the default sign of the effect is for the second level (the base level is the first, not the last level), but this can be changed with the <code>base</code> kwarg in the command. Effects coding is a sum-to-zero contrast, but when applied to factors with more than two levels does not yield orthogonal contrasts.</p>
 <p>Finally, contrasts for the five levels of the fixed factor <code>Test</code> represent the hypotheses about differences between them. In this tutorial, we use this factor to illustrate various options.</p>
 <p><strong>We (initially) include only <code>Test</code> as fixed factor and <code>Child</code> as random factor. More complex LMMs can be specified by simply adding other fixed or random factors to the formula.</strong></p>
-<section id="seqdiffcoding-contr1" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="seqdiffcoding-contr1"><span class="header-section-number">2.1</span> <em>SeqDiffCoding</em>: <code>contr1</code></h2>
-<p><em>SeqDiffCoding</em> was used in the publication. This specification tests pairwise differences between the five neighboring levels of <code>Test</code>, that is:</p>
+<section id="sequential-difference-coding-contr1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sequential-difference-coding-contr1"><span class="header-section-number">2.1</span> Sequential difference coding: <code>contr1</code></h2>
+<p>Sequential difference coding was used in the publication. This specification tests pairwise differences between the five neighboring levels of <code>Test</code>, that is:</p>
 <ul>
 <li>SDC1: 2-1</li>
 <li>SDC2: 3-2</li>
@@ -1703,7 +1739,7 @@ window.Quarto = {
 <li>SDC4: 5-4</li>
 </ul>
 <p>The levels were sorted such that these contrasts map onto four <em>a priori</em> hypotheses; in other words, they are <em>theoretically</em> motivated pairwise comparisons. The motivation also encompasses theoretically motivated interactions with <code>Sex</code>. The order of levels can also be explicitly specified during contrast construction. This is very useful if levels are in a different order in the dataframe. We recommend the explicit specification to increase transparency of the code.</p>
-<p>The statistical disadvantage of <em>SeqDiffCoding</em> is that the contrasts are not orthogonal, that is the contrasts are correlated. This is obvious from the fact that levels 2, 3, and 4 are all used in two contrasts. One consequence of this is that correlation parameters estimated between neighboring contrasts (e.g., 2-1 and 3-2) are difficult to interpret. Usually, they will be negative because assuming some practical limitation on the overall range (e.g., between levels 1 and 3), a small “2-1” effect “correlates” negatively with a larger “3-2” effect for mathematical reasons.</p>
+<p>The statistical disadvantage of sequential difference coding is that the contrasts are not orthogonal, that is the contrasts are correlated. This is obvious from the fact that levels 2, 3, and 4 are all used in two contrasts. One consequence of this is that correlation parameters estimated between neighboring contrasts (e.g., 2-1 and 3-2) are difficult to interpret. Usually, they will be negative because assuming some practical limitation on the overall range (e.g., between levels 1 and 3), a small “2-1” effect “correlates” negatively with a larger “3-2” effect for mathematical reasons.</p>
 <p>Obviously, the tradeoff between theoretical motivation and statistical purity is something that must be considered carefully when planning the analysis.</p>
 <div id="16" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>contr1 <span class="op">=</span> <span class="fu">Dict</span>(</span>
@@ -1722,11 +1758,179 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m_ovi_SeqDiff_1 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> Child)),</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                      dat; contrasts<span class="op">=</span>contr1, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="20" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.0014</td>
+<td style="text-align: right;">0.0143</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.9216</td>
+<td style="text-align: right;">0.7593</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;">-0.0044</td>
+<td style="text-align: right;">0.0440</td>
+<td style="text-align: right;">-0.10</td>
+<td style="text-align: right;">0.9210</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;">-0.0090</td>
+<td style="text-align: right;">0.0442</td>
+<td style="text-align: right;">-0.20</td>
+<td style="text-align: right;">0.8385</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;">-0.0062</td>
+<td style="text-align: right;">0.0441</td>
+<td style="text-align: right;">-0.14</td>
+<td style="text-align: right;">0.8878</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;">0.0082</td>
+<td style="text-align: right;">0.0440</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.8529</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6512</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>In this case, any differences between tests identified by the contrasts would be spurious because each test was standardized (i.e., <em>M</em>=0, <span class="math inline">\(SD\)</span>=1). The differences could also be due to an imbalance in the number of boys and girls or in the number of missing observations for each test.</p>
 <p>The primary interest in this study related to interactions of the test contrasts with and <code>age</code> and <code>Sex</code>. We start with age (linear) and its interaction with the four test contrasts.</p>
 <div id="22" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m_ovi_SeqDiff_2 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">*</span> a1 <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> Child)),</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                      dat; contrasts<span class="op">=</span>contr1, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="24" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0077</td>
+<td style="text-align: right;">0.0144</td>
+<td style="text-align: right;">-0.53</td>
+<td style="text-align: right;">0.5960</td>
+<td style="text-align: right;">0.7538</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;">-0.0182</td>
+<td style="text-align: right;">0.0442</td>
+<td style="text-align: right;">-0.41</td>
+<td style="text-align: right;">0.6814</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;">-0.0019</td>
+<td style="text-align: right;">0.0445</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">0.9655</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;">0.0010</td>
+<td style="text-align: right;">0.0444</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.9820</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;">-0.0091</td>
+<td style="text-align: right;">0.0442</td>
+<td style="text-align: right;">-0.21</td>
+<td style="text-align: right;">0.8373</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.2029</td>
+<td style="text-align: right;">0.0500</td>
+<td style="text-align: right;">4.06</td>
+<td style="text-align: right;">&lt;1e-04</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star_r &amp; a1</td>
+<td style="text-align: right;">0.3822</td>
+<td style="text-align: right;">0.1519</td>
+<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">0.0119</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20_r &amp; a1</td>
+<td style="text-align: right;">-0.1670</td>
+<td style="text-align: right;">0.1530</td>
+<td style="text-align: right;">-1.09</td>
+<td style="text-align: right;">0.2753</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ &amp; a1</td>
+<td style="text-align: right;">-0.2320</td>
+<td style="text-align: right;">0.1519</td>
+<td style="text-align: right;">-1.53</td>
+<td style="text-align: right;">0.1266</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT &amp; a1</td>
+<td style="text-align: right;">0.5125</td>
+<td style="text-align: right;">0.1506</td>
+<td style="text-align: right;">3.40</td>
+<td style="text-align: right;">0.0007</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6523</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <p>The difference between older and younger children is larger for <code>Star_r</code> than for <code>Run</code> (0.2473). <code>S20_r</code> did not differ significantly from <code>Star_r</code> (-0.0377) and <code>SLJ</code> (-0.0113) The largest difference in developmental gain was between <code>BPT</code> and <code>SLJ</code> (0.3355).</p>
 <p><strong>Please note that standard errors of this LMM are anti-conservative because the LMM is missing a lot of information in the RES (e..g., contrast-related VCs snd CPs for <code>Child</code>, <code>School</code>, and <code>Cohort</code>.</strong></p>
@@ -1734,6 +1938,150 @@ window.Quarto = {
 <div id="26" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m_ovi_SeqDiff_3 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">*</span> (a1 <span class="op">+</span> Sex) <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> Child)),</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                      dat; contrasts<span class="op">=</span>contr1, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="28" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0073</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.52</td>
+<td style="text-align: right;">0.6033</td>
+<td style="text-align: right;">0.7310</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;">-0.0216</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.50</td>
+<td style="text-align: right;">0.6177</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;">0.0015</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.9720</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;">0.0006</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.9887</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;">-0.0089</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.21</td>
+<td style="text-align: right;">0.8362</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1853</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">3.80</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2004</td>
+<td style="text-align: right;">0.0139</td>
+<td style="text-align: right;">14.39</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r &amp; a1</td>
+<td style="text-align: right;">0.4133</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">2.78</td>
+<td style="text-align: right;">0.0054</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r &amp; a1</td>
+<td style="text-align: right;">-0.1919</td>
+<td style="text-align: right;">0.1496</td>
+<td style="text-align: right;">-1.28</td>
+<td style="text-align: right;">0.1998</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ &amp; a1</td>
+<td style="text-align: right;">-0.2320</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.56</td>
+<td style="text-align: right;">0.1180</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT &amp; a1</td>
+<td style="text-align: right;">0.5010</td>
+<td style="text-align: right;">0.1473</td>
+<td style="text-align: right;">3.40</td>
+<td style="text-align: right;">0.0007</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1857</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">-4.33</td>
+<td style="text-align: right;">&lt;1e-04</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1003</td>
+<td style="text-align: right;">0.0431</td>
+<td style="text-align: right;">2.33</td>
+<td style="text-align: right;">0.0198</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0319</td>
+<td style="text-align: right;">0.0430</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.4582</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1110</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">2.59</td>
+<td style="text-align: right;">0.0097</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6424</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <p>The significant interactions with <code>Sex</code> reflect mostly differences related to muscle power, where the physiological constitution gives boys an advantage. The sex difference is smaller when coordination and cognition play a role – as in the <code>Star_r</code> test. (Caveat: SEs are estimated with an underspecified RES.)</p>
 <p>The final step in this first series is to add the interactions between the three covariates. A significant interaction between any of the four <code>Test</code> contrasts and age (linear) x <code>Sex</code> was hypothesized to reflect a prepubertal signal (i.e., hormones start to rise in girls’ ninth year of life). However, this hypothesis is linked to a specific shape of the interaction: Girls would need to gain more than boys in tests of muscular power.</p>
@@ -1760,12 +2108,196 @@ Predictors:
 <div id="32" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m_ovi_SeqDiff <span class="op">=</span> <span class="fu">lmm</span>(f_ovi, dat; contrasts<span class="op">=</span>contr1, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="34" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0069</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.49</td>
+<td style="text-align: right;">0.6233</td>
+<td style="text-align: right;">0.7283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;">-0.0261</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.60</td>
+<td style="text-align: right;">0.5458</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;">0.0054</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.9018</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;">0.0017</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.9687</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;">-0.0104</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.24</td>
+<td style="text-align: right;">0.8096</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1850</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">3.79</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2026</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.38</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r &amp; a1</td>
+<td style="text-align: right;">0.4198</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">0.0047</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r &amp; a1</td>
+<td style="text-align: right;">-0.1955</td>
+<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">-1.31</td>
+<td style="text-align: right;">0.1911</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ &amp; a1</td>
+<td style="text-align: right;">-0.2317</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.56</td>
+<td style="text-align: right;">0.1183</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT &amp; a1</td>
+<td style="text-align: right;">0.5024</td>
+<td style="text-align: right;">0.1472</td>
+<td style="text-align: right;">3.41</td>
+<td style="text-align: right;">0.0006</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1969</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-4.55</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1093</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">0.0119</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0390</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.3680</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1078</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">0.0125</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0457</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">-0.94</td>
+<td style="text-align: right;">0.3484</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star_r &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.2786</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">1.87</td>
+<td style="text-align: right;">0.0609</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20_r &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2118</td>
+<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">-1.42</td>
+<td style="text-align: right;">0.1566</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1757</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.2364</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0865</td>
+<td style="text-align: right;">0.1472</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.5570</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6441</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The results are very clear: Despite an abundance of statistical power there is no evidence for the differences between boys and girls in how much they gain in the ninth year of life in these five tests. The authors argue that, in this case, absence of evidence looks very much like evidence of absence of a hypothesized interaction.</p>
 <p>In the next two sections we use different contrasts. Does this have a bearing on this result? We still ignore for now that we are looking at anti-conservative test statistics.</p>
 </section>
-<section id="helmertcoding-contr2" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="helmertcoding-contr2"><span class="header-section-number">2.2</span> <em>HelmertCoding</em>: <code>contr2</code></h2>
-<p>The second set of contrasts uses <em>HelmertCoding</em>. Helmert coding codes each level as the difference from the average of the lower levels. With the default order of <code>Test</code> levels we get the following test statistics which we describe in reverse order of appearance in model output</p>
+<section id="helmert-coding-contr2" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="helmert-coding-contr2"><span class="header-section-number">2.2</span> _Helmert coding: <code>contr2</code></h2>
+<p>The second set of contrasts uses Helmert coding. Helmert coding encodes each level as the difference from the average of the lower levels. With the default order of <code>Test</code> levels we get the following test statistics which we describe in reverse order of appearance in model output</p>
 <ul>
 <li>HeC4: 5 - mean(1,2,3,4)</li>
 <li>HeC3: 4 - mean(1,2,3)</li>
@@ -1777,7 +2309,7 @@ Predictors:
 <p>One could argue that there is justification for HeC3 because <code>Run</code> (1), <code>Star_r</code> (2), and <code>S20</code> (3) involve running but <code>SLJ</code> (4) does not. Sports scientists, however, recoil. For them it does not make much sense to average the different running tests, because they draw on completely different physiological resources; it is a variant of the old apples-and-oranges problem.</p>
 <p>The justification for HeC3 is that<code>Run</code> (1) and <code>Star_r</code> (2) draw more strongly on cardiorespiratory <em>Endurance</em> than <code>S20</code> (3) due to the longer duration of the runs compared to sprinting for 20 m which is a pure measure of the physical-fitness component <em>Speed</em>. Again, sports scientists are not very happy with this proposal.</p>
 <p>Finally, HeC1 contrasts the fitness components Endurance, indicated best by Run (1), and Coordination, indicated by <code>Star_r</code> (2). Endurance (i.e., running for 6 minutes) is considered to be the best indicator of health-related status among the five tests because it is a rather pure measure of cardiorespiratory fitness. The <code>Star_r</code> test requires execution of a pre-instructed sequence of forward, sideways, and backward runs. This coordination of body movements implies a demand on working memory (i.e., remembering the order of these subruns) and executive control processes, but performance also depends on endurance. HeC1 yields a measure of Coordination “corrected” for the contribution of Endurance.</p>
-<p>The statistical advantage of <em>HelmertCoding</em> is that the resulting contrasts are orthogonal (uncorrelated). This allows for optimal partitioning of variance and statistical power. It is also more efficient to estimate “orthogonal” than “non-orthogonal” random-effect structures.</p>
+<p>The statistical advantage of Helmert coding is that the resulting contrasts are orthogonal (uncorrelated). This allows for optimal partitioning of variance and statistical power. It is also more efficient to estimate “orthogonal” than “non-orthogonal” random-effect structures.</p>
 <div id="36" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>contr2 <span class="op">=</span> <span class="fu">Dict</span>(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">:</span>Sex <span class="op">=&gt;</span> <span class="fu">EffectsCoding</span>(; levels<span class="op">=</span>[<span class="st">"Girls"</span>, <span class="st">"Boys"</span>]),</span>
@@ -1789,14 +2321,198 @@ Predictors:
 <div id="38" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m_ovi_Helmert <span class="op">=</span> <span class="fu">lmm</span>(f_ovi, dat; contrasts<span class="op">=</span>contr2, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="40" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0069</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.49</td>
+<td style="text-align: right;">0.6233</td>
+<td style="text-align: right;">0.7283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;">-0.0131</td>
+<td style="text-align: right;">0.0216</td>
+<td style="text-align: right;">-0.60</td>
+<td style="text-align: right;">0.5458</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;">-0.0026</td>
+<td style="text-align: right;">0.0126</td>
+<td style="text-align: right;">-0.20</td>
+<td style="text-align: right;">0.8381</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;">-0.0009</td>
+<td style="text-align: right;">0.0088</td>
+<td style="text-align: right;">-0.10</td>
+<td style="text-align: right;">0.9227</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;">-0.0026</td>
+<td style="text-align: right;">0.0069</td>
+<td style="text-align: right;">-0.38</td>
+<td style="text-align: right;">0.7051</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1850</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">3.79</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2026</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.38</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r &amp; a1</td>
+<td style="text-align: right;">0.2099</td>
+<td style="text-align: right;">0.0743</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">0.0047</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r &amp; a1</td>
+<td style="text-align: right;">0.0048</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.9116</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ &amp; a1</td>
+<td style="text-align: right;">-0.0555</td>
+<td style="text-align: right;">0.0303</td>
+<td style="text-align: right;">-1.83</td>
+<td style="text-align: right;">0.0669</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT &amp; a1</td>
+<td style="text-align: right;">0.0672</td>
+<td style="text-align: right;">0.0235</td>
+<td style="text-align: right;">2.86</td>
+<td style="text-align: right;">0.0042</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0985</td>
+<td style="text-align: right;">0.0216</td>
+<td style="text-align: right;">-4.55</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0036</td>
+<td style="text-align: right;">0.0126</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">0.7735</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0116</td>
+<td style="text-align: right;">0.0088</td>
+<td style="text-align: right;">1.31</td>
+<td style="text-align: right;">0.1910</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0285</td>
+<td style="text-align: right;">0.0069</td>
+<td style="text-align: right;">4.16</td>
+<td style="text-align: right;">&lt;1e-04</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0457</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">-0.94</td>
+<td style="text-align: right;">0.3484</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star_r &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1393</td>
+<td style="text-align: right;">0.0743</td>
+<td style="text-align: right;">1.87</td>
+<td style="text-align: right;">0.0609</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20_r &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0242</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.56</td>
+<td style="text-align: right;">0.5760</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0560</td>
+<td style="text-align: right;">0.0303</td>
+<td style="text-align: right;">-1.85</td>
+<td style="text-align: right;">0.0646</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0163</td>
+<td style="text-align: right;">0.0235</td>
+<td style="text-align: right;">-0.70</td>
+<td style="text-align: right;">0.4869</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6441</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>We forego a detailed discussion of the effects, but note that again none of the interactions between <code>age x Sex</code> with the four test contrasts was significant.</p>
 <p>The default labeling of Helmert contrasts may lead to confusions with other contrasts. Therefore, we could provide our own labels:</p>
 <p><code>labels=["c2.1", "c3.12", "c4.123", "c5.1234"]</code></p>
 <p>Once the order of levels is memorized the proposed labelling is very transparent.</p>
 </section>
-<section id="hypothesiscoding-contr3" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="hypothesiscoding-contr3"><span class="header-section-number">2.3</span> <em>HypothesisCoding</em>: <code>contr3</code></h2>
-<p>The third set of contrasts uses <em>HypothesisCoding</em>. <em>Hypothesis coding</em> allows the user to specify their own <em>a priori</em> contrast matrix, subject to the mathematical constraint that the matrix has full rank. For example, sport scientists agree that the first four tests can be contrasted with <code>BPT</code>, because the difference is akin to a correction of overall physical fitness. However, they want to keep the pairwise comparisons for the first four tests.</p>
+<section id="hypothesis-coding-contr3" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="hypothesis-coding-contr3"><span class="header-section-number">2.3</span> Hypothesis coding: <code>contr3</code></h2>
+<p>The third set of contrasts uses hypothesis coding. Hypothesis coding allows the user to specify their own <em>a priori</em> contrast matrix, subject to the mathematical constraint that the matrix has full rank. For example, sport scientists agree that the first four tests can be contrasted with <code>BPT</code>, because the difference is akin to a correction of overall physical fitness. However, they want to keep the pairwise comparisons for the first four tests.</p>
 <ul>
 <li>HyC1: <code>BPT</code> - mean(1,2,3,4)</li>
 <li>HyC2: <code>Star_r</code> - <code>Run_r</code></li>
@@ -1821,7 +2537,191 @@ Predictors:
 <div id="44" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>m_ovi_Hypo <span class="op">=</span> <span class="fu">lmm</span>(f_ovi, dat; contrasts<span class="op">=</span>contr3, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>With <em>HypothesisCoding</em> we must generate our own labels for the contrasts. The default labeling of contrasts is usually not interpretable. Therefore, we provide our own.</p>
+<div id="46" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0069</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.49</td>
+<td style="text-align: right;">0.6233</td>
+<td style="text-align: right;">0.7283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-other</td>
+<td style="text-align: right;">-0.0519</td>
+<td style="text-align: right;">0.1371</td>
+<td style="text-align: right;">-0.38</td>
+<td style="text-align: right;">0.7051</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-End</td>
+<td style="text-align: right;">-0.0261</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.60</td>
+<td style="text-align: right;">0.5458</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star</td>
+<td style="text-align: right;">0.0054</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.9018</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20</td>
+<td style="text-align: right;">0.0017</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.9687</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1850</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">3.79</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2026</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.38</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-other &amp; a1</td>
+<td style="text-align: right;">1.3433</td>
+<td style="text-align: right;">0.4692</td>
+<td style="text-align: right;">2.86</td>
+<td style="text-align: right;">0.0042</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-End &amp; a1</td>
+<td style="text-align: right;">0.4198</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">0.0047</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; a1</td>
+<td style="text-align: right;">-0.1955</td>
+<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">-1.31</td>
+<td style="text-align: right;">0.1911</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1</td>
+<td style="text-align: right;">-0.2317</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.56</td>
+<td style="text-align: right;">0.1183</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-other &amp; Sex: Boys</td>
+<td style="text-align: right;">0.5699</td>
+<td style="text-align: right;">0.1371</td>
+<td style="text-align: right;">4.16</td>
+<td style="text-align: right;">&lt;1e-04</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-End &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1969</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-4.55</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1093</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">0.0119</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0390</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.3680</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0457</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">-0.94</td>
+<td style="text-align: right;">0.3484</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-other &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.3262</td>
+<td style="text-align: right;">0.4692</td>
+<td style="text-align: right;">-0.70</td>
+<td style="text-align: right;">0.4869</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-End &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.2786</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">1.87</td>
+<td style="text-align: right;">0.0609</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2118</td>
+<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">-1.42</td>
+<td style="text-align: right;">0.1566</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1757</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.2364</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6441</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>With hypothesis coding we must generate our own labels for the contrasts. The default labeling of contrasts is usually not interpretable. Therefore, we provide our own.</p>
 <p>Anyway, none of the interactions between <code>age</code> x <code>Sex</code> with the four <code>Test</code> contrasts was significant for these contrasts.</p>
 <div id="48" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>contr1b <span class="op">=</span> <span class="fu">Dict</span>(</span>
@@ -1841,17 +2741,833 @@ Predictors:
 <div id="50" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m_ovi_SeqDiff_v2 <span class="op">=</span> <span class="fu">lmm</span>(f_ovi, dat; contrasts<span class="op">=</span>contr1b, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="52" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0069</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.49</td>
+<td style="text-align: right;">0.6233</td>
+<td style="text-align: right;">0.7283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run</td>
+<td style="text-align: right;">-0.0261</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.60</td>
+<td style="text-align: right;">0.5458</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star</td>
+<td style="text-align: right;">0.0054</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.9018</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20</td>
+<td style="text-align: right;">0.0017</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.9687</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ</td>
+<td style="text-align: right;">-0.0104</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.24</td>
+<td style="text-align: right;">0.8096</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1850</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">3.79</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2026</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.38</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; a1</td>
+<td style="text-align: right;">0.4198</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">0.0047</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; a1</td>
+<td style="text-align: right;">-0.1955</td>
+<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">-1.31</td>
+<td style="text-align: right;">0.1911</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1</td>
+<td style="text-align: right;">-0.2317</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.56</td>
+<td style="text-align: right;">0.1183</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1</td>
+<td style="text-align: right;">0.5024</td>
+<td style="text-align: right;">0.1472</td>
+<td style="text-align: right;">3.41</td>
+<td style="text-align: right;">0.0006</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1969</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-4.55</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1093</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">0.0119</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0390</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">0.3680</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1078</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">0.0125</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0457</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">-0.94</td>
+<td style="text-align: right;">0.3484</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-Run &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.2786</td>
+<td style="text-align: right;">0.1486</td>
+<td style="text-align: right;">1.87</td>
+<td style="text-align: right;">0.0609</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2118</td>
+<td style="text-align: right;">0.1495</td>
+<td style="text-align: right;">-1.42</td>
+<td style="text-align: right;">0.1566</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1757</td>
+<td style="text-align: right;">0.1484</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.2364</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0865</td>
+<td style="text-align: right;">0.1472</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.5570</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.6441</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="54" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>m_zcp_SeqD <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">*</span> a1 <span class="op">*</span> Sex <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">|</span> Child)),</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                 dat; contrasts<span class="op">=</span>contr1b, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="56" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0065</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.46</td>
+<td style="text-align: right;">0.6432</td>
+<td style="text-align: right;">0.7248</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run</td>
+<td style="text-align: right;">-0.0239</td>
+<td style="text-align: right;">0.0434</td>
+<td style="text-align: right;">-0.55</td>
+<td style="text-align: right;">0.5815</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star</td>
+<td style="text-align: right;">0.0063</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.8843</td>
+<td style="text-align: right;">0.5276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20</td>
+<td style="text-align: right;">-0.0024</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">-0.06</td>
+<td style="text-align: right;">0.9548</td>
+<td style="text-align: right;">0.4473</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ</td>
+<td style="text-align: right;">0.0007</td>
+<td style="text-align: right;">0.0430</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.9865</td>
+<td style="text-align: right;">0.0941</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1852</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">3.79</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2027</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.38</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; a1</td>
+<td style="text-align: right;">0.4300</td>
+<td style="text-align: right;">0.1487</td>
+<td style="text-align: right;">2.89</td>
+<td style="text-align: right;">0.0038</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; a1</td>
+<td style="text-align: right;">-0.2070</td>
+<td style="text-align: right;">0.1488</td>
+<td style="text-align: right;">-1.39</td>
+<td style="text-align: right;">0.1642</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1</td>
+<td style="text-align: right;">-0.2208</td>
+<td style="text-align: right;">0.1468</td>
+<td style="text-align: right;">-1.50</td>
+<td style="text-align: right;">0.1326</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1</td>
+<td style="text-align: right;">0.4694</td>
+<td style="text-align: right;">0.1459</td>
+<td style="text-align: right;">3.22</td>
+<td style="text-align: right;">0.0013</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1960</td>
+<td style="text-align: right;">0.0434</td>
+<td style="text-align: right;">-4.51</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1059</td>
+<td style="text-align: right;">0.0433</td>
+<td style="text-align: right;">2.45</td>
+<td style="text-align: right;">0.0144</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0332</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.4398</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1164</td>
+<td style="text-align: right;">0.0430</td>
+<td style="text-align: right;">2.71</td>
+<td style="text-align: right;">0.0068</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0454</td>
+<td style="text-align: right;">0.0488</td>
+<td style="text-align: right;">-0.93</td>
+<td style="text-align: right;">0.3522</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-Run &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.2626</td>
+<td style="text-align: right;">0.1487</td>
+<td style="text-align: right;">1.77</td>
+<td style="text-align: right;">0.0774</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2006</td>
+<td style="text-align: right;">0.1488</td>
+<td style="text-align: right;">-1.35</td>
+<td style="text-align: right;">0.1776</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1702</td>
+<td style="text-align: right;">0.1468</td>
+<td style="text-align: right;">-1.16</td>
+<td style="text-align: right;">0.2462</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0834</td>
+<td style="text-align: right;">0.1459</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.5678</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.5521</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="58" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m_zcp_SeqD_2 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">*</span> a1 <span class="op">*</span> Sex <span class="op">+</span> (<span class="fl">0</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">|</span> Child)),</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                   dat; contrasts<span class="op">=</span>contr1b, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="60" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0062</td>
+<td style="text-align: right;">0.0140</td>
+<td style="text-align: right;">-0.45</td>
+<td style="text-align: right;">0.6559</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run</td>
+<td style="text-align: right;">-0.0245</td>
+<td style="text-align: right;">0.0437</td>
+<td style="text-align: right;">-0.56</td>
+<td style="text-align: right;">0.5748</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star</td>
+<td style="text-align: right;">0.0048</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.9137</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20</td>
+<td style="text-align: right;">0.0131</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.7674</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ</td>
+<td style="text-align: right;">-0.0287</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.66</td>
+<td style="text-align: right;">0.5073</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1844</td>
+<td style="text-align: right;">0.0483</td>
+<td style="text-align: right;">3.82</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2018</td>
+<td style="text-align: right;">0.0140</td>
+<td style="text-align: right;">14.44</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; a1</td>
+<td style="text-align: right;">0.4064</td>
+<td style="text-align: right;">0.1507</td>
+<td style="text-align: right;">2.70</td>
+<td style="text-align: right;">0.0070</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; a1</td>
+<td style="text-align: right;">-0.1807</td>
+<td style="text-align: right;">0.1527</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.2366</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1</td>
+<td style="text-align: right;">-0.2782</td>
+<td style="text-align: right;">0.1524</td>
+<td style="text-align: right;">-1.82</td>
+<td style="text-align: right;">0.0680</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1</td>
+<td style="text-align: right;">0.5586</td>
+<td style="text-align: right;">0.1489</td>
+<td style="text-align: right;">3.75</td>
+<td style="text-align: right;">0.0002</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1971</td>
+<td style="text-align: right;">0.0437</td>
+<td style="text-align: right;">-4.51</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1014</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">0.0220</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0451</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">0.3089</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1019</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">2.36</td>
+<td style="text-align: right;">0.0185</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0448</td>
+<td style="text-align: right;">0.0483</td>
+<td style="text-align: right;">-0.93</td>
+<td style="text-align: right;">0.3536</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-Run &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.3097</td>
+<td style="text-align: right;">0.1507</td>
+<td style="text-align: right;">2.06</td>
+<td style="text-align: right;">0.0398</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2051</td>
+<td style="text-align: right;">0.1527</td>
+<td style="text-align: right;">-1.34</td>
+<td style="text-align: right;">0.1792</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2030</td>
+<td style="text-align: right;">0.1524</td>
+<td style="text-align: right;">-1.33</td>
+<td style="text-align: right;">0.1831</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0979</td>
+<td style="text-align: right;">0.1489</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.5107</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Run</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9577</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9839</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9855</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9716</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9394</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="62" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>m_cpx_0_SeqDiff <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">*</span> a1 <span class="op">*</span> Sex <span class="op">+</span> (<span class="fl">0</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">|</span> Child)),</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                      dat; contrasts<span class="op">=</span>contr1b, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="64" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0062</td>
+<td style="text-align: right;">0.0140</td>
+<td style="text-align: right;">-0.45</td>
+<td style="text-align: right;">0.6559</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run</td>
+<td style="text-align: right;">-0.0245</td>
+<td style="text-align: right;">0.0437</td>
+<td style="text-align: right;">-0.56</td>
+<td style="text-align: right;">0.5748</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star</td>
+<td style="text-align: right;">0.0048</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.9137</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20</td>
+<td style="text-align: right;">0.0131</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.7674</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ</td>
+<td style="text-align: right;">-0.0287</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">-0.66</td>
+<td style="text-align: right;">0.5073</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1844</td>
+<td style="text-align: right;">0.0483</td>
+<td style="text-align: right;">3.82</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2018</td>
+<td style="text-align: right;">0.0140</td>
+<td style="text-align: right;">14.44</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; a1</td>
+<td style="text-align: right;">0.4064</td>
+<td style="text-align: right;">0.1507</td>
+<td style="text-align: right;">2.70</td>
+<td style="text-align: right;">0.0070</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; a1</td>
+<td style="text-align: right;">-0.1807</td>
+<td style="text-align: right;">0.1527</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.2366</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1</td>
+<td style="text-align: right;">-0.2782</td>
+<td style="text-align: right;">0.1524</td>
+<td style="text-align: right;">-1.82</td>
+<td style="text-align: right;">0.0680</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1</td>
+<td style="text-align: right;">0.5586</td>
+<td style="text-align: right;">0.1489</td>
+<td style="text-align: right;">3.75</td>
+<td style="text-align: right;">0.0002</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1971</td>
+<td style="text-align: right;">0.0437</td>
+<td style="text-align: right;">-4.51</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1014</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">0.0220</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0451</td>
+<td style="text-align: right;">0.0443</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">0.3089</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1019</td>
+<td style="text-align: right;">0.0432</td>
+<td style="text-align: right;">2.36</td>
+<td style="text-align: right;">0.0185</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0448</td>
+<td style="text-align: right;">0.0483</td>
+<td style="text-align: right;">-0.93</td>
+<td style="text-align: right;">0.3536</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-Run &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.3097</td>
+<td style="text-align: right;">0.1507</td>
+<td style="text-align: right;">2.06</td>
+<td style="text-align: right;">0.0398</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2051</td>
+<td style="text-align: right;">0.1527</td>
+<td style="text-align: right;">-1.34</td>
+<td style="text-align: right;">0.1792</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2030</td>
+<td style="text-align: right;">0.1524</td>
+<td style="text-align: right;">-1.33</td>
+<td style="text-align: right;">0.1831</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0979</td>
+<td style="text-align: right;">0.1489</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.5107</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Run</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9577</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star_r</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9839</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20_r</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9855</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9716</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.9394</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="66" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_cpx_0_SeqDiff)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1976,6 +3692,190 @@ Predictors:
 <div id="72" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>m_cpx_1_SeqDiff <span class="op">=</span> <span class="fu">lmm</span>(f_cpx_1, dat; contrasts<span class="op">=</span>contr1b, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="74" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0061</td>
+<td style="text-align: right;">0.0140</td>
+<td style="text-align: right;">-0.43</td>
+<td style="text-align: right;">0.6657</td>
+<td style="text-align: right;">0.7230</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run</td>
+<td style="text-align: right;">-0.0236</td>
+<td style="text-align: right;">0.0431</td>
+<td style="text-align: right;">-0.55</td>
+<td style="text-align: right;">0.5839</td>
+<td style="text-align: right;">0.8364</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star</td>
+<td style="text-align: right;">0.0039</td>
+<td style="text-align: right;">0.0441</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.9299</td>
+<td style="text-align: right;">0.8995</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20</td>
+<td style="text-align: right;">0.0091</td>
+<td style="text-align: right;">0.0438</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.8355</td>
+<td style="text-align: right;">0.8356</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ</td>
+<td style="text-align: right;">-0.0174</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">-0.41</td>
+<td style="text-align: right;">0.6846</td>
+<td style="text-align: right;">1.0836</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1853</td>
+<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">3.81</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2027</td>
+<td style="text-align: right;">0.0140</td>
+<td style="text-align: right;">14.43</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; a1</td>
+<td style="text-align: right;">0.4134</td>
+<td style="text-align: right;">0.1470</td>
+<td style="text-align: right;">2.81</td>
+<td style="text-align: right;">0.0049</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; a1</td>
+<td style="text-align: right;">-0.1890</td>
+<td style="text-align: right;">0.1516</td>
+<td style="text-align: right;">-1.25</td>
+<td style="text-align: right;">0.2124</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1</td>
+<td style="text-align: right;">-0.2609</td>
+<td style="text-align: right;">0.1501</td>
+<td style="text-align: right;">-1.74</td>
+<td style="text-align: right;">0.0822</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1</td>
+<td style="text-align: right;">0.5195</td>
+<td style="text-align: right;">0.1467</td>
+<td style="text-align: right;">3.54</td>
+<td style="text-align: right;">0.0004</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: Star-Run &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1987</td>
+<td style="text-align: right;">0.0431</td>
+<td style="text-align: right;">-4.61</td>
+<td style="text-align: right;">&lt;1e-05</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: S20-Star &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1104</td>
+<td style="text-align: right;">0.0441</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">0.0124</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: SLJ-S20 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0259</td>
+<td style="text-align: right;">0.0438</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.5540</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: BPT-SLJ &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1143</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">2.67</td>
+<td style="text-align: right;">0.0077</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0445</td>
+<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">-0.91</td>
+<td style="text-align: right;">0.3604</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: Star-Run &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.2960</td>
+<td style="text-align: right;">0.1470</td>
+<td style="text-align: right;">2.01</td>
+<td style="text-align: right;">0.0440</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: S20-Star &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2087</td>
+<td style="text-align: right;">0.1516</td>
+<td style="text-align: right;">-1.38</td>
+<td style="text-align: right;">0.1686</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: SLJ-S20 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1540</td>
+<td style="text-align: right;">0.1501</td>
+<td style="text-align: right;">-1.03</td>
+<td style="text-align: right;">0.3050</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: BPT-SLJ &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0603</td>
+<td style="text-align: right;">0.1467</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.6810</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="76" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m_cpx_1_SeqDiff.PCA</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
@@ -2000,9 +3900,9 @@ Component loadings
 </div>
 </div>
 </section>
-<section id="pca-based-hypothesiscoding-contr4" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="pca-based-hypothesiscoding-contr4"><span class="header-section-number">2.4</span> <em>PCA-based HypothesisCoding</em>: <code>contr4</code></h2>
-<p>The fourth set of contrasts uses <em>HypothesisCoding</em> to specify the set of contrasts implementing the loadings of the four principal components of the published LMM based on test scores, not test effects (contrasts) — coarse-grained, that is roughly according to their signs. This is actually a very interesting and plausible solution nobody had proposed <em>a priori</em>.</p>
+<section id="pca-based-hypothesis-coding-contr4" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="pca-based-hypothesis-coding-contr4"><span class="header-section-number">2.4</span> PCA-based hypothesis coding: <code>contr4</code></h2>
+<p>The fourth set of contrasts uses hypothesis coding to specify the set of contrasts implementing the loadings of the four principal components of the published LMM based on test scores, not test effects (contrasts); in other words, roughly according to their signs. This is actually a very interesting and plausible solution nobody had proposed <em>a priori</em>.</p>
 <ul>
 <li>PC1: <code>BPT</code> - <code>Run_r</code></li>
 <li>PC2: (<code>Star_r</code> + <code>S20_r</code> + <code>SLJ</code>) - (<code>BPT</code> + <code>Run_r</code>)</li>
@@ -2027,6 +3927,190 @@ Component loadings
 </div>
 <div id="80" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>m_cpx_1_PC <span class="op">=</span> <span class="fu">lmm</span>(f_cpx_1, dat; contrasts<span class="op">=</span>contr4, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="82" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0060</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.43</td>
+<td style="text-align: right;">0.6686</td>
+<td style="text-align: right;">0.7446</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1</td>
+<td style="text-align: right;">-0.0285</td>
+<td style="text-align: right;">0.0427</td>
+<td style="text-align: right;">-0.67</td>
+<td style="text-align: right;">0.5042</td>
+<td style="text-align: right;">1.1465</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15</td>
+<td style="text-align: right;">-0.0023</td>
+<td style="text-align: right;">0.1647</td>
+<td style="text-align: right;">-0.01</td>
+<td style="text-align: right;">0.9887</td>
+<td style="text-align: right;">0.2807</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c2.34</td>
+<td style="text-align: right;">-0.0159</td>
+<td style="text-align: right;">0.0759</td>
+<td style="text-align: right;">-0.21</td>
+<td style="text-align: right;">0.8338</td>
+<td style="text-align: right;">1.5034</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4</td>
+<td style="text-align: right;">-0.0112</td>
+<td style="text-align: right;">0.0441</td>
+<td style="text-align: right;">-0.25</td>
+<td style="text-align: right;">0.7989</td>
+<td style="text-align: right;">1.3408</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1838</td>
+<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">0.0002</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2025</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.41</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; a1</td>
+<td style="text-align: right;">0.4904</td>
+<td style="text-align: right;">0.1470</td>
+<td style="text-align: right;">3.33</td>
+<td style="text-align: right;">0.0009</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; a1</td>
+<td style="text-align: right;">-0.3516</td>
+<td style="text-align: right;">0.5587</td>
+<td style="text-align: right;">-0.63</td>
+<td style="text-align: right;">0.5291</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c2.34 &amp; a1</td>
+<td style="text-align: right;">0.6574</td>
+<td style="text-align: right;">0.2605</td>
+<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">0.0116</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; a1</td>
+<td style="text-align: right;">0.2749</td>
+<td style="text-align: right;">0.1517</td>
+<td style="text-align: right;">1.81</td>
+<td style="text-align: right;">0.0700</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0547</td>
+<td style="text-align: right;">0.0427</td>
+<td style="text-align: right;">1.28</td>
+<td style="text-align: right;">0.2000</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.8430</td>
+<td style="text-align: right;">0.1647</td>
+<td style="text-align: right;">-5.12</td>
+<td style="text-align: right;">&lt;1e-06</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c2.34 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2469</td>
+<td style="text-align: right;">0.0759</td>
+<td style="text-align: right;">-3.25</td>
+<td style="text-align: right;">0.0011</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0451</td>
+<td style="text-align: right;">0.0441</td>
+<td style="text-align: right;">-1.02</td>
+<td style="text-align: right;">0.3075</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0467</td>
+<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">-0.96</td>
+<td style="text-align: right;">0.3365</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c5.1 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0078</td>
+<td style="text-align: right;">0.1470</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">0.9575</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c234.15 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.5470</td>
+<td style="text-align: right;">0.5587</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.3275</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c2.34 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.5878</td>
+<td style="text-align: right;">0.2605</td>
+<td style="text-align: right;">2.26</td>
+<td style="text-align: right;">0.0240</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c3.4 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1878</td>
+<td style="text-align: right;">0.1517</td>
+<td style="text-align: right;">1.24</td>
+<td style="text-align: right;">0.2159</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="84" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_cpx_1_PC)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2150,6 +4234,190 @@ Component loadings
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LN_NEWUOA does a poor job here</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>m_cpx_1_PC_2 <span class="op">=</span> <span class="fu">lmm</span>(f_cpx_1, dat; contrasts<span class="op">=</span>contr4b, progress, optimizer<span class="op">=:</span>LN_BOBYQA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="92" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0055</td>
+<td style="text-align: right;">0.0142</td>
+<td style="text-align: right;">-0.39</td>
+<td style="text-align: right;">0.6971</td>
+<td style="text-align: right;">0.7581</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1</td>
+<td style="text-align: right;">0.0331</td>
+<td style="text-align: right;">0.0301</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">0.2709</td>
+<td style="text-align: right;">0.6112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15</td>
+<td style="text-align: right;">0.0109</td>
+<td style="text-align: right;">0.0302</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.7179</td>
+<td style="text-align: right;">0.5295</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c12.34</td>
+<td style="text-align: right;">0.0040</td>
+<td style="text-align: right;">0.0308</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">0.8965</td>
+<td style="text-align: right;">0.7168</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4</td>
+<td style="text-align: right;">-0.0121</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">-0.38</td>
+<td style="text-align: right;">0.7003</td>
+<td style="text-align: right;">0.8100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1704</td>
+<td style="text-align: right;">0.0491</td>
+<td style="text-align: right;">3.47</td>
+<td style="text-align: right;">0.0005</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.1954</td>
+<td style="text-align: right;">0.0142</td>
+<td style="text-align: right;">13.75</td>
+<td style="text-align: right;">&lt;1e-42</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; a1</td>
+<td style="text-align: right;">-0.4004</td>
+<td style="text-align: right;">0.1031</td>
+<td style="text-align: right;">-3.89</td>
+<td style="text-align: right;">0.0001</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; a1</td>
+<td style="text-align: right;">-0.1340</td>
+<td style="text-align: right;">0.1031</td>
+<td style="text-align: right;">-1.30</td>
+<td style="text-align: right;">0.1939</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c12.34 &amp; a1</td>
+<td style="text-align: right;">0.1402</td>
+<td style="text-align: right;">0.1062</td>
+<td style="text-align: right;">1.32</td>
+<td style="text-align: right;">0.1868</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; a1</td>
+<td style="text-align: right;">0.2557</td>
+<td style="text-align: right;">0.1079</td>
+<td style="text-align: right;">2.37</td>
+<td style="text-align: right;">0.0178</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0686</td>
+<td style="text-align: right;">0.0301</td>
+<td style="text-align: right;">-2.28</td>
+<td style="text-align: right;">0.0226</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1630</td>
+<td style="text-align: right;">0.0302</td>
+<td style="text-align: right;">5.39</td>
+<td style="text-align: right;">&lt;1e-07</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c12.34 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0576</td>
+<td style="text-align: right;">0.0308</td>
+<td style="text-align: right;">-1.87</td>
+<td style="text-align: right;">0.0617</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0159</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">-0.51</td>
+<td style="text-align: right;">0.6133</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0413</td>
+<td style="text-align: right;">0.0491</td>
+<td style="text-align: right;">-0.84</td>
+<td style="text-align: right;">0.4010</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c5.1 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0392</td>
+<td style="text-align: right;">0.1031</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.7037</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c234.15 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1682</td>
+<td style="text-align: right;">0.1031</td>
+<td style="text-align: right;">-1.63</td>
+<td style="text-align: right;">0.1030</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c12.34 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1777</td>
+<td style="text-align: right;">0.1062</td>
+<td style="text-align: right;">1.67</td>
+<td style="text-align: right;">0.0942</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c3.4 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1415</td>
+<td style="text-align: right;">0.1079</td>
+<td style="text-align: right;">1.31</td>
+<td style="text-align: right;">0.1899</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="94" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_cpx_1_PC_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
@@ -2256,6 +4524,190 @@ Component loadings
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LN_BOBYQA does a poor job here</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>m_zcp_1_PC_2 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(zScore <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span><span class="op">*</span>a1<span class="op">*</span>Sex <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> <span class="bu">Test</span> <span class="op">|</span> Child)),</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                   dat; contrasts<span class="op">=</span>contr4b, progress, optimizer<span class="op">=:</span>LN_NEWUOA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="100" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0059</td>
+<td style="text-align: right;">0.0143</td>
+<td style="text-align: right;">-0.41</td>
+<td style="text-align: right;">0.6822</td>
+<td style="text-align: right;">0.7290</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1</td>
+<td style="text-align: right;">0.0239</td>
+<td style="text-align: right;">0.0291</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">0.4114</td>
+<td style="text-align: right;">0.4594</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15</td>
+<td style="text-align: right;">0.0134</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.6684</td>
+<td style="text-align: right;">0.8128</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c12.34</td>
+<td style="text-align: right;">0.0004</td>
+<td style="text-align: right;">0.0318</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.9890</td>
+<td style="text-align: right;">0.7930</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4</td>
+<td style="text-align: right;">-0.0046</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">-0.15</td>
+<td style="text-align: right;">0.8831</td>
+<td style="text-align: right;">0.7566</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1709</td>
+<td style="text-align: right;">0.0494</td>
+<td style="text-align: right;">3.46</td>
+<td style="text-align: right;">0.0005</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.1952</td>
+<td style="text-align: right;">0.0143</td>
+<td style="text-align: right;">13.66</td>
+<td style="text-align: right;">&lt;1e-41</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; a1</td>
+<td style="text-align: right;">-0.3756</td>
+<td style="text-align: right;">0.0997</td>
+<td style="text-align: right;">-3.77</td>
+<td style="text-align: right;">0.0002</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; a1</td>
+<td style="text-align: right;">-0.1347</td>
+<td style="text-align: right;">0.1081</td>
+<td style="text-align: right;">-1.25</td>
+<td style="text-align: right;">0.2128</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c12.34 &amp; a1</td>
+<td style="text-align: right;">0.1509</td>
+<td style="text-align: right;">0.1099</td>
+<td style="text-align: right;">1.37</td>
+<td style="text-align: right;">0.1695</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; a1</td>
+<td style="text-align: right;">0.2364</td>
+<td style="text-align: right;">0.1076</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">0.0280</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0739</td>
+<td style="text-align: right;">0.0291</td>
+<td style="text-align: right;">-2.54</td>
+<td style="text-align: right;">0.0110</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1678</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">5.34</td>
+<td style="text-align: right;">&lt;1e-07</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c12.34 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0571</td>
+<td style="text-align: right;">0.0318</td>
+<td style="text-align: right;">-1.79</td>
+<td style="text-align: right;">0.0728</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0181</td>
+<td style="text-align: right;">0.0314</td>
+<td style="text-align: right;">-0.58</td>
+<td style="text-align: right;">0.5649</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0440</td>
+<td style="text-align: right;">0.0494</td>
+<td style="text-align: right;">-0.89</td>
+<td style="text-align: right;">0.3734</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c5.1 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0349</td>
+<td style="text-align: right;">0.0997</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">0.7266</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c234.15 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.1766</td>
+<td style="text-align: right;">0.1081</td>
+<td style="text-align: right;">-1.63</td>
+<td style="text-align: right;">0.1023</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c12.34 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1888</td>
+<td style="text-align: right;">0.1099</td>
+<td style="text-align: right;">1.72</td>
+<td style="text-align: right;">0.0857</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c3.4 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1440</td>
+<td style="text-align: right;">0.1076</td>
+<td style="text-align: right;">1.34</td>
+<td style="text-align: right;">0.1806</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="102" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_zcp_1_PC_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2399,7 +4851,7 @@ Component loadings
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>m_Child_SDC <span class="op">=</span> <span class="fu">lmm</span>(f_Child, dat; contrasts<span class="op">=</span>contr1, progress, optimizer<span class="op">=:</span>LN_BOBYQA)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>m_Child_HeC <span class="op">=</span> <span class="fu">lmm</span>(f_Child, dat; contrasts<span class="op">=</span>contr2, progress, optimizer<span class="op">=:</span>LN_NELDERMEAD)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>m_Child_HyC <span class="op">=</span> <span class="fu">lmm</span>(f_Child, dat; contrasts<span class="op">=</span>contr3, progress, optimizer<span class="op">=:</span>LN_NELDERMEAD)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>m_Child_PCA <span class="op">=</span> <span class="fu">lmm</span>(f_Child, dat; contrasts<span class="op">=</span>contr4, progress, optimizer<span class="op">=:</span>LN_NELDERMEAD)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>m_Child_PCA <span class="op">=</span> <span class="fu">lmm</span>(f_Child, dat; contrasts<span class="op">=</span>contr4, progress, optimizer<span class="op">=:</span>LN_NELDERMEAD);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="112" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_Child_SDC)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2726,6 +5178,190 @@ Component loadings
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>m_Child_HyC0 <span class="op">=</span> <span class="fu">lmm</span>(f_Child0, dat; contrasts<span class="op">=</span>contr3, progress, optimizer<span class="op">=:</span>LN_NEWUOA)</span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>m_Child_PCA0 <span class="op">=</span> <span class="fu">lmm</span>(f_Child0, dat; contrasts<span class="op">=</span>contr4, progress, optimizer<span class="op">=:</span>LN_NEWUOA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div id="122" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Child</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0060</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">-0.42</td>
+<td style="text-align: right;">0.6722</td>
+<td style="text-align: right;">0.7514</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1</td>
+<td style="text-align: right;">-0.0221</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">-0.52</td>
+<td style="text-align: right;">0.6056</td>
+<td style="text-align: right;">1.1831</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15</td>
+<td style="text-align: right;">-0.0434</td>
+<td style="text-align: right;">0.1649</td>
+<td style="text-align: right;">-0.26</td>
+<td style="text-align: right;">0.7926</td>
+<td style="text-align: right;">0.0299</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c2.34</td>
+<td style="text-align: right;">-0.0100</td>
+<td style="text-align: right;">0.0768</td>
+<td style="text-align: right;">-0.13</td>
+<td style="text-align: right;">0.8966</td>
+<td style="text-align: right;">1.9567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4</td>
+<td style="text-align: right;">-0.0053</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">-0.12</td>
+<td style="text-align: right;">0.9035</td>
+<td style="text-align: right;">1.0495</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1</td>
+<td style="text-align: right;">0.1843</td>
+<td style="text-align: right;">0.0487</td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">0.0002</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex: Boys</td>
+<td style="text-align: right;">0.2027</td>
+<td style="text-align: right;">0.0141</td>
+<td style="text-align: right;">14.41</td>
+<td style="text-align: right;">&lt;1e-46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; a1</td>
+<td style="text-align: right;">0.4655</td>
+<td style="text-align: right;">0.1477</td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">0.0016</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; a1</td>
+<td style="text-align: right;">-0.2459</td>
+<td style="text-align: right;">0.5596</td>
+<td style="text-align: right;">-0.44</td>
+<td style="text-align: right;">0.6603</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c2.34 &amp; a1</td>
+<td style="text-align: right;">0.6414</td>
+<td style="text-align: right;">0.2642</td>
+<td style="text-align: right;">2.43</td>
+<td style="text-align: right;">0.0152</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; a1</td>
+<td style="text-align: right;">0.2499</td>
+<td style="text-align: right;">0.1491</td>
+<td style="text-align: right;">1.68</td>
+<td style="text-align: right;">0.0937</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c5.1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.0583</td>
+<td style="text-align: right;">0.0429</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">0.1743</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c234.15 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.8636</td>
+<td style="text-align: right;">0.1649</td>
+<td style="text-align: right;">-5.24</td>
+<td style="text-align: right;">&lt;1e-06</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c2.34 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.2425</td>
+<td style="text-align: right;">0.0768</td>
+<td style="text-align: right;">-3.16</td>
+<td style="text-align: right;">0.0016</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c3.4 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0375</td>
+<td style="text-align: right;">0.0435</td>
+<td style="text-align: right;">-0.86</td>
+<td style="text-align: right;">0.3885</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0470</td>
+<td style="text-align: right;">0.0487</td>
+<td style="text-align: right;">-0.96</td>
+<td style="text-align: right;">0.3348</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c5.1 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">-0.0028</td>
+<td style="text-align: right;">0.1477</td>
+<td style="text-align: right;">-0.02</td>
+<td style="text-align: right;">0.9848</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c234.15 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.6425</td>
+<td style="text-align: right;">0.5596</td>
+<td style="text-align: right;">1.15</td>
+<td style="text-align: right;">0.2509</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test: c2.34 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.5886</td>
+<td style="text-align: right;">0.2642</td>
+<td style="text-align: right;">2.23</td>
+<td style="text-align: right;">0.0259</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Test: c3.4 &amp; a1 &amp; Sex: Boys</td>
+<td style="text-align: right;">0.1689</td>
+<td style="text-align: right;">0.1491</td>
+<td style="text-align: right;">1.13</td>
+<td style="text-align: right;">0.2573</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="124" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likelihoodratiotest</span>(m_Child_SDC0, m_Child_SDC)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
@@ -2931,7 +5567,7 @@ Component loadings
 </div>
 </div>
 </div>
-<p>The best fit was obtained for the PCA-based zcpLMM. Somewhat surprisingly the second best fit was obtained for the SDC. The relatively poor performance of HeC-based zcpLMM is puzzling to me. I thought it might be related to imbalance in design in the present data, but this does not appear to be the case. The same comparison of <em>SequentialDifferenceCoding</em> and <em>Helmert Coding</em> also showed a worse fit for the zcp-HeC LMM than the zcp-SDC LMM.</p>
+<p>The best fit was obtained for the PCA-based zcpLMM. Somewhat surprisingly the second best fit was obtained for the SDC. The relatively poor performance of HeC-based zcpLMM is puzzling to me. I thought it might be related to imbalance in design in the present data, but this does not appear to be the case. The same comparison of sequential difference and Helmert coding also showed a worse fit for the zcp-HeC LMM than the zcp-SDC LMM.</p>
 </section>
 <section id="vcs-and-cps-depend-on-random-factor" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="vcs-and-cps-depend-on-random-factor"><span class="header-section-number">3.3</span> VCs and CPs depend on random factor</h2>
@@ -2942,7 +5578,7 @@ Component loadings
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>m_School_SeqDiff <span class="op">=</span> <span class="fu">lmm</span>(f_School, dat; contrasts<span class="op">=</span>contr1, progress)</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>m_School_Helmert <span class="op">=</span> <span class="fu">lmm</span>(f_School, dat; contrasts<span class="op">=</span>contr2, progress)</span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>m_School_Hypo <span class="op">=</span> <span class="fu">lmm</span>(f_School, dat; contrasts<span class="op">=</span>contr3, progress)</span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>m_School_PCA <span class="op">=</span> <span class="fu">lmm</span>(f_School, dat; contrasts<span class="op">=</span>contr4, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>m_School_PCA <span class="op">=</span> <span class="fu">lmm</span>(f_School, dat; contrasts<span class="op">=</span>contr4, progress);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="138" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m_School_SeqDiff)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3338,7 +5974,7 @@ Component loadings
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>m_School_SDC0 <span class="op">=</span> <span class="fu">lmm</span>(f_School0, dat; contrasts<span class="op">=</span>contr1, progress)</span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>m_School_HeC0 <span class="op">=</span> <span class="fu">lmm</span>(f_School0, dat; contrasts<span class="op">=</span>contr2, progress)</span>
 <span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>m_School_HyC0 <span class="op">=</span> <span class="fu">lmm</span>(f_School0, dat; contrasts<span class="op">=</span>contr3, progress)</span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>m_School_PCA0 <span class="op">=</span> <span class="fu">lmm</span>(f_School0, dat; contrasts<span class="op">=</span>contr4, progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>m_School_PCA0 <span class="op">=</span> <span class="fu">lmm</span>(f_School0, dat; contrasts<span class="op">=</span>contr4, progress);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="150" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>zcpLMM2 <span class="op">=</span> [<span class="st">"SDC0"</span>, <span class="st">"HeC0"</span>, <span class="st">"HyC0"</span>, <span class="st">"PCA0"</span>]</span>
@@ -3421,14 +6057,58 @@ Component loadings
 <h1 data-number="4"><span class="header-section-number">4</span> That’s it</h1>
 <p>That’s it for this tutorial. It is time to try your own contrast coding. You can use these data; there are many alternatives to set up hypotheses for the five tests. Of course and even better, code up some contrasts for data of your own.</p>
 <p>Have fun!</p>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Fuehner2021" class="csl-entry" role="listitem">
+Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. <em>Scientific Reports</em>, <em>11</em>(1). <a href="https://doi.org/10.1038/s41598-021-97000-4">https://doi.org/10.1038/s41598-021-97000-4</a>
 </div>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/0e399c4
-">0e399c4
-</a> using Quarto 1.9.36.</em></p>
+</div>
+<section id="exercises" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.1</span> Exercises</h2>
+<ol type="1">
+<li><strong>Same fit, different coefficients.</strong> Fit the model with two different contrast schemes for <code>Test</code> (e.g.&nbsp;<code>SeqDiffCoding</code> and <code>HelmertCoding</code>). Confirm that the log-likelihood is identical while the fixed-effect coefficients differ, and explain why.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Different full-rank coding schemes for the same factor span the same model space, so the fitted values and log-likelihood are identical; only the parametrization (which comparisons the coefficients represent) changes. Choose the scheme whose coefficients answer your research question directly.</p>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><strong>Match coding to a hypothesis.</strong> Suppose you want each coefficient to test a specific, theory-driven comparison among the levels of <code>Test</code>. Which coding scheme on this page supports that, and what do you have to supply?</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>HypothesisCoding</code> lets you state the contrasts directly: you supply a matrix whose rows are the comparisons you care about (and, for interpretability, ensure they are sensibly scaled). The PCA-based <code>HypothesisCoding</code> variant on this page shows one way to derive such contrasts empirically.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
+">e563d55
+</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -3847,13 +6527,13 @@ Component loadings
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../contrasts/transformation.html" class="pagination-link" aria-label="Transformations of the predictors and the response">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Transformations of the predictors and the response</span>
+      <a href="../contrasts/contrasts_kwdyz11.html" class="pagination-link" aria-label="Contrast Coding of Visual Attention Effects">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Contrast Coding of Visual Attention Effects</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../contrasts/contrasts_kwdyz11.html" class="pagination-link" aria-label="Contrast Coding of Visual Attention Effects">
-        <span class="nav-page-text">Contrast Coding of Visual Attention Effects</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../inference/bootstrap.html" class="pagination-link" aria-label="Parametric bootstrap for mixed-effects models">
+        <span class="nav-page-text">Parametric bootstrap for mixed-effects models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
