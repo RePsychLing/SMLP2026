@@ -1,9 +1,26 @@
 ---
 title: "The Emotikon Project: Model Complexification and PCA"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---
+
+::: {.objectives}
+**Learning objectives** — this capstone pulls the course together on a large dataset. After working through it you will be able to:
+
+- carry out a complete analysis: data preparation, plotting the main results, contrast specification, and model complexification;
+- use PCA of the random effects to guide the random-effects structure;
+- interpret a parsimonious model for the Emotikon fitness data.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Mixed Models Tutorial: Contrast Coding](../../contrasts/contrasts_fggk21.qmd); [Creating multi-panel plots](../../visualization/AoGPlots.qmd).
+
+**Datasets used:** `fggk21` (Emotikon; see the [dataset catalog](../../getting-started/datasets.qmd)).
+:::
 
 This script uses a subset of data reported in @Fuehner2021.
 To circumvent delays associated with model fitting we work with models that are less complex than those in the reference publication.
@@ -242,8 +259,6 @@ The levels were sorted such that these contrasts map onto four  _a priori_ hypot
 The motivation also encompasses theoretically motivated interactions with `Sex`.
 The order of levels can also be explicitly specified during contrast construction.
 This is very useful if levels are in a different order in the dataframe.
-
-Note that random factors `Child`, `School`, and `Cohort` are declared as `Grouping` variables. Technically, this specification is required for variables with a very large number of levels (e.g., 100K+ children). We recommend the explicit specification for all random factors as a general coding style.
 
 The first command recodes names indicating the physical fitness components used in the above figures and tables back to the shorter actual test names. This reduces  clutter in LMM outputs.
 
@@ -1018,4 +1033,20 @@ shrinkageplot!(Figure(; size=(800, 800)), m2, :Cohort)
 ::: {#refs}
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Read the PCA.** Inspect the principal-components decomposition of the random effects. How many components carry most of the variance, and how does that inform which random-effects terms to keep?
+
+::: {.callout-note collapse="true" title="Solution"}
+If the first few components account for nearly all of the random-effects variance, the remaining dimensions are effectively redundant — the data do not support a full-rank random-effects covariance. That is the quantitative basis for reducing the random-effects structure (e.g. dropping near-zero components or correlation parameters) rather than guessing.
+:::
+
+2. **Add a comparison.** Add a contrast for the `Test` factor that encodes a comparison you find substantively interesting, refit, and check whether it changes the conclusions about the age-by-sex interaction.
+
+::: {.callout-note collapse="true" title="Solution"}
+Because re-coding a factor does not change the model fit, the omnibus conclusions (and the age-by-sex interaction) are unaffected; what changes is which specific comparison each `Test` coefficient reports. Use this to confirm that your substantive comparison is or is not significant without disturbing the rest of the model. See [Mixed Models Tutorial: Contrast Coding](../../contrasts/contrasts_fggk21.qmd).
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

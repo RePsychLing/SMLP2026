@@ -1,4 +1,8 @@
 quarto-required: ">=1.7.29"
+author: 
+- "Phillip Alday"
+# - "Douglas Bates" 
+- "Reinhold Kliegl"
 date: last-modified
 date-format: iso
 engine: julia
@@ -8,41 +12,20 @@ execute:
   cache: true
   freeze: auto
 number-sections: true
+bibliography: 
+- references.bib
+csl: apa-annotated-bibliography.csl
 github:
   owner: RePsychLing
   repo: SMLP2026
-
 project:
   type: website
   title: "SMLP2026"
   execute-dir: project
   output-dir: _build/
-  render:
-  - index.qmd
-  - getting-started/about.qmd
-  - getting-started/useful_packages.qmd
-  - getting-started/pkg.qmd
-  - getting-started/arrow.qmd
-  - lmm-intro/sleepstudy.qmd
-  - lmm-intro/singularity.qmd
-  - model-specification/partial_within.qmd
-  - model-specification/mrk17.qmd
-  - model-specification/largescaledesigned.qmd
-  - contrasts/transformation.qmd
-  - contrasts/contrasts_fggk21.qmd
-  - contrasts/contrasts_kwdyz11.qmd
-  - contrasts/sleepstudy_speed.qmd
-  - inference/bootstrap.qmd
-  - inference/profiling.qmd
-  - inference/kb07.qmd
-  - inference/power_simulation.qmd
-  - glmm/glmm.qmd
-  - visualization/shrinkageplot.qmd
-  - visualization/AoGPlots.qmd
-  - examples/emotikon/fggk21.qmd
-  - examples/emotikon/check_emotikon_transform.qmd
-  - examples/visual-attention/kwdyz11.qmd
-  - examples/visual-attention/kkl15.qmd
+  # NOTE: there is intentionally no explicit `render:` list here. Quarto renders all
+  # project `.qmd` files by default, so the sidebar `contents:` tree below is the single
+  # source of truth for which pages exist and in what order.
 
 # editor_options:
 #   chunk_output_type: console
@@ -56,6 +39,7 @@ format:
     theme:
       light: [sandstone, theme.scss]
       dark: [darkly, theme-dark.scss]
+    css: styles.css
     # defaults, can be overridden
     toc: true
     toc-depth: 2
@@ -84,42 +68,40 @@ website:
     search: true
     collapse-level: 1
     contents:
-      - section: "Getting Started"
+      - section: "Start Here"
         contents:
         - index.qmd
         - getting-started/about.qmd
-        - getting-started/useful_packages.qmd
-        - getting-started/pkg.qmd
-        - getting-started/arrow.qmd
-      - section: "Introduction to Linear Mixed Models"
+        - getting-started/setup.qmd
+        - getting-started/datasets.qmd
+      - section: "Foundations: Linear Mixed Models"
         contents:
         - lmm-intro/sleepstudy.qmd
         - lmm-intro/singularity.qmd
-      - section: "Model Specification and Random Effects"
+      - section: "Seeing Your Model: Visualization & Diagnostics"
         contents:
-        - model-specification/partial_within.qmd
+        - visualization/shrinkageplot.qmd
+        - visualization/AoGPlots.qmd
+      - section: "Building Models: Specification & Random Effects"
+        contents:
         - model-specification/mrk17.qmd
-        - model-specification/largescaledesigned.qmd
-      - section: "Contrast Coding and Transformations"
+        # - model-specification/largescaledesigned.qmd
+        # - model-specification/partial_within.qmd
+      - section: "Contrast Coding & Transformations"
         contents:
         - contrasts/transformation.qmd
-        - contrasts/contrasts_fggk21.qmd
-        - contrasts/contrasts_kwdyz11.qmd
         - contrasts/sleepstudy_speed.qmd
-      - section: "Inference: Uncertainty Quantification"
+        - contrasts/contrasts_kwdyz11.qmd
+        - contrasts/contrasts_fggk21.qmd
+      - section: "Inference & Uncertainty Quantification"
         contents:
         - inference/bootstrap.qmd
         - inference/profiling.qmd
-        - inference/kb07.qmd
         - inference/power_simulation.qmd
       - section: "Generalized Linear Mixed Models"
         contents:
         - glmm/glmm.qmd
-      - section: "Visualization and Diagnostics"
-        contents:
-        - visualization/shrinkageplot.qmd
-        - visualization/AoGPlots.qmd
-      - section: "Extended Worked Examples"
+      - section: "Capstone Worked Examples"
         contents:
         - section: "The Emotikon Project"
           contents:
@@ -129,3 +111,8 @@ website:
           contents:
           - examples/visual-attention/kwdyz11.qmd
           - examples/visual-attention/kkl15.qmd
+      - section: "Reference & Appendix"
+        contents:
+        - reference/useful_packages.qmd
+        - reference/arrow.qmd
+        - reference/pkg.qmd

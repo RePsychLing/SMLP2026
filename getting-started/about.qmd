@@ -3,16 +3,16 @@ title: "About"
 ---
 
 These materials support the **Advanced Frequentist Methods** stream of the [Summer School on Statistical Methods for Linguistics and Psychology (SMLP)](https://vasishth.github.io/SMLP2026/), held at the University of Potsdam, 24--28 August 2026.
-The stream focuses on fitting, evaluating, and interpreting linear and generalized linear mixed-effects models using the [Julia programming language](https://julialang.org) and the [MixedModels.jl](https://juliastats.org/MixedModels.jl/stable/) package.
+See the [home page](../index.qmd) for what the stream covers and a suggested path through the materials, and [Setup](setup.qmd) to get the tools installed.
 
 # Instructors
 
 ## Phillip Alday
 
-Phillip Alday is an applied statistician and cognitive neuroscientist whose research spans mixed-effects modelling, EEG/M-EEG signal analysis, and the neuroscience of language processing.
-Over the course of his career, he's moved from mathematics through linguistics to cognitive neuroscience, with a sustained interest in developing better statistical tools for behavioural and neural data.
+Phillip Alday is an applied statistician and cognitive neuroscientist whose research spans mixed-effects modeling, EEG signal processing, and the neuroscience of language processing.
+Over the course of his career, he's moved from mathematics through linguistics to cognitive neuroscience, with a sustained interest in developing better statistical tools for behavioral and neural data.
 
-He is a core developer of [MixedModels.jl](https://github.com/JuliaStats/MixedModels.jl) — the Julia successor to the widely used R package `lme4` — and has authored or co-authored a family of related packages including [MixedModelsMakie.jl](https://github.com/palday/MixedModelsMakie.jl) (model visualisation), [Effects.jl](https://github.com/beacon-biosignals/Effects.jl) (effect estimation and plotting), and [MixedModelsExtras.jl](https://github.com/palday/MixedModelsExtras.jl).
+He is a core developer of [MixedModels.jl](https://github.com/JuliaStats/MixedModels.jl) — the Julia successor to the widely used R package `lme4` — and has authored or co-authored a family of related packages including [MixedModelsMakie.jl](https://github.com/palday/MixedModelsMakie.jl) (model visualization), [Effects.jl](https://github.com/beacon-biosignals/Effects.jl) (effect estimation and plotting), and [MixedModelsExtras.jl](https://github.com/palday/MixedModelsExtras.jl).
 Much of the course content has also served as a testing ground for new MixedModels.jl features and the broader Julia data-science ecosystem.
 
 Phillip has taught the Advanced Frequentist Track at SMLP since 2020, previously together with Douglas Bates (the original author of `lme4` and MixedModels.jl) and Reinhold Kliegl.
@@ -26,7 +26,7 @@ He has held positions at the University of Marburg, University of South Australi
 Reinhold Kliegl is Senior Professor of Psychology in the Division of Cognitive Psychology at the University of Potsdam.
 He received his doctorate from the University of Colorado at Boulder and worked as a research scientist at the Max Planck Institute for Human Development, Berlin, before coming to Potsdam, where he has been a central figure in applying and teaching modern mixed-model methods in the cognitive sciences.
 
-His research examines eye movements during reading, parafoveal and foveal processing, attentional control, and cognitive ageing, with a recurring emphasis on simultaneous modelling of experimental effects and individual differences.
+His research examines eye movements during reading, parafoveal and foveal processing, attentional control, and cognitive aging, with a recurring emphasis on simultaneous modeling of experimental effects and individual differences.
 Several datasets collected in his lab — including the visual-attention experiments (kwdyz11, kkl15) and the large-scale Emotikon fitness study (fggk21) — appear throughout these course materials as worked examples.
 
 On the methodological side, Reinhold is a co-author of two widely cited papers on mixed-model practice: "Parsimonious mixed models" [@Bates2015] and "Balancing Type I error and power in linear mixed models" [@Matuschek2017], both of which inform the model-specification and model-selection material in this course.
@@ -34,3 +34,14 @@ He is a founding contributor to SMLP and has taught the Advanced Frequentist Tra
 
 - University page: [uni-potsdam.de](https://www.uni-potsdam.de/en/cognitive-psychology/staff/kliegl-reinhold)
 - Google Scholar: [scholar.google.com](https://scholar.google.com/citations?user=nxD9IfcAAAAJ)
+
+---
+
+**References**
+
+::: {#refs}
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

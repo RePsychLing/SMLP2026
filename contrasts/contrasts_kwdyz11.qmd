@@ -7,31 +7,47 @@ julia:
 fig-format: png
 ---
 
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- specify and compare a range of contrast schemes (sequential-difference, hypothesis, dummy, effects, Helmert, and others) in Julia;
+- map theoretically motivated contrasts onto a four-level factor;
+- read off the hypothesis tested by each coding from the model output.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Transformations of the predictors and the response](transformation.qmd).
+
+**Datasets used:** `kwdyz11` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using AlgebraOfGraphics
 using CairoMakie
 using Chain
 using DataFrames
 using MixedModels
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset
 using StatsBase
 using StatsModels
-
-CairoMakie.activate!(; type="png")
-
 progress = false
 ```
 
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
+```
+
 # A word of caution {#sec-caution}
-Many researchers have pointed out that contrasts should be "tested instead of, rather than as a supplement to, the ordinary 'omnibus' F test" (Hays, 1973, p. 601).
+Many researchers have pointed out that contrasts should be "tested instead of, rather than as a supplement to, the ordinary 'omnibus' F test" [@hays1973 p. 601],
  
-For a (quasi-)experimental set of data, there is (or should be) a clear _a priori_ theoretical commitment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, irrespective of the outcome. If alternative theories lead to alternative _a priori_ contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement).
+For a (quasi-)experimental set of data, there is (or should be) a clear _a priori_ theoretical commitment to specific hypotheses about differences between factor levels and how these differences enter in interactions with other factors. This specification should be used in the first LMM and reported, regardless of the outcome. If alternative theories lead to alternative _a priori_ contrast specifications, both analyses are justified. If the observed means render the specification completely irrelevant, the comparisons originally planned could still be reported in a Supplement.
 
-In this script, we are working through a large number of different contrasts for the same data. The purpose is to introduce both the preprogrammed ("canned") and the general options to specify hypotheses about main effects and interactions. Obviously, we do not endorse generating a plot of the means and specifying the contrasts accordingly. This is known as the [Texas sharpshooter](https://www.bayesianspectacles.org/origin-of-the-texas-sharpshooter/) fallacy. The link leads to an illustration and brief historical account by Wagenmakers (2018).
+In this script, we are working through a large number of different contrasts for the same data. The purpose is to introduce both the preprogrammed ("canned") and the general options to specify hypotheses about main effects and interactions. Obviously, we do not endorse generating a plot of the means and specifying the contrasts accordingly. This is known as the [Texas sharpshooter](https://web.archive.org/web/20260210172855/https://www.bayesianspectacles.org/origin-of-the-texas-sharpshooter/) fallacy. 
 
-Irrespective of how results turn out, there is nothing wrong with specifying a set of post-hoc contrasts to gain a better understanding of what the data are trying to tell us. Of course, in an article or report about the study, the _a priori_ and post-hoc nature of contrast specifications must be made clear. Some kind of alpha-level adjustment (e.g., Bonferroni) may be called for, too. And, of course, there are grey zones.
+Irrespective of how results turn out, there is nothing wrong with specifying a set of post-hoc contrasts to gain a better understanding of what the data are trying to tell us. Of course, in an article or report about the study, the _a priori_ and post-hoc nature of contrast specifications must be made clear. Some kind of multiple comparisons correction (e.g., Bonferroni) may be called for, too. And, of course, there are grey zones.
 
 There is quite a bit of statistical literature on contrasts. Two "local" references are @Brehm2022 and @Schad2020.
 
@@ -47,8 +63,7 @@ The target is cued validly on 70% of trials by a brief flash of the corner of th
 
 We specify three contrasts for the four-level factor CTR that are derived from spatial, object-based, and attractor-like features of attention. They map onto sequential differences between appropriately ordered factor levels.
 
-We also have a dataset from a replication and extension of this study @Kliegl2015
-Both data sets are available in [R-package RePsychLing](https://github.com/dmbates/RePsychLing/tree/master/data/)
+We also have a dataset from a replication and extension of this study [@Kliegl2015].
 
 # Preprocessing {#sec-preprocessing}
 
@@ -59,7 +74,7 @@ cellmeans = combine(
   :rt => mean,
   :rt => std,
   :rt => length,
-  :rt => (x -> std(x) / sqrt(length(x))) => :rt_semean,
+  :rt => (x -> std(x) / sqrt(length(x))) => :rt_se,
 )
 ```
 
@@ -69,7 +84,7 @@ We use the same formula for all analyses
 
 ```{julia}
 #| output: false
-form = @formula rt ~ 1 + CTR + (1 + CTR | Subj)
+form = @formula(rt ~ 1 + CTR + (1 + CTR | Subj))
 ```
 
 This is the default order of factor levels.
@@ -83,10 +98,9 @@ Controlling the ordering of levels for contrasts:
  1. kwarg `levels` to order the levels
  2. The first level is set as the baseline; with kwarg `base` a different level can be specified.
 
-## SeqDiffCoding
+## Sequential difference coding
 
 The `SeqDiffCoding` contrast corresponds to `MASS::contr.sdif()` in R.
-The assignment of random factors such as `Subj` to `Grouping()` is necessary when the sample size is very large. We recommend to include it always, but in this tutorial we do so only in the first example.
 
 ```{julia}
 #| eval: false
@@ -99,7 +113,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m1 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => SeqDiffCoding(; levels),
@@ -113,14 +127,17 @@ What does the intercept represent?
 
 ```{julia}
 mean(dat1.rt)
+```
+
+```{julia}
 mean(cellmeans.rt_mean)
 ```
 
 Grand Mean is mean of condition means.  
 
-## HypothesisCoding
+## Hypothesis coding
 
-`HypothesisCoding` is the most general option available. We can implement all "canned" contrasts ourselves. The next example reproduces the test statistics from `SeqDiffCoding` - with a minor modification illustrating the flexibility of going beyond the default version.
+`HypothesisCoding` is the most general option available. We can implement all "canned" contrasts ourselves. The next example reproduces the test statistics from `SeqDiffCoding`, with a minor modification illustrating the flexibility of going beyond the default version.
 
 ```{julia}
 #| eval: false
@@ -141,7 +158,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m1b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -160,7 +177,7 @@ end
 
 The difference to the preprogrammed `SeqDiffCoding` is that for the third contrast we changed the direction of the contrast such that the sign of the effect is positive when the result is in agreement with theoretical expectation, that is we subtract the fourth level from the third, not the third level from the fourth.
 
-## DummyCoding
+## Dummy coding
 
 This contrast corresponds to `contr.treatment()` in R
 
@@ -173,7 +190,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m2 = let
   contrasts = Dict(:CTR => DummyCoding(; base="val"))
   fit_or_restore("contrasts_kwdyz11_m2.json", MixedModel, form, dat1; contrasts, progress)
@@ -182,10 +199,10 @@ end
 
 The `DummyCoding` contrast has the disadvantage that the intercept returns the mean of the level specified as `base`, default is the first level, not the GM.
 
-## YchycaeitCoding
+## YCHYCAEIT coding
 
 The contrasts returned by `DummyCoding` may be exactly what we want.
-Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YchycaeitCoding). And we use `HypothesisCoding` to achieve this outcome.
+Can't we have them, but also have the intercept estimate the GM, rather than the mean of the base level? Yes, we can! We call this "You can have your cake and it eat, too"-Coding (YCHYCAEIT coding). And we use `HypothesisCoding` to achieve this outcome.
 
 ```{julia}
 #| eval: false
@@ -206,7 +223,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m2b = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -244,7 +261,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m2c = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -299,7 +316,7 @@ m2d = let levels = ["sod", "val", "dos", "dod"]
 end
 ```
 
-## EffectsCoding
+## Effects coding
 
 `EffectsCoding` estimates the difference between the Grand Mean and three of the four levels. The difference of the fourth levels can be computed from the Grand Mean and these three differences. 
 
@@ -312,7 +329,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m3 = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(:CTR => EffectsCoding(; levels, base="val"))
   fit_or_restore("contrasts_kwdyz11_m3.json", MixedModel, form, dat1; contrasts, progress)
@@ -330,7 +347,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m3b = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(:CTR => EffectsCoding(; levels, base = "dod"))
   fit_or_restore("contrasts_kwdyz11_m3b.json", MixedModel, form, dat1; contrasts, progress)
@@ -358,7 +375,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m3c = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -376,7 +393,7 @@ end
 ```
 
 
-## HelmertCoding
+## Helmert coding
 
 `HelmertCoding` codes each level as the difference from the average of the lower levels. With the default order of `CTR` levels we get the following test statistics. These contrasts are orthogonal.
 
@@ -389,14 +406,14 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m4 = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(:CTR => HelmertCoding(; levels))
   fit_or_restore("contrasts_kwdyz11_m4.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
-```sh
+```
 + HeC1: (b - a)/2           # (391 - 358)/2 = 16.5
 + HeC2: (c - (b+a)/2)/3     # (405 - (391 + 358)/2)/3 = 10.17 
 + HeC3: (d - (c+b+a)/3)/4   # (402 - (405 + 391 + 358)/3)/4 = 4.33
@@ -424,7 +441,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m4b = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -442,9 +459,9 @@ m4b = let levels = ["val", "sod", "dos",  "dod"]
 end
 ```
 
-## Reverse HelmertCoding
+## Reverse Helmert coding
 
-`Reverse HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
+Reverse `HelmertCoding` codes each level as the difference from the average of the higher levels. To estimate these effects we simply reverse the order of factor levels. Of course, the contrasts are also orthogonal.
 
 ```{julia}
 #| eval: false
@@ -455,14 +472,14 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m4c = let levels = reverse(StatsModels.levels(dat1.CTR))
   contrasts = Dict(:CTR => HelmertCoding(; levels))
   fit_or_restore("contrasts_kwdyz11_m4c.json", MixedModel, form, dat1; contrasts, progress)
 end
 ```
 
-```sh
+```
 + HeC1:(c - d)/2            # (405 - 402)/2 = 1.5
 + HeC2:(b - (c+d)/2)/3      # (391 - (405 + 402)/2)/3 = -4.17
 + HeC3:(a - (b+c+d)/3/4     # (356  -(391 + 405 + 402)/3)/4 = -10.83
@@ -489,7 +506,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m4d = let levels = ["val", "sod", "dos",  "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -570,7 +587,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m5 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -635,7 +652,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m6 = let levels = ["val", "sod", "dos", "dod"]
   contrasts = Dict(
     :CTR => HypothesisCoding(
@@ -664,6 +681,7 @@ Three factors:
 
 2 x 3 = 6 measures / subject
 
+<!-- TODO: where does this data come from? document in used datasets -->
 ```{julia}
 dat2 = dataset(:exp_2x2x3)
 ```
@@ -677,43 +695,62 @@ cntrst2 = Dict(
     :B => SeqDiffCoding(; levels=["B1", "B2", "B3"]),
   )
 
-f6_cpx = @formula dv ~ 1 + Group*A*B   + (1 + A+B | Subj);
-f6_zcp = @formula dv ~ 1 + Group*A*B   + zerocorr(1 + A+B | Subj);
-f6_ovi = @formula dv ~ 1 + Group*A*B   +  (1 | Subj);
+f6_cpx = @formula(dv ~ 1 + Group*A*B   + (1 + A+B | Subj));
+f6_zcp = @formula(dv ~ 1 + Group*A*B   + zerocorr(1 + A+B | Subj));
+f6_ovi = @formula(dv ~ 1 + Group*A*B   +  (1 | Subj));
 ```
 
 ```{julia}
 #| eval: false
 m6_cpx = fit(MixedModel, f6_cpx, dat2; contrasts=cntrst2)
+```
+
+```{julia}
+#| echo: false
+m6_cpx = fit_or_restore("contrasts_kwdyz11_m6_cpx.json", MixedModel, f6_cpx, dat2; contrasts=cntrst2)
+```
+
+```{julia}
 issingular(m6_cpx)
+```
 
+
+```{julia}
+#| eval: false
 m6_zcp = fit(MixedModel, f6_zcp, dat2; contrasts=cntrst2)
-issingular(m6_zcp)
+```
+```{julia}
+#| echo: false
+m6_zcp = fit_or_restore("contrasts_kwdyz11_m6_zcp.json", MixedModel, f6_zcp, dat2; contrasts=cntrst2)
+```
 
+```{julia}
+issingular(m6_zcp)
+```
+
+```{julia}
+#| eval: false
 m6_ovi = fit(MixedModel, f6_ovi, dat2; contrasts=cntrst2)
 ```
 
 ```{julia}
-#| include: false
-m6_cpx = fit_or_restore("contrasts_kwdyz11_m6_cpx.json", MixedModel, f6_cpx, dat2; contrasts=cntrst2)
-m6_zcp = fit_or_restore("contrasts_kwdyz11_m6_zcp.json", MixedModel, f6_zcp, dat2; contrasts=cntrst2)
+#| echo: false
 m6_ovi = fit_or_restore("contrasts_kwdyz11_m6_ovi.json", MixedModel, f6_ovi, dat2; contrasts=cntrst2)
 ```
 
 ```{julia}
-lrtest(m6_ovi, m6_zcp, m6_cpx)
+issingular(m6_ovi)
+```
+
+```{julia}
+MixedModels.likelihoodratiotest(m6_ovi, m6_zcp, m6_cpx)
 ```
 
 
 There is a significant interaction between A and the first contrast of B (i.e., B2 - B1). The interaction is not significant for A and the second contrast of B (i.e., B3 - B2).  This implies that the left pair of lines in the following figure is statistically not parallel and that we do not have sufficient evidence that the right pair of lines is not parallel. 
 
-```
-───────────────────────────────────────────────────────────────────
-                                 Coef.  Std. Error      z  Pr(>|z|)
-───────────────────────────────────────────────────────────────────
-A: A2 & B: B2               3.53363       0.924789   3.82    0.0001
-A: A2 & B: B3               0.523243      0.950202   0.55    0.5819
-───────────────────────────────────────────────────────────────────
+```{julia}
+DataFrame(coeftable(m6_ovi))[9:10, :]
 ```
 
 ```{julia}
@@ -728,35 +765,33 @@ tbl1 = @chain DataFrame(dat2) begin
           :dv => sem => :dv_SE)
 end 
 
-fig1 = data(tbl1) * mapping(:B, :dv_M; color=:A) * (visual(Lines) + visual(Scatter))
-draw(fig1)
+fig = Figure(; size=(300, 300))
+plt = data(tbl1) * mapping(:B, :dv_M; color=:A) * (visual(Lines) + visual(Scatter))
+draw!(fig, plt)
+fig
 ```
 
+# Exercises
 
-# Appendix: Summary (Dave Kleinschmidt)
+1. **Intercept meaning.** Fit the model once with `DummyCoding` and once with `EffectsCoding` for the four-level CTR factor. What does the intercept estimate in each case?
 
-[StatsModels](https://juliastats.org/StatsModels.jl/latest/contrasts/)
+::: {.callout-note collapse="true" title="Solution"}
+With `DummyCoding` the intercept is the mean of the reference level; with `EffectsCoding` it is the grand mean (the unweighted average across levels). The slopes change meaning accordingly — differences from the reference level versus deviations from the grand mean.
+:::
 
-StatsModels.jl provides a few commonly used contrast coding schemes, some less-commonly used schemes, and structs that allow you to manually specify your own, custom schemes.
+2. **Custom contrasts.** Define a `HypothesisCoding` that encodes the spatial, object-based, and attraction comparisons described in the text, and verify that the resulting coefficients match those comparisons.
 
-## Standard contrasts
+::: {.callout-note collapse="true" title="Solution"}
+Supply a 3×4 hypothesis matrix whose rows correspond to the three theoretically motivated comparisons (in the appropriately ordered factor levels). After fitting, check that each estimated coefficient equals the corresponding difference of cell means — a good habit for confirming a custom coding does what you intended.
+:::
 
-The most commonly used contrasts are `DummyCoding` and `EffectsCoding` (which are similar to `contr.treatment()` and `contr.sum()` in R, respectively).
 
-## "Exotic" contrasts (rk: well ...)
+---
 
-We also provide `HelmertCoding` and `SeqDiffCoding` (corresponding to base R's `contr.helmert()` and `MASS::contr.sdif()`).
+:::{#refs}
+**References**
+:::
 
-## Manual contrasts
+---
 
-**ContrastsCoding()**
-
-There are two ways to manually specify contrasts.
-First, you can specify them **directly** via `ContrastsCoding`.
-If you do, it's good practice to specify the levels corresponding to the rows of the matrix, although they can be omitted in which case they'll be inferred from the data.
-
-**HypothesisCoding()**
-
-A better way to specify manual contrasts is via `HypothesisCoding`, where each row of the matrix corresponds to the weights given to the cell means of the levels corresponding to each column (see @Schad2020 for more information).
-
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

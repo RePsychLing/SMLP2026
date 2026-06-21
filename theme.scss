@@ -7,3 +7,28 @@
 /*-- scss:defaults --*/
 $code-block-bg: #f8f5f0;
 $code-bg: #f8f5f0;
+
+/*-- scss:rules --*/
+// "Learning objectives" / orientation box at the top of a page.
+// Tinted from the theme's $primary so it adapts to both light and dark themes;
+// text inherits $body-color and stays readable on either background.
+.objectives {
+  border: 1px solid rgba($primary, 0.35);
+  border-left: 6px solid $primary;
+  border-radius: 4px;
+  background-color: rgba($primary, 0.07);
+  padding: 0.8em 1.1em;
+  margin: 0 0 1.5em 0;
+
+  // Optional title via `::: {.objectives title="…"}`, rendered as a bold header.
+  &[title]::before {
+    content: attr(title);
+    display: block;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 0.4em;
+  }
+
+  > :first-child { margin-top: 0; }
+  > :last-child { margin-bottom: 0; }
+}

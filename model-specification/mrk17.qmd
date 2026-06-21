@@ -1,9 +1,26 @@
 ---
 title: "Model Specification and Selection: Masson, Rabe & Kliegl (2017)"
+authors:
+- "Reinhold Kliegl"
+- "Phillip Alday"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---
+
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- translate an experimental design into a mixed-model specification (response, covariates, factors, grouping);
+- distinguish between-unit and within-unit factors and map them to fixed and random effects;
+- reason about the variance components and correlation parameters implied by a factorial design.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd); [Transformations of the predictors and the response](../contrasts/transformation.qmd) is helpful.
+
+**Datasets used:** `mrk17` (the `mrk17_exp1` dataset; see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
 
 # Setup
 
@@ -15,16 +32,17 @@ using MixedModels
 using MixedModelsMakie
 using StatsBase
 
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset
 using Statistics: mean, std
 
 const progress = isinteractive()
 ```
 
 ```{julia}
-dat = DataFrame(dataset(:mrk17_exp1))
-describe(dat)
+#| echo: false
+using SMLP2026: fit_or_restore
 ```
+
 # Specification
 
 This section covers the general terminology and advice for model specification.
@@ -87,7 +105,7 @@ The within-between characteristics of fixed factors and covariates relative to t
 
 In this outline of the dimensions underlying the specification of an LMM, we have said nothing so far about the conditional modes of random effects (i.e., the results shown in caterpillar and shrinkage plots). They are not needed for model specification or model selection.
 
-The VC is the prior variance of the random effects, whereas `var(ranef(model))` is the variance of the posterior means/modes of the random effects. See Kliegl et al. (2010, VisualCognition); [Rizopoulos (2019, stackexchange](https://stats.stackexchange.com/questions/392283/interpreting-blups-or-varcorr-estimates-in-mixed-models/392307#392307).
+The VC is the prior variance of the random effects, whereas `var(ranef(model))` is the variance of the posterior means/modes of the random effects. See Kliegl et al. (2010, VisualCognition); [Rizopoulos (2019, stackexchange)](https://stats.stackexchange.com/questions/392283/interpreting-blups-or-varcorr-estimates-in-mixed-models/392307#392307).
 
 # Background for data
 
@@ -96,12 +114,18 @@ This semantic-priming experiment was reported in Masson, Rabe, & Kliegl (2017, E
 
 ##  Codebook
 
-The data (variables and observations) used by Masson et al. (2017) are available in file `MRK17_Exp1.RDS`
+The data (variables and observations) used by Masson et al. (2017) are available in the dataset `:mrk17_exp1`:
+
+```{julia}
+dat = DataFrame(dataset(:mrk17_exp1))
+describe(dat)
+```
+
 
 |Variable | Description|
 |---------|----------- |
-|Subj     | Subject identifier |
-|Item     | Target (non-)word  |
+|subj     | Subject identifier |
+|item     | Target (non-)word  |
 |trial    | Trial number |
 |F        | Target frequency is _high_  or _low_ |
 |P        | Prime is _related_ or _unrelated_ to target |
@@ -110,7 +134,7 @@ The data (variables and observations) used by Masson et al. (2017) are available
 |lT       | Last-trail target requires _word_ or _nonword_ response |
 |rt       | Reaction time [ms] |
 
-`lagQlty` and `lagTrgt` refer to experimental conditions in the last trial.
+`lQ` and `lT` refer to experimental conditions in the last trial.
 
 Corresponding indicator variables (-1/+1):
 
@@ -143,21 +167,21 @@ contrasts =
 ```{julia}
 #| eval: false
 m_cpx = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
                                (1+F+P+Q+lQ+lT | subj) +
-                               (1  +P+Q+lQ+lT | item);
-    fit(MixedModel, form, dat; contrasts, progress)
+                               (1  +P+Q+lQ+lT | item))
+    fit(MixedModel, form, dat; contrastsf, progress)
 end
 
 VarCorr(m_cpx)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_cpx = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
                                (1+F+P+Q+lQ+lT | subj) +
-                               (1  +P+Q+lQ+lT | item);
+                               (1  +P+Q+lQ+lT | item))
     fit_or_restore("mrk17_m_cpx.json", MixedModel, form, dat; contrasts, progress)
 end
 ```
@@ -167,8 +191,14 @@ issingular(m_cpx)
 ```
 
 ```{julia}
-MixedModels.PCA(m_cpx)
+pca = m_cpx.PCA
+pca[:subj]
 ```
+
+```{julia}
+pca[:item]
+```
+
 Variance-covariance matrix of random-effect structure suggests overparameterization
 for both subject-related and item-related components.
 
@@ -187,7 +217,7 @@ VP is zero for last diagonal entry; not supported by data.
 last(m_cpx.λ)
 ```
 
-VP is zero for fourth diagonal entry; not supported by data.
+VP is approximately zero for fourth diagonal entry; not supported by data.
 
 # Zero-correlation parameter LMM
 
@@ -198,25 +228,33 @@ We take out correlation parameters.
 ```{julia}
 #| eval: false
 m_zcp = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1+F+P+Q+lQ+lT | subj) +
-                       zerocorr(1  +P+Q+lQ+lT | item);
+                       zerocorr(1  +P+Q+lQ+lT | item))
     fit(MixedModel, form, dat; contrasts, progress)
 end
-
-VarCorr(m_zcp)
-issingular(m_zcp)
-MixedModels.PCA(m_zcp)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1+F+P+Q+lQ+lT | subj) +
-                       zerocorr(1  +P+Q+lQ+lT | item);
+                       zerocorr(1  +P+Q+lQ+lT | item))
     fit_or_restore("mrk17_m_zcp.json", MixedModel, form, dat; contrasts, progress)
 end
+```
+
+```{julia}
+VarCorr(m_zcp)
+```
+
+```{julia}
+issingular(m_zcp)
+```
+
+```{julia}
+m_zcp.PCA
 ```
 
 ```{julia}
@@ -228,22 +266,25 @@ Looks ok. It might be a good idea to prune the LMM by removing small VCs.
 ```{julia}
 #| eval: false
 m_zcp2 = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1  +P+Q+lQ+lT | subj) +
-                       zerocorr(1  +P+Q   +lT | item);
+                       zerocorr(1  +P+Q   +lT | item))
     fit(MixedModel, form, dat; contrasts, progress)
 end
-VarCorr(m_zcp2)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp2 = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
                        zerocorr(1  +P+Q+lQ+lT | subj) +
-                       zerocorr(1  +P+Q   +lT | item);
+                       zerocorr(1  +P+Q   +lT | item))
     fit_or_restore("mrk17_m_zcp2.json", MixedModel, form, dat; contrasts, progress)
 end
+```
+
+```{julia}
+VarCorr(m_zcp2)
 ```
 
 ```{julia}
@@ -255,20 +296,23 @@ We can perhaps remove some more.
 ```{julia}
 #| eval: false
 m_zcp3 = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                       zerocorr(1    +Q   +lT | subj) + (1 | item);
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1    +Q   +lT | subj) + (1 | item))
     fit(MixedModel, form, dat; contrasts, progress)
 end
-VarCorr(m_zcp3)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp3 = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                       zerocorr(1    +Q   +lT | subj) + (1 | item);
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1    +Q   +lT | subj) + (1 | item))
     fit_or_restore("mrk17_m_zcp3.json", MixedModel, form, dat; contrasts, progress)
 end
+```
+
+```{julia}
+VarCorr(m_zcp3)
 ```
 
 ```{julia}
@@ -280,20 +324,23 @@ And another iteration.
 ```{julia}
 #| eval: false
 m_zcp4 = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                       zerocorr(1         +lT | subj) + (1 | item);
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1         +lT | subj) + (1 | item))
     fit(MixedModel, form, dat; contrasts, progress)
 end
-VarCorr(m_zcp4)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_zcp4 = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                       zerocorr(1         +lT | subj) + (1 | item);
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
+                       zerocorr(1         +lT | subj) + (1 | item))
     fit_or_restore("mrk17_m_zcp4.json", MixedModel, form, dat; contrasts, progress)
 end
+```
+
+```{julia}
+VarCorr(m_zcp4)
 ```
 
 ```{julia}
@@ -309,27 +356,18 @@ m_prm = let
                                (1+    Q+lT | subj) + (1 | item);
     fit(MixedModel, form, dat; contrasts, progress)
 end
-VarCorr(m_prm)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_prm = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                               (1+    Q+lT | subj) + (1 | item);
+    form = @formula((1000/rt) ~ 1+F*P*Q*lQ*lT +
+                               (1+    Q+lT | subj) + (1 | item))
     fit_or_restore("mrk17_m_prm.json", MixedModel, form, dat; contrasts, progress)
 end
 ```
 
-### post-hoc LMM
-
 ```{julia}
-#| eval: false
-m_prm = let
-    form = @formula (1000/rt) ~ 1+F*P*Q*lQ*lT +
-                               (1+    Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end
 VarCorr(m_prm)
 ```
 
@@ -374,12 +412,10 @@ m_mrk17_crossed =let
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
     fit(MixedModel, form, dat; contrasts, progress)
 end
-
-VarCorr(m_prm)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_mrk17_crossed =let
    form = @formula (1000/rt) ~ 1 + F*P*Q*lQ*lT +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
@@ -388,7 +424,7 @@ end
 ```
 
 ```{julia}
-show(m_mrk17_crossed)
+VarCorr(m_prm)
 ```
 
 Finally, a look at the fixed effects. The four-factor interaction reported in Masson & Kliegl (2013) was not replicated.
@@ -405,7 +441,7 @@ end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m_mrk17_nested =let
    form = @formula (1000/rt) ~ 1 + Q/(F/P) +
         (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
@@ -413,177 +449,20 @@ m_mrk17_nested =let
 end
 ```
 
-# Questions from the Discussion forum
+## Exercises
 
-## Nesting within products of factors
+1. **Map the design.** List the experimental factors in `mrk17` and label each as between- or within-subject and between- or within-item. Which factors are therefore eligible for by-subject and by-item random slopes?
 
-Include parenthesis
+::: {.callout-note collapse="true" title="Solution"}
+The relatedness, frequency, and quality manipulations are crossed with both subjects and items in this repeated-measures design, so they vary within subjects and within items and are eligible for both by-subject and by-item random slopes. Factors that are properties of the item (e.g. target frequency) vary between items but within subjects, so they support a by-subject slope but not a by-item slope. Writing this table out is the first step in choosing a defensible random-effects structure.
+:::
 
-```{julia}
-#| eval: false
-m_mrk17_nested =let
-   form = @formula (1000/rt) ~ 1 + Q/(F/P) +
-        (1+Q | subj) + zerocorr(0+lT | subj) + zerocorr(1 + P | item) ;
-    fit(MixedModel, form, dat; contrasts, progress)
-end
-```
+2. **Write the maximal model.** Based on your classification, write the formula for the maximal random-effects structure, then a more parsimonious alternative using `zerocorr`.
 
-## Selection in fixed effects
+::: {.callout-note collapse="true" title="Solution"}
+The maximal model gives every within-grouping factor (and their interactions) a random slope for both `subj` and `item`; the parsimonious version wraps the random-effects term in `zerocorr(...)` to drop the correlation parameters that are typically the hardest to estimate. See [Convergence, singularity and all that](../lmm-intro/singularity.qmd) for why the maximal model is often singular in practice.
+:::
 
-```{julia}
-#| eval: false
-using RegressionFormulae
-# m_prm_5 is equivalent to m_prm
-m_prm_5 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^5 + (1+Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end;
+---
 
-m_prm_4 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^4 + (1+Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end;
-
-m_prm_3 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^3 + (1+Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end;
-
-m_prm_2 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^2 + (1+Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end;
-
-m_prm_1 = let
-    form = @formula (1000/rt) ~ 1+ F+P+Q+lQ+lT +   (1+Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end;
-
-# Compare the fits
-gof_summary = let
-  nms = [:m_prm_1, :m_prm_2, :m_prm_3, :m_prm_4, :m_prm_5]
-  mods = eval.(nms)
-  lrt = MixedModels.likelihoodratiotest(m_prm_1, m_prm_2, m_prm_3, m_prm_4, m_prm_5)
-  DataFrame(;
-    name = nms,
-    dof=dof.(mods),
-    deviance=deviance.(mods),
-    AIC=aic.(mods),
-    AICc=aicc.(mods),
-    BIC=bic.(mods),
-    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
-    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
-    # StatsBase.PValue includes some pretty-printing methods
-    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
-  )
-end
-```
-
-```{julia}
-#| include: false
-using RegressionFormulae
-# m_prm_5 is equivalent to m_prm
-m_prm_5 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^5 + (1+Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm_5.json", MixedModel, form, dat; contrasts, progress)
-end
-
-m_prm_4 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^4 + (1+Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm_4.json", MixedModel, form, dat; contrasts, progress)
-end
-
-m_prm_3 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^3 + (1+Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm_3.json", MixedModel, form, dat; contrasts, progress)
-end
-
-m_prm_2 = let
-    form = @formula (1000/rt) ~ 1+(F+P+Q+lQ+lT)^2 + (1+Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm_2.json", MixedModel, form, dat; contrasts, progress)
-end
-
-m_prm_1 = let
-    form = @formula (1000/rt) ~ 1+ F+P+Q+lQ+lT +   (1+Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm_1.json", MixedModel, form, dat; contrasts, progress)
-end
-
-# Compare the fits
-gof_summary = let
-  nms = [:m_prm_1, :m_prm_2, :m_prm_3, :m_prm_4, :m_prm_5]
-  mods = eval.(nms)
-  lrt = MixedModels.likelihoodratiotest(m_prm_1, m_prm_2, m_prm_3, m_prm_4, m_prm_5)
-  DataFrame(;
-    name = nms,
-    dof=dof.(mods),
-    deviance=deviance.(mods),
-    AIC=aic.(mods),
-    AICc=aicc.(mods),
-    BIC=bic.(mods),
-    χ²=vcat(:., round.(Int, diff(collect(lrt.lrt.deviance)))),
-    χ²_dof=vcat(:., diff(collect(lrt.lrt.dof))),
-    # StatsBase.PValue includes some pretty-printing methods
-    pvalue=vcat(:., StatsBase.PValue.(collect(lrt.lrt.pval[2:end])))
-  )
-end
-```
-
-Depending on the level of precision of your hypothesis. You could stay with main effect (BIC), include 2-factor interactions (AIC; also called _simple_ interactions) or include 3-factor interactions [χ² < 2*(χ²-dof); also called _2-way_ interactions].
-
-## Posthoc LMM
-
-We are using only three factors for the illustruation.
-
-```{julia}
-#| eval: false
-m_prm3 = let
-    form = @formula (1000/rt) ~ 1 + lT*lQ*Q +
-                               (1+    Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end
-```
-
-```{julia}
-#| include: false
-m_prm3 = let
-    form = @formula (1000/rt) ~ 1 + lT*lQ*Q +
-                               (1+    Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm3.json", MixedModel, form, dat; contrasts, progress)
-end
-```
-
-The `lT & lQ & Q` interactions is significant. Let's follow it up with a post-hoc LMM, that is looking at the `lQ & Q` interaction in the two levels of whether the last word was a target or not.
-
-```{julia}
-#| eval: false
-m_prm3_posthoc = let
-    form = @formula (1000/rt) ~ 1 + lT/(lQ*Q) +
-                               (1+    Q+lT | subj) + (1 | item);
-    fit(MixedModel, form, dat; contrasts, progress)
-end
-```
-
-```{julia}
-#| include: false
-m_prm3_posthoc = let
-    form = @formula (1000/rt) ~ 1 + lT/(lQ*Q) +
-                               (1+    Q+lT | subj) + (1 | item);
-    fit_or_restore("mrk17_m_prm3_posthoc.json", MixedModel, form, dat; contrasts, progress)
-end
-```
-
-The source of the interaction are trials where the last trial was a word target; there is no evidence for the interaction when the last trial was a nonword target.
-
-The original and post-hoc LMM have the same goodness of fit.
-
-```{julia}
-[objective(m_prm3), objective(m_prm3_posthoc)]
-```
-
-## Info
-
-```{julia}
-versioninfo()
-```
-
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

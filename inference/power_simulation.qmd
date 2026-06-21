@@ -6,6 +6,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- use simulation and the parametric bootstrap to estimate power and uncertainty;
+- simulate data from scratch for a planned design;
+- interpret the simulated distributions to inform design decisions.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Parametric bootstrap for mixed-effects models](bootstrap.qmd).
+
+**Datasets used:** `kb07` and simulated data (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 ```{julia}
 #| output: false
 using AlgebraOfGraphics
@@ -16,10 +30,15 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsSim
 using StatsBase
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset
 using Random
 
 const progress = isinteractive()
+```
+
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
 ```
 
 # The Parametric Bootstrap
@@ -68,7 +87,7 @@ pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1;
 
 :::{.callout-tip collapse=true, title="`optsum_overrides`"}
 The option `optsum_overrides` allows us to pass additional arguments for controlling the model fitting of each simulation replicate.
-`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's acceptable tradeoff in order to get many more replicates.
+`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's acceptable tradeoff in order to get many more replicates. The MixedModels.jl documentation also includes a little note on the [reduced precision bootstrap](https://juliastats.org/MixedModels.jl/stable/bootstrap/#Reduced-Precision-Bootstrap)
 :::
 
 Now, if we look at the docstring for `parametricbootstrap`, we see that there are keyword-arguments for the various model parameters:
@@ -301,4 +320,20 @@ dat[!, :n] = rand(RNG, Poisson(), nrow(dat)) .+ 3
 dat[!, :dv] = rand.(RNG, Binomial.(dat[!, :n])) ./ dat[!, :n]
 ```
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Effect size and power.** Re-run the simulation across a range of assumed effect sizes, holding the sample size fixed. Plot estimated power against effect size. What shape do you expect?
+
+::: {.callout-note collapse="true" title="Solution"}
+Power increases monotonically with effect size, tracing an S-shaped curve from the nominal false-positive rate (when the true effect is zero) toward 1 (for large effects). The interesting region is the middle, where small design changes move power the most.
+:::
+
+2. **Sample size.** Now hold the effect size fixed and vary the number of subjects. How does required sample size trade off against effect size for a target power (say 0.8)?
+
+::: {.callout-note collapse="true" title="Solution"}
+For a fixed target power, required sample size grows rapidly as the effect size shrinks (roughly inversely with the square of the effect size). Simulating a grid over both lets you read off feasible design points rather than relying on a single closed-form approximation.
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

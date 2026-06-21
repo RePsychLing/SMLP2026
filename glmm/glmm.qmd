@@ -8,6 +8,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- explain how GLMMs extend LMMs through a link function and a non-Gaussian conditional distribution;
+- contrast the role of the linear predictor in LMMs and GLMMs;
+- fit a logistic (Bernoulli) GLMM and summarize the results.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd); the [Building Models](../model-specification/partial_within.qmd) section is helpful.
+
+**Datasets used:** `sleepstudy` and `contra` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 Load the packages to be used
 
 ```{julia}
@@ -37,18 +51,16 @@ sleepstudy = DataFrame(dataset(:sleepstudy))
 
 ```{julia}
 #| eval: false
-contrasts = Dict(:subj => Grouping())
 m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
-  fit(MixedModel, f, sleepstudy; contrasts, progress)
+  fit(MixedModel, f, sleepstudy; progress)
 end
 println(m1)
 ```
 
 ```{julia}
 #| include: false
-contrasts = Dict(:subj => Grouping())
 m1 = let f = @formula reaction ~ 1 + days + (1 + days | subj)
-  fit_or_restore("glmm_m1.json", MixedModel, f, sleepstudy; contrasts, progress)
+  fit_or_restore("glmm_m1.json", MixedModel, f, sleepstudy; progress)
 end
 println(m1)
 ```
@@ -247,7 +259,6 @@ draw(
 ```{julia}
 #| eval: false
 contrasts = Dict(
-  :dist => Grouping(),
   :urban => HelmertCoding(),
   :livch => DummyCoding(), # default, but no harm in being explicit
 )
@@ -264,7 +275,6 @@ end
 ```{julia}
 #| include: false
 contrasts = Dict(
-  :dist => Grouping(),
   :urban => HelmertCoding(),
   :livch => DummyCoding(), # default, but no harm in being explicit
 )
@@ -441,4 +451,20 @@ preds = effects(design, gm3; invlink=AutoInvLink())
   - The patterns for women with children are similar and we do not need to distinguish between 1, 2, and 3+ children.
   - We do distinguish between those women who do not have children and those with children.  This shows up in a significant `age & children` interaction term.
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Interpret on the right scale.** For the logistic GLMM fit to the `contra` data, a coefficient is reported on the logit scale. How do you turn it into a statement about probability, and why can't you read it directly as a probability change?
+
+::: {.callout-note collapse="true" title="Solution"}
+Coefficients are additive on the log-odds (logit) scale; exponentiating gives an odds ratio. Because the logistic link is nonlinear, the same log-odds change corresponds to a different probability change depending on the baseline probability, so there is no single "probability per unit" — you evaluate predicted probabilities at specific covariate values (e.g. with an effects/marginal-means calculation).
+:::
+
+2. **Link and distribution.** What two choices distinguish a GLMM from an LMM, and which part of the `fit(MixedModel, ...)` call encodes them?
+
+::: {.callout-note collapse="true" title="Solution"}
+A GLMM adds (i) a conditional distribution for the response (e.g. `Bernoulli()`, `Poisson()`) and (ii) a link function relating the linear predictor to the conditional mean. Both are passed to `fit`/`GeneralizedLinearMixedModel` — the distribution as a positional argument and the link via the `link` keyword (each distribution has a canonical default link).
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

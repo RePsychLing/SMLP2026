@@ -1,10 +1,26 @@
 ---
 title: "Visual Attention Effects: Kliegl et al. (2011)"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
-author: "Reinhold Kliegl"
 ---
+
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- reproduce the visual-attention analysis with theoretically motivated contrasts;
+- diagnose the singular fit and identify the critical spatial–attraction correlation parameter;
+- connect the fixed effects and variance components for the attention effects.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Contrast Coding of Visual Attention Effects](../../contrasts/contrasts_kwdyz11.qmd).
+
+**Datasets used:** `kwdyz11`; the larger replication [`kkl15`](kkl15.qmd) is the companion analysis (see the [dataset catalog](../../getting-started/datasets.qmd)).
+:::
 
 # Background
 
@@ -408,4 +424,20 @@ Therefore, this CP will be replicated with a larger sample in script `kkl15.jl` 
 ::: {#refs}
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Find the culprit.** Identify the correlation parameter responsible for the singular fit. What is its estimated value, and why does that signal singularity?
+
+::: {.callout-note collapse="true" title="Solution"}
+The spatial–attraction correlation parameter is estimated at the boundary (±1), which makes the random-effects covariance rank-deficient and the fit singular. Inspecting `m.σρs` shows the offending correlation; this is exactly the parameter the larger [`kkl15`](kkl15.qmd) study was designed to estimate more reliably.
+:::
+
+2. **Effect vs. variance.** The attraction effect is near zero as a fixed effect yet has a reliable variance component. Explain how both can be true and why it matters.
+
+::: {.callout-note collapse="true" title="Solution"}
+A near-zero fixed effect means the *average* attraction effect across subjects is small; a reliable variance component means individuals nonetheless differ substantially — some show positive, some negative effects that cancel in the mean. Ignoring the variance component would wrongly conclude the effect is simply absent.
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

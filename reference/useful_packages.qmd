@@ -54,7 +54,7 @@ julia > lm(@formula(y ~ 1 + x), data)
 julia > glm(@formula(y ~ 1 + x), data, Binomial(), LogitLink())
 ```
 
-but the more general modelling API (also used by MixedModels.jl) is also supported:
+but the more general modeling API (also used by MixedModels.jl) is also supported:
 
 ```julia
 julia > fit(LinearModel, @formula(y ~ 1 + x), mydata)
@@ -130,4 +130,6 @@ For MATLAB users, there is also [MATLAB.jl](https://github.com/JuliaInterop/MATL
 
 Support for calling C and Fortran is [part of the Julia standard library](https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/).
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

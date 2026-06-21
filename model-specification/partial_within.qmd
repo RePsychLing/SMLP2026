@@ -5,6 +5,20 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- distinguish within-unit from between-unit factors and identify a partially-within design;
+- simulate data for such a design with MixedModelsSim;
+- specify the random-effects structure appropriate to crossed subjects and items.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd).
+
+**Datasets used:** simulated data (no external dataset).
+:::
+
 Begin by loading the packages to be used.
 
 ```{julia}
@@ -151,4 +165,20 @@ shrinkageplot(m1)
 caterpillar(m1; orderby=nothing, vline_at_zero=true)
 ```
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Classify the factors.** For the design simulated here, which experimental factors are manipulated within subjects, and which are within items? Why does that distinction determine where each factor can appear in the random-effects structure?
+
+::: {.callout-note collapse="true" title="Solution"}
+A factor can have a by-subject random slope only if it varies *within* subjects (each subject sees more than one level); likewise a by-item random slope requires the factor to vary within items. A factor that is between subjects (each subject sees only one level) cannot have a by-subject random slope — there is no within-subject variation for the slope to capture. In a partially-within design some factors are within one grouping factor but between the other, which is exactly what shapes the maximal random-effects structure.
+:::
+
+2. **Change the design size.** Re-run the simulation with more items per subject. How does increasing `n_item` affect your ability to estimate the by-item random effects?
+
+::: {.callout-note collapse="true" title="Solution"}
+With very few items the by-item variance components and any item-level correlations are poorly estimated and the fit is prone to singularity; increasing `n_item` gives the model more information per item-level effect and generally stabilizes those estimates. Try `n_item = 3, 10, 30` and compare `issingular` and the estimated item variance.
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

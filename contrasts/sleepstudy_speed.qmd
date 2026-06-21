@@ -1,9 +1,26 @@
 ---
 title: "The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons"
 engine: julia
+author:
+- Reinhold Kliegl
+- Phillip Alday
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---
+
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- re-express reaction time as speed and discuss when a response transformation aids interpretation;
+- compare within-subject simple regressions with a mixed-model fit;
+- build LMMs with and without correlation parameters and compare between-group effects.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd); [Transformations of the predictors and the response](transformation.qmd).
+
+**Datasets used:** `sleepstudy` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
 
 # Background
 
@@ -25,7 +42,7 @@ The authors analyzed response speed, that is (1/RT)*1000 -- completely warranted
 
 ## Current data
 
-The current data distributed with the _RData_ collection is attributed to the 3-hour TIB group, but the means do not agree at all with those reported for this group in [@Belenky2003 Figure 3] where the 3-hour TIB group is also based on only 13 (not 18) subjects. Specifically, the current data show a much smaller slow-down of response speed across E1 to E7 and do not reflect the recovery during R1 to R3. The current data also cover only 10 not 11 days, but it looks like only R3 is missing. The closest match of the current means was with the average of the 3-hour and 7-hour TIB groups; if only males were included, this would amount to 18 subjects. (This conjecture is based only on visual inspection of graphs.)
+The current data distributed with the `lme4` and `MixedModelsDatasets`  is attributed to the 3-hour TIB group, but the means do not agree at all with those reported for this group in [@Belenky2003 Figure 3] where the 3-hour TIB group is also based on only 13 (not 18) subjects. Specifically, the current data show a much smaller slow-down of response speed across E1 to E7 and do not reflect the recovery during R1 to R3. The current data also cover only 10 not 11 days, but it looks like only R3 is missing. The closest match of the current means was with the average of the 3-hour and 7-hour TIB groups; if only males were included, this would amount to 18 subjects. (This conjecture is based only on visual inspection of graphs.)
 
 # Setup
 
@@ -39,23 +56,28 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie   # plots specific to mixed-effects models using Makie
-using SMLP2026: dataset, fit_or_restore
+using SMLP2026: dataset
+```
+
+```{julia}
+#| echo: false
+using SMLP2026: fit_or_restore
 ```
 
 # Preprocessing
 
-The `sleepstudy` data are one of the datasets available with recent versions of the `MixedModels` package. We carry out some preprocessing to have the dataframe in the desired shape:
+The `sleepstudy` data are one of the datasets available with course materials or with the `MixedModelsDatasets` package. We carry out some preprocessing to have the dataframe in the desired shape:
 
   - Capitalize random factor `Subj`
-  - Compute `speed` as an alternative dependent variable from `reaction`, warranted by a 'boxcox' check of residuals.
+  - Compute `speed` as an alternative dependent variable from `reaction`, warranted by a Box-Cox check of residuals.
   - Create a `GroupedDataFrame` by levels of `Subj` (the original dataframe is available as `gdf.parent`, which we name `df`)
 
 ```{julia}
 gdf = @chain dataset(:sleepstudy) begin
-  DataFrame
-  rename!(:subj => :Subj, :days => :day)
-  @transform!(:speed = 1000 / :reaction)
-  groupby(:Subj)
+  DataFrame(_)
+  rename!(_, :subj => :Subj, :days => :day)
+  @transform!(_, :speed = 1000 / :reaction)
+  groupby(_, :Subj)
 end
 ```
 
@@ -69,7 +91,7 @@ describe(df)
 In the first analysis we ignore the dependency of observations due to repeated measures from the same subjects. We pool all the data and estimate the regression of 180 speed scores on the nine days of the experiment.
 
 ```{julia}
-pooledcoef = simplelinreg(df.day, df.speed)  # produces a Tuple
+pooledcoef = simplelinreg(df.day, df.speed)
 ```
 
 # Within-subject effects
@@ -99,7 +121,7 @@ let
   for (axs, sdf) in zip(f.content, gdf[ord]) # iterate over the panels and groups
     scatter!(axs, sdf.day, sdf.speed)      # add the points
     coef = simplelinreg(sdf.day, sdf.speed)
-    abline!(axs, first(coef), last(coef))  # add the regression line
+    ablines!(axs, first(coef), last(coef))  # add the regression line
   end
   f
 end
@@ -109,18 +131,17 @@ end
 
 ```{julia}
 #| eval: false
-m1 = let
-  form = @formula speed ~ 1 + day + (1 + day | Subj)
-  fit(MixedModel, form, df)
-end
+m1 = lmm(@formula(speed ~ 1 + day + (1 + day | Subj)), df)
+println(m1) # force plain text output
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m1 = let
-  form = @formula speed ~ 1 + day + (1 + day | Subj)
+  form = @formula(speed ~ 1 + day + (1 + day | Subj))
   fit_or_restore("sleepstudy_speed_m1.json", MixedModel, form, df)
 end
+println(m1)
 ```
 
 This model includes fixed effects for the intercept which estimates the average speed on the baseline day of the experiment prior to sleep deprivation, and the slowing per day of sleep deprivation. In this case about -0.11/second.
@@ -135,18 +156,17 @@ The `zerocorr` function applied to a random-effects term estimates one parameter
 
 ```{julia}
 #| eval: false
-m2 = let
-  form = @formula speed ~ 1 + day + zerocorr(1 + day | Subj)
-  fit(MixedModel, form, df)
-end
+m2 = lmm(@formula speed ~ 1 + day + zerocorr(1 + day | Subj), df)
+println(m2)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m2 = let
   form = @formula speed ~ 1 + day + zerocorr(1 + day | Subj)
   fit_or_restore("sleepstudy_speed_m2.json", MixedModel, form, df)
 end
+println(m2)
 ```
 
 LMM `m2` has a slghtly  lower log-likelihood than LMM `m1` but also one fewer parameters.
@@ -185,7 +205,7 @@ Here we "borrow strength" to improve the accuracy of prediction.
 #| code-fold: true
 #| fig-cap: "Prediction intervals on the random effects in model m2"
 #| label: fig-caterpillarm2
-caterpillar(m2)
+caterpillar!(Figure(; size=(500, 500)), m2)
 ```
 
 # Shrinkage plot
@@ -194,7 +214,7 @@ caterpillar(m2)
 #| code-fold: true
 #| fig-cap: "Shrinkage plot of the means of the random effects in model m2"
 #| label: fig-shrinkagem2
-shrinkageplot!(Figure(; size=(500, 500)), m2)
+shrinkageplot!(Figure(; size=(400, 400)), m2)
 ```
 
 # References
@@ -202,4 +222,20 @@ shrinkageplot!(Figure(; size=(500, 500)), m2)
 ::: {#refs}
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Speed versus time.** Refit the central model using speed (`1000 / reaction`, responses per second) instead of reaction time. How does the direction and interpretation of the sleep-deprivation effect change?
+
+::: {.callout-note collapse="true" title="Solution"}
+On the speed scale the effect of deprivation has the opposite sign — performance (responses per second) *decreases* with more days of restriction, where reaction time *increases*. The substantive story is the same; only the units and sign flip. Speed is sometimes preferred because its residuals are better behaved than those of raw reaction time.
+:::
+
+2. **Correlation parameter.** Compare the full model with a zero-correlation-parameter (`zerocorr`) version. Does dropping the correlation parameter materially change the fixed-effect conclusions?
+
+::: {.callout-note collapse="true" title="Solution"}
+Usually the fixed-effect estimates and their standard errors are nearly unchanged when you drop a weakly-identified correlation parameter, while the model becomes easier to fit and less prone to singularity. Compare them with `likelihoodratiotest` and inspect whether the correlation was well determined in the first place.
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

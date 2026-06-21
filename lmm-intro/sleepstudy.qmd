@@ -6,19 +6,33 @@ julia:
 fig-format: png
 ---
 
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+- fit a linear mixed model with a correlated random intercept and slope using MixedModels.jl;
+- interpret the fixed effects, variance components, and correlation parameter;
+- compare models with and without a random slope.
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Setup: installing the tools](../getting-started/setup.qmd).
+
+**Datasets used:** `sleepstudy` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
+
 The `sleepstudy` data are from a study of the effects of sleep deprivation on response time reported in  @Balkin2000 and in @Belenky2003.
 Eighteen subjects were allowed only 3 hours of time to sleep each night for 9 successive nights.
 Their reaction time was measured each day, starting the day before the first night of sleep deprivation, when the subjects were on their regular sleep schedule.
 
-::: {.callout-note}
-This description is inaccurate.
+::: {.callout-note collapse="true" title="Small infelicities"}
+This standard description is slightly inaccurate.
 In fact the first two days were acclimatization, the third was a baseline and sleep deprivation was only enforced after day 2.
 To allow for comparison with earlier analyses of these data we retain the old data description for this notebook only.
+See [lme4 GitHub issue #615](https://github.com/lme4/lme4/issues/615) for more information.
 :::
 
 # Loading the data
 
-First attach the MixedModels package and other packages for plotting.
+First load the MixedModels package and other packages for plotting.
 The CairoMakie package allows the Makie graphics system [@Danisch2021] to generate high quality static images.
 Activate that package with the SVG (Scalable Vector Graphics) backend.
 
@@ -43,7 +57,7 @@ The `sleepstudy` data are one of the datasets available with the `MixedModels` p
 sleepstudy = DataFrame(dataset("sleepstudy"))
 ```
 
-@fig-reaction_vs_days_by_subject displays the data in a multi-panel plot created with the `lattice` package in `R` [@Sarkar2008], using [RCall.jl](https://github.com/JuliaInterop/RCall.jl).
+@fig-reaction_vs_days_by_subject displays the data in a multi-panel plot.
 
 ```{julia}
 #| code-fold: true
@@ -116,26 +130,24 @@ There are some deviations from linearity within the panels but the deviations ar
 ```{julia}
 #| eval: false
 #| lst-label: m1
-contrasts = Dict{Symbol,Any}(:subj => Grouping())
 m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
-  fit(MixedModel, f, sleepstudy; contrasts)
+  fit(MixedModel, f, sleepstudy)
 end
 ```
 
 ```{julia}
-#| include: false
-contrasts = Dict{Symbol,Any}(:subj => Grouping())
+#| echo: false
 m1 = let f = @formula(reaction ~ 1 + days + (1 + days | subj))
-  fit_or_restore("sleepstudy_m1.json", MixedModel, f, sleepstudy; contrasts)
+  fit_or_restore("sleepstudy_m1.json", MixedModel, f, sleepstudy)
 end
 ```
 
 This model includes fixed effects for the intercept, representing the typical reaction time at the beginning of the experiment with zero days of sleep deprivation, and the slope w.r.t. days of sleep deprivation.
-The parameter estimates are about 250 ms. typical reaction time without deprivation and a typical increase of 10.5 ms. per day of sleep deprivation.
+The parameter estimates are about 250 ms typical reaction time without deprivation and a typical increase of 10.5 ms per day of sleep deprivation.
 
 The random effects represent shifts from the typical behavior for each subject.
-The shift in the intercept has a standard deviation of about 24 ms. which would suggest a range of about 200 ms. to 300 ms. in the intercepts.
-Similarly within-subject slopes would be expected to have a range of about 0 ms./day up to 20 ms./day.
+The shift in the intercept has a standard deviation of about 24 ms which would suggest a range of about 200 ms to 300 ms in the intercepts.
+Similarly within-subject slopes would be expected to have a range of about 0 ms per day up to 20 ms per day.
 
 The random effects for the slope and for the intercept are allowed to be correlated within subject.
 The estimated correlation, 0.08, is small.
@@ -157,8 +169,13 @@ By default, the levels of the grouping factor are sorted by increasing value of 
 #| code-fold: true
 #| fig-cap: Prediction intervals on random effects for model m1
 #| label: fig-m1caterpillar
-caterpillar(m1; vline_at_zero=true)
+caterpillar!(Figure(; size=(600, 400)), m1; vline_at_zero=true)
 ```
+
+::: {.callout-note}
+This plot could be drawn as `caterpillar(m1)`.
+The reason for explicitly creating a `Figure` to be modified by `caterpillar!` is to control the resolution.
+:::
 
 @fig-m1caterpillar reinforces the conclusion that there is little correlation between the random effect for intercept and the random effect for slope.
 
@@ -170,14 +187,14 @@ The `zerocorr` function applied to a random-effects term creates uncorrelated ve
 #| eval: false
 #| lst-label: m2
 m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
-  fit(MixedModel, f, sleepstudy; contrasts)
+  fit(MixedModel, f, sleepstudy)
 end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 m2 = let f = @formula reaction ~ 1 + days + zerocorr(1 + days | subj)
-  fit_or_restore("sleepstudy_m2.json", MixedModel, f, sleepstudy; contrasts)
+  fit_or_restore("sleepstudy_m2.json", MixedModel, f, sleepstudy)
 end
 ```
 
@@ -286,7 +303,7 @@ An empirical density plot of the estimates for the fixed-effects coefficients, @
 #| fig-cap: 'Empirical density plots of bootstrap replications of fixed-effects parameter estimates'
 #| label: fig-bsbetadensity
 begin
-  f1 = Figure(; size=(1000, 400))
+  f1 = Figure(; size=(600, 300))
   CairoMakie.density!(
     Axis(f1[1, 1]; xlabel="Intercept [ms]"), tbl.β1
   )
@@ -305,6 +322,17 @@ We define the 1-α `shortestcovint` to be the shortest interval that contains a 
 Table(shortestcovint(m1bstp))
 ```
 
+::: {.callout-note}
+MixedModels.jl also defines appropriate methods for `StatsAPI.confint` so that the above example could be written as
+
+```{julia}
+confint(m1bstp; method=:shortest)
+```
+
+<!-- TODO: add a section on the different methods to the bootstrap file and a xref here -->
+Later we discuss other available methods for computing confidence intervals.
+:::
+
 The intervals look reasonable except that the upper end point of the interval for ρ1, the correlation coefficient, is 1.0 .
 It turns out that the estimates of ρ have a great deal of variability.
 
@@ -318,7 +346,7 @@ hist(
   tbl.ρ1;
   bins=40,
   axis=(; xlabel="Estimated correlation of the random effects"),
-  figure=(; size=(500, 500)),
+  figure=(; size=(500, 300)),
 )
 ```
 
@@ -359,11 +387,11 @@ vcov(m1; corr=true)  # correlation estimate from the model
 let
   scatter(
     tbl.β1, tbl.β2,
-    color=(:blue, 0.20),
+    alpha=0.2,
     axis=(; xlabel="Intercept", ylabel="Coefficient of days"),
     figure=(; size=(500, 500)),
   )
-  contour!(kde((tbl.β1, tbl.β2)))
+  contour!(kde((tbl.β1, tbl.β2)); color=:black)
   current_figure()
 end
 ```
@@ -378,4 +406,37 @@ end
 ::: {#refs}
 :::
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+Work through these by running the code yourself; expand the solution only after you have an answer.
+
+1. **Centering.** Refit the model with `days` centered at the baseline (day 2 in the corrected description) instead of day 0. What changes — the slope, the intercept, or both — and how does the intercept's interpretation change?
+
+::: {.callout-note collapse="true" title="Solution"}
+Only the intercept (and its standard error) changes: it now estimates the fitted reaction time at day 2 rather than day 0. The slope is unchanged because centering is a linear shift of the predictor. This is the practical point of [transformations](../contrasts/transformation.qmd): coding changes interpretation, not fit.
+
+```{julia}
+#| eval: false
+df = DataFrame(dataset(:sleepstudy))
+df.days_c = df.days .- 2
+fit(MixedModel, @formula(reaction ~ 1 + days_c + (1 + days_c | subj)), df)
+```
+:::
+
+2. **Does the random slope earn its keep?** Fit a model with only a random intercept, `(1 | subj)`, and compare it to the random-slope model. Which would you keep, and on what evidence?
+
+::: {.callout-note collapse="true" title="Solution"}
+The random-slope model fits substantially better here: subjects differ not just in baseline reaction time but in how strongly sleep deprivation affects them. A likelihood-ratio test makes the comparison explicit.
+
+```{julia}
+#| eval: false
+sleepstudy = dataset(:sleepstudy)
+m_int   = fit(MixedModel, @formula(reaction ~ 1 + days + (1 | subj)), sleepstudy)
+m_slope = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), sleepstudy)
+MixedModels.likelihoodratiotest(m_int, m_slope)
+```
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

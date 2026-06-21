@@ -1,9 +1,26 @@
 ---
-title: "More on shrinkage plots"
+title: "Shrinkage plots"
+author: 
+- "Douglas Bates"
+- "Phillip Alday"
 engine: julia
 julia:
   exeflags: ["--project", "--threads=auto"]
 ---
+
+::: {.objectives title="Learning objectives"} 
+After working through this page you will be able to:
+
+- read a shrinkage plot and explain what its two sets of random-effects coefficients represent;
+- connect the amount of shrinkage to the strength of a variance component;
+- use shrinkage plots to judge whether a random-effects term is contributing or "inert".
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd); [Convergence, singularity and all that](../lmm-intro/singularity.qmd) is helpful.
+
+**Datasets used:** `kb07` (see the [dataset catalog](../getting-started/datasets.qmd)).
+:::
 
   - I have stated that the likelihood criterion used to fit linear mixed-effects can be considered as balancing fidelity to the data (i.e. fits the observed data well) versus model complexity.
   - This is similar to some of the criterion used in Machine Learning (ML), except that the criterion for LMMs has a rigorous mathematical basis.
@@ -17,6 +34,7 @@ using CairoMakie
 using DataFrames
 using LinearAlgebra
 using MixedModels
+using SMLP2026: dataset
 using MixedModelsMakie
 using Random
 using ProgressMeter
@@ -30,10 +48,10 @@ using SMLP2026: fit_or_restore
 ```
 
 
-Load the kb07 data set (don't tell Reinhold that I used these data).
+Load the kb07 data set.
 
 ```{julia}
-kb07 = MixedModels.dataset(:kb07)
+kb07 = dataset(:kb07)
 ```
 
 ```{julia}
@@ -119,15 +137,16 @@ sqrt.(diag(Σ₁))
 
 ```{julia}
 #| label: fig-m1shrinkage
-#| fig-cap: Shrinkage plot of model m1
-#| code-fold: true
-shrinkageplot(m1)
+#| fig-cap: Shrinkage plot of model m1 for the `:subj` grouping term
+shrinkageplot!(Figure(; size=(500, 500)), m1)
 ```
 
 The upper left panel shows the perfect negative correlation for those two components of the random effects.
 
 ```{julia}
-shrinkageplot(m1, :item)
+#| label: fig-m1shrinkage-item
+#| fig-cap: Shrinkage plot of model m1 for the `:item` grouping term
+shrinkageplot!(Figure(; size=(500, 500)), m1, :item)
 ```
 
 ```{julia}
@@ -180,7 +199,7 @@ VarCorr(m2)
 #| fig-cap: Shrinkage plot of model m2
 #| label: fig-m2shrinkage
 #| code-fold: true
-shrinkageplot(m2)
+shrinkageplot!(Figure(; size=(250, 250)), m2)
 ```
 
 ```{julia}
@@ -230,7 +249,7 @@ ridgeplot(m3btstrp)
 
 ```{julia}
 #| label: fig-ridgeplotnoint
-#| fig-cap: 'Ridge plot of the fixed-effects coefficients from the bootstrap sample (with the intercept)'
+#| fig-cap: 'Ridge plot of the fixed-effects coefficients from the bootstrap sample (without the intercept)'
 ridgeplot(m3btstrp; show_intercept=false)
 ```
 
@@ -289,7 +308,33 @@ end
 ```{julia}
 #| label: fig-scatterm4
 #| fig-cap: Residuals versus fitted values for model m4
-scatter(fitted(m4), residuals(m4))
+fig = Figure(; size=(400, 400))
+ax = fig[1, 1] = Axis(fig)
+scatter!(ax, fitted(m4), residuals(m4); alpha=0.5)
+fig
 ```
 
-*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}}.*
+## Exercises
+
+1. **Shrinkage in a well-supported model.** Produce a shrinkage plot for the `sleepstudy` random-slope model. How much do the points move compared with the `kb07` plots above, and what does that say about the strength of the random effects?
+
+::: {.callout-note collapse="true" title="Solution"}
+The `sleepstudy` random effects are well supported by the data, so the conditional modes shrink only modestly toward the origin — the points barely move. Strong subject-to-subject variation means the penalty for complexity has little to pull against.
+
+```{julia}
+#| eval: false
+df = DataFrame(dataset(:sleepstudy))
+m = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), df)
+shrinkageplot!(Figure(; size=(500, 500)), m)
+```
+:::
+
+2. **Reading shrinkage.** In a different model, the points for one random-effects term collapse almost entirely onto a single line. What is that telling you about the term?
+
+::: {.callout-note collapse="true" title="Solution"}
+Heavy shrinkage toward a lower-dimensional subspace (a line, or the origin) means that random-effects term is contributing little — it is close to "inert". The likelihood gains little from letting it vary, so the estimates are pulled strongly toward zero. This is a visual cue to consider simplifying the random-effects structure.
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*
