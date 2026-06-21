@@ -70,18 +70,19 @@ Thus the response being modeled is the speed measured in responses per second.
 
 ```{julia}
 #| eval: false
-pr01 = let f = @formula 1000 / rt_raw ~
-    1 + load + spkr + prec + (1 + prec | item) + (1 | subj)
-  profile(fit(MixedModel, f, kb07; contrasts, progress))
+pr01 = let f = @formula(1000 / rt_raw ~
+    1 + load + spkr + prec + (1 + prec | item) + (1 | subj))
+  profile(lmm(f, kb07; contrasts, progress))
 end
 println(pr01.m) # model is a property of the profile object
 ```
 
 ```{julia}
 #| include: false
-pr01 = let f = @formula 1000 / rt_raw ~
-    1 + load + spkr + prec + (1 + prec | item) + (1 | subj)
-  profile(fit_or_restore("profiling_pr01.json", MixedModel, f, kb07; contrasts, progress))
+pr01 = let f = @formula(1000 / rt_raw ~
+    1 + load + spkr + prec + (1 + prec | item) + (1 | subj))
+  profile(fit_or_restore("profiling_pr01.json", MixedModel, f, kb07; 
+                          contrasts, progress))
 end
 println(pr01.m) # model is a property of the profile object
 ```
