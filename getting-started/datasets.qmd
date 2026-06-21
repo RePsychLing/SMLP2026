@@ -49,9 +49,19 @@ Outside of that tutorial, prefer
 
 # Datasets bundled with MixedModelsDatasets.jl
 
-These three are documented in full upstream — design, every column, and the primary
+These four are documented in full upstream — design, every column, and the primary
 citation — in the [MixedModelsDatasets.jl dataset reference](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/).
 We summarize their role in this course and link out for the details.
+
+## `dyestuff`
+
+Yield of dyestuff (Naphthalene Black 12B) from five preparations of each of six batches of an
+intermediate product. The canonical minimal example of a linear mixed model: an
+intercept-only model with a single grouping factor (`batch`), used to introduce variance
+components in their simplest form. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#dyestuff).
+
+**Used in:** [bootstrap](../inference/bootstrap.qmd).
 
 ## `sleepstudy`
 
@@ -67,7 +77,7 @@ Response times from Kronmüller & Barr (2007), a 2×2×2 visual-world experiment
 illustrate maximal versus parsimonious random-effects structures. See the
 [upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#kb07).
 
-**Used in:** [shrinkage plots](../visualization/shrinkageplot.qmd), [bootstrap](../inference/bootstrap.qmd), [profiling](../inference/profiling.qmd), [kb07](../inference/kb07.qmd), [power simulation](../inference/power_simulation.qmd).
+**Used in:** [shrinkage plots](../visualization/shrinkageplot.qmd), [bootstrap](../inference/bootstrap.qmd), [profiling](../inference/profiling.qmd), [power simulation](../inference/power_simulation.qmd).
 
 ## `mrk17_exp1`
 

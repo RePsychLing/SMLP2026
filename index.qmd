@@ -76,7 +76,7 @@ appears:
 | Dataset | Used in |
 |:--------|:--------|
 | `sleepstudy` | [sleepstudy](lmm-intro/sleepstudy.qmd), [singularity](lmm-intro/singularity.qmd), [transformations](contrasts/transformation.qmd), [speed metrics](contrasts/sleepstudy_speed.qmd), [bootstrap](inference/bootstrap.qmd), [GLMM](glmm/glmm.qmd) |
-| `kb07` | [shrinkage plots](visualization/shrinkageplot.qmd), [bootstrap](inference/bootstrap.qmd), [profiling](inference/profiling.qmd), [kb07](inference/kb07.qmd), [power simulation](inference/power_simulation.qmd) |
+| `kb07` | [shrinkage plots](visualization/shrinkageplot.qmd), [bootstrap](inference/bootstrap.qmd), [profiling](inference/profiling.qmd), [power simulation](inference/power_simulation.qmd) |
 | `fggk21` (Emotikon) | [contrast coding](contrasts/contrasts_fggk21.qmd), [AoG plots](visualization/AoGPlots.qmd), [Emotikon capstone](examples/emotikon/fggk21.qmd), [transform check](examples/emotikon/check_emotikon_transform.qmd) |
 | `kwdyz11` | [contrast coding](contrasts/contrasts_kwdyz11.qmd), [visual-attention capstone](examples/visual-attention/kwdyz11.qmd) |
 | `kkl15` | [replication & model reduction](examples/visual-attention/kkl15.qmd) |

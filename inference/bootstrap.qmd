@@ -8,7 +8,7 @@ julia:
 ::: {.objectives title="Learning objectives"} 
 After working through this page you will be able to:
 
-- explain what the parametric bootstrap does and why it can give more accurate intervals than standard-error or profile methods;
+- explain what the parametric bootstrap does and why it can give more accurate intervals than Wald or other methods based on the standard error;
 - run a parametric bootstrap on a fitted `MixedModel`;
 - summarize bootstrap replicates into confidence intervals and spot singular fits among them.
 :::
@@ -16,7 +16,7 @@ After working through this page you will be able to:
 ::: {.callout-note title="Before you start"}
 **Prerequisites:** [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd).
 
-**Datasets used:** `sleepstudy` and `kb07` (see the [dataset catalog](../getting-started/datasets.qmd)).
+**Datasets used:** `sleepstudy`, `kb07`, `dyestuff` (see the [dataset catalog](../getting-started/datasets.qmd)).
 :::
 
 The speed of MixedModels.jl relative to its predecessors makes the parametric bootstrap much more computationally tractable.
@@ -99,7 +99,7 @@ m0 = fit(MixedModel, form, kb07; contrasts, progress)
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 form = @formula(rt_trunc ~ 1 + spkr * prec * load +
                           (1 + spkr + prec + load | subj) +
                           (1 + spkr + prec + load | item))
@@ -151,7 +151,7 @@ To bootstrap the model parameters, first initialize a random number generator th
 
 ```{julia}
 const RNG = MersenneTwister(42)
-samp = parametricbootstrap(RNG, 5_000, m1)
+samp = parametricbootstrap(RNG, 5_000, m1; progress)
 tbl = samp.tbl
 ```
 
@@ -304,7 +304,6 @@ count(issingular(sampsleep))
 # See Also
 
 - [Confidence Intervals from Profiled Objective](profiling.qmd) — an alternative approach to uncertainty quantification via likelihood profiling rather than simulation.
-- [Bootstrapping a Fitted Model](kb07.qmd) — a practical worked example applying parametric bootstrap to the Kronmueller & Barr (2007) dataset.
 
 # References
 

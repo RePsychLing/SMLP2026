@@ -97,7 +97,6 @@ website:
         contents:
         - inference/bootstrap.qmd
         - inference/profiling.qmd
-        - inference/kb07.qmd
         - inference/power_simulation.qmd
       - section: "Generalized Linear Mixed Models"
         contents:
