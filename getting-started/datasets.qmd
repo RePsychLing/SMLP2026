@@ -98,11 +98,21 @@ are updated.
 
 **Full name:** Physical fitness of third-graders (Emotikon study)
 
-Physical-fitness component scores from @Fuehner2021: 108,295 third-graders from 515 primary
-schools across 9 cohorts, tested on a battery of fitness tasks (running, jumping, balancing,
-and so on). The size and nested structure (children within schools within cohorts) make it a
-realistic large-scale example for contrast coding of a multi-level factor (`Test`), for
-PCA-guided model complexification, and for visualization at scale.
+Physical-fitness component scores from @Fuehner2021: 108,295 third-graders (all between 8.0
+and 8.99 years old; 55,086 girls, 53,209 boys) from 515 primary schools across 9 cohorts
+(2011–2019), yielding 525,126 scores. The size and nested structure (children within schools
+within cohorts) make it a realistic large-scale example for contrast coding of a multi-level
+factor (`Test`), for PCA-guided model complexification, and for visualization at scale.
+
+The `Test` factor has five levels, each measured in its own units:
+
+- `Run` (*Endurance*): 6-minute endurance run [m]; to nearest 9 m in a 9×18 m field
+- `Star_r` (*Coordination*): star coordination run [m/s]; 9×9 m field, 4 × diagonal = 50.912 m
+- `S20_r` (*Speed*): 20-meter sprint [m/s]
+- `SLJ` (*Muscle power low*): standing long jump [cm]
+- `BPT` (*Muscle power up*): 1-kg medicine ball push test [m]
+
+The `age` variable is computed as test date minus the middle of the month of the child's birth date.
 
 **Citation:** @Fuehner2021.
 

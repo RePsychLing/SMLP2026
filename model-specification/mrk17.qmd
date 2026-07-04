@@ -449,6 +449,11 @@ m_mrk17_nested =let
 end
 ```
 
+## See Also
+
+- The [multiple random-effects terms chapter](https://www.embraceuncertaintybook.com/multiple.html) of *Embrace Uncertainty* — a deeper treatment of crossed, nested, and partially crossed random-effects structures.
+- The [large-scale designed experiment chapter](https://www.embraceuncertaintybook.com/largescaledesigned.html) of *Embrace Uncertainty* — model specification and selection at scale, on the English Lexicon Project.
+
 ## Exercises
 
 1. **Map the design.** List the experimental factors in `mrk17` and label each as between- or within-subject and between- or within-item. Which factors are therefore eligible for by-subject and by-item random slopes?

@@ -101,7 +101,7 @@ re_subj = create_re(1.2, 1.5, 1.5; corrmat)
 
 ```{julia}
 #| code-fold: true
-fit!(simulate!(m0; θ, β, σ))
+fit!(simulate!(m0; θ, β, σ); progress)
 ```
 
 
@@ -164,6 +164,10 @@ shrinkageplot(m1)
 #| code-fold: true
 caterpillar(m1; orderby=nothing, vline_at_zero=true)
 ```
+
+## See Also
+
+- The [multiple random-effects terms chapter](https://www.embraceuncertaintybook.com/multiple.html) of *Embrace Uncertainty* — crossed, nested, and partially crossed random-effects structures in depth.
 
 ## Exercises
 

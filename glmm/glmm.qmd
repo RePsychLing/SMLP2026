@@ -451,6 +451,10 @@ preds = effects(design, gm3; invlink=AutoInvLink())
   - The patterns for women with children are similar and we do not need to distinguish between 1, 2, and 3+ children.
   - We do distinguish between those women who do not have children and those with children.  This shows up in a significant `age & children` interaction term.
 
+## See Also
+
+- The [binary-response GLMM chapter](https://www.embraceuncertaintybook.com/glmmbernoulli.html) of *Embrace Uncertainty* — a full treatment of the same contraception data, including link functions and interpretation on the odds scale.
+
 ## Exercises
 
 1. **Interpret on the right scale.** For the logistic GLMM fit to the `contra` data, a coefficient is reported on the logit scale. How do you turn it into a statement about probability, and why can't you read it directly as a probability change?

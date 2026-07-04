@@ -1,6 +1,7 @@
 module SMLP2026
 
 using Arrow
+using CategoricalArrays
 using CSV
 using DataFrames
 using Dates
@@ -11,6 +12,8 @@ using MixedModelsDatasets
 using PooledArrays
 using Random
 using Scratch
+using StableRNGs
+using StatsBase
 using Suppressor
 using SHA
 using TypedTables
@@ -44,8 +47,72 @@ function age_at_event(edate::TimeType, dob::TimeType)
     return (ey - by) - (em < bm | (em == bm & ed < bd))
 end
 
+"""
+    fggk21_preprocessed()
+
+Return the full `fggk21` (Emotikon) data as a `DataFrame`, preprocessed as in
+the original publication (Fühner et al., 2021): `age` centered at 8.5 years
+(`a1`), `Sex` recoded to "Boys"/"Girls", `Test` recoded to descriptive labels
+(Endurance, Coordination, Speed, PowerLOW, PowerUP), and `score` replaced by
+its z-score within each `Test` (`zScore`), computed on the full data.
+"""
+function fggk21_preprocessed()
+    df = DataFrame(dataset(:fggk21))
+    transform!(df,
+        :age => (x -> x .- 8.5) => :a1,
+        :Sex => categorical => :Sex,
+        :Test => categorical => :Test,
+    )
+    levels!(df.Sex, ["male", "female"])
+    recode!(df.Sex, "male" => "Boys", "female" => "Girls")
+    levels!(df.Test, ["Run", "Star_r", "S20_r", "SLJ", "BPT"])
+    recode!(
+        df.Test,
+        "Run" => "Endurance",
+        "Star_r" => "Coordination",
+        "S20_r" => "Speed",
+        "SLJ" => "PowerLOW",
+        "BPT" => "PowerUP",
+    )
+    select!(groupby(df, :Test), Not(:score), :score => zscore => :zScore)
+    return df
+end
+
+"""
+    fggk21_teaching_sample(; nboys=1000, ngirls=1000, seed=42)
+    fggk21_teaching_sample(df::AbstractDataFrame; nboys=1000, ngirls=1000, seed=42)
+
+Return the canonical teaching subsample of the `fggk21` (Emotikon) data used
+throughout the course materials: a stratified sample of whole children
+(`nboys` boys and `ngirls` girls, keeping all of a sampled child's test
+scores), drawn without replacement using a `StableRNG` seeded with `seed` so
+that the subsample is reproducible across Julia versions.
+
+Sampling whole children (rather than individual scores) preserves the
+within-child structure needed for by-`Child` random slopes. The z-scores are
+computed on the full data *before* sampling (see [`fggk21_preprocessed`](@ref),
+which supplies the input when no `DataFrame` is given).
+"""
+function fggk21_teaching_sample(; kwargs...)
+    return fggk21_teaching_sample(fggk21_preprocessed(); kwargs...)
+end
+
+function fggk21_teaching_sample(df::AbstractDataFrame;
+                                nboys=1000, ngirls=1000, seed=42)
+    child = unique(select(df, :Cohort, :School, :Child, :Sex, :age))
+    rng = StableRNG(seed)
+    samp = combine(groupby(child, :Sex)) do sdf
+        n = first(sdf.Sex) == "Boys" ? nboys : ngirls
+        return sdf[sample(rng, 1:nrow(sdf), n; replace=false), :]
+    end
+    sampled = Set(samp.Child)
+    return subset(df, :Child => ByRow(in(sampled)))
+end
+
 export GENRES,
     age_at_event,
+    fggk21_preprocessed,
+    fggk21_teaching_sample,
     tagpad,
     fit_or_restore,
     fit_or_restore!

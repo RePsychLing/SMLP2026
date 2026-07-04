@@ -217,6 +217,11 @@ caterpillar!(Figure(; size=(500, 500)), m2)
 shrinkageplot!(Figure(; size=(400, 400)), m2)
 ```
 
+# See Also
+
+- [Analysis of the sleepstudy data](../lmm-intro/sleepstudy.qmd) — the reaction-time analysis of these data that this page re-examines on the speed scale.
+- [Shrinkage of random effects](../visualization/shrinkageplot.qmd) — what the caterpillar and shrinkage plots above are showing and how to read them.
+
 # References
 
 ::: {#refs}

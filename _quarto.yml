@@ -85,8 +85,7 @@ website:
       - section: "Building Models: Specification & Random Effects"
         contents:
         - model-specification/mrk17.qmd
-        # - model-specification/largescaledesigned.qmd
-        # - model-specification/partial_within.qmd
+        - model-specification/partial_within.qmd
       - section: "Contrast Coding & Transformations"
         contents:
         - contrasts/transformation.qmd
@@ -114,5 +113,6 @@ website:
       - section: "Reference & Appendix"
         contents:
         - reference/useful_packages.qmd
+        - reference/mixedmodels_cheatsheet.qmd
         - reference/arrow.qmd
         - reference/pkg.qmd

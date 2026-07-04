@@ -284,6 +284,8 @@ The neighboring panels in the data plot, `S330` and `S331`, have more variabilit
 
 # Assessing variability by bootstrapping
 
+This section is a first taste of the parametric bootstrap; the full treatment is in the [Inference & Uncertainty section](../inference/bootstrap.qmd).
+
 The speed of fitting linear mixed-effects models using `MixedModels.jl` allows for using simulation-based approaches to inference instead of relying on approximate standard errors.
 A *parametric bootstrap sample* for model `m` is a collection of models of the same form as `m` fit to data values simulated from `m`.
 That is, we pretend that `m` and its parameter values are the *true* parameter values, simulate data from these values, and estimate parameters from the simulated data.
@@ -329,8 +331,7 @@ MixedModels.jl also defines appropriate methods for `StatsAPI.confint` so that t
 confint(m1bstp; method=:shortest)
 ```
 
-<!-- TODO: add a section on the different methods to the bootstrap file and a xref here -->
-Later we discuss other available methods for computing confidence intervals.
+The parametric bootstrap is treated in full in [Parametric bootstrap for mixed-effects models](../inference/bootstrap.qmd); [confidence intervals from the profiled objective](../inference/profiling.qmd) cover an alternative based on the likelihood surface.
 :::
 
 The intervals look reasonable except that the upper end point of the interval for ρ1, the correlation coefficient, is 1.0 .
@@ -400,6 +401,8 @@ end
 
 - [The Belenky Sleep Study: Speed Metrics and Between-Group Comparisons](../contrasts/sleepstudy_speed.qmd) — re-analyzes a related sleep-deprivation dataset using a speed (1/RT) transformation of the response.
 - [Convergence, Singularity, and All That](singularity.qmd) — uses the sleepstudy data to illustrate what happens when a model's random-effects covariance structure is degenerate.
+- [Parametric bootstrap for mixed-effects models](../inference/bootstrap.qmd) — the full treatment of the bootstrap previewed above.
+- The [introductory chapter](https://www.embraceuncertaintybook.com/intro.html) of *Embrace Uncertainty* — the conceptual foundations of mixed models (fixed vs. random effects, maximum likelihood, conditional modes) on the simplest possible example.
 
 # References
 

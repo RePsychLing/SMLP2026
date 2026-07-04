@@ -209,6 +209,9 @@ library(arrow)
 read_ipc_file("fggk21.arrow")
 ```
 
+# See Also
+
+- The [data tables appendix](https://www.embraceuncertaintybook.com/datatables.html) of *Embrace Uncertainty* — Arrow files, memory-mapped data, and table representations in Julia.
 
 # References
 

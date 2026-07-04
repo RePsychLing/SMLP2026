@@ -247,6 +247,11 @@ let pars=["σ", "σ1", "σ2", "σ3"]
 end
 ```
 
+## See Also
+
+- [Parametric bootstrap for mixed-effects models](bootstrap.qmd) — the simulation-based alternative to profiling.
+- The [introductory chapter](https://www.embraceuncertaintybook.com/intro.html) of *Embrace Uncertainty* — develops the profiled log-likelihood from first principles on the simplest possible example.
+
 ## Exercises
 
 1. **Profile versus bootstrap.** Compute profile-based confidence intervals for the `kb07` model and compare them to the parametric-bootstrap intervals. Where do they agree, and where might they diverge?

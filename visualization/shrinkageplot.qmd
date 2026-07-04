@@ -314,6 +314,10 @@ scatter!(ax, fitted(m4), residuals(m4); alpha=0.5)
 fig
 ```
 
+## See Also
+
+- The [introductory](https://www.embraceuncertaintybook.com/intro.html) and [longitudinal-data](https://www.embraceuncertaintybook.com/longitudinal.html) chapters of *Embrace Uncertainty* — the theory of conditional modes and further worked examples of shrinkage.
+
 ## Exercises
 
 1. **Shrinkage in a well-supported model.** Produce a shrinkage plot for the `sleepstudy` random-slope model. How much do the points move compared with the `kb07` plots above, and what does that say about the strength of the random effects?
