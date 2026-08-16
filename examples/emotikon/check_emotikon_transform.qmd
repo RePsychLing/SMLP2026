@@ -89,7 +89,7 @@ f1 = @formula zScore ~
 
 ```{julia}
 m1x = LinearMixedModel(f1, dat; contrasts)
-restoreoptsum!(m1x, joinpath(FITSDIR, "fggk21_m1_optsum.json"))
+restoreoptsum!(m1x, joinpath(FITSDIR, "fggk21_m1_optsum.json"); rtol=1e-6)
 ```
 
 ```{julia}
