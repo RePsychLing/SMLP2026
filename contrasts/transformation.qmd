@@ -61,7 +61,8 @@ using DataFrames
 using Effects
 using MixedModels
 using StandardizedPredictors
-using SMLP2026: dataset, fit_or_restore
+using MixedModelsDatasets: dataset
+using SMLP2026: fit_or_restore
 const progress = isinteractive()
 ```
 

@@ -33,6 +33,7 @@ using CairoMakie
 using DataFrames
 using LinearAlgebra
 using MixedModels
+using MixedModelsDatasets
 using MixedModelsMakie
 
 const progress = isinteractive()
@@ -47,12 +48,12 @@ Fit a model for reaction time in the sleepstudy example.
 
 ```{julia}
 #| eval: false
-m01 = lmm(@formula(reaction ~ 1 + days + (1 + days|subj)), MixedModels.dataset(:sleepstudy); progress)
+m01 = lmm(@formula(reaction ~ 1 + days + (1 + days|subj)), dataset(:sleepstudy); progress)
 ```
 
 ```{julia}
 #| include: false
-m01 = fit_or_restore("singularity_m01.json", @formula(reaction ~ 1 + days + (1 + days|subj)), MixedModels.dataset(:sleepstudy); progress)
+m01 = fit_or_restore("singularity_m01.json", @formula(reaction ~ 1 + days + (1 + days|subj)), dataset(:sleepstudy); progress)
 ```
 
 ```{julia}
@@ -188,7 +189,7 @@ With little data the model often cannot estimate the intercept–slope correlati
 
 ```{julia}
 #| eval: false
-df = DataFrame(dataset(:sleepstudy))
+df = DataFrame(MixedModelsDatasets.dataset(:sleepstudy))
 sub = filter(:subj => in(first(unique(df.subj), 3)), df)
 m = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), sub)
 issingular(m)

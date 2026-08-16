@@ -14,12 +14,13 @@ analysis.
 
 # How datasets are loaded
 
-All example datasets are loaded through a single function re-exported by the course package:
+All example datasets are loaded through the `dataset` function from
+[MixedModelsDatasets.jl](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/):
 
 ```{julia}
 #| output: false
 using DataFrames
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 ```
 
 ```{julia}
@@ -27,29 +28,24 @@ sleepstudy = DataFrame(dataset(:sleepstudy))
 first(sleepstudy, 5)
 ```
 
-`dataset(name)` resolves a name from one of two sources:
-
-1. **Datasets re-exported from [MixedModelsDatasets.jl](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/)** — the standard collection bundled with the Julia mixed-models ecosystem (e.g. `sleepstudy`, `kb07`, `mrk17_exp1`).
-2. **Course-specific datasets hosted on [OSF](https://osf.io/)** — downloaded on first use, checksum-verified, and cached locally (e.g. `fggk21`, `kwdyz11`, `kkl15`). The download is automatic; you don't need to fetch anything by hand.
-
-To list everything available in this project:
+To list everything available:
 
 ```{julia}
-using SMLP2026
-sort(SMLP2026.datasets())
+using MixedModelsDatasets
+sort(MixedModelsDatasets.datasets())
 ```
 
 ::: {.callout-note}
 A few datasets in these materials are also distributed as files under `data/` (e.g. the raw
 Emotikon data as `emotikon.rds`). Those are used in the data-wrangling example
-[Saving data with Arrow](../reference/arrow.qmd). 
+[Saving data with Arrow](../reference/arrow.qmd).
 Outside of that tutorial, prefer
 `dataset(...)`.
 :::
 
-# Datasets bundled with MixedModelsDatasets.jl
+# Datasets used in these materials
 
-These four are documented in full upstream — design, every column, and the primary
+All datasets below are documented in full upstream — design, every column, and the primary
 citation — in the [MixedModelsDatasets.jl dataset reference](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/).
 We summarize their role in this course and link out for the details.
 
@@ -88,31 +84,22 @@ refers to it as **`mrk17`**. See the
 
 **Used in:** [model specification](../model-specification/mrk17.qmd).
 
-# Course-specific datasets
+## `contra`
 
-These datasets are hosted on OSF and downloaded automatically by `dataset(...)`. Column
-summaries below are generated directly from the data, so they stay accurate as the datasets
-are updated.
+Contraceptive use among Bangladeshi women, from the 1988 Bangladesh Fertility Survey. A binary
+response (use/non-use of contraception) with demographic predictors, used to introduce
+generalized linear mixed models. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#contra).
 
-## `fggk21` (the Emotikon project)
+**Used in:** [GLMM](../glmm/glmm.qmd).
 
-**Full name:** Physical fitness of third-graders (Emotikon study)
+## `fggk21`
 
-Physical-fitness component scores from @Fuehner2021: 108,295 third-graders (all between 8.0
-and 8.99 years old; 55,086 girls, 53,209 boys) from 515 primary schools across 9 cohorts
-(2011–2019), yielding 525,126 scores. The size and nested structure (children within schools
-within cohorts) make it a realistic large-scale example for contrast coding of a multi-level
-factor (`Test`), for PCA-guided model complexification, and for visualization at scale.
-
-The `Test` factor has five levels, each measured in its own units:
-
-- `Run` (*Endurance*): 6-minute endurance run [m]; to nearest 9 m in a 9×18 m field
-- `Star_r` (*Coordination*): star coordination run [m/s]; 9×9 m field, 4 × diagonal = 50.912 m
-- `S20_r` (*Speed*): 20-meter sprint [m/s]
-- `SLJ` (*Muscle power low*): standing long jump [cm]
-- `BPT` (*Muscle power up*): 1-kg medicine ball push test [m]
-
-The `age` variable is computed as test date minus the middle of the month of the child's birth date.
+Physical-fitness component scores from @Fuehner2021: 108,295 third-graders from 515 primary
+schools across 9 cohorts (2011–2019), yielding 525,126 scores. The size and nested structure
+make it a realistic large-scale example for contrast coding of a multi-level factor (`Test`),
+for PCA-guided model complexification, and for visualization at scale. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#fggk21).
 
 **Citation:** @Fuehner2021.
 
@@ -132,13 +119,12 @@ produce the Arrow files are walked through in [Saving data with Arrow](../refere
 
 ## `kwdyz11`
 
-**Full name:** Kliegl, Wei, Dambacher, Yan & Zhou (2011) visual-attention experiment
-
 Reaction times from a cueing experiment with four cue-target relations (CTRs), used to
 estimate spatial, object-based, and attractor-like effects of visual attention together with
 the individual differences in those effects. A key teaching point: the attraction effect is
 near zero as a fixed effect but has a reliable variance component, and the originally reported
-model turned out to be singular — motivating the replication in `kkl15`.
+model turned out to be singular — motivating the replication in `kkl15`. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#kwdyz11).
 
 **Citation:** @Kliegl2011.
 
@@ -152,13 +138,12 @@ describe(DataFrame(dataset(:kwdyz11)))
 
 ## `kkl15`
 
-**Full name:** Kliegl, Kushela & Laubrock (2015) replication and extension
-
 A larger conceptual replication of `kwdyz11` [@Kliegl2015], run at Potsdam with additional
 manipulations of target size and rectangle orientation. With more data and more conditions it
 estimates the theoretically critical spatial–attraction correlation parameter that was the
 source of the singularity in the original study, and is the running example for principled
-reduction of model complexity.
+reduction of model complexity. See the
+[upstream entry](https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#kkl15).
 
 **Citation:** @Kliegl2015.
 

@@ -1,40 +1,40 @@
 module SMLP2026
 
-using Arrow
+# using Arrow            # only needed by dataset/movielens machinery
 using CategoricalArrays
-using CSV
+# using CSV              # only needed by dataset/movielens machinery
 using DataFrames
 using Dates
-using Downloads
-using Markdown
+# using Downloads        # only needed by dataset/movielens machinery
+# using Markdown         # only needed by movielens machinery
 using MixedModels
-using MixedModelsDatasets
+using MixedModelsDatasets: MixedModelsDatasets
 using PooledArrays
 using Random
-using Scratch
+# using Scratch          # only needed by dataset machinery
 using StableRNGs
 using StatsBase
 using Suppressor
-using SHA
-using TypedTables
+# using SHA              # only needed by dataset machinery
+# using TypedTables      # only needed by dataset machinery
 using ZipFile
 
-const CACHE = Ref("")
-const MMDS = String[]
+# const CACHE = Ref("")
+# const MMDS = String[]
 
 const DATADIR = joinpath(dirname(@__DIR__), "data")
 const FITSDIR = joinpath(dirname(@__DIR__), "fits")
 export DATADIR, FITSDIR
 
-function __init__()
-    CACHE[] = @get_scratch!("data")
-    mkpath(CACHE[])
-    append!(MMDS, MixedModelsDatasets.datasets())
-end
+# function __init__()
+#     CACHE[] = @get_scratch!("data")
+#     mkpath(CACHE[])
+#     append!(MMDS, MixedModelsDatasets.datasets())
+# end
 
-include("datasets.jl")
+# include("datasets.jl")
 include("tagpad.jl")
-include("movielens.jl")
+# include("movielens.jl")
 
 """
     age_at_event(edate::Dates.TimeType, dob::Dates.TimeType)
@@ -57,7 +57,7 @@ the original publication (Fühner et al., 2021): `age` centered at 8.5 years
 its z-score within each `Test` (`zScore`), computed on the full data.
 """
 function fggk21_preprocessed()
-    df = DataFrame(dataset(:fggk21))
+    df = DataFrame(MixedModelsDatasets.dataset(:fggk21))
     transform!(df,
         :age => (x -> x .- 8.5) => :a1,
         :Sex => categorical => :Sex,
@@ -109,7 +109,7 @@ function fggk21_teaching_sample(df::AbstractDataFrame;
     return subset(df, :Child => ByRow(in(sampled)))
 end
 
-export GENRES,
+export # GENRES,
     age_at_event,
     fggk21_preprocessed,
     fggk21_teaching_sample,

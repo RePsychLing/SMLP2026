@@ -41,7 +41,8 @@ using DataFrameMacros
 using MixedModels
 using MixedModelsMakie
 using RCall
-using SMLP2026: dataset, FITSDIR
+using MixedModelsDatasets: dataset
+using SMLP2026: FITSDIR
 using Serialization
 using StatsBase
 ```

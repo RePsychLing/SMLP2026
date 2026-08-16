@@ -21,7 +21,7 @@ After working through this page you will be able to:
 
 This notebook shows creating a multi-panel plot similar to Figure 2 of @Fuehner2021.
 
-The data are available from the SMLP2026 example datasets.
+The data are available from the `MixedModelsDatasets` package.
 
 ```{julia}
 #| code-fold: true
@@ -31,7 +31,7 @@ using CairoMakie   # for displaying static plots
 using DataFrames
 using Statistics
 using StatsBase
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 ```
 
 ```{julia}

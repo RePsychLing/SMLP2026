@@ -33,7 +33,8 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie
-using SMLP2026: dataset, fit_or_restore
+using MixedModelsDatasets: dataset
+using SMLP2026: fit_or_restore
 
 const progress = isinteractive()
 ```

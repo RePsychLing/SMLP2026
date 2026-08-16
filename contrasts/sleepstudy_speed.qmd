@@ -56,7 +56,7 @@ using DataFrameMacros
 using DataFrames
 using MixedModels
 using MixedModelsMakie   # plots specific to mixed-effects models using Makie
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 ```
 
 ```{julia}

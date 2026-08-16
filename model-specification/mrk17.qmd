@@ -32,7 +32,7 @@ using MixedModels
 using MixedModelsMakie
 using StatsBase
 
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 using Statistics: mean, std
 
 const progress = isinteractive()
