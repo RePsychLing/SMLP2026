@@ -106,11 +106,7 @@ The [Makie ecosystem](https://makie.org/) is a relatively new take on graphics t
 
 [Plots.jl](https://docs.juliaplots.org/latest/) is the original plotting package in Julia, but we often find it difficult to work with compared to some of the other alternatives. [StatsPlots.jl](https://github.com/JuliaPlots/StatsPlots.jl) builds on this, adding common statistical plots, while [UnicodePlots.jl](https://github.com/Evizero/UnicodePlots.jl) renders plots as Unicode characters directly in the REPL.
 
-[PGFPlotsX.jl](https://kristofferc.github.io/PGFPlotsX.jl/stable/) is a very new package that writes directly to PGF (the format used by LaTeX's tikz framework) and can stand alone or be used as a rendering backend for the Plots.jl ecosystem.
-
-## Gadfly
-
-[Gadfly.jl](https://gadflyjl.org/stable/) was the original attempt to create a plotting system in Julia based on the grammar of graphics (the "gg" in `ggplot2`). Development has largely stalled, but some functionality still exceeds AlgebraOfGraphics.jl, which has taken up the grammar of graphics mantle. Notably, the MixedModels.jl documentation still uses Gadfly as of this writing (early September 2021).
+[PGFPlotsX.jl](https://kristofferc.github.io/PGFPlotsX.jl/stable/) is a newer package that writes directly to PGF (the format used by LaTeX's tikz framework) and can stand alone or be used as a rendering backend for the Plots.jl ecosystem.
 
 ## Others
 
@@ -122,11 +118,9 @@ Using Julia doesn't mean you have to leave all the packages you knew in other la
 
 [RCall.jl](https://juliainterop.github.io/RCall.jl/stable/gettingstarted/) provides a very convenient interface for interacting with R. [JellyMe4.jl](https://github.com/palday/JellyMe4.jl/) adds support for moving MixedModels.jl and `lme4` models back and forth between the languages (which means that you can use `emmeans`, `sjtools`, `DHARMa`, `car`, etc. to examine MixedModels.jl models!). [RData.jl](https://github.com/JuliaData/RData.jl) provides support for reading `.rds` and `.rda` files from Julia, while [RDatasets.jl](https://github.com/JuliaStats/RDatasets.jl) provides convenient access to many of the standard datasets provided by R and various R packages.
 
-[PyCall.jl](https://github.com/JuliaPy/PyCall.jl/) provides a very convenient way for interacting with Python code and packages. [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) builds upon this foundation to provide support for Python's `matplotlib`. Similarly, [PyMNE.jl](https://github.com/beacon-biosignals/PyMNE.jl) and [PyFOOOF.jl](https://github.com/beacon-biosignals/pyfooof.jl) provide some additional functionality to make interacting with MNE-Python and FOOOF from within Julia even easier than with vanilla PyCall. More recently, [PythonCall.jl](https://github.com/cjdoris/PythonCall.jl) has proven to be a popular alternative to PyCall.jl.
+[PythonCall.jl](https://github.com/JuliaPy/PyCall.jl/) provides a very convenient way for interacting with Python code and packages. [PyPlot.jl](https://github.com/JuliaPy/PythonPlot.jl) builds upon this foundation to provide support for Python's `matplotlib`. Similarly, [PyMNE.jl](https://github.com/beacon-biosignals/PyMNE.jl) and [PyFOOOF.jl](https://github.com/beacon-biosignals/pyfooof.jl) provide some additional functionality to make interacting with MNE-Python and FOOOF from within Julia even easier than with vanilla PyCall. [PyCall.jl](https://github.com/JuliaPy/PyCall.jl) was the original interoperability package, but has been largely succeeded by PythonCall.jl
 
 For MATLAB users, there is also [MATLAB.jl](https://github.com/JuliaInterop/MATLAB.jl)
-
-[Cxx.jl](https://juliainterop.github.io/Cxx.jl/stable/) provides interoperability with C++. It also provides a C++ REPL mode, making it possible to treat C++ much more like a dynamic language than the traditional compiler toolchain would allow.
 
 Support for calling C and Fortran is [part of the Julia standard library](https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/).
 
