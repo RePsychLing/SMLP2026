@@ -9,6 +9,8 @@ author:
 This site provides materials for the **Advanced frequentist methods** stream of the [Summer School on Statistical Methods](https://vasishth.github.io/SMLP2026/) to be held at the University of Potsdam, 24--28 August 2026.
 The stream focuses on fitting, evaluating, and interpreting linear and generalized linear mixed-effects models using the [Julia programming language](https://julialang.org) and the [MixedModels.jl](https://juliastats.org/MixedModels.jl/stable/) package.
 
+These materials are hands-on and example-driven. For the theoretical foundations behind them, the companion is [*Embrace Uncertainty*](https://www.embraceuncertaintybook.com), the in-progress book on mixed-effects models in Julia by Douglas Bates and the course instructors; individual pages link to the relevant book chapters for deeper treatment.
+
 # How to use these materials
 
 Every page is a complete, runnable analysis. You can engage with them two ways:
@@ -17,7 +19,13 @@ Every page is a complete, runnable analysis. You can engage with them two ways:
   reasoning without running anything. Good for a first pass.
 - **Run locally.** Clone the repository and execute the code yourself — change things, break
   things, and do the [exercises](#exercises-and-self-check) at the bottom of each core page.
-  This is where the learning happens. Start with [Setup: installing the tools](getting-started/setup.qmd).
+  This is where the learning happens. Start with [Setup: installing the tools](getting-started/setup.qmd). 
+
+  ::: {.callout-tip title="Hidden blocks in the source code" collapse="true"}
+  Note that most pages include some hidden functionality to make cache results and make rendering the website as a whole faster. 
+  You should feel free to skip blocks including calls to the function `fit_or_restore!`. 
+  These blocks are not visible in the rendered course webpage and are only visible if you look at the `.qmd` files directly
+  :::
 
 Most pages in the core path open with a **Learning objectives** box (what you'll be able to
 do afterwards) and a **Before you start** box (which pages to read first and which datasets
@@ -25,7 +33,8 @@ are used), so you can navigate and pace yourself without an instructor in the ro
 
 ::: {.callout-tip title="I just need to look something up"}
 The [Reference & Appendix](reference/useful_packages.qmd) section is lookup material, not a
-lesson sequence: a tour of [useful Julia packages](reference/useful_packages.qmd), how to
+lesson sequence: a tour of [useful Julia packages](reference/useful_packages.qmd), a
+[cheatsheet of MixedModels.jl extractor functions](reference/mixedmodels_cheatsheet.qmd), how to
 [save and load data with Arrow](reference/arrow.qmd), and
 [package management for reproducible environments](reference/pkg.qmd). Dip in as needed.
 :::
@@ -35,7 +44,7 @@ lesson sequence: a tour of [useful Julia packages](reference/useful_packages.qmd
 1. **[Start Here](getting-started/setup.qmd)** — install the tools, meet the instructors, and skim the [dataset catalog](getting-started/datasets.qmd).
 2. **Foundations: Linear Mixed Models** — fit and interpret your first mixed model ([sleepstudy](lmm-intro/sleepstudy.qmd)) and learn to recognize [singular fits](lmm-intro/singularity.qmd).
 3. **Seeing Your Model** — [shrinkage plots](visualization/shrinkageplot.qmd) and [multi-panel graphics](visualization/AoGPlots.qmd); diagnostic tools you'll reuse everywhere.
-4. **Building Models** — random-effects [specification](model-specification/partial_within.qmd) and selection for [designed](model-specification/mrk17.qmd) and [large-scale](model-specification/largescaledesigned.qmd) experiments.
+4. **Building Models** — random-effects [specification](model-specification/partial_within.qmd) and selection for [designed experiments](model-specification/mrk17.qmd); for modeling a large-scale experiment (the English Lexicon Project), see the [corresponding chapter](https://www.embraceuncertaintybook.com/largescaledesigned.html) of *Embrace Uncertainty*.
 5. **Contrast Coding & Transformations** — make your coefficients answer the questions you actually care about ([transformations](contrasts/transformation.qmd), contrast schemes).
 6. **Inference & Uncertainty** — [bootstrap](inference/bootstrap.qmd), [profiling](inference/profiling.qmd), and [power simulation](inference/power_simulation.qmd).
 7. **Generalized Linear Mixed Models** — [extending to non-Gaussian responses](glmm/glmm.qmd).

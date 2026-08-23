@@ -11,7 +11,7 @@ julia:
 ::: {.objectives title="Learning objectives"} 
 After working through this page you will be able to:
 
-- read a shrinkage plot and explain what its two sets of random-effects coefficients represent;
+- read a shrinkage plot and explain what its two sets of points represent;
 - connect the amount of shrinkage to the strength of a variance component;
 - use shrinkage plots to judge whether a random-effects term is contributing or "inert".
 :::
@@ -30,11 +30,12 @@ After working through this page you will be able to:
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using CairoMakie
 using DataFrames
 using LinearAlgebra
 using MixedModels
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 using MixedModelsMakie
 using Random
 using ProgressMeter
@@ -313,6 +314,10 @@ ax = fig[1, 1] = Axis(fig)
 scatter!(ax, fitted(m4), residuals(m4); alpha=0.5)
 fig
 ```
+
+## See Also
+
+- The [introductory](https://www.embraceuncertaintybook.com/intro.html) and [longitudinal-data](https://www.embraceuncertaintybook.com/longitudinal.html) chapters of *Embrace Uncertainty* — the theory of conditional modes and further worked examples of shrinkage.
 
 ## Exercises
 

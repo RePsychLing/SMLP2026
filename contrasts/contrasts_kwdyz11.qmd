@@ -29,7 +29,7 @@ using CairoMakie
 using Chain
 using DataFrames
 using MixedModels
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 using StatsBase
 using StatsModels
 progress = false
@@ -670,106 +670,6 @@ end
 ```
 
 The three contrasts for one main effect and two nested contrasts are orthogonal. There is no test of the interaction (parallelism).
-
-# An Example for a complex example: Group(2) x A(2) x B(2)
-
-Three factors:
-
-+ G(roup): G1, G2 - between subjects
-+ A: A1, A2, - within subjects
-+ B: B1, B2, B3 - within subjects
-
-2 x 3 = 6 measures / subject
-
-<!-- TODO: where does this data come from? document in used datasets -->
-```{julia}
-dat2 = dataset(:exp_2x2x3)
-```
-
-We select an LMM supported by the data. 
-
-```{julia}
-cntrst2 = Dict(
-    :Group => SeqDiffCoding(; levels=["G1", "G2"]),
-    :A => SeqDiffCoding(; levels=["A1", "A2"]),
-    :B => SeqDiffCoding(; levels=["B1", "B2", "B3"]),
-  )
-
-f6_cpx = @formula(dv ~ 1 + Group*A*B   + (1 + A+B | Subj));
-f6_zcp = @formula(dv ~ 1 + Group*A*B   + zerocorr(1 + A+B | Subj));
-f6_ovi = @formula(dv ~ 1 + Group*A*B   +  (1 | Subj));
-```
-
-```{julia}
-#| eval: false
-m6_cpx = fit(MixedModel, f6_cpx, dat2; contrasts=cntrst2)
-```
-
-```{julia}
-#| echo: false
-m6_cpx = fit_or_restore("contrasts_kwdyz11_m6_cpx.json", MixedModel, f6_cpx, dat2; contrasts=cntrst2)
-```
-
-```{julia}
-issingular(m6_cpx)
-```
-
-
-```{julia}
-#| eval: false
-m6_zcp = fit(MixedModel, f6_zcp, dat2; contrasts=cntrst2)
-```
-```{julia}
-#| echo: false
-m6_zcp = fit_or_restore("contrasts_kwdyz11_m6_zcp.json", MixedModel, f6_zcp, dat2; contrasts=cntrst2)
-```
-
-```{julia}
-issingular(m6_zcp)
-```
-
-```{julia}
-#| eval: false
-m6_ovi = fit(MixedModel, f6_ovi, dat2; contrasts=cntrst2)
-```
-
-```{julia}
-#| echo: false
-m6_ovi = fit_or_restore("contrasts_kwdyz11_m6_ovi.json", MixedModel, f6_ovi, dat2; contrasts=cntrst2)
-```
-
-```{julia}
-issingular(m6_ovi)
-```
-
-```{julia}
-MixedModels.likelihoodratiotest(m6_ovi, m6_zcp, m6_cpx)
-```
-
-
-There is a significant interaction between A and the first contrast of B (i.e., B2 - B1). The interaction is not significant for A and the second contrast of B (i.e., B3 - B2).  This implies that the left pair of lines in the following figure is statistically not parallel and that we do not have sufficient evidence that the right pair of lines is not parallel. 
-
-```{julia}
-DataFrame(coeftable(m6_ovi))[9:10, :]
-```
-
-```{julia}
-using Chain
-tbl1 = @chain DataFrame(dat2) begin
-  groupby(_, [:Subj, :A, :B])
-  combine(_, nrow => :n, :dv => mean => :dv)
-  groupby(_, [:A, :B])
-  combine(_, 
-          :dv => mean => :dv_M,
-          :dv => std => :dv_SD,
-          :dv => sem => :dv_SE)
-end 
-
-fig = Figure(; size=(300, 300))
-plt = data(tbl1) * mapping(:B, :dv_M; color=:A) * (visual(Lines) + visual(Scatter))
-draw!(fig, plt)
-fig
-```
 
 # Exercises
 

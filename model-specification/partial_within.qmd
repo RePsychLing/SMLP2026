@@ -5,11 +5,12 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives title="Learning objectives"} 
+::: {.objectives title="Learning objectives"}
 After working through this page you will be able to:
 
 - distinguish within-unit from between-unit factors and identify a partially-within design;
 - simulate data for such a design with MixedModelsSim;
+- construct designs of arbitrary crossing and nesting from tidy tables with join operations;
 - specify the random-effects structure appropriate to crossed subjects and items.
 :::
 
@@ -18,6 +19,16 @@ After working through this page you will be able to:
 
 **Datasets used:** simulated data (no external dataset).
 :::
+
+## Within-unit and between-unit factors
+
+An experimental factor is *within* a grouping factor (subjects, items, schools, ...) if each level of the grouping factor is observed at more than one level of the experimental factor, and *between* if each level of the grouping factor is observed at exactly one level. The same factor can be within one grouping factor and between another: in a typical psycholinguistic experiment, word frequency is a property of the words, so it is *between* items, but every subject reads both high- and low-frequency words, so it is *within* subjects.
+
+This distinction matters because it determines the possible random-effects structure. A random slope for a factor by a grouping factor is only meaningful if the factor varies *within* that grouping factor: a subject who only ever sees one level of a factor provides no information about how *their* response changes across levels, so there is no subject-specific slope to estimate. In the word-frequency example, the model can include a by-subject random slope for frequency, but only a random intercept for items.
+
+We call a design *partially within* when at least one experimental factor is within one grouping factor but between another, or more generally when different units are observed under different subsets of the conditions. Almost every design with crossed subjects and items is partially within in this sense; see the discussion of crossed and nested random factors in [the MRK17 model-selection page](./mrk17.qmd) for the related distinction between crossing and nesting of the grouping factors themselves.
+
+Because no real dataset ever has exactly the design you are contemplating, this page works entirely with simulated data. Simulation is also the honest way to answer design questions ("can I even estimate this random effect?") before collecting data — see the [power simulation page](../inference/power_simulation.qmd) for the full workflow.
 
 Begin by loading the packages to be used.
 
@@ -28,8 +39,8 @@ using AlgebraOfGraphics
 using CairoMakie
 using DataFrames
 using MixedModels
-using MixedModelsMakie
 using MixedModelsSim
+using MixedModelsMakie
 using ProgressMeter
 using Random
 using StableRNGs
@@ -39,49 +50,51 @@ const progress = isinteractive()
 
 ```{julia}
 #| include: false
-using SMLP2026: fit_or_restore
+using SMLP2026: fit_or_restore, fit_or_restore!
 ```
 
+We will use the same contrasts throughout: Helmert coding for the three-level frequency factor and effects coding for the two-level priming factor introduced later.
 
 ```{julia}
-#| code-fold: true
+contrasts = Dict(:frequency => HelmertCoding(base="high"),
+                 :prime => EffectsCoding(base="unrelated"))
+```
+
+## Simulating a crossed design
+
+MixedModelsSim provides `simdat_crossed`, which generates a fully crossed subject-by-item design in one call. We simulate 40 subjects crossed with 30 items, with a three-level frequency factor manipulated between items.
+
+Note the naming convention: `simdat_crossed` expresses everything as "between", so a factor that is within subjects but between items is passed as `item_btwn`. (A factor manipulated within both subjects and items would be passed as `both_win`.)
+
+```{julia}
 n_subj = 40
-n_item = 3
-# things are expressed as "between", so "within subjects" is "between items"
+n_item = 30
+# a between-item factor is (here) a within-subject factor
 item_btwn = Dict(:frequency => ["high", "medium", "low"])
-design = simdat_crossed(StableRNG(42), n_subj, n_item;
-                        item_btwn = item_btwn)
-design = DataFrame(design)
+design = DataFrame(simdat_crossed(StableRNG(42), n_subj, n_item;
+                                  item_btwn=item_btwn))
+first(design, 6)
 ```
 
+Every subject sees every item, and the frequency levels cycle across items, so each subject sees 10 items at each frequency level:
+
 ```{julia}
-#| code-fold: true
 unique!(select(design, :item, :frequency))
 ```
 
-```{julia}
-#| eval: false
-#| code-fold: true
-m0 = let contrasts, form
-    contrasts = Dict(:frequency => HelmertCoding(base="high"))
-    form = @formula(dv ~ 1 + frequency +
-                    (1 + frequency | subj))
-    fit(MixedModel, form, design; contrasts, progress)
-end
-```
+The `dv` column is filled with standard normal noise — a placeholder, not something we would ever analyze. To simulate a response with a known random-effects structure, we first construct (without fitting) a model whose formula encodes the design: frequency is within subjects, so it gets a by-subject random slope, but it is between items, so items get only a random intercept.
 
 ```{julia}
-#| include: false
-m0 = let contrasts, form
-    contrasts = Dict(:frequency => HelmertCoding(base="high"))
+m0 = let form
     form = @formula(dv ~ 1 + frequency +
-                    (1 + frequency | subj))
-    fit_or_restore("partial_within_m0.json", MixedModel, form, design; contrasts, progress)
-end
+                    (1 + frequency | subj) + (1 | item))
+    MixedModel(form, design; contrasts)
+end;
 ```
 
+Next we choose the population parameters to simulate from. `create_re` builds the (relative) covariance factor for one grouping factor from the standard deviations of its random effects (in the order they appear in the formula: intercept, then the two frequency contrasts) and optionally a correlation matrix:
+
 ```{julia}
-#| code-fold: true
 corrmat = [ 1    0.1 -0.2
             0.1  1    0.1
            -0.2  0.1  1 ]
@@ -89,94 +102,306 @@ re_subj = create_re(1.2, 1.5, 1.5; corrmat)
 ```
 
 ```{julia}
-#| code-fold: true
-θ = createθ(m0; subj=re_subj)
+re_item = create_re(0.8)
 ```
 
+`createθ` assembles these into the parameter vector θ in the form the model expects:
+
 ```{julia}
-#| code-fold: true
+θ = createθ(m0; subj=re_subj, item=re_item)
+```
+
+Together with fixed effects β and a residual standard deviation σ, we can now overwrite the placeholder response with a simulated one and fit the model to it. Note the use of a seeded `StableRNG` so that the simulated data — and hence the fit — are reproducible.
+
+```{julia}
 σ = 1;
 β = [1.0, -3, -2];
-```
-
-```{julia}
-#| code-fold: true
-fit!(simulate!(m0; θ, β, σ))
-```
-
-
-```{julia}
-#| code-fold: true
-shrinkageplot(m0)
-```
-
-```{julia}
-#| code-fold: true
-caterpillar(m0; orderby=nothing, vline_at_zero=true)
-```
-
-
-```{julia}
-#| code-fold: true
-design[!, :dv] .= response(m0)
-```
-
-```{julia}
-#| code-fold: true
-design_partial = filter(design) do row
-    subj = parse(Int, row.subj[2:end])
-    item = parse(Int, row.item[2:end])
-    # for even-numbered subjects, we keep all conditions
-    # for odd-numbered subjects, we keep only the two "odd" items,
-    # i.e. the first and last conditions
-    return iseven(subj) || isodd(item)
-end
-sort!(unique!(select(design_partial, :subj, :frequency)), :subj)
+simulate!(StableRNG(1), m0; θ, β, σ);
 ```
 
 ```{julia}
 #| eval: false
+fit!(m0; progress)
+```
+
+```{julia}
+#| include: false
+fit_or_restore!(m0, "partial_within_m0.json"; progress)
+```
+
+```{julia}
 #| code-fold: true
-m1 = let contrasts, form
-    contrasts = Dict(:frequency => HelmertCoding(base="high"))
-    form = @formula(dv ~ 1 + frequency +
-                    (1 + frequency | subj))
+println(m0)
+```
+
+The estimates recover the simulation parameters reasonably well. The shrinkage plot shows how the by-subject predictions are pulled from the within-subject estimates (the spread-out cloud) toward the population estimate:
+
+```{julia}
+#| code-fold: true
+shrinkageplot!(Figure(; size=(500, 500)), m0, :subj)
+```
+
+```{julia}
+#| code-fold: true
+caterpillar!(Figure(; size=(600, 650)), m0, :subj; orderby=nothing, vline_at_zero=true)
+```
+
+## Building designs with tidy tables and joins
+
+`simdat_crossed` is convenient, but it only generates fully crossed designs, and its keyword conventions have to be memorized. There is a more general recipe that scales to designs of arbitrary complexity, based on the *tidy data* principle: **give each kind of experimental unit its own table**, with one row per unit and one column per property of that unit. The full design then falls out of combining these small tables with join operations. This is exactly what `simdat_crossed` does internally — we are just doing it in the open.
+
+### One table per kind of unit
+
+Our experiment has two kinds of units. Subjects have an identifier and (to be used shortly) an assignment to a counterbalancing list:
+
+```{julia}
+using SMLP2026: tagpad
+subj_table = DataFrame(subj=tagpad(1:n_subj, "S"),
+                       list=repeat(["A", "B"], n_subj ÷ 2))
+first(subj_table, 4)
+```
+
+Items have an identifier and a frequency class — frequency lives in the item table precisely *because* it is a between-item factor:
+
+```{julia}
+item_table = DataFrame(item=tagpad(1:n_item, "I"),
+                       frequency=repeat(["high", "medium", "low"], n_item ÷ 3))
+first(item_table, 4)
+```
+
+(The helper `tagpad` produces zero-padded labels such as `"S01"` so that string sorting matches numeric order.)
+
+### Full crossing with `crossjoin`
+
+A fully crossed design is the Cartesian product of the unit tables, which is what `crossjoin` computes: every row of the first table paired with every row of the second.
+
+```{julia}
+crossed = crossjoin(select(subj_table, :subj), item_table)
+nrow(crossed)
+```
+
+This is the same design that `simdat_crossed` produced, which we can verify with a join: `antijoin` returns the rows of its first argument that have *no* match in the second, so an empty anti-join means every design cell we built is present in `design`.
+
+```{julia}
+isempty(antijoin(crossed, design; on=[:subj, :item, :frequency]))
+```
+
+### Attaching covariates with `leftjoin`
+
+Because unit-level properties live in unit-level tables, adding a covariate to the design is a one-line join. `leftjoin` keeps all rows of its first argument and copies in the matching columns of the second; each item's word length is automatically repeated for every subject who sees that item.
+
+```{julia}
+item_covariates = DataFrame(item=item_table.item,
+                            wordlength=rand(StableRNG(2026), 3:9, n_item))
+leftjoin!(crossed, item_covariates; on=:item)
+first(crossed, 4)
+```
+
+The same pattern adds subject covariates (join on `:subj`), and it works just as well on real data as on simulated designs — see the [power simulation page](../inference/power_simulation.qmd) for it in action.
+
+### Counterbalancing with a Latin square
+
+Now for a factor that `simdat_crossed` cannot express: a priming manipulation (related vs. unrelated prime) that is within *both* subjects and items, but where each subject sees each item only once — so each subject sees each item in only *one* of the two conditions. The standard solution is a Latin square: items are rotated through the conditions across counterbalancing lists, and each subject is assigned to one list.
+
+The rotation is itself just a small tidy table. In wide form, one row per item and one column per list:
+
+```{julia}
+square = DataFrame(item=item_table.item,
+                   A=repeat(["related", "unrelated"], n_item ÷ 2),
+                   B=repeat(["unrelated", "related"], n_item ÷ 2))
+first(square, 4)
+```
+
+`stack` reshapes it to long ("tidy") form — one row per item-list combination:
+
+```{julia}
+rotation = stack(square, [:A, :B]; variable_name=:list, value_name=:prime)
+first(rotation, 4)
+```
+
+The full design is then: cross subjects with items, and use the (`list`, `item`) pair to look up each trial's condition in the rotation table.
+
+```{julia}
+design_ls = leftjoin(crossjoin(subj_table, item_table), rotation;
+                     on=[:list, :item])
+disallowmissing!(design_ls)
+nrow(design_ls)
+```
+
+One technical note: `leftjoin` cannot know in advance that every row will find a match, so the joined columns allow `missing` values. `disallowmissing!` asserts that no `missing` values are actually present and narrows the column types accordingly, which keeps the modeling code downstream simple.
+
+The counterbalancing worked: each subject sees every combination of frequency and priming, in equal numbers, even though no subject sees any item twice.
+
+```{julia}
+combine(groupby(design_ls, [:list, :frequency, :prime]), nrow => :n)
+```
+
+The general recipe, then, is:
+
+- `crossjoin` **crosses**: units are combined factorially.
+- `leftjoin` on a shared key **nests and annotates**: rows inherit the properties of the unit (or unit combination) they belong to.
+- `antijoin` (or `subset`) **removes cells**: deliberately, for incomplete designs such as Latin squares beyond two conditions, or to mimic anticipated data loss.
+
+Any crossing or nesting structure — students within classes within schools, items within sublists within lists, trials within blocks — can be built by composing these operations on small per-unit tables.
+
+## Fitting the partially-within design
+
+The design now licenses a richer random-effects structure. Priming is within subjects *and* within items, so it can (and should) get random slopes for both. Frequency remains between items:
+
+```{julia}
+design_ls.dv = zeros(nrow(design_ls));
+m1 = let form
+    form = @formula(dv ~ 1 + frequency * prime +
+                    (1 + frequency + prime | subj) +
+                    (1 + prime | item))
+    MixedModel(form, design_ls; contrasts)
+end;
+```
+
+As before, we choose population parameters and simulate a response. The by-subject structure now has four dimensions (intercept, two frequency contrasts, one priming contrast) and the by-item structure two (intercept, priming contrast); for simplicity we simulate with uncorrelated random effects.
+
+```{julia}
+re_subj1 = create_re(1.2, 1.5, 1.5, 1.0)
+re_item1 = create_re(0.8, 0.5)
+θ1 = createθ(m1; subj=re_subj1, item=re_item1)
+β1 = [1.0, -3, -2, 1.5, 0.5, -0.5];
+simulate!(StableRNG(1), m1; θ=θ1, β=β1, σ);
+```
+
+```{julia}
+#| eval: false
+fit!(m1; progress)
+```
+
+```{julia}
+#| include: false
+fit_or_restore!(m1, "partial_within_m1.json"; progress)
+```
+
+```{julia}
+#| code-fold: true
+println(m1)
+```
+
+We keep the simulated response for reuse below:
+
+```{julia}
+design_ls.dv .= response(m1);
+```
+
+The shrinkage plots now come in two flavors, one per grouping factor. Note that the by-item panels involve only the intercept and the priming slope — there *is* no by-item frequency slope to plot, because the design does not support one.
+
+```{julia}
+#| code-fold: true
+shrinkageplot!(Figure(; size=(700, 700)), m1, :subj)
+```
+
+```{julia}
+#| code-fold: true
+shrinkageplot!(Figure(; size=(400, 400)), m1, :item)
+```
+
+```{julia}
+#| code-fold: true
+caterpillar!(Figure(; size=(450, 550)), m1, :item; orderby=nothing, vline_at_zero=true)
+```
+
+## When the design degrades: missing cells
+
+Real datasets rarely arrive as balanced as they were designed. Suppose the medium-frequency items turn out to be unusable for the odd-numbered subjects (an equipment problem, a bad session — the reason does not matter). Deliberately removing design cells is again a join: build a table of the lost trials and `antijoin` it away.
+
+```{julia}
+lost = crossjoin(subj_table[1:2:end, [:subj]],
+                 subset(item_table, :frequency => ByRow(==("medium")))[:, [:item]])
+design_partial = antijoin(design_ls, lost; on=[:subj, :item])
+nrow(design_partial)
+```
+
+For half of the subjects, frequency is now effectively a two-level factor:
+
+```{julia}
+sort!(unique!(select(design_partial, :subj, :frequency)), :subj)
+```
+
+Crucially, the *same* model can still be fit. The mixed model does not require every subject to appear in every cell; subjects simply contribute information only about the contrasts their data speak to, and their predicted effects for the missing cells are informed by the population estimates (partial pooling).
+
+```{julia}
+#| eval: false
+m2 = let form
+    form = @formula(dv ~ 1 + frequency * prime +
+                    (1 + frequency + prime | subj) +
+                    (1 + prime | item))
     fit(MixedModel, form, design_partial; contrasts, progress)
 end
 ```
 
 ```{julia}
 #| include: false
-m1 = let contrasts, form
-    contrasts = Dict(:frequency => HelmertCoding(base="high"))
-    form = @formula(dv ~ 1 + frequency +
-                    (1 + frequency | subj))
-    fit_or_restore("partial_within_m1.json", MixedModel, form, design_partial; contrasts, progress)
+m2 = let form
+    form = @formula(dv ~ 1 + frequency * prime +
+                    (1 + frequency + prime | subj) +
+                    (1 + prime | item))
+    fit_or_restore("partial_within_m2.json", MixedModel, form, design_partial;
+                   contrasts, progress)
 end
 ```
 
 ```{julia}
 #| code-fold: true
-shrinkageplot(m1)
+println(m2)
+```
+
+Compare the by-subject shrinkage with the complete design above: the predictions for the subjects with missing cells are pulled more strongly toward the population values, because less data means the population estimate carries relatively more weight.
+
+```{julia}
+#| code-fold: true
+shrinkageplot!(Figure(; size=(700, 700)), m2, :subj)
 ```
 
 ```{julia}
 #| code-fold: true
-caterpillar(m1; orderby=nothing, vline_at_zero=true)
+caterpillar(m2, :subj; orderby=nothing, vline_at_zero=true)
 ```
+
+This robustness has limits: if a factor becomes *between* subjects for *all* subjects, the by-subject slope is no longer identified at all, and heavily unbalanced designs yield noisier variance-component estimates. Simulating the anticipated imbalance before running the study — exactly as done here — is the way to find out whether your design still supports the model you intend to fit.
+
+## See Also
+
+- The [multiple random-effects terms chapter](https://www.embraceuncertaintybook.com/multiple.html) of *Embrace Uncertainty* — crossed, nested, and partially crossed random-effects structures in depth.
+- The [MRK17 model-specification page](./mrk17.qmd) — between/within factors and crossed vs. nested grouping factors in a real dataset.
+- The [power simulation page](../inference/power_simulation.qmd) — using simulated designs (including join-based covariates) to plan sample sizes.
 
 ## Exercises
 
-1. **Classify the factors.** For the design simulated here, which experimental factors are manipulated within subjects, and which are within items? Why does that distinction determine where each factor can appear in the random-effects structure?
+1. **Classify the factors.** For the Latin-square design simulated here, which experimental factors are within subjects, which are within items, and which are within both? Why does that distinction determine where each factor can appear in the random-effects structure?
 
 ::: {.callout-note collapse="true" title="Solution"}
-A factor can have a by-subject random slope only if it varies *within* subjects (each subject sees more than one level); likewise a by-item random slope requires the factor to vary within items. A factor that is between subjects (each subject sees only one level) cannot have a by-subject random slope — there is no within-subject variation for the slope to capture. In a partially-within design some factors are within one grouping factor but between the other, which is exactly what shapes the maximal random-effects structure.
+Frequency is between items (each item has one frequency class) but within subjects (each subject sees all three classes); priming is within both subjects and items (each subject sees both conditions, and each item appears in both conditions — across different subjects). A factor can have a by-subject random slope only if it varies *within* subjects, and likewise for items: so frequency gets a by-subject slope but no by-item slope, while priming gets both. A factor that is between a grouping factor cannot have a random slope for it — there is no within-unit variation for the slope to capture.
 :::
 
-2. **Change the design size.** Re-run the simulation with more items per subject. How does increasing `n_item` affect your ability to estimate the by-item random effects?
+2. **Change the design size.** Re-run the simulation with fewer items (say `n_item = 6`). How does decreasing `n_item` affect your ability to estimate the by-item random effects?
 
 ::: {.callout-note collapse="true" title="Solution"}
-With very few items the by-item variance components and any item-level correlations are poorly estimated and the fit is prone to singularity; increasing `n_item` gives the model more information per item-level effect and generally stabilizes those estimates. Try `n_item = 3, 10, 30` and compare `issingular` and the estimated item variance.
+With very few items the by-item variance components and any item-level correlations are poorly estimated and the fit is prone to singularity; increasing `n_item` gives the model more information per item-level effect and generally stabilizes those estimates. Try `n_item = 6, 30, 90` and compare `issingular` and the estimated item variances.
+:::
+
+3. **Build a nested design.** Using only small tidy tables and joins, construct the design table for a study with 4 schools, 3 classes within each school, and 5 students within each class, where each student takes the same 2 tests. (Hint: nesting means that a class "belongs to" its school, so the class table should carry the school identifier.)
+
+::: {.callout-note collapse="true" title="Solution"}
+Nesting is expressed by building each lower-level table *from* the table above it, so that every row carries its parent's key; crossing is expressed with `crossjoin`.
+
+```julia
+schools = DataFrame(school=tagpad(1:4, "H"))
+classes = transform(crossjoin(schools, DataFrame(classnum=1:3)),
+                    [:school, :classnum] => ByRow((s, c) -> string(s, "c", c)) => :class)
+students = transform(crossjoin(classes, DataFrame(studnum=1:5)),
+                     [:class, :studnum] => ByRow((c, s) -> string(c, "s", s)) => :student)
+design = crossjoin(select(students, :school, :class, :student),
+                   DataFrame(test=["math", "reading"]))
+nrow(design)  # 4 * 3 * 5 * 2 = 120
+```
+
+Because each class label contains its school (and each student label its class), the identifiers are globally unique and the grouping factors can be used directly in a model formula such as `(1 | school) + (1 | class) + (1 | student)`. See the discussion of nested factors on the [MRK17 page](./mrk17.qmd) for why unique labels matter.
 :::
 
 ---

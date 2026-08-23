@@ -17,7 +17,7 @@ After working through this page you will be able to:
 ::: {.callout-note title="Before you start"}
 **Prerequisites:** [Parametric bootstrap for mixed-effects models](bootstrap.qmd).
 
-**Datasets used:** `kb07` and simulated data (see the [dataset catalog](../getting-started/datasets.qmd)).
+**Datasets used:** simulated data only.
 :::
 
 ```{julia}
@@ -30,67 +30,19 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsSim
 using StatsBase
-using SMLP2026: dataset
 using Random
 
 const progress = isinteractive()
 ```
 
-```{julia}
-#| echo: false
-using SMLP2026: fit_or_restore
-```
+# From bootstrap to power analysis
 
-# The Parametric Bootstrap
+In the [parametric bootstrap](bootstrap.qmd), we used the parameter estimates from a model fitted to *observed* data to simulate new data and quantify the uncertainty of those estimates.
+The same machinery -- simulate, refit, repeat -- also answers a design question: if the true effects had a particular size, how often would we detect them?
+That is a power analysis.
+All we need beyond the bootstrap is a way to construct a model object for a design we have not yet run and a way to specify the "true" parameter values that generate the simulated data.
 
-Let us consider the `kb07` dataset.
-
-```{julia}
-#| eval: false
-kb07 = dataset(:kb07)
-contrasts = Dict(:spkr => EffectsCoding(),
-                 :prec => EffectsCoding(),
-                 :load => EffectsCoding())
-fm1 = fit(MixedModel,
-          @formula(rt_trunc ~ 1 * spkr * prec * load +
-                             (1 | subj) +
-                             (1 | item)),
-          kb07; contrasts, progress)
-```
-
-```{julia}
-#| include: false
-kb07 = dataset(:kb07)
-contrasts = Dict(:spkr => EffectsCoding(),
-                 :prec => EffectsCoding(),
-                 :load => EffectsCoding())
-fm1 = fit_or_restore("power_simulation_fm1.json", MixedModel,
-                     @formula(rt_trunc ~ 1 * spkr * prec * load +
-                                        (1 | subj) +
-                                        (1 | item)),
-                     kb07; contrasts, progress)
-```
-
-We can perform a *parametric bootstrap* on the model to get estimates of our uncertainty.
-In the parametric bootstrap, we use the *parameters* we estimated to simulate new data.
-If we repeat this process many times, we are able to "pick ourselves up by our bootstraps"
-and examine the variability we would expect to see based purely on chance if the ground truth
-exactly matched our estimates.
-In this way, we are able to estimate our uncertainty -- we cannot be more certain than the 'natural'
-variability we would have for a given parameter value.
-
-```{julia}
-pb1 = parametricbootstrap(MersenneTwister(42), 1000, fm1;
-                          optsum_overrides=(;ftol_rel=1e-8))
-```
-
-
-:::{.callout-tip collapse=true, title="`optsum_overrides`"}
-The option `optsum_overrides` allows us to pass additional arguments for controlling the model fitting of each simulation replicate.
-`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's acceptable tradeoff in order to get many more replicates. The MixedModels.jl documentation also includes a little note on the [reduced precision bootstrap](https://juliastats.org/MixedModels.jl/stable/bootstrap/#Reduced-Precision-Bootstrap)
-:::
-
-Now, if we look at the docstring for `parametricbootstrap`, we see that there are keyword-arguments for the various model parameters:
+Looking at the docstring for `parametricbootstrap`, we see that there are keyword-arguments for the various model parameters:
 
 :::{.border id="docstring"}
 ```{julia}
@@ -148,7 +100,7 @@ Finally, we have a dependent variable `dv` initialized to be draws from the stan
 
 :::{.callout-note title="Latin squares, partial crossing, and continuous covariates"}
 `simdat_crossed` is designed to simulate a fully crossed factorial design.
-If you have a partially crossed or Latin squaresdesign, then you could delete the "extra" cells to reduce the fully crossed data here to be partially crossed.
+If you have a partially crossed or Latin squares design, then you could delete the "extra" cells to reduce the fully crossed data here to be partially crossed.
 For continuous covariates, we need to separately construct the covariates and then use a tabular join to create the design.
 We'll examine an example of this later.
 :::
@@ -161,7 +113,7 @@ simmod = fit(MixedModel,
 println(simmod)
 ```
 
-make sure to discuss contrasts here
+<!-- TODO: discuss contrasts for the simulated factors here -->
 
 ```{julia}
 β = [250.0, -25.0, 10, 0.0]
@@ -237,6 +189,8 @@ for subj_n in [20, 40, 60, 80, 100, 120, 140],  item_n in [40, 60, 80, 100, 120,
                         dat)
 
     θ = createθ(simmod; subj=subj_re, item=item_re)
+    # optsum_overrides speeds up the replicate fits;
+    # see the reduced-precision note on the bootstrap page
     simboot = parametricbootstrap(RNG, 100, simmod;
                                   β, σ, θ,
                                   optsum_overrides=(;ftol_rel=1e-8),
@@ -297,12 +251,12 @@ leftjoin!(dat, item_covariates; on=:item)
 simmod = fit(MixedModel,
              @formula(dv ~ 1 + age * frequency * chaos +
                           (1 + frequency | subj) +
-                          (1 + age | item)), dat; contrasts, progress)
+                          (1 + age | item)), dat; progress)
 ```
 
-TODO: continuous covariate
-TODO: bernoulli response
-TODO: savereplicates
+<!-- TODO: continuous covariate -->
+<!-- TODO: bernoulli response -->
+<!-- TODO: savereplicates -->
 
 ```{julia}
 dat[!, :dv] = rand(RNG, Bernoulli(), nrow(dat))

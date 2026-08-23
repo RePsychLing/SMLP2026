@@ -60,7 +60,7 @@ using Random
 using StatsBase
 
 using AlgebraOfGraphics: density
-using SMLP2026: dataset
+using MixedModelsDatasets: dataset
 
 progress = isinteractive()
 ```

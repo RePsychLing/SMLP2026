@@ -40,7 +40,7 @@ parameters (`β`), the standard deviation (`σ`), of the per-observation noise, 
 parameter (`θ`), that defines the variance-covariance matrices of the random effects.
 A technical description of the covariance parameter can be found in the [MixedModels.jl docs](https://juliastats.org/MixedModels.jl/v4.7.1/optimization/).
 Lisa Schwetlick and Daniel Backhaus have provided a more beginner-friendly description of the covariance parameter in the [documentation for MixedModelsSim.jl](https://repsychling.github.io/MixedModelsSim.jl/v0.2.6/simulation_tutorial/).
-For today's purposes -- looking at the uncertainty in the estimates from a fitted model -- we can simply use values from the fitted model, but we will revisit the parametric bootstrap as a convenient way to simulate new data, potentially with different parameter values, for power analysis.
+For today's purposes -- looking at the uncertainty in the estimates from a fitted model -- we can simply use values from the fitted model, but we will revisit the parametric bootstrap in [power simulation](power_simulation.qmd) as a convenient way to simulate new data, potentially with different parameter values, for power analysis.
 
 Attach the packages to be used
 ```{julia}
@@ -52,7 +52,8 @@ using DataFrames
 using MixedModels
 using MixedModelsMakie
 using Random
-using SMLP2026: dataset, fit_or_restore
+using MixedModelsDatasets: dataset
+using SMLP2026: fit_or_restore
 
 using AlgebraOfGraphics: AlgebraOfGraphics as AoG
 const progress = isinteractive()
@@ -154,6 +155,11 @@ const RNG = MersenneTwister(42)
 samp = parametricbootstrap(RNG, 5_000, m1; progress)
 tbl = samp.tbl
 ```
+
+:::{.callout-tip collapse=true, title="`optsum_overrides`: faster replicates at reduced precision"}
+The keyword argument `optsum_overrides` passes additional arguments controlling the model fitting of each replicate, e.g. `parametricbootstrap(RNG, 5_000, m1; optsum_overrides=(; ftol_rel=1e-8))`.
+`ftol_rel=1e-8` lowers the threshold for changes in the objective -- more directly, the optimizer considers the model converged if the change in the deviance is less than $10^{-8}$, which is a very small change, but larger than the default $10^{-12}$. Because the majority of the optimization time is spent in final fine-tuning, changing this threshold can greatly speed up the fitting time at the cost of a small loss of quality in fit. For a stochastic process like the bootstrap, that change in quality just adds to the general noise, but that's an acceptable tradeoff in order to get many more replicates. The MixedModels.jl documentation also includes a little note on the [reduced precision bootstrap](https://juliastats.org/MixedModels.jl/stable/bootstrap/#Reduced-Precision-Bootstrap).
+:::
 
 An empirical density plot of the estimates of the residual standard deviation is obtained as
 ```{julia}
@@ -304,6 +310,8 @@ count(issingular(sampsleep))
 # See Also
 
 - [Confidence Intervals from Profiled Objective](profiling.qmd) — an alternative approach to uncertainty quantification via likelihood profiling rather than simulation.
+- [Using simulation to estimate uncertainty and power](power_simulation.qmd) — the same simulate-refit machinery applied to designs you have not run yet.
+- The [introductory chapter](https://www.embraceuncertaintybook.com/intro.html) of *Embrace Uncertainty* — the theory behind the parametric bootstrap and coverage intervals, on the simplest possible example.
 
 # References
 
