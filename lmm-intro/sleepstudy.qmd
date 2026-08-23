@@ -8,6 +8,7 @@ fig-format: png
 
 ::: {.objectives title="Learning objectives"} 
 After working through this page you will be able to:
+
 - fit a linear mixed model with a correlated random intercept and slope using MixedModels.jl;
 - interpret the fixed effects, variance components, and correlation parameter;
 - compare models with and without a random slope.
@@ -34,7 +35,6 @@ See [lme4 GitHub issue #615](https://github.com/lme4/lme4/issues/615) for more i
 
 First load the MixedModels package and other packages for plotting.
 The CairoMakie package allows the Makie graphics system [@Danisch2021] to generate high quality static images.
-Activate that package with the SVG (Scalable Vector Graphics) backend.
 
 ```{julia}
 #| code-fold: true
@@ -332,7 +332,7 @@ MixedModels.jl also defines appropriate methods for `StatsAPI.confint` so that t
 confint(m1bstp; method=:shortest)
 ```
 
-The parametric bootstrap is treated in full in [Parametric bootstrap for mixed-effects models](../inference/bootstrap.qmd); [confidence intervals from the profiled objective](../inference/profiling.qmd) cover an alternative based on the likelihood surface.
+The parametric bootstrap is treated in full in [Parametric bootstrap for mixed-effects models](../inference/bootstrap.qmd). [Confidence intervals from the profiled objective](../inference/profiling.qmd) cover an alternative based on the likelihood surface.
 :::
 
 The intervals look reasonable except that the upper end point of the interval for ρ1, the correlation coefficient, is 1.0 .

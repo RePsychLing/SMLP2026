@@ -11,7 +11,7 @@ julia:
 ::: {.objectives title="Learning objectives"} 
 After working through this page you will be able to:
 
-- read a shrinkage plot and explain what its two sets of random-effects coefficients represent;
+- read a shrinkage plot and explain what its two sets of points represent;
 - connect the amount of shrinkage to the strength of a variance component;
 - use shrinkage plots to judge whether a random-effects term is contributing or "inert".
 :::
@@ -30,6 +30,7 @@ After working through this page you will be able to:
 
 ```{julia}
 #| code-fold: true
+#| output: false
 using CairoMakie
 using DataFrames
 using LinearAlgebra

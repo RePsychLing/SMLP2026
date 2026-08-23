@@ -189,7 +189,7 @@ With little data the model often cannot estimate the intercept–slope correlati
 
 ```{julia}
 #| eval: false
-df = DataFrame(MixedModelsDatasets.dataset(:sleepstudy))
+df = DataFrame(dataset(:sleepstudy))
 sub = filter(:subj => in(first(unique(df.subj), 3)), df)
 m = fit(MixedModel, @formula(reaction ~ 1 + days + (1 + days | subj)), sub)
 issingular(m)
