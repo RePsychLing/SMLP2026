@@ -20,7 +20,7 @@ All example datasets are loaded through the `dataset` function from
 ```{julia}
 #| output: false
 using DataFrames
-using MixedModelsDatasets: dataset
+using MixedModelsDatasets
 ```
 
 ```{julia}
@@ -31,14 +31,12 @@ first(sleepstudy, 5)
 To list everything available:
 
 ```{julia}
-using MixedModelsDatasets
-sort(MixedModelsDatasets.datasets())
+sort(datasets())
 ```
 
 ::: {.callout-note}
-A few datasets in these materials are also distributed as files under `data/` (e.g. the raw
-Emotikon data as `emotikon.rds`). Those are used in the data-wrangling example
-[Saving data with Arrow](../reference/arrow.qmd).
+A few datasets in these materials are also distributed as files under `data/` (e.g. the raw Emotikon data as `emotikon.rds`). 
+Those are used in the data-wrangling example [Saving data with Arrow](../reference/arrow.qmd).
 Outside of that tutorial, prefer
 `dataset(...)`.
 :::
@@ -51,7 +49,7 @@ We summarize their role in this course and link out for the details.
 
 ## `dyestuff`
 
-Yield of dyestuff (Naphthalene Black 12B) from five preparations of each of six batches of an
+Yield of dyestuff from five preparations of each of six batches of an
 intermediate product. The canonical minimal example of a linear mixed model: an
 intercept-only model with a single grouping factor (`batch`), used to introduce variance
 components in their simplest form. See the

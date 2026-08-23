@@ -8,7 +8,7 @@ using Dates
 # using Downloads        # only needed by dataset/movielens machinery
 # using Markdown         # only needed by movielens machinery
 using MixedModels
-using MixedModelsDatasets: MixedModelsDatasets
+using MixedModelsDatasets
 using PooledArrays
 using Random
 # using Scratch          # only needed by dataset machinery
@@ -57,7 +57,7 @@ the original publication (Fühner et al., 2021): `age` centered at 8.5 years
 its z-score within each `Test` (`zScore`), computed on the full data.
 """
 function fggk21_preprocessed()
-    df = DataFrame(MixedModelsDatasets.dataset(:fggk21))
+    df = DataFrame(dataset(:fggk21))
     transform!(df,
         :age => (x -> x .- 8.5) => :a1,
         :Sex => categorical => :Sex,
