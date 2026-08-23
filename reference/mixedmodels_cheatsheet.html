@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
+<meta name="author" content="Reinhold Kliegl">
 <meta name="dcterms.date" content="2026-08-23">
 
-<title>Useful packages – SMLP2026: Advanced Frequentist Track</title>
+<title>MixedModels.jl cheatsheet – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -66,15 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../reference/mixedmodels_cheatsheet.html" rel="next">
-<link href="../examples/visual-attention/kkl15.html" rel="prev">
+<link href="../reference/arrow.html" rel="next">
+<link href="../reference/useful_packages.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -119,6 +120,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -320,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Useful packages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/mixedmodels_cheatsheet.html">MixedModels.jl cheatsheet</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -593,13 +597,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link active">
+  <a href="../reference/useful_packages.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Useful packages</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">MixedModels.jl cheatsheet</span></a>
   </div>
 </li>
@@ -627,35 +631,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link active" data-scroll-target="#data-wrangling"><span class="header-section-number">1</span> Data wrangling</a>
-  <ul class="collapse">
-  <li><a href="#reading-data" id="toc-reading-data" class="nav-link" data-scroll-target="#reading-data"><span class="header-section-number">1.1</span> Reading data</a></li>
-  <li><a href="#dataframes" id="toc-dataframes" class="nav-link" data-scroll-target="#dataframes"><span class="header-section-number">1.2</span> DataFrames</a></li>
-  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">1.3</span> Regression</a></li>
-  <li><a href="#formula-macros-and-domain-specific-languages" id="toc-formula-macros-and-domain-specific-languages" class="nav-link" data-scroll-target="#formula-macros-and-domain-specific-languages"><span class="header-section-number">1.4</span> <code>@formula</code>, macros and domain-specific languages</a></li>
-  <li><a href="#extensions-to-the-formula-syntax" id="toc-extensions-to-the-formula-syntax" class="nav-link" data-scroll-target="#extensions-to-the-formula-syntax"><span class="header-section-number">1.5</span> Extensions to the formula syntax</a></li>
-  <li><a href="#standardizing-predictors" id="toc-standardizing-predictors" class="nav-link" data-scroll-target="#standardizing-predictors"><span class="header-section-number">1.6</span> Standardizing Predictors</a></li>
-  <li><a href="#effects" id="toc-effects" class="nav-link" data-scroll-target="#effects"><span class="header-section-number">1.7</span> Effects</a></li>
-  <li><a href="#estimated-marginal-least-square-means" id="toc-estimated-marginal-least-square-means" class="nav-link" data-scroll-target="#estimated-marginal-least-square-means"><span class="header-section-number">1.8</span> Estimated Marginal / Least Square Means</a></li>
-  </ul></li>
-  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">2</span> Hypothesis Testing</a></li>
-  <li><a href="#plotting-ecosystem" id="toc-plotting-ecosystem" class="nav-link" data-scroll-target="#plotting-ecosystem"><span class="header-section-number">3</span> Plotting ecosystem</a>
-  <ul class="collapse">
-  <li><a href="#makie" id="toc-makie" class="nav-link" data-scroll-target="#makie"><span class="header-section-number">3.1</span> Makie</a></li>
-  <li><a href="#plots.jl" id="toc-plots.jl" class="nav-link" data-scroll-target="#plots.jl"><span class="header-section-number">3.2</span> Plots.jl</a></li>
-  <li><a href="#others" id="toc-others" class="nav-link" data-scroll-target="#others"><span class="header-section-number">3.3</span> Others</a></li>
-  </ul></li>
-  <li><a href="#connecting-to-other-languages" id="toc-connecting-to-other-languages" class="nav-link" data-scroll-target="#connecting-to-other-languages"><span class="header-section-number">4</span> Connecting to Other Languages</a></li>
+  <li><a href="#overall-summary-statistics" id="toc-overall-summary-statistics" class="nav-link active" data-scroll-target="#overall-summary-statistics"><span class="header-section-number">1</span> Overall summary statistics</a></li>
+  <li><a href="#fixed-effect-statistics" id="toc-fixed-effect-statistics" class="nav-link" data-scroll-target="#fixed-effect-statistics"><span class="header-section-number">2</span> Fixed-effect statistics</a></li>
+  <li><a href="#covariance-parameter-estimates" id="toc-covariance-parameter-estimates" class="nav-link" data-scroll-target="#covariance-parameter-estimates"><span class="header-section-number">3</span> Covariance parameter estimates</a></li>
+  <li><a href="#model-predictions" id="toc-model-predictions" class="nav-link" data-scroll-target="#model-predictions"><span class="header-section-number">4</span> Model “predictions”</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also"><span class="header-section-number">5</span> See Also</a></li>
   </ul>
-<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/useful_packages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/mixedmodels_cheatsheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Useful packages</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference/useful_packages.html">Reference &amp; Appendix</a></li><li class="breadcrumb-item"><a href="../reference/mixedmodels_cheatsheet.html">MixedModels.jl cheatsheet</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Useful packages</h1>
+<h1 class="title">MixedModels.jl cheatsheet</h1>
 </div>
 
 
@@ -663,9 +653,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
              <p>Phillip Alday </p>
+             <p>Reinhold Kliegl </p>
           </div>
   </div>
     
@@ -684,97 +675,420 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Unlike R, Julia does not immediately expose a huge number of functions, but instead requires loading packages (whether from the standard library or from the broader package ecosystem) for a lot of relevant functionality for statistical analysis. There are technical reasons for this, such as the ease of using the Julia package system. One further motivation is that Julia is aimed at a broader “technical computing” audience (like MATLAB or perhaps Python) and less at a “statistical analysis” audience.</p>
-<p>This has two important implications:</p>
-<ol type="1">
-<li>Even relatively simple programs will often load several packages.</li>
-<li>Packages are often focused on adding a relatively narrow set of functionality, which means that “basic” functionality (e.g.&nbsp;reading a CSV file and manipulating it as a DataFrame) is often split across multiple packages. In other words, <strong>see the the first point!</strong></li>
-</ol>
-<p>This notebook is not intended to be an exhaustive list of packages, but rather to highlight a few packages that I suspect will be particularly useful. Before getting onto the packages, I have one final hint: take advantage of how easy and first-class package management in Julia is. Having good package management makes reproducible analyses much easier and avoids breaking old analyses when you start a new one. The package-manager REPL mode (activated by typing <code>]</code> at the <code>julia&gt;</code> prompt) is very useful.</p>
-<section id="data-wrangling" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Data wrangling</h1>
-<section id="reading-data" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="reading-data"><span class="header-section-number">1.1</span> Reading data</h2>
+<div class="objectives" title="Learning objectives">
+<p>This page is a lookup reference, not a lesson. Use it to:</p>
 <ul>
-<li><p><a href="https://arrow.juliadata.org/dev/manual/">Arrow.jl</a> a high performance format for data storage, accessible in R via the <a href="https://arrow.apache.org/docs/r/"><code>arrow</code> package</a> and in Python via <code>pyarrow</code>. (Confusingly, the function for reading and writing Arrow format files in R is called <code>read_feather</code> and <code>write_feather</code>, but the modern Arrow format is distinct from the older Feather format provided by the <code>feather</code> package.) This is the format that we store the example and test datasets in for MixedModels.jl.</p></li>
-<li><p><a href="https://csv.juliadata.org/stable/index.html">CSV.jl</a> useful for reading comma-separated values, tab-separated values and basically everything handled by the <code>read.csv</code> and <code>read.table</code> family of functions in R.</p></li>
+<li>find the extractor function for a particular piece of information about a fitted model;</li>
+<li>understand what each of the commonly used extractors returns.</li>
 </ul>
-<p>Note that by default both Arrow.jl and CSV.jl do not return a DataFrame, but rather “column tables” – named tuples of column vectors.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Before you start">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Before you start
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Prerequisites:</strong> <a href="../lmm-intro/sleepstudy.html">Analysis of the sleepstudy data</a>.</p>
+<p><strong>Datasets used:</strong> <code>sleepstudy</code> (see the <a href="../getting-started/datasets.html">dataset catalog</a>).</p>
+</div>
+</div>
+<p>Here we introduce most of the commands available in the <em>MixedModels.jl</em> package for the immediate inspection and analysis of results returned in a fitted <em>linear</em> mixed-effect model. All the examples use the random-slopes model for the <a href="../lmm-intro/sleepstudy.html">sleepstudy data</a>, which is small enough that everything here runs in seconds.</p>
+<div id="2" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsDatasets</span>: dataset</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: fit_or_restore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="4" class="cell" data-execution_count="0">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> <span class="fu">fit</span>(MixedModel,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>         <span class="pp">@formula</span>(reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days <span class="op">|</span> subj)),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">dataset</span>(<span class="op">:</span>sleepstudy))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="overall-summary-statistics" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overall-summary-statistics"><span class="header-section-number">1</span> Overall summary statistics</h2>
+<div id="8" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m1.optsum            <span class="co"># MixedModels.OptSummary: all info about the optimization</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Initialization</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Initial parameter vector</td>
+<td style="text-align: left;">[1.0, 0.0, 1.0]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Initial objective value</td>
+<td style="text-align: left;">1784.6423001241371</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Optimizer settings</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Optimizer</td>
+<td style="text-align: left;"><code>LN_NEWUOA</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Backend</td>
+<td style="text-align: left;"><code>nlopt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ftol_rel</td>
+<td style="text-align: left;">1.0e-12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ftol_abs</td>
+<td style="text-align: left;">1.0e-8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">xtol_rel</td>
+<td style="text-align: left;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">xtol_abs</td>
+<td style="text-align: left;">[1.0e-10, 1.0e-10, 1.0e-10]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">initial_step</td>
+<td style="text-align: left;">[1.0, 1.0, 1.0]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">maxfeval</td>
+<td style="text-align: left;">-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">maxtime</td>
+<td style="text-align: left;">-1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">xtol_zero_abs</td>
+<td style="text-align: left;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ftol_zero_abs</td>
+<td style="text-align: left;">1.0e-5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pirls_maxiter</td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pirls_ftol_rel</td>
+<td style="text-align: left;">1.4901161193847656e-8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pirls_ftol_abs</td>
+<td style="text-align: left;">1.0e-5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pirls_maxhalfstep</td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Result</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Function evaluations</td>
+<td style="text-align: left;">82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Final parameter vector</td>
+<td style="text-align: left;">[0.9292, 0.0182, 0.2226]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Final objective value</td>
+<td style="text-align: left;">1751.9393</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Return code</td>
+<td style="text-align: left;"><code>FTOL_REACHED</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="10" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loglikelihood</span>(m1) <span class="co"># StatsBase.loglikelihood: log-likelihood of the model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>-875.9696734578358</code></pre>
+</div>
+</div>
+<div id="12" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(m1)      <span class="co"># StatsBase.deviance: negative twice the log-likelihood relative to saturated model</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1751.9393469156716</code></pre>
+</div>
+</div>
+<div id="14" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">objective</span>(m1)    <span class="co"># MixedModels.objective: saturated model not clear: negative twice the log-likelihood</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1751.9393469156716</code></pre>
+</div>
+</div>
+<div id="16" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nobs</span>(m1) <span class="co"># n of observations; they are not independent</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>180</code></pre>
+</div>
+</div>
+<div id="18" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>n, p, q, k <span class="op">=</span> <span class="fu">size</span>(m1)  <span class="co"># nobs, fixed-effects params, VCs+CPs, grouping factors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>(180, 2, 36, 1)</code></pre>
+</div>
+</div>
+<div id="20" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dof</span>(m1)  <span class="co"># n of degrees of freedom is number of model parameters</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>6</code></pre>
+</div>
+</div>
+<div id="22" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>geom_df <span class="op">=</span> <span class="fu">sum</span>(<span class="fu">leverage</span>(m1)) <span class="co"># trace of hat / rank of model matrix / geom dof</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>28.611612940625573</code></pre>
+</div>
+</div>
+<div id="24" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>resid_df <span class="op">=</span> <span class="fu">nobs</span>(m1) <span class="op">-</span> geom_df  <span class="co"># effective residual degrees of freedom</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>151.38838705937442</code></pre>
+</div>
+</div>
+<div id="26" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aic</span>(m1)  <span class="co"># objective(m1) + 2*dof(m1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1763.9393469156716</code></pre>
+</div>
+</div>
+<div id="28" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bic</span>(m1)  <span class="co"># objective(m1) + dof(m1)*log(nobs(m1))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1783.097088021013</code></pre>
+</div>
+</div>
 </section>
-<section id="dataframes" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="dataframes"><span class="header-section-number">1.2</span> DataFrames</h2>
-<p>Unlike in R, DataFrames are not part of the base language, nor the standard library.</p>
-<p><a href="https://dataframes.juliadata.org/stable/">DataFrames.jl</a> provides the basic infrastructure around DataFrames, as well as its own <a href="https://bkamins.github.io/julialang/2020/12/24/minilanguage.html">mini language</a> for doing the split-apply-combine approach that underlies R’s <code>dplyr</code> and much of the tidyverse. The DataFrames.jl documentation is the place for looking at how to e.g.&nbsp;read in a <a href="https://dataframes.juliadata.org/stable/man/importing_and_exporting/">CSV or Arrow file as a DataFrame</a>. Note that DataFrames.jl by default depends on <a href="https://categoricalarrays.juliadata.org/stable/">CategoricalArrays.jl</a> to handle the equivalent of <code>factor</code> in the R world, but there is an alternative package for <code>factor</code>-like array type in Julia, <a href="https://github.com/JuliaData/PooledArrays.jl/">PooledArrays.jl</a>. PooledArrays are simpler, but more limited than CategoricalArrays and we (Phillip and Doug) sometimes use them in our examples and simulations. The tables produced by reading an Arrow file have their own representation of factor-like data as <code>DictEncoded</code> arrays.</p>
-<p>DataFrame.jl’s mini language can be a bit daunting, if you’re used to manipulations in the style of base R or the tidyverse. For that, there are several options; recently, we’ve had particularly nice experiences with <a href="https://github.com/jkrumbiegel/DataFrameMacros.jl">DataFrameMacros.jl</a> and <a href="https://github.com/jkrumbiegel/Chain.jl">Chain.jl</a> for a convenient syntax to connect or “pipe” together successive operations. It’s your choice whether and which of these add-ons you want to use! Phillip tends to write his code using raw DataFrames.jl, but Doug really enjoys DataFrameMacros.jl.</p>
-<p>The recently added <a href="https://github.com/TidierOrg/">Tidier</a> collection of Julia packages is popular with those coming from the tidyverse.</p>
+<section id="fixed-effect-statistics" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="fixed-effect-statistics"><span class="header-section-number">2</span> Fixed-effect statistics</h2>
+<div id="30" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftable</span>(m1) <span class="co"># StatsBase.coeftable: fixed-effects statistics; default level=0.95</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Coef.</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">z</th>
+<th style="text-align: left;">Pr(&gt;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">251.405</td>
+<td style="text-align: right;">6.63228</td>
+<td style="text-align: right;">37.91</td>
+<td style="text-align: left;">&lt;1e-99</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">days</td>
+<td style="text-align: right;">10.4673</td>
+<td style="text-align: right;">1.50224</td>
+<td style="text-align: right;">6.97</td>
+<td style="text-align: left;">&lt;1e-11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="32" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m1)              <span class="co"># StatsBase.coef; parts of the table</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 251.4051060532072
+  10.46728550560944</code></pre>
+</div>
+</div>
+<div id="34" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(m1)    <span class="co"># MixedModels.fixef: not the same as coef() for rank-deficient case</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 251.4051060532072
+  10.46728550560944</code></pre>
+</div>
+</div>
+<div id="36" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>m1.β                  <span class="co"># alternative extractor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 251.4051060532072
+  10.46728550560944</code></pre>
+</div>
+</div>
+<div id="38" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixefnames</span>(m1)        <span class="co"># works also for coefnames(m1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{String}:
+ "(Intercept)"
+ "days"</code></pre>
+</div>
+</div>
+<div id="40" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vcov</span>(m1)   <span class="co"># StatsBase.vcov: var-cov matrix of fixed-effects coefficients</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2×2 Matrix{Float64}:
+ 43.9871  -1.3705
+ -1.3705   2.25672</code></pre>
+</div>
+</div>
+<div id="42" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vcov</span>(m1; corr<span class="op">=</span><span class="cn">true</span>) <span class="co"># StatsBase.vcov: correlation matrix of fixed-effects coefficients</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2×2 Matrix{Float64}:
+  1.0       -0.137555
+ -0.137555   1.0</code></pre>
+</div>
+</div>
+<div id="44" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stderror</span>(m1)       <span class="co"># StatsBase.stderror: SE for fixed-effects coefficients</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 6.632279012514935
+ 1.5022367701697787</code></pre>
+</div>
+</div>
+<div id="46" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">propertynames</span>(m1)  <span class="co"># names of available extractors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>(:formula, :reterms, :Xymat, :feterm, :sqrtwts, :parmap, :dims, :A, :L, :optsum, :θ, :theta, :β, :beta, :βs, :betas, :λ, :lambda, :stderror, :σ, :sigma, :σs, :sigmas, :σρs, :sigmarhos, :b, :u, :X, :y, :corr, :vcov, :PCA, :rePCA, :objective, :pvalues)</code></pre>
+</div>
+</div>
 </section>
-<section id="regression" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="regression"><span class="header-section-number">1.3</span> Regression</h2>
-<p>Unlike in R, neither formula processing nor basic regression are part of the base language or the standard library.</p>
-<p>The formula syntax and basic contrast-coding schemes in Julia is provided by <a href="https://juliastats.org/StatsModels.jl/v0.6/">StatsModels.jl</a>. By default, MixedModels.jl re-exports the <code>@formula</code> macro and most commonly used contrast schemes from StatsModels.jl, so you often don’t have to worry about loading StatsModels.jl directly. The same is true for <a href="https://juliastats.org/GLM.jl/dev/manual/">GLM.jl</a>, which provides basic linear and generalized linear models, such as ordinary least squares (OLS) regression and logistic regression, i.e.&nbsp;the classical, non mixed regression models.</p>
-<p>The basic functionality looks quite similar to R, e.g.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x), data)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">glm</span>(<span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x), data, <span class="fu">Binomial</span>(), <span class="fu">LogitLink</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>but the more general modeling API (also used by MixedModels.jl) is also supported:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">fit</span>(LinearModel, <span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x), mydata)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>julia <span class="op">&gt;</span> <span class="fu">fit</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  GeneralizedLinearModel,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@formula</span>(y <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> x),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  data,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Binomial</span>(),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">LogitLink</span>(),</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(You can also specify your model matrices directly and skip the formula interface, but we don’t recommend this as it’s easy to mess up in really subtle but very problematic ways.)</p>
+<section id="covariance-parameter-estimates" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="covariance-parameter-estimates"><span class="header-section-number">3</span> Covariance parameter estimates</h2>
+<p>These commands inform us about the model parameters associated with the random-effects structure (RES).</p>
+<div id="48" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m1) <span class="co"># Test if model is singular for parameter vector m1.theta (default)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>false</code></pre>
+</div>
+</div>
+<div id="50" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(m1) <span class="co"># MixedModels.VarCorr: estimates of random-effect structure (RES)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Column</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Variance</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std.Dev</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Corr.</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">subj</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">565.51589</td>
+<td style="text-align: right;">23.78058</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">days</td>
+<td style="text-align: right;">32.68220</td>
+<td style="text-align: right;">5.71683</td>
+<td style="text-align: right;">+0.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">654.94103</td>
+<td style="text-align: right;">25.59182</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="52" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>m1.σs      <span class="co"># VCs; m1.sigmas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>(subj = (var"(Intercept)" = 23.7805780726916, days = 5.716834485317427),)</code></pre>
+</div>
+</div>
+<div id="54" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>m1.θ       <span class="co"># Parameter vector for RES (w/o residual); m1.theta</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>3-element Vector{Float64}:
+ 0.9292259065867788
+ 0.018165149307614335
+ 0.2226454658393477</code></pre>
+</div>
+</div>
+<div id="56" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BlockDescription</span>(m1) <span class="co">#  Description of blocks of A and L in a LinearMixedModel</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th">rows</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">subj</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">fixed</th>
+</tr>
+<tr class="even">
+<td style="text-align: left;">36</td>
+<td style="text-align: left;">BlkDiag</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Dense</td>
+<td style="text-align: left;">Dense</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
-<section id="formula-macros-and-domain-specific-languages" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="formula-macros-and-domain-specific-languages"><span class="header-section-number">1.4</span> <code>@formula</code>, macros and domain-specific languages</h2>
-<p>As a sidebar: why is <code>@formula</code> a macro and not a normal function? Well, that’s because formulas are essentially their own domain-specific language (a variant of <a href="https://www.jstor.org/stable/2346786">Wilkinson-Rogers notation</a>) and macros are used for manipulating the language itself – or in this case, handling an entirely new, embedded language! This is also why macros are used by packages like <a href="https://turing.ml/">Turing.jl</a> and <a href="https://cscherrer.github.io/Soss.jl/stable/">Soss.jl</a> that define a language for Bayesian probabilistic programming like <a href="https://docs.pymc.io/">PyMC3</a> or <a href="https://mc-stan.org/">Stan</a>.</p>
+<section id="model-predictions" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="model-predictions"><span class="header-section-number">4</span> Model “predictions”</h2>
+<p>These commands extract the conditional modes/means and (co-)variances of the random effects, that is the model’s “predictions” for the units (levels) of the grouping (random) factors.</p>
+<div id="58" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">condVar</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1-element Vector{Array{Float64, 3}}:
+ [140.9671928188997 -20.604478452614167; -20.604478452614167 5.157784594104255;;; 140.9671928188997 -20.604478452614167; -20.604478452614167 5.157784594104255;;; 140.9671928188997 -20.604478452614167; -20.604478452614167 5.157784594104255;;; … ;;; 140.9671928188997 -20.604478452614167; -20.604478452614167 5.157784594104255;;; 140.9671928188997 -20.604478452614167; -20.604478452614167 5.157784594104255;;; 140.9671928188997 -20.604478452614167; -20.604478452614167 5.157784594104255]</code></pre>
+</div>
+</div>
+<p>The conditional covariances are hard to look at directly; they are usually visualized instead:</p>
+<ul>
+<li><strong>Caterpillar plots</strong> (<code>caterpillar</code>, <code>qqcaterpillar</code> from MixedModelsMakie) display prediction intervals of the random effects per level; they are introduced in the <a href="../lmm-intro/sleepstudy.html">sleepstudy analysis</a>.</li>
+<li><strong>Shrinkage plots</strong> (<code>shrinkageplot</code> from MixedModelsMakie) visualize how the conditional modes are “shrunk” toward the grand mean relative to per-level estimates; they are the topic of <a href="../visualization/shrinkageplot.html">Shrinkage of random effects</a>.</li>
+</ul>
 </section>
-<section id="extensions-to-the-formula-syntax" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="extensions-to-the-formula-syntax"><span class="header-section-number">1.5</span> Extensions to the formula syntax</h2>
-<p>There are several ongoing efforts to extend the formula syntax to include some of the “extras” available in R, e.g.&nbsp;<a href="https://github.com/kleinschmidt/RegressionFormulae.jl">RegressionFormulae.jl</a> to use the caret (<code>^</code>) notation to limit interactions to a certain order (<code>(a+b+c)^2</code> generates <code>a + b + c + a&amp;b + a&amp;c + b&amp;c</code>, but not <code>a&amp;b&amp;c</code>). Note also that Julia uses <code>&amp;</code> to express interactions, not <code>:</code> like in R.</p>
-</section>
-<section id="standardizing-predictors" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="standardizing-predictors"><span class="header-section-number">1.6</span> Standardizing Predictors</h2>
-<p>Although function calls such as <code>log</code> can be used within Julia formulae, they must act on a rowwise basis, i.e.&nbsp;on observations. Transformations such as z-scoring or centering (often done with <code>scale</code> in R) require knowledge of the entire column. <a href="https://beacon-biosignals.github.io/StandardizedPredictors.jl/stable/">StandardizedPredictors.jl</a> provides functions for centering, scaling, and z-scoring within the formula. These are treated as pseudo-contrasts and computed on demand, meaning that <code>predict</code> and <code>effects</code> (see next) computations will handle these transformations on new data (e.g.&nbsp;centering new data <em>around the mean computed during fitting the original data</em>) correctly and automatically.</p>
-</section>
-<section id="effects" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="effects"><span class="header-section-number">1.7</span> Effects</h2>
-<p>John Fox’s <code>effects</code> package in R (and the related <code>ggeffects</code> package for plotting these using <code>ggplot2</code>) provides a nice way to visualize a model’s overall view of the data. This functionality is provided by <a href="https://beacon-biosignals.github.io/Effects.jl/stable/"><code>Effects.jl</code></a> and works out-of-the-box with most regression model packages in Julia (including MixedModels.jl). Support for formulae with embedded functions (such as <code>log</code>) is not yet complete, but we’re working on it!</p>
-</section>
-<section id="estimated-marginal-least-square-means" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="estimated-marginal-least-square-means"><span class="header-section-number">1.8</span> Estimated Marginal / Least Square Means</h2>
-<p><a href="https://beacon-biosignals.github.io/Effects.jl/stable/"><code>Effects.jl</code></a> provides a subset of the functionality (basic estimated-marginal means and exhaustive pairwise comparisons) of the R package <code>emmeans</code> package. However, it is often better to use sensible, hypothesis-driven contrast coding than to compute all pairwise comparisons after the fact. 😃</p>
-</section>
-</section>
-<section id="hypothesis-testing" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Hypothesis Testing</h1>
-<p>Classical statistical tests such as the t-test can be found in the package <a href="https://github.com/JuliaStats/HypothesisTests.jl/">HypothesisTests.jl</a>.</p>
-</section>
-<section id="plotting-ecosystem" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Plotting ecosystem</h1>
-<p>Throughout this course, we have used the Makie ecosystem for plotting, but there are several alternatives in Julia.</p>
-<section id="makie" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="makie"><span class="header-section-number">3.1</span> Makie</h2>
-<p>The <a href="https://makie.org/">Makie ecosystem</a> is a relatively new take on graphics that aims to be both powerful and easy to use. Makie.jl itself only provides abstract definitions for many components (and is used in e.g.&nbsp;MixedModelsMakie.jl to define plot types for MixedModels.jl). The actual plotting and rendering is handled by a backend package such as CairoMakie.jl (good for Quarto notebooks or rending static 2D images) and GLMakie.jl (good for dynamic, interactive visuals and 3D images). <a href="https://aog.makie.org/stable/">AlgebraOfGraphics.jl</a> builds a grammar of graphics upon the Makie framework. It’s a great way to get good plots very quickly, but extensive customization is still best achieved by using Makie directly. PumasAI has a collection of <a href="https://tutorials.pumas.ai/html/PlottingInJulia/">nice tutorials for AlgebraOfGraphics</a>.</p>
-</section>
-<section id="plots.jl" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="plots.jl"><span class="header-section-number">3.2</span> Plots.jl</h2>
-<p><a href="https://docs.juliaplots.org/latest/">Plots.jl</a> is the original plotting package in Julia, but we often find it difficult to work with compared to some of the other alternatives. <a href="https://github.com/JuliaPlots/StatsPlots.jl">StatsPlots.jl</a> builds on this, adding common statistical plots, while <a href="https://github.com/Evizero/UnicodePlots.jl">UnicodePlots.jl</a> renders plots as Unicode characters directly in the REPL.</p>
-<p><a href="https://kristofferc.github.io/PGFPlotsX.jl/stable/">PGFPlotsX.jl</a> is a newer package that writes directly to PGF (the format used by LaTeX’s tikz framework) and can stand alone or be used as a rendering backend for the Plots.jl ecosystem.</p>
-</section>
-<section id="others" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="others"><span class="header-section-number">3.3</span> Others</h2>
-<p>There are many <a href="https://juliapackages.com/c/graphics">other graphics packages available in Julia</a>, often wrapping well-established frameworks such as <a href="https://www.queryverse.org/VegaLite.jl/stable/">VegaLite</a>.</p>
-</section>
-</section>
-<section id="connecting-to-other-languages" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Connecting to Other Languages</h1>
-<p>Using Julia doesn’t mean you have to leave all the packages you knew in other languages behind. In Julia, it’s often possible to even easily and quickly invoke code from other languages <em>from within Julia</em>.</p>
-<p><a href="https://juliainterop.github.io/RCall.jl/stable/gettingstarted/">RCall.jl</a> provides a very convenient interface for interacting with R. <a href="https://github.com/palday/JellyMe4.jl/">JellyMe4.jl</a> adds support for moving MixedModels.jl and <code>lme4</code> models back and forth between the languages (which means that you can use <code>emmeans</code>, <code>sjtools</code>, <code>DHARMa</code>, <code>car</code>, etc. to examine MixedModels.jl models!). <a href="https://github.com/JuliaData/RData.jl">RData.jl</a> provides support for reading <code>.rds</code> and <code>.rda</code> files from Julia, while <a href="https://github.com/JuliaStats/RDatasets.jl">RDatasets.jl</a> provides convenient access to many of the standard datasets provided by R and various R packages.</p>
-<p><a href="https://github.com/JuliaPy/PyCall.jl/">PythonCall.jl</a> provides a very convenient way for interacting with Python code and packages. <a href="https://github.com/JuliaPy/PythonPlot.jl">PyPlot.jl</a> builds upon this foundation to provide support for Python’s <code>matplotlib</code>. Similarly, <a href="https://github.com/beacon-biosignals/PyMNE.jl">PyMNE.jl</a> and <a href="https://github.com/beacon-biosignals/pyfooof.jl">PyFOOOF.jl</a> provide some additional functionality to make interacting with MNE-Python and FOOOF from within Julia even easier than with vanilla PyCall. <a href="https://github.com/JuliaPy/PyCall.jl">PyCall.jl</a> was the original interoperability package, but has been largely succeeded by PythonCall.jl</p>
-<p>For MATLAB users, there is also <a href="https://github.com/JuliaInterop/MATLAB.jl">MATLAB.jl</a></p>
-<p>Support for calling C and Fortran is <a href="https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/">part of the Julia standard library</a>.</p>
+<section id="see-also" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="see-also"><span class="header-section-number">5</span> See Also</h2>
+<ul>
+<li>The <a href="https://juliastats.org/MixedModels.jl/stable/api/">MixedModels.jl API documentation</a> — the complete and authoritative list of exported functions.</li>
+<li>The <a href="https://www.embraceuncertaintybook.com/linalg.html">linear algebra appendix</a> of <em>Embrace Uncertainty</em> — the mathematical background for the objective, the θ parameterization, and the block structure reported by <code>BlockDescription</code>.</li>
+<li><a href="../lmm-intro/sleepstudy.html">Analysis of the sleepstudy data</a> — the model used on this page, in context.</li>
+</ul>
 <hr>
 <p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
 ">39af12d
@@ -1199,13 +1513,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../examples/visual-attention/kkl15.html" class="pagination-link" aria-label="Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Visual Attention: Replication and Model Reduction (Kliegl et al., 2015)</span>
+      <a href="../reference/useful_packages.html" class="pagination-link" aria-label="Useful packages">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Useful packages</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../reference/mixedmodels_cheatsheet.html" class="pagination-link" aria-label="MixedModels.jl cheatsheet">
-        <span class="nav-page-text">MixedModels.jl cheatsheet</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../reference/arrow.html" class="pagination-link" aria-label="Saving data with Arrow">
+        <span class="nav-page-text">Saving data with Arrow</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1214,4 +1528,4 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/useful_packages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/mixedmodels_cheatsheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

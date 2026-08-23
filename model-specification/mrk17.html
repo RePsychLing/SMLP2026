@@ -2,23 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-08-23">
 
 <title>Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017) – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../contrasts/transformation.html" rel="next">
+<link href="../model-specification/partial_within.html" rel="next">
 <link href="../visualization/AoGPlots.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -79,14 +82,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2031d5dd4b2b06e5a05dd6ad86b95408.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -437,6 +440,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -594,6 +603,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MixedModels.jl cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
@@ -647,7 +662,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#crossed-fixed-effects" id="toc-crossed-fixed-effects" class="nav-link" data-scroll-target="#crossed-fixed-effects"><span class="header-section-number">6.1</span> Crossed fixed effects</a></li>
   <li><a href="#nested-fixed-effects" id="toc-nested-fixed-effects" class="nav-link" data-scroll-target="#nested-fixed-effects"><span class="header-section-number">6.2</span> Nested fixed effects</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.3</span> Exercises</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also"><span class="header-section-number">6.3</span> See Also</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.4</span> Exercises</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/model-specification/mrk17.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -676,7 +692,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-06-21</p>
+      <p class="date">2026-08-23</p>
     </div>
   </div>
   
@@ -719,7 +735,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsDatasets</span>: dataset</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Statistics</span>: mean, std</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1329,14 +1345,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">1.6375</td>
 <td style="text-align: right;">0.0209</td>
-<td style="text-align: right;">78.32</td>
+<td style="text-align: right;">78.24</td>
 <td style="text-align: right;">&lt;1e-99</td>
 <td style="text-align: right;">0.0566</td>
-<td style="text-align: right;">0.1748</td>
+<td style="text-align: right;">0.1750</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">F: HF</td>
-<td style="text-align: right;">0.0192</td>
+<td style="text-align: right;">0.0193</td>
 <td style="text-align: right;">0.0044</td>
 <td style="text-align: right;">4.40</td>
 <td style="text-align: right;">&lt;1e-04</td>
@@ -1346,10 +1362,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">P: rel</td>
 <td style="text-align: right;">0.0188</td>
-<td style="text-align: right;">0.0027</td>
+<td style="text-align: right;">0.0028</td>
 <td style="text-align: right;">6.85</td>
 <td style="text-align: right;">&lt;1e-11</td>
-<td style="text-align: right;">0.0113</td>
+<td style="text-align: right;">0.0114</td>
 <td style="text-align: right;">0.0113</td>
 </tr>
 <tr class="odd">
@@ -1367,7 +1383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0027</td>
 <td style="text-align: right;">0.61</td>
 <td style="text-align: right;">0.5415</td>
-<td style="text-align: right;">0.0060</td>
+<td style="text-align: right;">0.0059</td>
 <td style="text-align: right;">0.0108</td>
 </tr>
 <tr class="odd">
@@ -1375,7 +1391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0084</td>
 <td style="text-align: right;">0.0045</td>
 <td style="text-align: right;">1.86</td>
-<td style="text-align: right;">0.0627</td>
+<td style="text-align: right;">0.0626</td>
 <td style="text-align: right;">0.0125</td>
 <td style="text-align: right;">0.0323</td>
 </tr>
@@ -1393,7 +1409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0014</td>
 <td style="text-align: right;">0.0024</td>
 <td style="text-align: right;">-0.57</td>
-<td style="text-align: right;">0.5679</td>
+<td style="text-align: right;">0.5681</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1402,7 +1418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0014</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.60</td>
-<td style="text-align: right;">0.5488</td>
+<td style="text-align: right;">0.5492</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1410,8 +1426,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">F: HF &amp; lQ: clr</td>
 <td style="text-align: right;">-0.0010</td>
 <td style="text-align: right;">0.0023</td>
-<td style="text-align: right;">-0.42</td>
-<td style="text-align: right;">0.6709</td>
+<td style="text-align: right;">-0.43</td>
+<td style="text-align: right;">0.6703</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1420,7 +1436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0024</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-1.03</td>
-<td style="text-align: right;">0.3038</td>
+<td style="text-align: right;">0.3040</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1438,7 +1454,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0005</td>
 <td style="text-align: right;">0.0024</td>
 <td style="text-align: right;">0.20</td>
-<td style="text-align: right;">0.8427</td>
+<td style="text-align: right;">0.8428</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1456,7 +1472,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0017</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.73</td>
-<td style="text-align: right;">0.4636</td>
+<td style="text-align: right;">0.4632</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1474,7 +1490,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0003</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-0.13</td>
-<td style="text-align: right;">0.8935</td>
+<td style="text-align: right;">0.8932</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1483,7 +1499,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0013</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-0.58</td>
-<td style="text-align: right;">0.5613</td>
+<td style="text-align: right;">0.5615</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1492,7 +1508,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0026</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">1.14</td>
-<td style="text-align: right;">0.2536</td>
+<td style="text-align: right;">0.2534</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1501,7 +1517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0040</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-1.74</td>
-<td style="text-align: right;">0.0823</td>
+<td style="text-align: right;">0.0822</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1510,7 +1526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0020</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.87</td>
-<td style="text-align: right;">0.3858</td>
+<td style="text-align: right;">0.3855</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1519,7 +1535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0012</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-0.52</td>
-<td style="text-align: right;">0.6043</td>
+<td style="text-align: right;">0.6050</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1528,7 +1544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0001</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.9541</td>
+<td style="text-align: right;">0.9547</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1537,7 +1553,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0016</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.69</td>
-<td style="text-align: right;">0.4905</td>
+<td style="text-align: right;">0.4906</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1546,7 +1562,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0000</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-0.00</td>
-<td style="text-align: right;">0.9971</td>
+<td style="text-align: right;">0.9973</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1554,7 +1570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">Q: clr &amp; lQ: clr &amp; lT: WD</td>
 <td style="text-align: right;">0.0089</td>
 <td style="text-align: right;">0.0023</td>
-<td style="text-align: right;">3.86</td>
+<td style="text-align: right;">3.87</td>
 <td style="text-align: right;">0.0001</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1564,7 +1580,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0022</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-0.96</td>
-<td style="text-align: right;">0.3363</td>
+<td style="text-align: right;">0.3362</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1573,7 +1589,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">-0.0014</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">-0.59</td>
-<td style="text-align: right;">0.5585</td>
+<td style="text-align: right;">0.5583</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1591,7 +1607,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0040</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">1.74</td>
-<td style="text-align: right;">0.0821</td>
+<td style="text-align: right;">0.0822</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1600,7 +1616,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0019</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.80</td>
-<td style="text-align: right;">0.4218</td>
+<td style="text-align: right;">0.4215</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1609,7 +1625,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">0.0013</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.5771</td>
+<td style="text-align: right;">0.5773</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -1639,23 +1655,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>
 Principal components based on correlation matrix
  (Intercept)   1.0     .      .      .      .     .
- F: HF         0.38   1.0     .      .      .     .
+ F: HF         0.39   1.0     .      .      .     .
  P: rel        0.35   0.95   1.0     .      .     .
  Q: clr        0.41   0.49   0.72   1.0     .     .
- lQ: clr       0.06   0.04   0.21   0.58   1.0    .
- lT: WD        0.26  -0.15  -0.01   0.37   0.5   1.0
+ lQ: clr       0.06   0.02   0.22   0.58   1.0    .
+ lT: WD        0.26  -0.14  -0.01   0.37   0.5   1.0
 
 Normalized cumulative variances:
-[0.4799, 0.7515, 0.8962, 0.9593, 1.0, 1.0]
+[0.4802, 0.7525, 0.8972, 0.961, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5    PC6
- (Intercept)  -0.34   0.01   0.83   0.41  -0.13  -0.1
- F: HF        -0.46   0.44  -0.07  -0.24  -0.42   0.59
- P: rel       -0.53   0.3   -0.2   -0.22   0.01  -0.74
- Q: clr       -0.52  -0.18  -0.14   0.17   0.75   0.3
- lQ: clr      -0.29  -0.54  -0.42   0.46  -0.49  -0.04
- lT: WD       -0.19  -0.63   0.27  -0.7   -0.08   0.01</code></pre>
+ (Intercept)  -0.34   0.01   0.83   0.41  -0.14  -0.08
+ F: HF        -0.46   0.44  -0.07  -0.27  -0.38   0.61
+ P: rel       -0.53   0.29  -0.21  -0.19  -0.03  -0.74
+ Q: clr       -0.52  -0.17  -0.14   0.18   0.76   0.27
+ lQ: clr      -0.29  -0.54  -0.42   0.44  -0.51   0.01
+ lT: WD       -0.19  -0.63   0.27  -0.7   -0.06  -0.01</code></pre>
 </div>
 </div>
 <div id="20" class="cell" data-execution_count="1">
@@ -1666,19 +1682,19 @@ Principal components based on correlation matrix
  (Intercept)   1.0     .      .      .      .
  P: rel        0.05   1.0     .      .      .
  Q: clr        0.36   0.38   1.0     .      .
- lQ: clr       0.38   0.03   0.04   1.0     .
+ lQ: clr       0.38   0.03   0.03   1.0     .
  lT: WD       -0.11  -0.87  -0.01  -0.35   1.0
 
 Normalized cumulative variances:
-[0.4232, 0.688, 0.9051, 1.0, 1.0]
+[0.4226, 0.6867, 0.9058, 1.0, 1.0]
 
 Component loadings
                 PC1    PC2    PC3    PC4    PC5
- (Intercept)  -0.3    0.67   0.01   0.68   0.07
- P: rel       -0.6   -0.38   0.22   0.05   0.67
- Q: clr       -0.31   0.35   0.7   -0.46  -0.28
- lQ: clr      -0.32   0.4   -0.63  -0.55   0.2
- lT: WD        0.6    0.35   0.26  -0.15   0.66</code></pre>
+ (Intercept)  -0.3   -0.67   0.02  -0.67   0.07
+ P: rel       -0.6    0.38   0.22  -0.05   0.67
+ Q: clr       -0.31  -0.34   0.7    0.46  -0.28
+ lQ: clr      -0.31  -0.41  -0.62   0.55   0.2
+ lT: WD        0.6   -0.34   0.26   0.15   0.66</code></pre>
 </div>
 </div>
 <p>Variance-covariance matrix of random-effect structure suggests overparameterization for both subject-related and item-related components.</p>
@@ -1691,11 +1707,11 @@ Component loadings
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(m_cpx.λ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>5×5 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
-  0.193324      ⋅             ⋅            ⋅          ⋅ 
-  0.00202502   0.0386692      ⋅            ⋅          ⋅ 
-  0.015637     0.0155305     0.0371148     ⋅          ⋅ 
-  0.0076407    0.000276723  -0.00238434   0.0187043   ⋅ 
- -0.00477483  -0.0370668     0.0171952   -0.0117717  0.0</code></pre>
+  0.193277      ⋅             ⋅            ⋅          ⋅ 
+  0.0020462    0.0387503      ⋅            ⋅          ⋅ 
+  0.0156021    0.0156457     0.0371266     ⋅          ⋅ 
+  0.00759413   0.000186907  -0.00254248   0.0185664   ⋅ 
+ -0.00483564  -0.0370602     0.0173187   -0.0117918  0.0</code></pre>
 </div>
 </div>
 <p>VP is zero for last diagonal entry; not supported by data.</p>
@@ -1703,12 +1719,12 @@ Component loadings
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">last</span>(m_cpx.λ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>6×6 LinearAlgebra.LowerTriangular{Float64, Matrix{Float64}}:
- 0.597027      ⋅            ⋅          ⋅           ⋅           ⋅ 
- 0.00817112   0.0195929     ⋅          ⋅           ⋅           ⋅ 
- 0.0134265    0.0341408    0.0122785   ⋅           ⋅           ⋅ 
- 0.0392456    0.034324     0.080024   0.00987767   ⋅           ⋅ 
- 0.00207305   0.000581738  0.0207248  0.0289884   0.00922742   ⋅ 
- 0.0283136   -0.0295314    0.0471752  0.00651751  0.0895914   0.0153796</code></pre>
+ 0.597673      ⋅           ⋅           ⋅           ⋅          ⋅ 
+ 0.00817834   0.0195987    ⋅           ⋅           ⋅          ⋅ 
+ 0.0134332    0.0343562   0.0118084    ⋅           ⋅          ⋅ 
+ 0.0392908    0.0349323   0.0803039   0.00238319   ⋅          ⋅ 
+ 0.00207406  -0.00023301  0.0248861  -0.0162896   0.021435    ⋅ 
+ 0.0283478   -0.0285668   0.0460512   0.0479191   0.0747655  0.0238336</code></pre>
 </div>
 </div>
 <p>VP is approximately zero for fourth diagonal entry; not supported by data.</p>
@@ -1781,7 +1797,7 @@ Component loadings
 <td style="text-align: right;">0.0017</td>
 <td style="text-align: right;">0.0027</td>
 <td style="text-align: right;">0.64</td>
-<td style="text-align: right;">0.5226</td>
+<td style="text-align: right;">0.5225</td>
 <td style="text-align: right;">0.0040</td>
 <td style="text-align: right;">0.0109</td>
 </tr>
@@ -2060,8 +2076,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320272</td>
-<td style="text-align: right;">0.05659254</td>
+<td style="text-align: right;">0.00320276</td>
+<td style="text-align: right;">0.05659289</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2071,8 +2087,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00007237</td>
-<td style="text-align: right;">0.00850706</td>
+<td style="text-align: right;">0.00007239</td>
+<td style="text-align: right;">0.00850802</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2083,7 +2099,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
 <td style="text-align: right;">0.00014785</td>
-<td style="text-align: right;">0.01215917</td>
+<td style="text-align: right;">0.01215925</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -2093,8 +2109,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00001585</td>
-<td style="text-align: right;">0.00398083</td>
+<td style="text-align: right;">0.00001584</td>
+<td style="text-align: right;">0.00398046</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2104,8 +2120,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00011637</td>
-<td style="text-align: right;">0.01078771</td>
+<td style="text-align: right;">0.00011639</td>
+<td style="text-align: right;">0.01078852</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2115,8 +2131,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061104</td>
-<td style="text-align: right;">0.17496012</td>
+<td style="text-align: right;">0.03061018</td>
+<td style="text-align: right;">0.17495766</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2127,7 +2143,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">F: HF</td>
 <td style="text-align: right;">0.00001557</td>
-<td style="text-align: right;">0.00394626</td>
+<td style="text-align: right;">0.00394587</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2137,8 +2153,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00009956</td>
-<td style="text-align: right;">0.00997793</td>
+<td style="text-align: right;">0.00009955</td>
+<td style="text-align: right;">0.00997769</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -2148,8 +2164,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00077334</td>
-<td style="text-align: right;">0.02780901</td>
+<td style="text-align: right;">0.00077335</td>
+<td style="text-align: right;">0.02780908</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2159,8 +2175,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00011913</td>
-<td style="text-align: right;">0.01091451</td>
+<td style="text-align: right;">0.00011912</td>
+<td style="text-align: right;">0.01091431</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2170,8 +2186,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00106075</td>
-<td style="text-align: right;">0.03256920</td>
+<td style="text-align: right;">0.00106079</td>
+<td style="text-align: right;">0.03256980</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2181,8 +2197,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08588286</td>
-<td style="text-align: right;">0.29305778</td>
+<td style="text-align: right;">0.08588283</td>
+<td style="text-align: right;">0.29305772</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2234,11 +2250,11 @@ Normalized cumulative variances:
 Component loadings
                PC1   PC2   PC3   PC4   PC5   PC6
  (Intercept)  1.0   0.0   0.0   0.0   0.0   0.0
- F: HF        0.0   0.0   0.0   0.0   0.0   1.0
- P: rel       0.0   1.0   0.0   0.0   0.0   0.0
- Q: clr       0.0   0.0   1.0   0.0   0.0   0.0
- lQ: clr      0.0   0.0   0.0   1.0   0.0   0.0
- lT: WD       0.0   0.0   0.0   0.0   1.0   0.0)</code></pre>
+ F: HF        0.0   1.0   0.0   0.0   0.0   0.0
+ P: rel       0.0   0.0   1.0   0.0   0.0   0.0
+ Q: clr       0.0   0.0   0.0   1.0   0.0   0.0
+ lQ: clr      0.0   0.0   0.0   0.0   1.0   0.0
+ lT: WD       0.0   0.0   0.0   0.0   0.0   1.0)</code></pre>
 </div>
 </div>
 <div id="36" class="cell" data-execution_count="1">
@@ -2268,7 +2284,7 @@ Component loadings
 <td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0239</td>
+<td style="text-align: left;">0.0240</td>
 </tr>
 </tbody>
 </table>
@@ -2373,7 +2389,7 @@ Component loadings
 <td style="text-align: right;">0.0014</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.60</td>
-<td style="text-align: right;">0.5470</td>
+<td style="text-align: right;">0.5471</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -2615,8 +2631,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.00320203</td>
-<td style="text-align: right;">0.05658648</td>
+<td style="text-align: right;">0.00320206</td>
+<td style="text-align: right;">0.05658673</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2625,8 +2641,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00007138</td>
-<td style="text-align: right;">0.00844841</td>
+<td style="text-align: right;">0.00007134</td>
+<td style="text-align: right;">0.00844637</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2635,8 +2651,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00014719</td>
-<td style="text-align: right;">0.01213220</td>
+<td style="text-align: right;">0.00014718</td>
+<td style="text-align: right;">0.01213197</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -2646,7 +2662,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.00011707</td>
-<td style="text-align: right;">0.01082006</td>
+<td style="text-align: right;">0.01082007</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2655,8 +2671,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.03061051</td>
-<td style="text-align: right;">0.17495860</td>
+<td style="text-align: right;">0.03061165</td>
+<td style="text-align: right;">0.17496186</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2665,8 +2681,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">P: rel</td>
-<td style="text-align: right;">0.00009921</td>
-<td style="text-align: right;">0.00996049</td>
+<td style="text-align: right;">0.00009920</td>
+<td style="text-align: right;">0.00995982</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2675,8 +2691,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.00077305</td>
-<td style="text-align: right;">0.02780380</td>
+<td style="text-align: right;">0.00077308</td>
+<td style="text-align: right;">0.02780425</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
@@ -2685,8 +2701,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lQ: clr</td>
-<td style="text-align: right;">0.00011890</td>
-<td style="text-align: right;">0.01090430</td>
+<td style="text-align: right;">0.00011889</td>
+<td style="text-align: right;">0.01090356</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2695,8 +2711,8 @@ Component loadings
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.00106148</td>
-<td style="text-align: right;">0.03258035</td>
+<td style="text-align: right;">0.00106147</td>
+<td style="text-align: right;">0.03258024</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
@@ -2705,8 +2721,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;">0.08591587</td>
-<td style="text-align: right;">0.29311409</td>
+<td style="text-align: right;">0.08591590</td>
+<td style="text-align: right;">0.29311415</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2751,7 +2767,7 @@ Component loadings
 <td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0239</td>
+<td style="text-align: left;">0.0240</td>
 </tr>
 </tbody>
 </table>
@@ -2782,7 +2798,7 @@ Component loadings
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">1.6374</td>
 <td style="text-align: right;">0.0209</td>
-<td style="text-align: right;">78.23</td>
+<td style="text-align: right;">78.24</td>
 <td style="text-align: right;">&lt;1e-99</td>
 <td style="text-align: right;">0.0566</td>
 <td style="text-align: right;">0.1750</td>
@@ -3096,31 +3112,31 @@ Component loadings
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032049</td>
-<td style="text-align: right;">0.0566119</td>
+<td style="text-align: right;">0.0566122</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306168</td>
-<td style="text-align: right;">0.1749765</td>
+<td style="text-align: right;">0.0306158</td>
+<td style="text-align: right;">0.1749737</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Q: clr</td>
-<td style="text-align: right;">0.0007629</td>
-<td style="text-align: right;">0.0276198</td>
+<td style="text-align: right;">0.0007628</td>
+<td style="text-align: right;">0.0276192</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.0010645</td>
-<td style="text-align: right;">0.0326265</td>
+<td style="text-align: right;">0.0010646</td>
+<td style="text-align: right;">0.0326284</td>
 <td style="text-align: right;">.</td>
 <td style="text-align: right;">.</td>
 </tr>
@@ -3128,7 +3144,7 @@ Component loadings
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
 <td style="text-align: right;">0.0864752</td>
-<td style="text-align: right;">0.2940667</td>
+<td style="text-align: right;">0.2940666</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -3179,7 +3195,7 @@ Component loadings
 <td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0239</td>
+<td style="text-align: left;">0.0240</td>
 </tr>
 </tbody>
 </table>
@@ -3523,21 +3539,21 @@ Component loadings
 <td style="text-align: left;">item</td>
 <td style="text-align: left;">(Intercept)</td>
 <td style="text-align: right;">0.0032067</td>
-<td style="text-align: right;">0.0566279</td>
+<td style="text-align: right;">0.0566278</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306608</td>
-<td style="text-align: right;">0.1751023</td>
+<td style="text-align: right;">0.0306607</td>
+<td style="text-align: right;">0.1751020</td>
 <td style="text-align: right;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
-<td style="text-align: right;">0.0010897</td>
-<td style="text-align: right;">0.0330099</td>
+<td style="text-align: right;">0.0010896</td>
+<td style="text-align: right;">0.0330098</td>
 <td style="text-align: right;">.</td>
 </tr>
 <tr class="odd">
@@ -3602,7 +3618,7 @@ Component loadings
 <td style="text-align: right;">-7148</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: right;">25</td>
-<td style="text-align: left;">0.0239</td>
+<td style="text-align: left;">0.0240</td>
 </tr>
 </tbody>
 </table>
@@ -3904,7 +3920,7 @@ Component loadings
 <td style="text-align: right;">0.0021</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.89</td>
-<td style="text-align: right;">0.3714</td>
+<td style="text-align: right;">0.3713</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -3954,8 +3970,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306221</td>
-<td style="text-align: right;">0.1749917</td>
+<td style="text-align: right;">0.0306216</td>
+<td style="text-align: right;">0.1749903</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -3971,7 +3987,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325895</td>
+<td style="text-align: right;">0.0325897</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -3979,7 +3995,7 @@ Component loadings
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
 <td style="text-align: right;">0.0864769</td>
-<td style="text-align: right;">0.2940695</td>
+<td style="text-align: right;">0.2940696</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -4025,7 +4041,7 @@ Component loadings
 <td style="text-align: right;">-7148</td>
 <td style="text-align: right;">33</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: left;">0.2963</td>
+<td style="text-align: left;">0.2971</td>
 </tr>
 </tbody>
 </table>
@@ -4114,7 +4130,7 @@ Component loadings
 <td style="text-align: right;">7817.0</td>
 <td style="text-align: left;">-33</td>
 <td style="text-align: left;">29</td>
-<td style="text-align: left;">0.2963</td>
+<td style="text-align: left;">0.2971</td>
 </tr>
 </tbody>
 </table>
@@ -4225,7 +4241,7 @@ Component loadings
 <td style="text-align: right;">0.0013</td>
 <td style="text-align: right;">0.0023</td>
 <td style="text-align: right;">0.58</td>
-<td style="text-align: right;">0.5602</td>
+<td style="text-align: right;">0.5601</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -4473,8 +4489,8 @@ Component loadings
 <tr class="odd">
 <td style="text-align: left;">subj</td>
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">0.0306221</td>
-<td style="text-align: right;">0.1749917</td>
+<td style="text-align: right;">0.0306216</td>
+<td style="text-align: right;">0.1749903</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -4490,7 +4506,7 @@ Component loadings
 <td style="text-align: left;"></td>
 <td style="text-align: left;">lT: WD</td>
 <td style="text-align: right;">0.0010621</td>
-<td style="text-align: right;">0.0325895</td>
+<td style="text-align: right;">0.0325897</td>
 <td style="text-align: right;">+0.26</td>
 <td style="text-align: right;">+0.38</td>
 </tr>
@@ -4498,7 +4514,7 @@ Component loadings
 <td style="text-align: left;">Residual</td>
 <td style="text-align: left;"></td>
 <td style="text-align: right;">0.0864769</td>
-<td style="text-align: right;">0.2940695</td>
+<td style="text-align: right;">0.2940696</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -4634,8 +4650,15 @@ Component loadings
 </div>
 </div>
 </section>
-<section id="exercises" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.3</span> Exercises</h2>
+<section id="see-also" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="see-also"><span class="header-section-number">6.3</span> See Also</h2>
+<ul>
+<li>The <a href="https://www.embraceuncertaintybook.com/multiple.html">multiple random-effects terms chapter</a> of <em>Embrace Uncertainty</em> — a deeper treatment of crossed, nested, and partially crossed random-effects structures.</li>
+<li>The <a href="https://www.embraceuncertaintybook.com/largescaledesigned.html">large-scale designed experiment chapter</a> of <em>Embrace Uncertainty</em> — model specification and selection at scale, on the English Lexicon Project.</li>
+</ul>
+</section>
+<section id="exercises" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.4</span> Exercises</h2>
 <ol type="1">
 <li><strong>Map the design.</strong> List the experimental factors in <code>mrk17</code> and label each as between- or within-subject and between- or within-item. Which factors are therefore eligible for by-subject and by-item random slopes?</li>
 </ol>
@@ -4675,9 +4698,9 @@ Component loadings
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
-">e563d55
-</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
+">39af12d
+</a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
 </section>
@@ -5104,8 +5127,8 @@ Component loadings
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../contrasts/transformation.html" class="pagination-link" aria-label="Transformations of the predictors and the response">
-        <span class="nav-page-text">Transformations of the predictors and the response</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../model-specification/partial_within.html" class="pagination-link" aria-label="Partially-within subjects designs">
+        <span class="nav-page-text">Partially-within subjects designs</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

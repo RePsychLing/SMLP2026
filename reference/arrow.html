@@ -2,23 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-08-23">
 
 <title>Saving data with Arrow – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -92,21 +95,21 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../reference/pkg.html" rel="next">
-<link href="../reference/useful_packages.html" rel="prev">
+<link href="../reference/mixedmodels_cheatsheet.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2031d5dd4b2b06e5a05dd6ad86b95408.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -457,6 +460,12 @@ div.csl-indent {
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -614,6 +623,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MixedModels.jl cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
@@ -643,7 +658,8 @@ div.csl-indent {
   <li><a href="#creating-the-smaller-table" id="toc-creating-the-smaller-table" class="nav-link" data-scroll-target="#creating-the-smaller-table"><span class="header-section-number">5</span> Creating the smaller table</a></li>
   <li><a href="#discovering-patterns-in-the-data" id="toc-discovering-patterns-in-the-data" class="nav-link" data-scroll-target="#discovering-patterns-in-the-data"><span class="header-section-number">6</span> Discovering patterns in the data</a></li>
   <li><a href="#reading-arrow-files-in-other-languages" id="toc-reading-arrow-files-in-other-languages" class="nav-link" data-scroll-target="#reading-arrow-files-in-other-languages"><span class="header-section-number">7</span> Reading Arrow files in other languages</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8</span> References</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also"><span class="header-section-number">8</span> See Also</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">9</span> References</a></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/reference/arrow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -671,7 +687,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-06-21</p>
+      <p class="date">2026-08-23</p>
     </div>
   </div>
   
@@ -688,7 +704,7 @@ div.csl-indent {
 <p>The <a href="https://arrow.apache.org">Arrow storage format</a> provides a language-agnostic storage and memory specification for columnar data tables, which just means “something that looks like a data frame in R”. That is, an arrow table is an ordered, named collection of columns, all of the same length.</p>
 <p>The columns can be of different types including numeric values, character strings, and factor-like representations - called <em>DictEncoded</em>.</p>
 <p>An Arrow file can be read or written from R, Python, Julia and many other languages. Somewhat confusingly in R and Python the name <code>feather</code>, which refers to an earlier version of the storage format, is used in some function names like <code>read_feather</code>.</p>
-<p>Internally, the SMLP2026 package uses Arrow to store all of its datasets.</p>
+<p>The <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/">MixedModelsDatasets</a> package uses Arrow to store all of its datasets.</p>
 </section>
 <section id="the-emotikon-data" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> The Emotikon data</h1>
@@ -3400,17 +3416,23 @@ Note
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_ipc_file</span>(<span class="st">"fggk21.arrow"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="references" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> References</h1>
+<section id="see-also" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> See Also</h1>
+<ul>
+<li>The <a href="https://www.embraceuncertaintybook.com/datatables.html">data tables appendix</a> of <em>Embrace Uncertainty</em> — Arrow files, memory-mapped data, and table representations in Julia.</li>
+</ul>
+</section>
+<section id="references" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Fuehner2021" class="csl-entry" role="listitem">
 Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effects in physical fitness components of 108,295 third graders including 515 primary schools and 9 cohorts. <em>Scientific Reports</em>, <em>11</em>(1). <a href="https://doi.org/10.1038/s41598-021-97000-4">https://doi.org/10.1038/s41598-021-97000-4</a>
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
-">e563d55
-</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
+">39af12d
+</a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
 </section>
@@ -3831,8 +3853,8 @@ Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effe
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../reference/useful_packages.html" class="pagination-link" aria-label="Useful packages">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Useful packages</span>
+      <a href="../reference/mixedmodels_cheatsheet.html" class="pagination-link" aria-label="MixedModels.jl cheatsheet">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">MixedModels.jl cheatsheet</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

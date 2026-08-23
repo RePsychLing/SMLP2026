@@ -2,23 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Douglas Bates">
 <meta name="author" content="Phillip Alday">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-08-23">
 
 <title>Convergence, singularity and all that – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -79,14 +82,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2031d5dd4b2b06e5a05dd6ad86b95408.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -122,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -466,6 +469,12 @@ window.Quarto = {
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -623,6 +632,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MixedModels.jl cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
@@ -682,7 +697,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-06-21</p>
+      <p class="date">2026-08-23</p>
     </div>
   </div>
   
@@ -726,14 +741,27 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsDatasets</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsMakie</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+</div>
+<div id="4" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+    SMLP2026<span class="ansi-cyan-fg"> Being precompiled by another process (pid: 1397975, pidfile: /home/phillip/.julia/compiled/v1.12/SMLP2026/fI8Nu_A50vh.ji.pidfile)</span>
+   5871.9 ms<span class="ansi-green-fg">  ✓ </span>SMLP2026
+  1 dependency successfully precompiled in 6 seconds. 404 already precompiled.
+  <span class="ansi-yellow-fg">319</span> dependencies precompiled but <span class="ansi-yellow-fg">different versions are currently loaded</span> (AbstractFFTs, AbstractFFTs → AbstractFFTsChainRulesCoreExt, AbstractTrees, Accessors, Accessors → IntervalSetsExt, Accessors → LinearAlgebraExt, Accessors → StaticArraysExt, Accessors → StructArraysExt, Accessors → UnitfulExt, Adapt, Adapt → AdaptSparseArraysExt, Adapt → AdaptStaticArraysExt, AdaptivePredicates, AliasTables, Animations, ArgTools, ArrayLayouts, ArrayLayouts → ArrayLayoutsSparseArraysExt, Arrow, ArrowTypes, Automa, AxisAlgorithms, BSplineKit, BandedMatrices, BandedMatrices → BandedMatricesSparseArraysExt, Base64, BaseDirs, BitIntegers, Bzip2_jll, CEnum, CRC32c, CRlibm, CRlibm_jll, Cairo, CairoMakie, Cairo_jll, ChainRulesCore, ChainRulesCore → ChainRulesCoreSparseArraysExt, CodecLz4, CodecZstd, ColorBrewer, ColorSchemes, ColorTypes, ColorTypes → StyledStringsExt, ColorVectorSpace, ColorVectorSpace → SpecialFunctionsExt, Colors, Combinatorics, CommonSolve, CommonSubexpressions, CommonWorldInvalidations, Compat, Compat → CompatLinearAlgebraExt, CompilerSupportLibraries_jll, CompositionsBase, CompositionsBase → CompositionsBaseInverseFunctionsExt, ConcurrentUtilities, ConstructionBase, ConstructionBase → ConstructionBaseIntervalSetsExt, ConstructionBase → ConstructionBaseLinearAlgebraExt, ConstructionBase → ConstructionBaseStaticArraysExt, Contour, CoreMath, CoreMath_jll, Crayons, DataAPI, DataFrames, DataStructures, DataValueInterfaces, Dates, DelaunayTriangulation, DelimitedFiles, Dictionaries, DiffResults, DiffRules, Distributed, Distributions, Distributions → DistributionsChainRulesCoreExt, DocStringExtensions, Downloads, EarCut_jll, EnumX, ExactPredicates, Expat_jll, ExprTools, FFMPEG_jll, FFTA, FastGaussQuadrature, FileIO, FilePaths, FilePathsBase, FilePathsBase → FilePathsBaseMmapExt, FillArrays, FillArrays → FillArraysPDMatsExt, FillArrays → FillArraysSparseArraysExt, FillArrays → FillArraysStaticArraysExt, FillArrays → FillArraysStatisticsExt, FixedPointNumbers, Fontconfig_jll, Format, ForwardDiff, ForwardDiff → ForwardDiffStaticArraysExt, FreeType, FreeType2_jll, FreeTypeAbstraction, FriBidi_jll, Future, GLM, Gamma, GeometryBasics, GeometryBasics → IntervalSetsExt, GettextRuntime_jll, Glib_jll, Graphics, Graphite2_jll, GridLayoutBase, HarfBuzz_jll, HypergeometricFunctions, IfElse, ImageBase, ImageCore, ImageIO, Indexing, IndirectArrays, InlineStrings, InlineStrings → ArrowTypesExt, InlineStrings → ParsersExt, IntegerMathUtils, InteractiveUtils, Interpolations, Interpolations → InterpolationsUnitfulExt, IntervalArithmetic, IntervalArithmetic → IntervalArithmeticDiffRulesExt, IntervalArithmetic → IntervalArithmeticForwardDiffExt, IntervalArithmetic → IntervalArithmeticIntervalSetsExt, IntervalArithmetic → IntervalArithmeticIrrationalConstantsExt, IntervalArithmetic → IntervalArithmeticLinearAlgebraExt, IntervalArithmetic → IntervalArithmeticSparseArraysExt, IntervalSets, IntervalSets → IntervalSetsRandomExt, IntervalSets → IntervalSetsStatisticsExt, InverseFunctions, InverseFunctions → InverseFunctionsDatesExt, InvertedIndices, IrrationalConstants, Isoband, IteratorInterfaceExtensions, JLLWrappers, JSON, JSON → JSONArrowExt, JSON3, JSON3 → JSON3ArrowExt, JuliaSyntaxHighlighting, KernelDensity, LAME_jll, LaTeXStrings, LazyModules, LibCURL, LibCURL_jll, LibGit2, LibGit2_jll, LibSSH2_jll, Libffi_jll, Libiconv_jll, Libmount_jll, Libuuid_jll, LogExpFunctions, LogExpFunctions → LogExpFunctionsChainRulesCoreExt, LogExpFunctions → LogExpFunctionsInverseFunctionsExt, Logging, Lz4_jll, MacroTools, Makie, MakieCore, MappedArrays, Markdown, MathTeXEngine, Missings, MixedModels, MixedModels → MixedModelsForwardDiffExt, MixedModelsDatasets, MixedModelsMakie, Mmap, Mocking, MosaicViews, MozillaCACerts_jll, MuladdMacro, NLopt, NLopt_jll, NaNMath, NetworkOptions, Observables, OffsetArrays, OffsetArrays → OffsetArraysAdaptExt, Ogg_jll, OpenBLASConsistentFPCSR_jll, OpenLibm_jll, OpenSSL_jll, OpenSpecFun_jll, Opus_jll, OrderedCollections, PCRE2_jll, PDMats, PDMats → StatsBaseExt, PNGFiles, Packing, PaddedViews, Pango_jll, Parsers, Pixman_jll, Pkg, Pkg → REPLExt, PlotUtils, PolygonOps, PooledArrays, PrecompileTools, Preferences, PrettyTables, Primes, Printf, ProgressMeter, PtrArrays, QuadGK, REPL, Ratios, Ratios → RatiosFixedPointNumbersExt, RectangularFullPacked, Reexport, RegressionFormulae, RelocatableFolders, Requires, Rmath, Rmath_jll, Roots, Roots → RootsChainRulesCoreExt, Roots → RootsForwardDiffExt, Roots → RootsUnitfulExt, RoundingEmulator, SciMLPublic, Scratch, SentinelArrays, Serialization, ShaderAbstractions, ShiftedArrays, Showoff, SignedDistanceFields, SortingAlgorithms, SparseArrays, SpecialFunctions, SpecialFunctions → SpecialFunctionsChainRulesCoreExt, SplitApplyCombine, StableRNGs, StackViews, Static, StaticArrays, StaticArrays → StaticArraysChainRulesCoreExt, StaticArrays → StaticArraysStatisticsExt, StaticArraysCore, Statistics, Statistics → SparseArraysExt, StatsAPI, StatsBase, StatsFuns, StatsFuns → StatsFunsChainRulesCoreExt, StatsFuns → StatsFunsInverseFunctionsExt, StatsModels, StringManipulation, StringViews, StructArrays, StructArrays → StructArraysAdaptExt, StructArrays → StructArraysLinearAlgebraExt, StructArrays → StructArraysSparseArraysExt, StructArrays → StructArraysStaticArraysExt, StructTypes, StructUtils, StructUtils → StructUtilsStaticArraysCoreExt, StructUtils → StructUtilsTablesExt, StyledStrings, SuiteSparse, SuiteSparse_jll, TOML, TZJData, TableTraits, Tables, Tar, TensorCore, TimeZones, TranscodingStreams, TriplotBase, TypedTables, UUIDs, Unicode, UnicodeFun, Unitful, Unitful → ConstructionBaseUnitfulExt, Unitful → ForwardDiffExt, Unitful → InverseFunctionsUnitfulExt, Unitful → NaNMathExt, Unitful → PrintfExt, WoodburyMatrices, Xorg_libX11_jll, Xorg_libXau_jll, Xorg_libXdmcp_jll, Xorg_libXext_jll, Xorg_libXrender_jll, Xorg_libxcb_jll, Xorg_xtrans_jll, Zlib_jll, Zstd_jll, isoband_jll, libaom_jll, libass_jll, libfdk_aac_jll, libpng_jll, libvorbis_jll, nghttp2_jll, p7zip_jll, x264_jll and x265_jll). Restart julia to access the new versions. Otherwise, 74 dependents of these packages may trigger further precompilation to work with the unexpected versions.
+</pre>
+</div>
+</div>
 </div>
 <p>Fit a model for reaction time in the sleepstudy example.</p>
 <div id="6" class="cell" data-execution_count="0">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m01 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days<span class="op">|</span>subj)), MixedModels.<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy); progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m01 <span class="op">=</span> <span class="fu">lmm</span>(<span class="pp">@formula</span>(reaction <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> days <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> days<span class="op">|</span>subj)), <span class="fu">dataset</span>(<span class="op">:</span>sleepstudy); progress)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="10" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(m01)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -745,16 +773,16 @@ window.Quarto = {
 
 Variance components:
             Column    Variance Std.Dev.   Corr.
-subj     (Intercept)  565.52071 23.78068
-         days          32.68242  5.71685 +0.08
-Residual              654.94016 25.59180
+subj     (Intercept)  565.51589 23.78058
+         days          32.68220  5.71683 +0.08
+Residual              654.94103 25.59182
  Number of obs: 180; levels of grouping factors: 18
 
   Fixed-effects parameters:
 ──────────────────────────────────────────────────
                 Coef.  Std. Error      z  Pr(&gt;|z|)
 ──────────────────────────────────────────────────
-(Intercept)  251.405      6.6323   37.91    &lt;1e-99
+(Intercept)  251.405      6.63228  37.91    &lt;1e-99
 days          10.4673     1.50224   6.97    &lt;1e-11
 ──────────────────────────────────────────────────</code></pre>
 </div>
@@ -764,8 +792,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>λ <span class="op">=</span> <span class="fu">only</span>(m01.λ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 LowerTriangular{Float64, Matrix{Float64}}:
- 0.92923     ⋅ 
- 0.0181644  0.222646</code></pre>
+ 0.929226    ⋅ 
+ 0.0181651  0.222645</code></pre>
 </div>
 </div>
 <p>The <em>transpose</em> of <span class="math inline">\(\lambda\)</span>, written <span class="math inline">\(\lambda'\)</span>, is an upper triangular matrix generated by “flipping” <span class="math inline">\(\lambda\)</span> about the main diagonal.</p>
@@ -773,8 +801,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>λ<span class="ch">'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 UpperTriangular{Float64, Adjoint{Float64, Matrix{Float64}}}:
- 0.92923  0.0181644
-  ⋅       0.222646</code></pre>
+ 0.929226  0.0181651
+  ⋅        0.222645</code></pre>
 </div>
 </div>
 <p>The product <span class="math inline">\(\lambda * \lambda'\)</span> will be symmetric. The covariance matrix of the random effects, <span class="math inline">\(\Sigma\)</span>, is this symmetric matrix scaled by <span class="math inline">\(\sigma^2\)</span></p>
@@ -782,8 +810,8 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> m01.σ<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> λ <span class="op">*</span> λ<span class="ch">'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 Matrix{Float64}:
- 565.521   11.0547
-  11.0547  32.6824</code></pre>
+ 565.516   11.0551
+  11.0551  32.6822</code></pre>
 </div>
 </div>
 <p>The estimated variances of the random effects, which are the diagonal elements of <span class="math inline">\(\Sigma\)</span>, correspond to the values shown in the table. To evaluate the covariance, isolate the correlation</p>
@@ -797,14 +825,14 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># there is exactly one.</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>ρ <span class="op">=</span> <span class="fu">only</span>(m01.σρs.subj.ρ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>0.08131378907082809</code></pre>
+<pre><code>0.08131758108848451</code></pre>
 </div>
 </div>
 <p>and multiply by the standard deviations</p>
 <div id="20" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ρ <span class="op">*</span> <span class="fu">sqrt</span>(<span class="fu">first</span>(Σ) <span class="op">*</span> <span class="fu">last</span>(Σ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>11.05466396790707</code></pre>
+<pre><code>11.055094964441999</code></pre>
 </div>
 </div>
 </section>
@@ -815,9 +843,9 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m01.θ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>3-element Vector{Float64}:
- 0.9292304825690973
- 0.018164375827454657
- 0.22264643709604015</code></pre>
+ 0.9292259065867788
+ 0.018165149307614335
+ 0.2226454658393477</code></pre>
 </div>
 </div>
 <p>The elements of this parameter vector are subject to constraints. In particular, two of the three elements have a lower bound of zero.</p>
@@ -838,7 +866,7 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div id="26" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>m01.optsum.fitlog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Table with 2 columns and 72 rows:
+<pre><code>Table with 2 columns and 82 rows:
       θ                                 objective
     ┌────────────────────────────────────────────
  1  │ [1.0, 0.0, 1.0]                   1784.64
@@ -848,20 +876,20 @@ days          10.4673     1.50224   6.97    &lt;1e-11
  5  │ [0.0, 0.0, 1.0]                   1806.24
  6  │ [1.0, -1.0, 1.0]                  1798.6
  7  │ [1.0, 0.0, 0.0]                   1794.77
- 8  │ [1.22435, -0.00691503, 0.797624]  1778.03
- 9  │ [1.46448, -0.0169209, 0.611336]   1771.86
- 10 │ [1.80499, -0.0631689, 0.109571]   1774.69
- 11 │ [1.46736, 0.101338, 0.607374]     1772.35
- 12 │ [1.56923, -0.151459, 0.422853]    1763.91
- 13 │ [1.66673, -0.627902, 0.274894]    1783.3
- 14 │ [1.65242, -0.14957, 0.478319]     1767.42
- 15 │ [1.49341, -0.0708007, 0.32143]    1757.94
- 16 │ [1.51395, 0.228361, 0.337085]     1763.58
- 17 │ [1.40516, -0.106856, 0.291229]    1756.52
+ 8  │ [1.22435, -0.00691505, 0.797624]  1778.03
+ 9  │ [1.46448, -0.0169209, 0.611335]   1771.86
+ 10 │ [1.80499, -0.063169, 0.10957]     1774.69
+ 11 │ [1.46736, 0.101338, 0.607373]     1772.35
+ 12 │ [1.56922, -0.151459, 0.422861]    1763.91
+ 13 │ [1.66672, -0.627889, 0.274909]    1783.3
+ 14 │ [1.65241, -0.14957, 0.478326]     1767.42
+ 15 │ [1.49341, -0.0708049, 0.321432]   1757.94
+ 16 │ [1.51395, 0.228358, 0.337085]     1763.58
+ 17 │ [1.40515, -0.10686, 0.291233]     1756.52
  ⋮  │                ⋮                      ⋮</code></pre>
 </div>
 </div>
-<p>There were 72 evaluations of the objective before convergence was declared, according to rather stringent convergence criteria. We can see that the last 10 evaluations only produced changes in the fourth decimal place of the objective or even smaller. That is, effective convergence occurred a fair bit sooner.</p>
+<p>There were 82 evaluations of the objective before convergence was declared, according to rather stringent convergence criteria. We can see that the last 10 evaluations only produced changes in the fourth decimal place of the objective or even smaller. That is, effective convergence occurred a fair bit sooner.</p>
 </section>
 <section id="a-model-that-converges-to-a-degenerate-distribution" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> A model that converges to a degenerate distribution</h1>
@@ -879,15 +907,15 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>normed <span class="op">=</span> <span class="fu">normalize!</span>(λ[<span class="fl">2</span>, <span class="op">:</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2-element Vector{Float64}:
- 0.08131378907082806
- 0.9966885510062535</code></pre>
+ 0.08131758108848451
+ 0.9966882416312123</code></pre>
 </div>
 </div>
 <p>providing the correlation as</p>
 <div id="30" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">first</span>(normed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>0.08131378907082806</code></pre>
+<pre><code>0.08131758108848451</code></pre>
 </div>
 </div>
 </section>
@@ -953,9 +981,9 @@ days          10.4673     1.50224   6.97    &lt;1e-11
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
-">e563d55
-</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
+">39af12d
+</a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
 </section>

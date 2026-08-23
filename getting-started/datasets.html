@@ -2,23 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-08-23">
 
 <title>Dataset catalog – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -99,14 +102,14 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2031d5dd4b2b06e5a05dd6ad86b95408.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -457,6 +460,12 @@ div.csl-indent {
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -614,6 +623,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MixedModels.jl cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
@@ -637,18 +652,16 @@ div.csl-indent {
    
   <ul class="collapse">
   <li><a href="#how-datasets-are-loaded" id="toc-how-datasets-are-loaded" class="nav-link active" data-scroll-target="#how-datasets-are-loaded"><span class="header-section-number">1</span> How datasets are loaded</a></li>
-  <li><a href="#datasets-bundled-with-mixedmodelsdatasets.jl" id="toc-datasets-bundled-with-mixedmodelsdatasets.jl" class="nav-link" data-scroll-target="#datasets-bundled-with-mixedmodelsdatasets.jl"><span class="header-section-number">2</span> Datasets bundled with MixedModelsDatasets.jl</a>
+  <li><a href="#datasets-used-in-these-materials" id="toc-datasets-used-in-these-materials" class="nav-link" data-scroll-target="#datasets-used-in-these-materials"><span class="header-section-number">2</span> Datasets used in these materials</a>
   <ul class="collapse">
   <li><a href="#dyestuff" id="toc-dyestuff" class="nav-link" data-scroll-target="#dyestuff"><span class="header-section-number">2.1</span> <code>dyestuff</code></a></li>
   <li><a href="#sleepstudy" id="toc-sleepstudy" class="nav-link" data-scroll-target="#sleepstudy"><span class="header-section-number">2.2</span> <code>sleepstudy</code></a></li>
   <li><a href="#kb07" id="toc-kb07" class="nav-link" data-scroll-target="#kb07"><span class="header-section-number">2.3</span> <code>kb07</code></a></li>
   <li><a href="#mrk17_exp1" id="toc-mrk17_exp1" class="nav-link" data-scroll-target="#mrk17_exp1"><span class="header-section-number">2.4</span> <code>mrk17_exp1</code></a></li>
-  </ul></li>
-  <li><a href="#course-specific-datasets" id="toc-course-specific-datasets" class="nav-link" data-scroll-target="#course-specific-datasets"><span class="header-section-number">3</span> Course-specific datasets</a>
-  <ul class="collapse">
-  <li><a href="#fggk21-the-emotikon-project" id="toc-fggk21-the-emotikon-project" class="nav-link" data-scroll-target="#fggk21-the-emotikon-project"><span class="header-section-number">3.1</span> <code>fggk21</code> (the Emotikon project)</a></li>
-  <li><a href="#kwdyz11" id="toc-kwdyz11" class="nav-link" data-scroll-target="#kwdyz11"><span class="header-section-number">3.2</span> <code>kwdyz11</code></a></li>
-  <li><a href="#kkl15" id="toc-kkl15" class="nav-link" data-scroll-target="#kkl15"><span class="header-section-number">3.3</span> <code>kkl15</code></a></li>
+  <li><a href="#contra" id="toc-contra" class="nav-link" data-scroll-target="#contra"><span class="header-section-number">2.5</span> <code>contra</code></a></li>
+  <li><a href="#fggk21" id="toc-fggk21" class="nav-link" data-scroll-target="#fggk21"><span class="header-section-number">2.6</span> <code>fggk21</code></a></li>
+  <li><a href="#kwdyz11" id="toc-kwdyz11" class="nav-link" data-scroll-target="#kwdyz11"><span class="header-section-number">2.7</span> <code>kwdyz11</code></a></li>
+  <li><a href="#kkl15" id="toc-kkl15" class="nav-link" data-scroll-target="#kkl15"><span class="header-section-number">2.8</span> <code>kkl15</code></a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/getting-started/datasets.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -677,7 +690,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-06-21</p>
+      <p class="date">2026-08-23</p>
     </div>
   </div>
   
@@ -694,10 +707,10 @@ div.csl-indent {
 </div>
 <section id="how-datasets-are-loaded" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> How datasets are loaded</h1>
-<p>All example datasets are loaded through a single function re-exported by the course package:</p>
+<p>All example datasets are loaded through the <code>dataset</code> function from <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/">MixedModelsDatasets.jl</a>:</p>
 <div id="2" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsDatasets</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">dataset</span>(<span class="op">:</span>sleepstudy))</span>
@@ -716,7 +729,7 @@ div.csl-indent {
 <th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th" title="Int8">Int8</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float32">Float32</th>
 </tr>
 </thead>
 <tbody>
@@ -755,35 +768,29 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p><code>dataset(name)</code> resolves a name from one of two sources:</p>
-<ol type="1">
-<li><strong>Datasets re-exported from <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/">MixedModelsDatasets.jl</a></strong> — the standard collection bundled with the Julia mixed-models ecosystem (e.g.&nbsp;<code>sleepstudy</code>, <code>kb07</code>, <code>mrk17_exp1</code>).</li>
-<li><strong>Course-specific datasets hosted on <a href="https://osf.io/">OSF</a></strong> — downloaded on first use, checksum-verified, and cached locally (e.g.&nbsp;<code>fggk21</code>, <code>kwdyz11</code>, <code>kkl15</code>). The download is automatic; you don’t need to fetch anything by hand.</li>
-</ol>
-<p>To list everything available in this project:</p>
+<p>To list everything available:</p>
 <div id="6" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(SMLP2026.<span class="fu">datasets</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">datasets</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>32-element Vector{String}:
- "ELP_ldt_item"
- "ELP_ldt_subj"
- "ELP_ldt_trial"
+<pre><code>28-element Vector{String}:
  "box"
  "cbpp"
  "contra"
  "d3"
  "dyestuff"
  "dyestuff2"
+ "elp_ldt_item"
+ "elp_ldt_subj"
+ "elp_ldt_trial"
  "elstongrizzle"
  ⋮
+ "ml32_ratings"
+ "mmec"
  "mrk17_exp1"
  "oxboys"
  "oxide"
  "pastes"
  "penicillin"
- "ratings"
- "sizespeed"
  "sleepstudy"
  "verbagg"</code></pre>
 </div>
@@ -802,12 +809,12 @@ Note
 </div>
 </div>
 </section>
-<section id="datasets-bundled-with-mixedmodelsdatasets.jl" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Datasets bundled with MixedModelsDatasets.jl</h1>
-<p>These four are documented in full upstream — design, every column, and the primary citation — in the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/">MixedModelsDatasets.jl dataset reference</a>. We summarize their role in this course and link out for the details.</p>
+<section id="datasets-used-in-these-materials" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Datasets used in these materials</h1>
+<p>All datasets below are documented in full upstream — design, every column, and the primary citation — in the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/">MixedModelsDatasets.jl dataset reference</a>. We summarize their role in this course and link out for the details.</p>
 <section id="dyestuff" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="dyestuff"><span class="header-section-number">2.1</span> <code>dyestuff</code></h2>
-<p>Yield of dyestuff (Naphthalene Black 12B) from five preparations of each of six batches of an intermediate product. The canonical minimal example of a linear mixed model: an intercept-only model with a single grouping factor (<code>batch</code>), used to introduce variance components in their simplest form. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#dyestuff">upstream entry</a>.</p>
+<p>Yield of dyestuff from five preparations of each of six batches of an intermediate product. The canonical minimal example of a linear mixed model: an intercept-only model with a single grouping factor (<code>batch</code>), used to introduce variance components in their simplest form. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#dyestuff">upstream entry</a>.</p>
 <p><strong>Used in:</strong> <a href="../inference/bootstrap.html">bootstrap</a>.</p>
 </section>
 <section id="sleepstudy" class="level2" data-number="2.2">
@@ -825,14 +832,14 @@ Note
 <p>Lexical-decision response times from Masson, Rabe &amp; Kliegl (2017), Experiment 1 — a 2×2×2 design that is a standard benchmark for high-dimensional crossed random effects. The course refers to it as <strong><code>mrk17</code></strong>. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#mrk17_exp1">upstream entry</a>.</p>
 <p><strong>Used in:</strong> <a href="../model-specification/mrk17.html">model specification</a>.</p>
 </section>
+<section id="contra" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="contra"><span class="header-section-number">2.5</span> <code>contra</code></h2>
+<p>Contraceptive use among Bangladeshi women, from the 1988 Bangladesh Fertility Survey. A binary response (use/non-use of contraception) with demographic predictors, used to introduce generalized linear mixed models. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#contra">upstream entry</a>.</p>
+<p><strong>Used in:</strong> <a href="../glmm/glmm.html">GLMM</a>.</p>
 </section>
-<section id="course-specific-datasets" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Course-specific datasets</h1>
-<p>These datasets are hosted on OSF and downloaded automatically by <code>dataset(...)</code>. Column summaries below are generated directly from the data, so they stay accurate as the datasets are updated.</p>
-<section id="fggk21-the-emotikon-project" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="fggk21-the-emotikon-project"><span class="header-section-number">3.1</span> <code>fggk21</code> (the Emotikon project)</h2>
-<p><strong>Full name:</strong> Physical fitness of third-graders (Emotikon study)</p>
-<p>Physical-fitness component scores from <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span>: 108,295 third-graders from 515 primary schools across 9 cohorts, tested on a battery of fitness tasks (running, jumping, balancing, and so on). The size and nested structure (children within schools within cohorts) make it a realistic large-scale example for contrast coding of a multi-level factor (<code>Test</code>), for PCA-guided model complexification, and for visualization at scale.</p>
+<section id="fggk21" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="fggk21"><span class="header-section-number">2.6</span> <code>fggk21</code></h2>
+<p>Physical-fitness component scores from <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span>: 108,295 third-graders from 515 primary schools across 9 cohorts (2011–2019), yielding 525,126 scores. The size and nested structure make it a realistic large-scale example for contrast coding of a multi-level factor (<code>Test</code>), for PCA-guided model complexification, and for visualization at scale. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#fggk21">upstream entry</a>.</p>
 <p><strong>Citation:</strong> <span class="citation" data-cites="Fuehner2021">Fühner et al. (<a href="#ref-Fuehner2021" role="doc-biblioref">2021</a>)</span>.</p>
 <div id="8" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -955,10 +962,9 @@ Note
 </div>
 </div>
 </section>
-<section id="kwdyz11" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="kwdyz11"><span class="header-section-number">3.2</span> <code>kwdyz11</code></h2>
-<p><strong>Full name:</strong> Kliegl, Wei, Dambacher, Yan &amp; Zhou (2011) visual-attention experiment</p>
-<p>Reaction times from a cueing experiment with four cue-target relations (CTRs), used to estimate spatial, object-based, and attractor-like effects of visual attention together with the individual differences in those effects. A key teaching point: the attraction effect is near zero as a fixed effect but has a reliable variance component, and the originally reported model turned out to be singular — motivating the replication in <code>kkl15</code>.</p>
+<section id="kwdyz11" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="kwdyz11"><span class="header-section-number">2.7</span> <code>kwdyz11</code></h2>
+<p>Reaction times from a cueing experiment with four cue-target relations (CTRs), used to estimate spatial, object-based, and attractor-like effects of visual attention together with the individual differences in those effects. A key teaching point: the attraction effect is near zero as a fixed effect but has a reliable variance component, and the originally reported model turned out to be singular — motivating the replication in <code>kkl15</code>. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#kwdyz11">upstream entry</a>.</p>
 <p><strong>Citation:</strong> <span class="citation" data-cites="Kliegl2011">Kliegl et al. (<a href="#ref-Kliegl2011" role="doc-biblioref">2011</a>)</span>.</p>
 <div id="10" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -1048,10 +1054,9 @@ Note
 </div>
 <p><strong>Used in:</strong> <a href="../contrasts/contrasts_kwdyz11.html">contrast coding of visual-attention effects</a>, <a href="../examples/visual-attention/kwdyz11.html">visual-attention capstone</a>.</p>
 </section>
-<section id="kkl15" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="kkl15"><span class="header-section-number">3.3</span> <code>kkl15</code></h2>
-<p><strong>Full name:</strong> Kliegl, Kushela &amp; Laubrock (2015) replication and extension</p>
-<p>A larger conceptual replication of <code>kwdyz11</code> <span class="citation" data-cites="Kliegl2015">(<a href="#ref-Kliegl2015" role="doc-biblioref">Kliegl et al., 2015</a>)</span>, run at Potsdam with additional manipulations of target size and rectangle orientation. With more data and more conditions it estimates the theoretically critical spatial–attraction correlation parameter that was the source of the singularity in the original study, and is the running example for principled reduction of model complexity.</p>
+<section id="kkl15" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="kkl15"><span class="header-section-number">2.8</span> <code>kkl15</code></h2>
+<p>A larger conceptual replication of <code>kwdyz11</code> <span class="citation" data-cites="Kliegl2015">(<a href="#ref-Kliegl2015" role="doc-biblioref">Kliegl et al., 2015</a>)</span>, run at Potsdam with additional manipulations of target size and rectangle orientation. With more data and more conditions it estimates the theoretically critical spatial–attraction correlation parameter that was the source of the singularity in the original study, and is the running example for principled reduction of model complexity. See the <a href="https://juliamixedmodels.github.io/MixedModelsDatasets.jl/stable/datasets/#kkl15">upstream entry</a>.</p>
 <p><strong>Citation:</strong> <span class="citation" data-cites="Kliegl2015">Kliegl et al. (<a href="#ref-Kliegl2015" role="doc-biblioref">2015</a>)</span>.</p>
 <div id="12" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -1154,9 +1159,9 @@ Kliegl, R., Wei, P., Dambacher, M., Yan, M., &amp; Zhou, X. (2011). Experimental
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
-">e563d55
-</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
+">39af12d
+</a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
 </section>

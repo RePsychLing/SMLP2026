@@ -2,23 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-08-23">
 
 <title>Contrast Coding of Visual Attention Effects – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -99,14 +102,14 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-2031d5dd4b2b06e5a05dd6ad86b95408.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="../site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -457,6 +460,12 @@ div.csl-indent {
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -614,6 +623,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MixedModels.jl cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../reference/arrow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
@@ -654,8 +669,7 @@ div.csl-indent {
   <li><a href="#anova-coding" id="toc-anova-coding" class="nav-link" data-scroll-target="#anova-coding"><span class="header-section-number">5.1</span> Anova Coding</a></li>
   <li><a href="#nested-coding" id="toc-nested-coding" class="nav-link" data-scroll-target="#nested-coding"><span class="header-section-number">5.2</span> Nested coding</a></li>
   </ul></li>
-  <li><a href="#an-example-for-a-complex-example-group2-x-a2-x-b2" id="toc-an-example-for-a-complex-example-group2-x-a2-x-b2" class="nav-link" data-scroll-target="#an-example-for-a-complex-example-group2-x-a2-x-b2"><span class="header-section-number">6</span> An Example for a complex example: Group(2) x A(2) x B(2)</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7</span> Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6</span> Exercises</a></li>
   </ul>
 <div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/RePsychLing/SMLP2026/edit/main/contrasts/contrasts_kwdyz11.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RePsychLing/SMLP2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -683,7 +697,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-06-21</p>
+      <p class="date">2026-08-23</p>
     </div>
   </div>
   
@@ -725,7 +739,7 @@ div.csl-indent {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Chain</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModels</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: dataset</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsDatasets</span>: dataset</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsBase</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StatsModels</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>progress <span class="op">=</span> <span class="cn">false</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1913,536 +1927,8 @@ div.csl-indent {
 <p>The three contrasts for one main effect and two nested contrasts are orthogonal. There is no test of the interaction (parallelism).</p>
 </section>
 </section>
-<section id="an-example-for-a-complex-example-group2-x-a2-x-b2" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> An Example for a complex example: Group(2) x A(2) x B(2)</h1>
-<p>Three factors:</p>
-<ul>
-<li>G(roup): G1, G2 - between subjects</li>
-<li>A: A1, A2, - within subjects</li>
-<li>B: B1, B2, B3 - within subjects</li>
-</ul>
-<p>2 x 3 = 6 measures / subject</p>
-<!-- TODO: where does this data come from? document in used datasets -->
-<div id="78" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> <span class="fu">dataset</span>(<span class="op">:</span>exp_2x2x3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Arrow.Table with 396 rows, 5 columns, and schema:
- :Subj   String
- :Group  String
- :A      String
- :B      String
- :dv     Float64</code></pre>
-</div>
-</div>
-<p>We select an LMM supported by the data.</p>
-<div id="80" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cntrst2 <span class="op">=</span> <span class="fu">Dict</span>(</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>Group <span class="op">=&gt;</span> <span class="fu">SeqDiffCoding</span>(; levels<span class="op">=</span>[<span class="st">"G1"</span>, <span class="st">"G2"</span>]),</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>A <span class="op">=&gt;</span> <span class="fu">SeqDiffCoding</span>(; levels<span class="op">=</span>[<span class="st">"A1"</span>, <span class="st">"A2"</span>]),</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span>B <span class="op">=&gt;</span> <span class="fu">SeqDiffCoding</span>(; levels<span class="op">=</span>[<span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"B3"</span>]),</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>f6_cpx <span class="op">=</span> <span class="pp">@formula</span>(dv <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Group<span class="op">*</span>A<span class="op">*</span>B   <span class="op">+</span> (<span class="fl">1</span> <span class="op">+</span> A<span class="op">+</span>B <span class="op">|</span> Subj));</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>f6_zcp <span class="op">=</span> <span class="pp">@formula</span>(dv <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Group<span class="op">*</span>A<span class="op">*</span>B   <span class="op">+</span> <span class="fu">zerocorr</span>(<span class="fl">1</span> <span class="op">+</span> A<span class="op">+</span>B <span class="op">|</span> Subj));</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>f6_ovi <span class="op">=</span> <span class="pp">@formula</span>(dv <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> Group<span class="op">*</span>A<span class="op">*</span>B   <span class="op">+</span>  (<span class="fl">1</span> <span class="op">|</span> Subj));</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="82" class="cell" data-execution_count="0">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>m6_cpx <span class="op">=</span> <span class="fu">fit</span>(MixedModel, f6_cpx, dat2; contrasts<span class="op">=</span>cntrst2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="84" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Subj</th>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">29.5404</td>
-<td style="text-align: right;">1.0697</td>
-<td style="text-align: right;">27.62</td>
-<td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">8.5500</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2</td>
-<td style="text-align: right;">-6.3605</td>
-<td style="text-align: right;">2.1394</td>
-<td style="text-align: right;">-2.97</td>
-<td style="text-align: right;">0.0029</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A: A2</td>
-<td style="text-align: right;">-0.0074</td>
-<td style="text-align: right;">0.3796</td>
-<td style="text-align: right;">-0.02</td>
-<td style="text-align: right;">0.9844</td>
-<td style="text-align: right;">0.3183</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B: B2</td>
-<td style="text-align: right;">0.1856</td>
-<td style="text-align: right;">0.5132</td>
-<td style="text-align: right;">0.36</td>
-<td style="text-align: right;">0.7175</td>
-<td style="text-align: right;">1.8073</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B: B3</td>
-<td style="text-align: right;">-0.9345</td>
-<td style="text-align: right;">0.4665</td>
-<td style="text-align: right;">-2.00</td>
-<td style="text-align: right;">0.0451</td>
-<td style="text-align: right;">0.5001</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; A: A2</td>
-<td style="text-align: right;">0.2392</td>
-<td style="text-align: right;">0.7591</td>
-<td style="text-align: right;">0.32</td>
-<td style="text-align: right;">0.7527</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group: G2 &amp; B: B2</td>
-<td style="text-align: right;">1.9668</td>
-<td style="text-align: right;">1.0263</td>
-<td style="text-align: right;">1.92</td>
-<td style="text-align: right;">0.0553</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; B: B3</td>
-<td style="text-align: right;">0.0872</td>
-<td style="text-align: right;">0.9330</td>
-<td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.9256</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A: A2 &amp; B: B2</td>
-<td style="text-align: right;">3.5336</td>
-<td style="text-align: right;">0.9248</td>
-<td style="text-align: right;">3.82</td>
-<td style="text-align: right;">0.0001</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">A: A2 &amp; B: B3</td>
-<td style="text-align: right;">0.5232</td>
-<td style="text-align: right;">0.9248</td>
-<td style="text-align: right;">0.57</td>
-<td style="text-align: right;">0.5715</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group: G2 &amp; A: A2 &amp; B: B2</td>
-<td style="text-align: right;">2.8335</td>
-<td style="text-align: right;">1.8496</td>
-<td style="text-align: right;">1.53</td>
-<td style="text-align: right;">0.1255</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; A: A2 &amp; B: B3</td>
-<td style="text-align: right;">-2.3042</td>
-<td style="text-align: right;">1.8496</td>
-<td style="text-align: right;">-1.25</td>
-<td style="text-align: right;">0.2128</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Residual</td>
-<td style="text-align: right;">3.7548</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="86" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m6_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>true</code></pre>
-</div>
-</div>
-<div id="88" class="cell" data-execution_count="0">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>m6_zcp <span class="op">=</span> <span class="fu">fit</span>(MixedModel, f6_zcp, dat2; contrasts<span class="op">=</span>cntrst2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="90" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Subj</th>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">29.5404</td>
-<td style="text-align: right;">1.0698</td>
-<td style="text-align: right;">27.61</td>
-<td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">8.5483</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2</td>
-<td style="text-align: right;">-6.3605</td>
-<td style="text-align: right;">2.1395</td>
-<td style="text-align: right;">-2.97</td>
-<td style="text-align: right;">0.0030</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A: A2</td>
-<td style="text-align: right;">-0.0074</td>
-<td style="text-align: right;">0.3805</td>
-<td style="text-align: right;">-0.02</td>
-<td style="text-align: right;">0.9845</td>
-<td style="text-align: right;">0.0000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B: B2</td>
-<td style="text-align: right;">0.1856</td>
-<td style="text-align: right;">0.4992</td>
-<td style="text-align: right;">0.37</td>
-<td style="text-align: right;">0.7100</td>
-<td style="text-align: right;">1.4527</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B: B3</td>
-<td style="text-align: right;">-0.9345</td>
-<td style="text-align: right;">0.4660</td>
-<td style="text-align: right;">-2.01</td>
-<td style="text-align: right;">0.0449</td>
-<td style="text-align: right;">0.0000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; A: A2</td>
-<td style="text-align: right;">0.2392</td>
-<td style="text-align: right;">0.7610</td>
-<td style="text-align: right;">0.31</td>
-<td style="text-align: right;">0.7533</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group: G2 &amp; B: B2</td>
-<td style="text-align: right;">1.9668</td>
-<td style="text-align: right;">0.9984</td>
-<td style="text-align: right;">1.97</td>
-<td style="text-align: right;">0.0488</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; B: B3</td>
-<td style="text-align: right;">0.0872</td>
-<td style="text-align: right;">0.9321</td>
-<td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.9255</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A: A2 &amp; B: B2</td>
-<td style="text-align: right;">3.5336</td>
-<td style="text-align: right;">0.9321</td>
-<td style="text-align: right;">3.79</td>
-<td style="text-align: right;">0.0001</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">A: A2 &amp; B: B3</td>
-<td style="text-align: right;">0.5232</td>
-<td style="text-align: right;">0.9321</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.5745</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group: G2 &amp; A: A2 &amp; B: B2</td>
-<td style="text-align: right;">2.8335</td>
-<td style="text-align: right;">1.8641</td>
-<td style="text-align: right;">1.52</td>
-<td style="text-align: right;">0.1285</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; A: A2 &amp; B: B3</td>
-<td style="text-align: right;">-2.3042</td>
-<td style="text-align: right;">1.8641</td>
-<td style="text-align: right;">-1.24</td>
-<td style="text-align: right;">0.2164</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Residual</td>
-<td style="text-align: right;">3.7843</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="92" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m6_zcp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>true</code></pre>
-</div>
-</div>
-<div id="94" class="cell" data-execution_count="0">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>m6_ovi <span class="op">=</span> <span class="fu">fit</span>(MixedModel, f6_ovi, dat2; contrasts<span class="op">=</span>cntrst2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="96" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Est.</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">z</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">σ_Subj</th>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">29.5404</td>
-<td style="text-align: right;">1.0698</td>
-<td style="text-align: right;">27.61</td>
-<td style="text-align: right;">&lt;1e-99</td>
-<td style="text-align: right;">8.5428</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2</td>
-<td style="text-align: right;">-6.3605</td>
-<td style="text-align: right;">2.1395</td>
-<td style="text-align: right;">-2.97</td>
-<td style="text-align: right;">0.0030</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A: A2</td>
-<td style="text-align: right;">-0.0074</td>
-<td style="text-align: right;">0.3879</td>
-<td style="text-align: right;">-0.02</td>
-<td style="text-align: right;">0.9848</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B: B2</td>
-<td style="text-align: right;">0.1856</td>
-<td style="text-align: right;">0.4751</td>
-<td style="text-align: right;">0.39</td>
-<td style="text-align: right;">0.6960</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B: B3</td>
-<td style="text-align: right;">-0.9345</td>
-<td style="text-align: right;">0.4751</td>
-<td style="text-align: right;">-1.97</td>
-<td style="text-align: right;">0.0492</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; A: A2</td>
-<td style="text-align: right;">0.2392</td>
-<td style="text-align: right;">0.7758</td>
-<td style="text-align: right;">0.31</td>
-<td style="text-align: right;">0.7579</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group: G2 &amp; B: B2</td>
-<td style="text-align: right;">1.9668</td>
-<td style="text-align: right;">0.9502</td>
-<td style="text-align: right;">2.07</td>
-<td style="text-align: right;">0.0385</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; B: B3</td>
-<td style="text-align: right;">0.0872</td>
-<td style="text-align: right;">0.9502</td>
-<td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.9269</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A: A2 &amp; B: B2</td>
-<td style="text-align: right;">3.5336</td>
-<td style="text-align: right;">0.9502</td>
-<td style="text-align: right;">3.72</td>
-<td style="text-align: right;">0.0002</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">A: A2 &amp; B: B3</td>
-<td style="text-align: right;">0.5232</td>
-<td style="text-align: right;">0.9502</td>
-<td style="text-align: right;">0.55</td>
-<td style="text-align: right;">0.5819</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Group: G2 &amp; A: A2 &amp; B: B2</td>
-<td style="text-align: right;">2.8335</td>
-<td style="text-align: right;">1.9004</td>
-<td style="text-align: right;">1.49</td>
-<td style="text-align: right;">0.1360</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Group: G2 &amp; A: A2 &amp; B: B3</td>
-<td style="text-align: right;">-2.3042</td>
-<td style="text-align: right;">1.9004</td>
-<td style="text-align: right;">-1.21</td>
-<td style="text-align: right;">0.2253</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Residual</td>
-<td style="text-align: right;">3.8580</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="98" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">issingular</span>(m6_ovi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>false</code></pre>
-</div>
-</div>
-<div id="100" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>MixedModels.<span class="fu">likelihoodratiotest</span>(m6_ovi, m6_zcp, m6_cpx)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">model-dof</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">-2 logLik</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">χ²</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">χ²-dof</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">P(&gt;χ²)</th>
-</tr>
-<tr class="even">
-<td style="text-align: left;">dv ~ 1 + Group + A + B + Group &amp; A + Group &amp; B + A &amp; B + Group &amp; A &amp; B + (1 | Subj)</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">-2419</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">dv ~ 1 + Group + A + B + Group &amp; A + Group &amp; B + A &amp; B + Group &amp; A &amp; B + zerocorr(1 + A + B | Subj)</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">-2418</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">0.8302</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">dv ~ 1 + Group + A + B + Group &amp; A + Group &amp; B + A &amp; B + Group &amp; A &amp; B + (1 + A + B | Subj)</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">-2416</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">0.9597</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>There is a significant interaction between A and the first contrast of B (i.e., B2 - B1). The interaction is not significant for A and the second contrast of B (i.e., B3 - B2). This implies that the left pair of lines in the following figure is statistically not parallel and that we do not have sufficient evidence that the right pair of lines is not parallel.</p>
-<div id="102" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DataFrame</span>(<span class="fu">coeftable</span>(m6_ovi))[<span class="fl">9</span><span class="op">:</span><span class="fl">10</span>, <span class="op">:</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<div><div style="float: left;"><span>2×5 DataFrame</span></div><div style="clear: both;"></div></div><div class="data-frame" style="overflow-x: scroll;">
-<table class="data-frame caption-top table table-sm table-striped small">
-<thead>
-<tr class="columnLabelRow header">
-<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Row</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Name</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Coef.</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Std. Error</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">z</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Pr(&gt;|z|)</th>
-</tr>
-<tr class="columnLabelRow even">
-<th class="stubheadLabel" data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"></th>
-<th style="text-align: left;" data-quarto-table-cell-role="th" title="String">String</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th" title="Float64">Float64</th>
-</tr>
-</thead>
-<tbody>
-<tr class="dataRow odd">
-<td class="rowLabel" style="text-align: right; font-weight: bold;">1</td>
-<td style="text-align: left;">A: A2 &amp; B: B2</td>
-<td style="text-align: right;">3.53363</td>
-<td style="text-align: right;">0.950202</td>
-<td style="text-align: right;">3.71882</td>
-<td style="text-align: right;">0.000200157</td>
-</tr>
-<tr class="dataRow even">
-<td class="rowLabel" style="text-align: right; font-weight: bold;">2</td>
-<td style="text-align: left;">A: A2 &amp; B: B3</td>
-<td style="text-align: right;">0.523243</td>
-<td style="text-align: right;">0.950202</td>
-<td style="text-align: right;">0.550665</td>
-<td style="text-align: right;">0.581863</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="104" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Chain</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>tbl1 <span class="op">=</span> <span class="pp">@chain</span> <span class="fu">DataFrame</span>(dat2) <span class="cf">begin</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(_, [<span class="op">:</span>Subj, <span class="op">:</span>A, <span class="op">:</span>B])</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(_, nrow <span class="op">=&gt;</span> <span class="op">:</span>n, <span class="op">:</span>dv <span class="op">=&gt;</span> mean <span class="op">=&gt;</span> <span class="op">:</span>dv)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">groupby</span>(_, [<span class="op">:</span>A, <span class="op">:</span>B])</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">combine</span>(_, </span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>          <span class="op">:</span>dv <span class="op">=&gt;</span> mean <span class="op">=&gt;</span> <span class="op">:</span>dv_M,</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>          <span class="op">:</span>dv <span class="op">=&gt;</span> std <span class="op">=&gt;</span> <span class="op">:</span>dv_SD,</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>          <span class="op">:</span>dv <span class="op">=&gt;</span> sem <span class="op">=&gt;</span> <span class="op">:</span>dv_SE)</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span> </span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>(; size<span class="op">=</span>(<span class="fl">300</span>, <span class="fl">300</span>))</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>plt <span class="op">=</span> <span class="fu">data</span>(tbl1) <span class="op">*</span> <span class="fu">mapping</span>(<span class="op">:</span>B, <span class="op">:</span>dv_M; color<span class="op">=:</span>A) <span class="op">*</span> (<span class="fu">visual</span>(Lines) <span class="op">+</span> <span class="fu">visual</span>(Scatter))</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="fu">draw!</span>(fig, plt)</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>fig</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<img width="300" height="300" style="object-fit: contain; height: auto;" src="data:image/png;base64, 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SUkJVquVVatW4VRSUsKuXbsYNGgQ3t7eDBo0iOLiYho0aICvry8dO3Zk7969JCcn88UXX9CiRQvchd1uJy8vjyVLlhAbG4vD4eDo0aO8+OKL9OnTh6VLl+LUtm1bzp8/T7du3di+fTtNmjRh6dKltGnTBneiEC4jICCA2rVrc0VaWhpLlixhzZo1pKamcvnyZVq0aMHu3bspKSnBnSmlqF27NlfUrVuX7du388033zBo0CCWLFnCL7/8wnfffYfNZsPJ29ubV155hRYtWuBu4uPjiY+Px6lOnToUFRXRt29fnDIyMvj22285ffo04eHhON1zzz3MmTOHNm3a4E4UwmXl5eVx4cIFatSogZOPjw+zZ8/GqU2bNniaY8eOkZSUhFNeXh4PPfQQNpuNKypVqsSqVavwBMeOHaNGjRo4mUwmRo4cSXh4OFdUq1aNkydP4m4UwmXs3LmTgQMH4lRQUMDq1avp0aMHd911F05Go5HatWvjZDabcWc5OTkMHDgQp9LSUnbv3o3BYGDYsGE49enTh6udO3eOd999l7vuugt39NprrxEYGIjD4eD48ePs2LGDL774AqeEhAReeuklnGbPns3evXv5/PPP+fjjj3E3CuEyysrKKCwsxEnTNKKioliwYAFdu3alfv36eBKHw0FhYSFXhIeHs2rVKubPn89jjz3G1T799FMGDx5MpUqVeO2113BHRUVFFBYW4uTr60tJSQmTJk1i9uzZGAwGrti1axcZGRmYTCbckUK4jNTUVGbOnMnVunXrxt///ne++uorPImfnx8zZ87kam+//TZDhgyhT58+mEwmfvnlFx555BF27tzJK6+8wiOPPIKmabijESNGEB8fzxUHDx6kWrVq9OvXjwYNGnDFm2++idO4cePo1asX+/fvx50ohEtr2LAho0aNQkDDhg3Jycnhxx9/JDIykubNm1OvXj0OHjyIzWbDk8TFxREcHMzOnTs5fPgwu3fvZty4cVzRqFEjhg4dSlFRERaLBXehEC4rJyeHuXPnUq9ePTyd3W5n5syZBAcHU7lyZd544w3Kysp477330DQNT7Nw4UIuXLhA3bp1OXv2LLNmzWLQoEGUL18epxUrVhAfH4/FYsGdKITLWLZsGRUqVOCKs2fPEh8fz9SpU/E0586do0KFClyRlZWF1Wpl7ty5mM1mNmzYwJEjR/D19eVq1atXZ+vWrbibZs2aoZTCqaCggMuXLzN69GhSU1NxOBw0bdqUpKQkmjZtyunTp9m3bx9Lly7F3SiES3j55Zd5/PHHuULTNMLCwqhatSoGg4FrzZ8/n4oVK+KO2rdvT3x8PFfz8/OjevXqWK1WnF5++WUGDBjAtXx8fHAn0dHRrF69mqtZLBbi4+MJDAzESdM0li1bxsqVKzlw4AAhISG0atWKkJAQ3I1CuITq1atTvXp1/qgGDRrgriIiIoiIiOB/qVOnDp7A29ubZs2a8Ue0atWKVq1a4c4UQgihEwohhNAJhRBC6IRCCCF0QiGEEDqhEEIInVAIIYROKIRwcePGjWPdunVcYTKZqFq1Kk888QQxMTEIz6EQwsXt2LGD06dP07NnT5zy8/P56quvePvtt8nIyCAqKgrhGRRC6EDVqlUZOHAgVzz33HPExsby6aefMmDAAIRnUAihQyaTCYvFQmhoKMJzKITQgVOnTvHZZ5/hVFBQwOeff05UVBTt2rVDeA6FEDqwe/duhg4dyhUnT56kWbNmFBQU4Ovri/AMCiF0oE2bNsyfP58rCgoKaNmyJYMHD2bevHkIz6AQQoe8vLx48MEHGTNmDMJzKITQqbVr1xIVFYXwHAohdGDLli306NGDK3788Uf27NnDsmXLEJ5DIYSL69ixI/Hx8VyhaRqNGzfm7rvvJiYmBuE5FEK4uI4dO9KxY0eEUAghhE4ohBBCJxRCCKETCiGE0AmFEELohEIIIXRCIYQQOqEQQgidUAghhE4ohBBCJxRCCKETCiGE0AmFEELohEIIIXRCIYQQOqEQQgidUAghhE78P0y4vS5PPFg+AAAAAElFTkSuQmCC">
-</div>
-</div>
-</section>
-<section id="exercises" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Exercises</h1>
+<section id="exercises" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Exercises</h1>
 <ol type="1">
 <li><strong>Intercept meaning.</strong> Fit the model once with <code>DummyCoding</code> and once with <code>EffectsCoding</code> for the four-level CTR factor. What does the intercept estimate in each case?</li>
 </ol>
@@ -2501,9 +1987,9 @@ Schad, D. J., Vasishth, S., Hohenstein, S., &amp; Kliegl, R. (2020). How to capi
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
-">e563d55
-</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
+">39af12d
+</a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
 </section>

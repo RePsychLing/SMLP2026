@@ -2,23 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-06-21">
+<meta name="dcterms.date" content="2026-08-23">
 
 <title>Tenth Summer School on Statistical Methods for Linguistics and Psychology – SMLP2026: Advanced Frequentist Track</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -43,14 +46,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-3681b7500170391c608fcfe10660c3d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-18c52899f572187d076ab9ff57424338.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-2031d5dd4b2b06e5a05dd6ad86b95408.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-920b473dd2f6ad3167b79306dac5d73b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
 <script src="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
 <link href="site_libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
@@ -401,6 +404,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Model Specification and Selection: Masson, Rabe &amp; Kliegl (2017)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./model-specification/partial_within.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partially-within subjects designs</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -558,6 +567,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./reference/mixedmodels_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MixedModels.jl cheatsheet</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./reference/arrow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Saving data with Arrow</span></a>
   </div>
@@ -613,7 +628,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-06-21</p>
+      <p class="date">2026-08-23</p>
     </div>
   </div>
   
@@ -626,12 +641,29 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This site provides materials for the <strong>Advanced frequentist methods</strong> stream of the <a href="https://vasishth.github.io/SMLP2026/">Summer School on Statistical Methods</a> to be held at the University of Potsdam, 24–28 August 2026. The stream focuses on fitting, evaluating, and interpreting linear and generalized linear mixed-effects models using the <a href="https://julialang.org">Julia programming language</a> and the <a href="https://juliastats.org/MixedModels.jl/stable/">MixedModels.jl</a> package.</p>
+<p>These materials are hands-on and example-driven. For the theoretical foundations behind them, the companion is <a href="https://www.embraceuncertaintybook.com"><em>Embrace Uncertainty</em></a>, the in-progress book on mixed-effects models in Julia by Douglas Bates and the course instructors; individual pages link to the relevant book chapters for deeper treatment.</p>
 <section id="how-to-use-these-materials" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> How to use these materials</h1>
 <p>Every page is a complete, runnable analysis. You can engage with them two ways:</p>
 <ul>
-<li><strong>Read along.</strong> The rendered website shows all code and its output, so you can follow the reasoning without running anything. Good for a first pass.</li>
-<li><strong>Run locally.</strong> Clone the repository and execute the code yourself — change things, break things, and do the <a href="#exercises-and-self-check">exercises</a> at the bottom of each core page. This is where the learning happens. Start with <a href="./getting-started/setup.html">Setup: installing the tools</a>.</li>
+<li><p><strong>Read along.</strong> The rendered website shows all code and its output, so you can follow the reasoning without running anything. Good for a first pass.</p></li>
+<li><p><strong>Run locally.</strong> Clone the repository and execute the code yourself — change things, break things, and do the <a href="#exercises-and-self-check">exercises</a> at the bottom of each core page. This is where the learning happens. Start with <a href="./getting-started/setup.html">Setup: installing the tools</a>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Hidden blocks in the source code">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hidden blocks in the source code
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Note that most pages include some hidden functionality to make cache results and make rendering the website as a whole faster. You should feel free to skip blocks including calls to the function <code>fit_or_restore!</code>. These blocks are not visible in the rendered course webpage and are only visible if you look at the <code>.qmd</code> files directly</p>
+</div>
+</div>
+</div></li>
 </ul>
 <p>Most pages in the core path open with a <strong>Learning objectives</strong> box (what you’ll be able to do afterwards) and a <strong>Before you start</strong> box (which pages to read first and which datasets are used), so you can navigate and pace yourself without an instructor in the room.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="I just need to look something up">
@@ -644,7 +676,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <a href="./reference/useful_packages.html">Reference &amp; Appendix</a> section is lookup material, not a lesson sequence: a tour of <a href="./reference/useful_packages.html">useful Julia packages</a>, how to <a href="./reference/arrow.html">save and load data with Arrow</a>, and <a href="./reference/pkg.html">package management for reproducible environments</a>. Dip in as needed.</p>
+<p>The <a href="./reference/useful_packages.html">Reference &amp; Appendix</a> section is lookup material, not a lesson sequence: a tour of <a href="./reference/useful_packages.html">useful Julia packages</a>, a <a href="./reference/mixedmodels_cheatsheet.html">cheatsheet of MixedModels.jl extractor functions</a>, how to <a href="./reference/arrow.html">save and load data with Arrow</a>, and <a href="./reference/pkg.html">package management for reproducible environments</a>. Dip in as needed.</p>
 </div>
 </div>
 </section>
@@ -654,7 +686,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong><a href="./getting-started/setup.html">Start Here</a></strong> — install the tools, meet the instructors, and skim the <a href="./getting-started/datasets.html">dataset catalog</a>.</li>
 <li><strong>Foundations: Linear Mixed Models</strong> — fit and interpret your first mixed model (<a href="./lmm-intro/sleepstudy.html">sleepstudy</a>) and learn to recognize <a href="./lmm-intro/singularity.html">singular fits</a>.</li>
 <li><strong>Seeing Your Model</strong> — <a href="./visualization/shrinkageplot.html">shrinkage plots</a> and <a href="./visualization/AoGPlots.html">multi-panel graphics</a>; diagnostic tools you’ll reuse everywhere.</li>
-<li><strong>Building Models</strong> — random-effects <a href="./model-specification/partial_within.html">specification</a> and selection for <a href="./model-specification/mrk17.html">designed</a> and <a href="./model-specification/largescaledesigned.html">large-scale</a> experiments.</li>
+<li><strong>Building Models</strong> — random-effects <a href="./model-specification/partial_within.html">specification</a> and selection for <a href="./model-specification/mrk17.html">designed experiments</a>; for modeling a large-scale experiment (the English Lexicon Project), see the <a href="https://www.embraceuncertaintybook.com/largescaledesigned.html">corresponding chapter</a> of <em>Embrace Uncertainty</em>.</li>
 <li><strong>Contrast Coding &amp; Transformations</strong> — make your coefficients answer the questions you actually care about (<a href="./contrasts/transformation.html">transformations</a>, contrast schemes).</li>
 <li><strong>Inference &amp; Uncertainty</strong> — <a href="./inference/bootstrap.html">bootstrap</a>, <a href="./inference/profiling.html">profiling</a>, and <a href="./inference/power_simulation.html">power simulation</a>.</li>
 <li><strong>Generalized Linear Mixed Models</strong> — <a href="./glmm/glmm.html">extending to non-Gaussian responses</a>.</li>
@@ -735,9 +767,9 @@ ul.task-list li input[type="checkbox"] {
 <h1 data-number="5"><span class="header-section-number">5</span> Getting started</h1>
 <p>New here? Head to <strong><a href="./getting-started/setup.html">Setup: installing the tools</a></strong> to get git, Julia, and Quarto working before the course, then read <strong><a href="./getting-started/about.html">About</a></strong> for the course framing and instructor bios.</p>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/e563d55
-">e563d55
-</a> using Quarto 1.9.38 and Julia 1.12.6.</em></p>
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
+">39af12d
+</a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
 </section>
