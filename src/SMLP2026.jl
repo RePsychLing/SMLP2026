@@ -147,7 +147,8 @@ end
 
 function fit_or_restore!(model::MixedModel, fname;
                          force=false, restore_kwargs=(; atol=1e-8), 
-                         fallback_to_new_fit=true, fit_kwargs...)
+                         fallback_to_new_fit=true, 
+                         progress=false, fit_kwargs...)
     fname = _normalize_model_cache_path(fname)
     @debug "cache path: $(fname)"
     if isfile(fname) && !force
@@ -167,7 +168,7 @@ function fit_or_restore!(model::MixedModel, fname;
     end
 
     @debug "fitting model"
-    fit!(model; fit_kwargs...)
+    fit!(model; progress, fit_kwargs...)
     zip = ZipFile.Writer(fname)
     try
         f = ZipFile.addfile(zip, "model.json"; method=ZipFile.Deflate)
