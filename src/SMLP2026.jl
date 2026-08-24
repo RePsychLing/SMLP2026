@@ -19,6 +19,8 @@ using Suppressor
 # using TypedTables      # only needed by dataset machinery
 using ZipFile
 
+include("RK_GLMM_utilities.jl")
+
 # const CACHE = Ref("")
 # const MMDS = String[]
 
