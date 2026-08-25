@@ -8,7 +8,7 @@
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-08-23">
+<meta name="dcterms.date" content="2026-08-24">
 
 <title>Saving data with Arrow – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -687,7 +687,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-08-23</p>
+      <p class="date">2026-08-24</p>
     </div>
   </div>
   
@@ -739,9 +739,10 @@ div.csl-indent {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># downloads the file to a temporary directory</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fn <span class="op">=</span> <span class="fu">joinpath</span>(DATADIR, <span class="st">"emotikon.rds"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> !<span class="fu">isfile</span>(fn)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@info</span> <span class="st">"Downloading Emotikon data"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Downloads</span>.<span class="fu">download</span>(<span class="st">"https://osf.io/xawdb/download?version=2"</span>, fn)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mkpath</span>(DATADIR)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="pp">@info</span> <span class="st">"Downloading Emotikon data"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Downloads</span>.<span class="fu">download</span>(<span class="st">"https://osf.io/xawdb/download?version=2"</span>, fn)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="6" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dfrm <span class="op">=</span> <span class="fu">load</span>(fn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3430,8 +3431,8 @@ Fühner, T., Granacher, U., Golle, K., &amp; Kliegl, R. (2021). Age and sex effe
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/39af12d
-">39af12d
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/2f4615b
+">2f4615b
 </a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
