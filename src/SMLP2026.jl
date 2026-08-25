@@ -28,11 +28,13 @@ const DATADIR = joinpath(dirname(@__DIR__), "data")
 const FITSDIR = joinpath(dirname(@__DIR__), "fits")
 export DATADIR, FITSDIR
 
-# function __init__()
+function __init__()
 #     CACHE[] = @get_scratch!("data")
 #     mkpath(CACHE[])
 #     append!(MMDS, MixedModelsDatasets.datasets())
-# end
+      mkpath(DATADIR)
+      mkpath(FITSDIR)
+end
 
 # include("datasets.jl")
 include("tagpad.jl")
