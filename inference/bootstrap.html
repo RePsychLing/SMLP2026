@@ -8,7 +8,7 @@
 
 <meta name="author" content="Phillip Alday">
 <meta name="author" content="Reinhold Kliegl">
-<meta name="dcterms.date" content="2026-08-23">
+<meta name="dcterms.date" content="2026-08-26">
 
 <title>Parametric bootstrap for mixed-effects models – SMLP2026: Advanced Frequentist Track</title>
 <style>
@@ -716,7 +716,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026-08-23</p>
+      <p class="date">2026-08-26</p>
     </div>
   </div>
   
@@ -1313,7 +1313,7 @@ window.Quarto = {
 </section>
 <section id="singularity" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Singularity</h1>
-<p>Let’s consider the classic dysetuff dataset:</p>
+<p>Let’s consider the classic dyestuff dataset:</p>
 <div id="38" class="cell" data-execution_count="0">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dyestuff <span class="op">=</span> <span class="fu">dataset</span>(<span class="op">:</span>dyestuff)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mdye <span class="op">=</span> <span class="fu">fit</span>(MixedModel, <span class="pp">@formula</span>(yield <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> (<span class="fl">1</span> <span class="op">|</span> batch)), dyestuff)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1511,8 +1511,8 @@ Kronmüller, E., &amp; Barr, D. J. (2007). Perspective-free pragmatics: Broken p
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/2f4615b
-">2f4615b
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/8438abc
+">8438abc
 </a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
