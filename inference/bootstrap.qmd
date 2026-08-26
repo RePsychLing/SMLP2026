@@ -5,7 +5,7 @@ julia:
   exeflags: ["--project", "--threads=auto"]
 ---
 
-::: {.objectives title="Learning objectives"} 
+::: {.objectives title="Learning objectives"}
 After working through this page you will be able to:
 
 - explain what the parametric bootstrap does and why it can give more accurate intervals than Wald or other methods based on the standard error;
@@ -152,7 +152,7 @@ To bootstrap the model parameters, first initialize a random number generator th
 
 ```{julia}
 const RNG = MersenneTwister(42)
-samp = parametricbootstrap(RNG, 5_000, 2180.64 m1; progress)
+samp = parametricbootstrap(RNG, 5_000, m1; progress)
 tbl = samp.tbl
 ```
 
