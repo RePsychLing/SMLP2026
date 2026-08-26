@@ -152,7 +152,7 @@ To bootstrap the model parameters, first initialize a random number generator th
 
 ```{julia}
 const RNG = MersenneTwister(42)
-samp = parametricbootstrap(RNG, 5_000, m1; progress)
+samp = parametricbootstrap(RNG, 5_000, 2180.64 m1; progress)
 tbl = samp.tbl
 ```
 
@@ -208,7 +208,7 @@ ridgeplot(samp; show_intercept=false)
 
 # Singularity
 
-Let's consider the classic dysetuff dataset:
+Let's consider the classic dyestuff dataset:
 
 ```{julia}
 #| eval: false
