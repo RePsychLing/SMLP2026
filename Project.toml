@@ -51,11 +51,11 @@ TypedTables = "9d95f2ec-7b3d-5a63-8d20-e2491e220bb9"
 ZipFile = "a5390f91-8eb1-5f08-bee0-b1d1ffed6cea"
 
 [compat]
-AlgebraOfGraphics = "0.10"
+AlgebraOfGraphics = "0.10, 0.13"
 Arrow = "2"
 BoxCox = "0.3.3"
 CSV = "0.10"
-CairoMakie = "0.13"
+CairoMakie = "0.13, 0.15"
 Chain = "0.6"
 DataFrameMacros = "0.4"
 DataFrames = "1.6"

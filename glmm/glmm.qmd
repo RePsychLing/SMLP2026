@@ -243,7 +243,8 @@ draw(
     @transform(
       contra,
       :numuse = Int(:use == "Y"),
-      :urb = ifelse(:urban == "Y", "Urban", "Rural")
+      :urb = ifelse(:urban == "Y", "Urban", "Rural"),
+      :age = Float64(:age)
     )
   ) *
   mapping(
