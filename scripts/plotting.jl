@@ -5,6 +5,7 @@ using DataFrames
 using Effects # like effects or emmeans
 using MixedModels # you know this one
 using MixedModelsDatasets # for the data
+using MixedModelsExtras # extra things that people ask for but we don't really endorse
 using Random # for the random number generator
 
 kb07 = dataset(:kb07)
@@ -102,3 +103,7 @@ draw(plt;
                titleposition=:left, 
                framevisible=false))
                     
+
+DataFrame(ictable(mkb07, mkb07_small))
+
+show(stdout, MIME("text/latex"), DataFrame(ictable(mkb07, mkb07_small)))
