@@ -18,14 +18,17 @@ mkb07 = lmm(@formula(rt_trunc ~ 1 + spkr * prec * load
                            :prec => EffectsCoding(),
                            :load => EffectsCoding()))
 
-mm = lmm(@formula(Y ~ 1 + (1|G) + (1|H)), dataset(:ml1m))
 mi = lmm(@formula(y ~ 1 + service + (1|s) + (1|d) + (1|dept)), dataset(:insteval))
+mm = lmm(@formula(Y ~ 1 + (1|G) + (1|H)), dataset(:ml1m))
 
+nestingplot(mkb07)
+nestingtable(mkb07)
+filter(:count => iszero, nestingtable(mkb07))
+nestingstructure(mkb07)
+nestingplot(mi)
+nestingplot(mm)
+
+# BUG HERE. I WILL FIX
 upsetplot(kb07; cols=Not([:subj, :item]))
 upsetplot(mkb07, :subj)
 upsetplot(mkb07, :item)
-nestingplot(mkb07)
-nestingtable(mkb07)
-filter(:count => ==(0), nestingtable(mkb07))
-nestingplot(mi)
-nestingplot(mm)
