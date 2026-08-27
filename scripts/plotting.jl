@@ -42,7 +42,7 @@ mkb07_small = lmm(@formula(rt_trunc ~ 1 + spkr * prec * load
                            :prec => EffectsCoding(base="maintain"),
                            :load => EffectsCoding()))
 
-bkb07 = parametricbootstrap(MersenneTwister(2708), 500, mkb07_small)
+bkb07 = parametricbootstrap(MersenneTwister(2708), 5000, mkb07_small)
 
 coefplot(mkb07)
 
@@ -61,3 +61,44 @@ ridgeplot(bkb07; ptype=:σ)
 ridgeplot(bkb07; 
           ptype=:sigma, 
           group=:subj)
+
+ridgeplot(bkb07; 
+          ptype=:rho)
+
+ridgeplot(bkb07; 
+          ptype=:rho,
+          histogram=true)
+
+ridgeplot(bkb07; 
+          ptype=:rho,
+          histogram=true,
+          bins=20)
+
+ridgeplot(bkb07; 
+          ptype=:θ)
+
+ridgeplot(bkb07; 
+          ptype=:θ,
+          histogram=true)   
+          
+eff = effects(Dict(:spkr => ["old", "new"],
+                   :prec => ["break", "maintain"],
+                   :load => ["yes", "no"]),
+             mkb07)
+
+plt = data(eff) * mapping(:spkr, :rt_trunc; 
+                          color=:load, 
+                          col=:prec) * visual(ScatterLines) 
+
+plt = data(eff) * mapping(:spkr; color=:load, col=:prec) * 
+                (mapping(:rt_trunc) * visual(ScatterLines) + 
+                 mapping(:lower, :upper) * visual(Band, alpha=0.3))
+
+draw(plt;
+     figure=(; title="kb07 model"),
+     axis=(; ylabel="Reaction Time (ms)",
+           xlabel="Speaker"),
+     legend=(; position=:bottom, 
+               titleposition=:left, 
+               framevisible=false))
+                    
