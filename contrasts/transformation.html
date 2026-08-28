@@ -795,27 +795,6 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MixedModelsDatasets</span>: dataset</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SMLP2026</span>: fit_or_restore</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> progress <span class="op">=</span> <span class="fu">isinteractive</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   1769.9 ms<span class="ansi-green-fg">  ✓ </span>Effects
-  1 dependency successfully precompiled in 2 seconds. 89 already precompiled.
-  <span class="ansi-yellow-fg">36</span> dependencies precompiled but <span class="ansi-yellow-fg">different versions are currently loaded</span> (Base64, Compat, Compat → CompatLinearAlgebraExt, Crayons, DataAPI, DataFrames, DataStructures, DataValueInterfaces, Dates, Future, InlineStrings, InteractiveUtils, InvertedIndices, IteratorInterfaceExtensions, JuliaSyntaxHighlighting, LaTeXStrings, Markdown, Missings, OrderedCollections, PooledArrays, PrecompileTools, Preferences, PrettyTables, Printf, REPL, Reexport, SentinelArrays, SortingAlgorithms, Statistics, StringManipulation, StyledStrings, TOML, TableTraits, Tables, UUIDs and Unicode). Restart julia to access the new versions. Otherwise, 23 dependents of these packages may trigger further precompilation to work with the unexpected versions.
-<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   2333.5 ms<span class="ansi-green-fg">  ✓ </span>Effects → EffectsGLMExt
-  1 dependency successfully precompiled in 2 seconds. 91 already precompiled.
-  <span class="ansi-yellow-fg">91</span> dependencies precompiled but <span class="ansi-yellow-fg">different versions are currently loaded</span> (Accessors, Accessors → LinearAlgebraExt, AliasTables, Base64, Combinatorics, CommonSolve, CommonSubexpressions, Compat, Compat → CompatLinearAlgebraExt, CompilerSupportLibraries_jll, CompositionsBase, CompositionsBase → CompositionsBaseInverseFunctionsExt, ConstructionBase, ConstructionBase → ConstructionBaseLinearAlgebraExt, Crayons, DataAPI, DataFrames, DataStructures, DataValueInterfaces, Dates, DiffResults, DiffRules, Distributions, DocStringExtensions, Effects, FillArrays, FillArrays → FillArraysPDMatsExt, FillArrays → FillArraysSparseArraysExt, FillArrays → FillArraysStatisticsExt, ForwardDiff, Future, GLM, Gamma, HypergeometricFunctions, InlineStrings, InteractiveUtils, InverseFunctions, InverseFunctions → InverseFunctionsDatesExt, InvertedIndices, IrrationalConstants, IteratorInterfaceExtensions, JLLWrappers, JuliaSyntaxHighlighting, LaTeXStrings, LogExpFunctions, LogExpFunctions → LogExpFunctionsInverseFunctionsExt, MacroTools, Markdown, Missings, NaNMath, OpenLibm_jll, OpenSpecFun_jll, OrderedCollections, PDMats, PDMats → StatsBaseExt, PooledArrays, PrecompileTools, Preferences, PrettyTables, Printf, PtrArrays, QuadGK, REPL, Reexport, Rmath, Rmath_jll, Roots, Roots → RootsForwardDiffExt, SentinelArrays, Serialization, ShiftedArrays, SortingAlgorithms, SparseArrays, SpecialFunctions, StaticArraysCore, Statistics, Statistics → SparseArraysExt, StatsAPI, StatsBase, StatsFuns, StatsFuns → StatsFunsInverseFunctionsExt, StatsModels, StringManipulation, StyledStrings, SuiteSparse, SuiteSparse_jll, TOML, TableTraits, Tables, UUIDs and Unicode). Restart julia to access the new versions. Otherwise, 1 dependent of these packages may trigger further precompilation to work with the unexpected versions.
-<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   4021.9 ms<span class="ansi-green-fg">  ✓ </span>Effects → EffectsMixedModelsExt
-  1 dependency successfully precompiled in 4 seconds. 163 already precompiled.
-  <span class="ansi-yellow-fg">163</span> dependencies precompiled but <span class="ansi-yellow-fg">different versions are currently loaded</span> (Accessors, Accessors → LinearAlgebraExt, Accessors → StaticArraysExt, Adapt, Adapt → AdaptSparseArraysExt, Adapt → AdaptStaticArraysExt, AliasTables, ArgTools, ArrayLayouts, ArrayLayouts → ArrayLayoutsSparseArraysExt, Arrow, ArrowTypes, BSplineKit, BandedMatrices, BandedMatrices → BandedMatricesSparseArraysExt, Base64, BitIntegers, CEnum, CodecLz4, CodecZstd, Combinatorics, CommonSolve, CommonSubexpressions, CommonWorldInvalidations, Compat, Compat → CompatLinearAlgebraExt, CompilerSupportLibraries_jll, CompositionsBase, CompositionsBase → CompositionsBaseInverseFunctionsExt, ConcurrentUtilities, ConstructionBase, ConstructionBase → ConstructionBaseLinearAlgebraExt, ConstructionBase → ConstructionBaseStaticArraysExt, Crayons, DataAPI, DataFrames, DataStructures, DataValueInterfaces, Dates, DelimitedFiles, Dictionaries, DiffResults, DiffRules, Distributed, Distributions, DocStringExtensions, Downloads, Effects, Effects → EffectsGLMExt, EnumX, ExprTools, FastGaussQuadrature, FillArrays, FillArrays → FillArraysPDMatsExt, FillArrays → FillArraysSparseArraysExt, FillArrays → FillArraysStaticArraysExt, FillArrays → FillArraysStatisticsExt, ForwardDiff, ForwardDiff → ForwardDiffStaticArraysExt, Future, GLM, Gamma, HypergeometricFunctions, IfElse, Indexing, InlineStrings, InlineStrings → ArrowTypesExt, InlineStrings → ParsersExt, InteractiveUtils, InverseFunctions, InverseFunctions → InverseFunctionsDatesExt, InvertedIndices, IrrationalConstants, IteratorInterfaceExtensions, JLLWrappers, JSON, JSON → JSONArrowExt, JuliaSyntaxHighlighting, LaTeXStrings, LibCURL, LibCURL_jll, LibSSH2_jll, LogExpFunctions, LogExpFunctions → LogExpFunctionsInverseFunctionsExt, Logging, Lz4_jll, MacroTools, Markdown, Missings, MixedModels, MixedModels → MixedModelsForwardDiffExt, MixedModelsDatasets, Mmap, Mocking, MozillaCACerts_jll, NLopt, NLopt_jll, NaNMath, NetworkOptions, OpenLibm_jll, OpenSSL_jll, OpenSpecFun_jll, OrderedCollections, PDMats, PDMats → StatsBaseExt, Parsers, PooledArrays, PrecompileTools, Preferences, PrettyTables, Printf, ProgressMeter, PtrArrays, QuadGK, REPL, RectangularFullPacked, Reexport, RegressionFormulae, Rmath, Rmath_jll, Roots, Roots → RootsForwardDiffExt, SciMLPublic, Scratch, SentinelArrays, Serialization, ShiftedArrays, SortingAlgorithms, SparseArrays, SpecialFunctions, SplitApplyCombine, Static, StaticArrays, StaticArrays → StaticArraysStatisticsExt, StaticArraysCore, Statistics, Statistics → SparseArraysExt, StatsAPI, StatsBase, StatsFuns, StatsFuns → StatsFunsInverseFunctionsExt, StatsModels, StringManipulation, StringViews, StructUtils, StructUtils → StructUtilsStaticArraysCoreExt, StructUtils → StructUtilsTablesExt, StyledStrings, SuiteSparse, SuiteSparse_jll, TOML, TZJData, TableTraits, Tables, TimeZones, TranscodingStreams, TypedTables, UUIDs, Unicode, Zlib_jll, Zstd_jll, nghttp2_jll and p7zip_jll). Restart julia to access the new versions. Otherwise, 1 dependent of these packages may trigger further precompilation to work with the unexpected versions.
-<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   1125.3 ms<span class="ansi-green-fg">  ✓ </span>StandardizedPredictors
-  1 dependency successfully precompiled in 1 seconds. 45 already precompiled.
-  <span class="ansi-yellow-fg">45</span> dependencies precompiled but <span class="ansi-yellow-fg">different versions are currently loaded</span> (AliasTables, Base64, CompilerSupportLibraries_jll, DataAPI, DataStructures, DataValueInterfaces, Dates, DocStringExtensions, Gamma, HypergeometricFunctions, InteractiveUtils, IrrationalConstants, IteratorInterfaceExtensions, JLLWrappers, JuliaSyntaxHighlighting, LogExpFunctions, Markdown, Missings, OpenLibm_jll, OpenSpecFun_jll, OrderedCollections, Preferences, Printf, PtrArrays, REPL, Reexport, Rmath, Rmath_jll, Serialization, ShiftedArrays, SortingAlgorithms, SparseArrays, SpecialFunctions, Statistics, Statistics → SparseArraysExt, StatsAPI, StatsBase, StatsFuns, StatsModels, StyledStrings, SuiteSparse_jll, TOML, TableTraits, Tables and Unicode). Restart julia to access the new versions. Otherwise, 1 dependent of these packages may trigger further precompilation to work with the unexpected versions.
-</pre>
-</div>
-</div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>false</code></pre>
 </div>
@@ -1036,11 +1015,11 @@ resultant transformation:
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcoxplot</span>(bc; conf_level<span class="op">=</span><span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
-<pre><span class="ansi-green-fg">Minimizing 2    Time: 0:00:00 (65.65 ms/it)</span>
+<pre><span class="ansi-green-fg">Minimizing 2    Time: 0:00:00 (69.99 ms/it)</span>
 <span class="ansi-blue-fg">   objective: -279.6183745800397</span>
 
 
-<span class="ansi-green-fg">Minimizing 53    Time: 0:00:00 ( 5.83 ms/it)</span>
+<span class="ansi-green-fg">Minimizing 53    Time: 0:00:00 ( 6.24 ms/it)</span>
 </pre>
 </div>
 </div>
@@ -1183,8 +1162,8 @@ For y &lt; 0:
 </div>
 </div>
 <hr>
-<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/4433ece
-">4433ece
+<p><em>This page was rendered from git revision <a href="https://github.com/RePsychLing/SMLP2026/tree/2d15c6c
+">2d15c6c
 </a> using Quarto 1.10.18 and Julia 1.12.7.</em></p>
 
 
