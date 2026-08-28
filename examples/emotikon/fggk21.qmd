@@ -68,7 +68,14 @@ transform!(df,
 levels!(df.Sex, ["male", "female"])
 recode!(df.Sex, "male" => "Boys", "female" => "Girls")
 levels!(df.Test, ["Run", "Star_r", "S20_r", "SLJ", "BPT"])
-
+recode!(
+  df.Test,
+  "Run" => "Endurance",
+  "Star_r" => "Coordination",
+  "S20_r" => "Speed",
+  "SLJ" => "PowerLOW",
+  "BPT" => "PowerUP",
+)
 describe(df)
 
 contrasts = Dict{Symbol,Any}(nm => SeqDiffCoding() for nm in (:Test, :Sex))
