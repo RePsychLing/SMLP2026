@@ -35,7 +35,7 @@ Three views pull the term apart:
 |---|---|---|
 | **Observed** | `log(RAN)` against the predictor, split by the moderator, with an ordinary least-squares line per group | nothing removed — the raw data |
 | **Partial** | the same, after subtracting every model term *except* the target interaction and its lower-order relatives, and the random intercept | `partial_fitted(m09, keep; mode=:include) .+ residuals(m09)` — the Julia analogue of R's `remef(..., keep=TRUE, grouping=TRUE, ran=NULL)` |
-| **Predicted** | the model's fitted mean on a regular grid, with a 95% confidence band, holding the other predictors at typical values | `Effects.effects(grid, m09)` |
+| **Predicted** | the model's fitted mean on a regular grid, with a 95% confidence band, holding the other predictors at typical values | `Effects.effects(grid, m09; level=0.95)` |
 
 The **observed** panel is honest about scatter but confounded. The **partial** panel
 keeps the residual scatter (so you can still judge influence and fit) while removing
@@ -178,7 +178,7 @@ end
 #| label: fig-c-evs
 let
   grid = Dict(:evs_c => range(extrema(dat.evs_c)...; length=50), :Condition => levels(dat.Condition))
-  e = effects(grid, m09)
+  e = effects(grid, m09; level=0.95)
   rename!(e, :lran => :yhat)
   e.evs = e.evs_c .+ mean(dat.evs)
   three_panel(; obs_df=dp, xcol=:evs, xlab="Eye–voice span", obs_y=:lran, par_y=:pf_C_evs,
@@ -200,7 +200,7 @@ lines separate less — the interaction is real but the *marginal* prediction di
 #| label: fig-g-evs
 let
   grid = Dict(:evs_c => range(extrema(dat.evs_c)...; length=50), :Group => levels(dat.Group))
-  e = effects(grid, m09)
+  e = effects(grid, m09; level=0.95)
   rename!(e, :lran => :yhat)
   e.evs = e.evs_c .+ mean(dat.evs)
   three_panel(; obs_df=dp, xcol=:evs, xlab="Eye–voice span", obs_y=:lran, par_y=:pf_G_evs,
@@ -222,7 +222,7 @@ who are already fluent.
 let
   grid = Dict(:gaze_c => range(extrema(dat.gaze_c)...; length=50),
               :evs_c => tert_med .- mean(dat.evs))
-  e = effects(grid, m09)
+  e = effects(grid, m09; level=0.95)
   rename!(e, :lran => :yhat)
   e.gaze = e.gaze_c .+ mean(dat.gaze)
   pts = tert_med .- mean(dat.evs)
@@ -248,7 +248,7 @@ ahead. The predicted panel confirms the crossing pattern with confidence bands.
 let
   grid = Dict(:evs_c => range(extrema(dat.evs_c)...; length=50),
               :Condition => levels(dat.Condition), :Group => levels(dat.Group))
-  e = effects(grid, m09)
+  e = effects(grid, m09; level=0.95)
   rename!(e, :lran => :yhat)
   e.evs = e.evs_c .+ mean(dat.evs)
   e.cg = categorical(string.(e.Condition, " / ", e.Group))
