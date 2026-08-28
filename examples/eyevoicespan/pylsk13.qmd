@@ -1,0 +1,493 @@
+---
+title: "Eye–Voice Span in Rapid Automatized Naming: Pan et al. (2013)"
+engine: julia
+author:
+- Reinhold Kliegl
+- Jinger Pan
+julia:
+  exeflags: ["--project", "--threads=auto"]
+---
+
+::: {.objectives title="Learning objectives"}
+After working through this page you will be able to:
+
+- reproduce a covariate-based LMM analysis (`gaze duration` and `eye–voice span` as predictors of psychometric RAN) from a published study;
+- complexify a fixed-effect structure with continuous-by-categorical interactions and prune it with likelihood-ratio tests;
+- visualize higher-order interactions three ways — with *partial effects* (`MixedModelsExtras.partial_fitted`, the Julia analogue of R's `remef()`), with *marginal effects* (`Effects.jl`), and with model diagnostics (`MixedModelsMakie.jl`).
+:::
+
+::: {.callout-note title="Before you start"}
+**Prerequisites:** [Analysis of the sleepstudy data](../../lmm-intro/sleepstudy.qmd) for the modeling vocabulary; [Transformations and Effects](../../contrasts/transformation.qmd) for `Effects.jl`; [Creating multi-panel plots](../../visualization/AoGPlots.qmd) for the plotting stack.
+
+**Data used:** `pylsk13.rda`, distributed alongside this page (`examples/eyevoicespan/`). The original R script (`pylsk13_v4.R`) and the paper (`Pan_etal.DevSci.2013.pdf`) are in the same folder.
+:::
+
+# Background
+
+@Pan2013 measured the eye movements of Chinese dyslexic and control children during
+*rapid automatized naming* (RAN) of **digits** (alphanumeric) and **dice** surfaces
+(symbolic). Both stimulus types require identical oral responses, which controls for
+effects associated with speech production.
+
+The question addressed on this page is a psychometric one: how well do two eye-movement
+measures obtained from the computerized RAN task — **gaze duration** (`gaze`, the summed
+fixation time on an item) and the **eye–voice span** (`evs`, the distance in characters
+between the currently fixated item and the item currently being named) — predict
+naming speed (`ran`, seconds to name a card of items), and does that prediction differ
+between the two `Condition`s (digit/dice) and the two `Group`s (control/dyslexic)?
+
+The analysis follows `pylsk13_v4.R`:
+
+1. **Setup** — read the data, check whether the response needs a transformation, center the covariates.
+2. **Model building** — start from an additive covariate model, add the `Condition × Group` interaction, then the full `Condition × Group × evs × gaze` factorial, and prune it back with likelihood-ratio tests.
+3. **Visualization** — partial-effect plots (Figures 1 and 2 of the paper), marginal-effect plots, and residual diagnostics.
+
+# Packages
+
+```{julia}
+#| code-fold: true
+#| output: false
+using AlgebraOfGraphics
+using AlgebraOfGraphics: density, linear
+using BoxCox
+using CairoMakie
+using CategoricalArrays
+using DataFrames
+using Effects
+using MixedModels
+using MixedModelsMakie
+using MixedModelsExtras          # partial_fitted(): the Julia analogue of remef()
+using RData                      # to read the .rda file
+using Statistics
+using StatsBase
+
+using SMLP2026: fit_or_restore
+
+const progress = false
+set_aog_theme!()
+```
+
+# Read and prepare the data
+
+`pylsk13.rda` contains a single data frame `dat` with one row per child × condition
+(56 children × 2 conditions = 112 rows).
+
+```{julia}
+dat = DataFrame(load(joinpath(@__DIR__, "pylsk13.rda"))["dat"])
+```
+
+We follow the general recommendation to code the levels of grouping variables as
+strings (here `S101`, `S102`, …), to give factors meaningful level names, and to fix
+a sensible level order. `ran` is log-transformed (justified below) and the two
+covariates are **centered** (not scaled) so that the intercept and the lower-order
+terms are interpretable at the average `gaze` and `evs`.
+
+```{julia}
+transform!(dat,
+  :subj => (x -> categorical(string.("S", x))) => :Subj,
+  :group => (x -> categorical(recode(x, 1 => "control", 2 => "dyslexic"))) => :Group,
+  :condition => (x -> categorical(recode(x, 1 => "digit", 2 => "dice"))) => :Condition,
+  :ran => ByRow(log) => :lran,
+)
+levels!(dat.Group, ["control", "dyslexic"])
+levels!(dat.Condition, ["digit", "dice"])
+dat.evs_c = dat.evs .- mean(dat.evs)
+dat.gaze_c = dat.gaze .- mean(dat.gaze)
+describe(dat)
+```
+
+## Does the response need a transformation?
+
+The R script uses `MASS::boxcox()` to justify a log transform of `ran` (but not of
+`gaze` or `evs`). The Julia equivalent fits a `BoxCoxTransformation` to a mixed model
+of the untransformed response.
+
+```{julia}
+m_ran = fit(MixedModel,
+  @formula(ran ~ 1 + Condition * Group + evs_c + gaze_c + (1 | Subj)),
+  dat;
+  contrasts=Dict(:Condition => DummyCoding(; base="digit"),
+                 :Group => DummyCoding(; base="control")),
+  progress,
+)
+bc = fit(BoxCoxTransformation, m_ran; progress)
+```
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Box–Cox profile for the RAN response. The optimum is close to λ = 0, i.e. a log transform."
+#| label: fig-boxcox
+boxcoxplot(bc; conf_level=0.95)
+```
+
+The profile peaks near `λ = 0`, so `log(ran)` (= `lran`) is a reasonable choice and
+matches the published analysis.
+
+## Condition and Group means
+
+```{julia}
+cell_means = combine(
+  groupby(dat, [:Group, :Condition]),
+  :lran => mean => :lran_m,
+  :lran => (x -> std(x) / sqrt(length(x))) => :lran_se,
+  :evs => mean => :evs_m,
+  :gaze => mean => :gaze_m,
+  nrow => :n,
+)
+cell_means
+```
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Mean log(RAN) by Condition and Group. Naming dice is slower than naming digits in both groups, and the group difference is larger for digits."
+#| label: fig-cellmeans
+draw(
+  data(cell_means) *
+  mapping(:Condition, :lran_m => "log(RAN)"; color=:Group, group=:Group) *
+  visual(ScatterLines; markersize=16),
+)
+```
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Comparative density of log(RAN) by Condition."
+#| label: fig-density
+draw(
+  data(dat) *
+  mapping(:lran => "log(RAN)"; color=:Condition) *
+  density(),
+)
+```
+
+# Linear mixed models
+
+The two categorical predictors use treatment (dummy) contrasts with the same
+reference levels as the published analysis (`digit` and `control`), so the
+coefficients reproduce Table 3 of @Pan2013.
+
+::: {.callout-tip}
+If the *intercept* should estimate the grand mean rather than the `digit`/`control`
+cell — usually preferable in factorial designs — swap `DummyCoding` for
+`EffectsCoding`. The omnibus tests below are unchanged; only the meaning of the
+lower-order coefficients changes.
+:::
+
+```{julia}
+contrasts = Dict(
+  :Condition => DummyCoding(; base="digit"),
+  :Group => DummyCoding(; base="control"),
+)
+```
+
+All models keep the maximal grouping structure supported by this design: a single
+by-child random intercept (`(1 | Subj)`). With only two observations per child there
+is no room for by-child random slopes.
+
+## Model building
+
+```{julia}
+m00 = fit_or_restore("eyevoicespan_m00.json", MixedModel,
+  @formula(lran ~ 1 + Condition + Group + evs_c + gaze_c + (1 | Subj)),
+  dat; contrasts, progress)
+```
+
+```{julia}
+m05 = fit_or_restore("eyevoicespan_m05.json", MixedModel,
+  @formula(lran ~ 1 + Condition * Group + evs_c + gaze_c + (1 | Subj)),
+  dat; contrasts, progress)
+```
+
+```{julia}
+m10 = fit_or_restore("eyevoicespan_m10.json", MixedModel,
+  @formula(lran ~ 1 + Condition * Group * evs_c * gaze_c + (1 | Subj)),
+  dat; contrasts, progress)
+```
+
+`m10` is the full `Condition × Group × evs × gaze` factorial. The three highest-order
+terms that involve the `evs × gaze` product are not significant, so we drop them:
+the `Condition × Group × evs × gaze` four-way, the `Group × evs × gaze` three-way,
+and the `Condition × evs × gaze` three-way. What remains (`m09`) is the model
+whose coefficients correspond to Table 3 of @Pan2013. (The `z` statistics here differ
+slightly from the published `t` values because of software differences — ML vs. REML,
+contrast parameterization — but the substantive pattern is the same.)
+
+```{julia}
+m09 = fit_or_restore("eyevoicespan_m09.json", MixedModel,
+  @formula(lran ~ 1 + Condition + Group + evs_c + gaze_c +
+    Condition & Group + Condition & evs_c + Condition & gaze_c +
+    Group & evs_c + Group & gaze_c + evs_c & gaze_c +
+    Condition & Group & evs_c + Condition & Group & gaze_c +
+    (1 | Subj)),
+  dat; contrasts, progress)
+```
+
+```{julia}
+MixedModels.likelihoodratiotest(m00, m05, m09, m10)
+```
+
+Adding `Condition × Group` (`m05`) and the covariate interactions retained in `m09`
+each improve the fit reliably; the extra terms in `m10` do not. `m09` is the
+preferred model.
+
+## The preferred model
+
+```{julia}
+VarCorr(m09)
+```
+
+```{julia}
+m09
+```
+
+The coefficients of interest:
+
+- **`evs_c` (−0.63)** — within `digit`/`control`, a larger eye–voice span predicts
+  *faster* (lower log) naming.
+- **`Condition: dice & Group: dyslexic & evs_c` (−0.55, *p* ≈ .006)** — the three-way
+  interaction: the EVS benefit is distributed differently across cells (Figure 1 of the paper).
+- **`evs_c & gaze_c` (−0.005, *p* ≈ .001)** — the two covariates interact.
+- **`gaze_c` (+0.0036)** — longer gaze durations predict *slower* naming, as expected.
+
+# Diagnostics
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Residuals vs. fitted values for m09."
+#| label: fig-resvsfitted
+draw(
+  data((; f=fitted(m09), r=residuals(m09))) *
+  mapping(:f => "Fitted log(RAN)", :r => "Residual (m09)") *
+  visual(Scatter),
+)
+```
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Normal quantile plot of the m09 residuals."
+#| label: fig-qq
+qqnorm(residuals(m09); qqline=:fitrobust)
+```
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Prediction intervals on the by-child random intercepts (m09)."
+#| label: fig-caterpillar
+caterpillar(m09, :Subj)
+```
+
+# Partial-effect plots (the `remef()` analogue)
+
+The R script visualizes the higher-order interactions with **partial effects**
+computed by `remef()`: it takes the observed response, removes the contribution of
+the nuisance terms (here everything involving `gaze` and the random intercept), and
+keeps the terms of interest plus the residual. The result is an "adjusted" response
+that isolates one slice of the model.
+
+`MixedModelsExtras.partial_fitted` is the Julia counterpart. It returns the fitted
+values for a chosen set of coefficients; adding the residuals back reproduces
+`remef(..., keep=TRUE)`.
+
+```{julia}
+# keep every fixed effect that does NOT involve gaze; drop the by-child intercept
+keep_evs = filter(c -> !occursin("gaze_c", c), coefnames(m09))
+# keep every fixed effect that does NOT involve evs; drop the by-child intercept
+keep_gaze = filter(c -> !occursin("evs_c", c), coefnames(m09))
+
+dp = select(dat, :Subj, :Group, :Condition, :evs, :gaze, :lran)
+dp.partial_evs =
+  partial_fitted(m09, keep_evs, Dict(:Subj => String[]); mode=:include) .+ residuals(m09)
+dp.partial_gaze =
+  partial_fitted(m09, keep_gaze, Dict(:Subj => String[]); mode=:include) .+ residuals(m09)
+dp.cg = categorical(string.(dp.Condition, " / ", dp.Group))
+first(dp, 6)
+```
+
+For plotting we stack the observed response and each partial response into long
+form, so that "observed vs. adjusted" becomes a facet column with a single shared
+legend.
+
+```{julia}
+stack_partial(col, label) =
+  insertcols!(select(dp, :evs, :gaze, :cg, col => :y), :kind => label)
+
+dp_evs = vcat(stack_partial(:lran, "observed"), stack_partial(:partial_evs, "adjusted"))
+dp_gaze = vcat(stack_partial(:lran, "observed"), stack_partial(:partial_gaze, "adjusted"))
+first(dp_evs, 4)
+```
+
+::: {.callout-note collapse="true" title="How the specification maps onto R's remef()"}
+`remef(m09, fix = c(1, "condition:group:evs_c"), keep = TRUE, grouping = TRUE, ran = NULL)`
+keeps the intercept, the three-way `condition:group:evs_c` term, **and** (because
+`grouping = TRUE`) every lower-order term built from `condition`, `group`, and
+`evs_c`; it removes everything involving `gaze_c` and all random effects.
+`filter(c -> !occursin("gaze_c", c), coefnames(m09))` selects exactly that set of
+fixed-effect coefficients, and `Dict(:Subj => String[])` drops the random intercept.
+:::
+
+## Figure 1 — `Condition × Group × EVS`
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Left: observed log(RAN) vs. eye–voice span. Right: partial effect from m09 (gaze contribution and random intercept removed)."
+#| label: fig-partial-evs
+draw(
+  data(dp_evs) *
+  mapping(
+    :evs => "Eye–voice span",
+    :y => "log(RAN)";
+    color=:cg => "Condition / Group",
+    col=:kind,
+  ) *
+  (visual(Scatter; alpha=0.5) + linear());
+  facet=(; linkyaxes=:all),
+)
+```
+
+The partial plot sharpens the pattern noted in the paper: the EVS benefit (negative
+slope) is present for `digit` naming in the control group but is weak or absent in
+the `dice / dyslexic` cell.
+
+## Figure 2 — `Condition × Group × Gaze`
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Left: observed log(RAN) vs. gaze duration. Right: partial effect from m09 (EVS contribution and random intercept removed)."
+#| label: fig-partial-gaze
+draw(
+  data(dp_gaze) *
+  mapping(
+    :gaze => "Gaze duration [ms]",
+    :y => "log(RAN)";
+    color=:cg => "Condition / Group",
+    col=:kind,
+  ) *
+  (visual(Scatter; alpha=0.5) + linear());
+  facet=(; linkyaxes=:all),
+)
+```
+
+# Marginal-effect plots with `Effects.jl`
+
+`partial_fitted` adjusts *observed* data points. `Effects.jl` instead evaluates the
+*model's prediction* on a regular grid, holding the variables that are not on the
+grid at a typical value (the mean; for the centered covariates that is `0`). This is
+the Julia analogue of R's `effects` / `emmeans`.
+
+## EVS effect by Condition and Group
+
+```{julia}
+evsgrid = Dict(
+  :evs_c => range(extrema(dat.evs_c)...; length=50),
+  :Condition => levels(dat.Condition),
+  :Group => levels(dat.Group),
+)
+eff_evs = effects(evsgrid, m09)
+eff_evs.evs = eff_evs.evs_c .+ mean(dat.evs)
+eff_evs.cg = categorical(string.(eff_evs.Condition, " / ", eff_evs.Group))
+first(eff_evs, 6)
+```
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Model-predicted log(RAN) as a function of eye–voice span, with 95% confidence bands, by Condition and Group."
+#| label: fig-effects-evs
+draw(
+  data(eff_evs) *
+  mapping(
+    :evs => "Eye–voice span",
+    color=:cg => "Condition / Group",
+  ) * (
+    mapping(:lran => "log(RAN)") * visual(Lines) + 
+    mapping(:lower, :upper) * visual(Band; alpha=0.3)
+    )
+  )
+```
+
+## Gaze effect by Condition and Group
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Model-predicted log(RAN) as a function of gaze duration, with 95% confidence bands, by Condition and Group."
+#| label: fig-effects-gaze
+let
+  gazegrid = Dict(
+    :gaze_c => range(extrema(dat.gaze_c)...; length=50),
+    :Condition => levels(dat.Condition),
+    :Group => levels(dat.Group),
+  )
+  eff_gaze = effects(gazegrid, m09)
+  eff_gaze.gaze = eff_gaze.gaze_c .+ mean(dat.gaze)
+  eff_gaze.cg = categorical(string.(eff_gaze.Condition, " / ", eff_gaze.Group))
+  draw(
+    data(eff_gaze) *
+    mapping(:gaze => "Gaze duration [ms]"; color=:cg => "Condition / Group") * (
+      mapping(:lran => "log(RAN)") * visual(Lines) +
+      mapping(:lower, :upper) * visual(Band; alpha=0.3)
+  ))
+end
+```
+
+## `evs × gaze` interaction
+
+The reliable `evs_c & gaze_c` term means the gaze slope changes with EVS. We show it
+by evaluating the model at three EVS levels (roughly the tertiles).
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "The gaze-duration effect at small, medium, and large eye–voice span (model prediction, 95% bands)."
+#| label: fig-effects-evsxgaze
+let
+  qs = quantile(dat.evs, [1/6, 1/2, 5/6])
+  grid = Dict(
+    :gaze_c => range(extrema(dat.gaze_c)...; length=50),
+    :evs_c => qs .- mean(dat.evs),
+  )
+  eff = effects(grid, m09)
+  eff.gaze = eff.gaze_c .+ mean(dat.gaze)
+  eff.evs_level = categorical(
+    round.(eff.evs_c .+ mean(dat.evs); digits=2);
+  )
+  draw(
+    data(eff) *
+    mapping(:gaze => "Gaze duration [ms]";
+            color=:evs_level => "Eye–voice span") *
+    (mapping(:lran => "log(RAN)") * visual(Lines) + 
+     mapping(:lower, :upper) * visual(Band; alpha=0.3))
+  )
+end
+```
+
+# See also
+
+- [Transformations and Effects](../../contrasts/transformation.qmd) — the `Effects.jl` workflow and Box–Cox transformations in more detail.
+- [The Emotikon Project](../emotikon/fggk21.qmd) — model complexification and PCA of the random effects on a large dataset.
+- R's [`remef`](https://github.com/hohenstein/remef) and the `partial_fitted` docstring in `MixedModelsExtras`.
+
+# References
+
+::: {#refs}
+:::
+
+## Exercises
+
+1. **Contrast coding.** Refit `m09` with `EffectsCoding` for `Condition` and `Group`. Which coefficients change, which stay the same, and what does the intercept estimate now?
+
+::: {.callout-note collapse="true" title="Solution"}
+The omnibus likelihood-ratio tests, `VarCorr`, the residual standard deviation, and the fitted values are all unchanged — the model space is the same. The intercept now estimates the grand mean (the unweighted average over the four `Condition × Group` cells) instead of the `digit`/`control` cell, and every lower-order `Condition`/`Group` coefficient becomes a deviation from that grand mean rather than a simple difference from a reference level. The highest-order interaction coefficient is unchanged up to a scale factor.
+:::
+
+2. **Partial vs. marginal.** @fig-partial-evs (partial effects) and @fig-effects-evs (marginal effects) both show the EVS slopes by cell. What does each one add that the other does not?
+
+::: {.callout-note collapse="true" title="Solution"}
+The partial-effect plot keeps the residuals, so it shows the *scatter* of individual observations around the adjusted regression line — useful for spotting influential points and for judging how much of the variance the term actually explains. The marginal-effect plot shows the model's prediction with a proper confidence band and no leftover noise from other terms, which makes the *estimated* slopes and their uncertainty directly comparable across cells. Use partial effects to inspect the data given the model; use marginal effects to communicate the model.
+:::
+
+3. **Why center?** The covariates were centered before fitting. What would change in the `m09` coefficient table if `evs` and `gaze` entered on their raw scales, and would any of the omnibus tests change?
+
+::: {.callout-note collapse="true" title="Solution"}
+Only the interpretation of the lower-order terms shifts. With raw covariates, `Condition: dice` would estimate the digit-vs-dice difference at `evs = 0` and `gaze = 0` — an extrapolation far outside the data — inflating its standard error and making it hard to interpret. The intercept would likewise refer to `evs = gaze = 0`. The higher-order interaction coefficients, the variance components, the fitted values, and every likelihood-ratio test are invariant to centering.
+:::
+
+---
+
+*This page was rendered from git revision {{< git-rev short=true >}} using Quarto {{< version >}} and Julia {{< julia-version >}}.*

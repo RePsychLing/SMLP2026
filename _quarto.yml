@@ -110,6 +110,10 @@ website:
           contents:
           - examples/visual-attention/kwdyz11.qmd
           - examples/visual-attention/kkl15.qmd
+        - section: "Eye–Voice Span in Rapid Automatized Naming"
+          contents:
+          - examples/eyevoicespan/pylsk13.qmd
+          - examples/eyevoicespan/pylsk13_interactions.qmd
       - section: "Reference & Appendix"
         contents:
         - reference/useful_packages.qmd

@@ -659,10 +659,6 @@ issingular(m2)
 
 Depending on the random number generator seed, the model may or may not be supported in the alternative parameterization of scores. The fixed-effects profile is not affected (see the model comparisons below).
 
-:::{.callout-caution}
-RK: The order of RE terms is critical. In formula `f2` the `zerocorr()` term must be placed last as shown. If it is placed first, School-related and Child-related CPs are estimated/reported (?) as zero. This was not the case for formula `m1`. Thus, it appears to be related to the `0`-intercepts in School and Child terms. Need a reprex.
-:::
-
 ```{julia}
 VarCorr(m2)
 ```
