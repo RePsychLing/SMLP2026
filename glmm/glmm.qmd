@@ -35,6 +35,7 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsDatasets: dataset
 using SMLP2026: fit_or_restore
+using Statistics
 
 const progress = isinteractive()
 ```
@@ -369,9 +370,41 @@ At present the calculation of the `geomdof` as `sum(influence(m))` is not correc
 
 ### Using `urban&dist` as a grouping factor
 
-<!-- add note about how we determined this! --> 
-
 It turns out that there can be more difference between urban and rural settings within the same political district than there is between districts.
+
+```{julia}
+dist_mean = combine(groupby(contra, :dist), 
+                           :use => (x -> mean(x .== "Y")) => "dist_mean")
+plt = data(dist_mean) * mapping(:dist_mean => "Distribution of district means") * AlgebraOfGraphics.density()
+draw(plt)                 
+```
+
+```{julia}
+dist_urban_mean = combine(groupby(contra, [:dist, :urban]), 
+                           :use => (x -> mean(x .== "Y")) => "dist_urban_mean")
+plt = data(dist_urban_mean) * mapping(:dist_urban_mean => "Distribution of district × urban means"; color=:urban) * AlgebraOfGraphics.density()
+draw(plt)                 
+```
+
+```{julia}
+dum_sorter = combine(groupby(dist_urban_mean, :dist),
+                     :dist_urban_mean => diff => :urban_rural_diff)    
+transform!(dum_sorter, :urban_rural_diff => ByRow(abs); renamecols=false)
+all_dists = DataFrame(; dist=unique(dist_urban_mean.dist))
+dum_sorter = leftjoin(all_dists, dum_sorter; on=:dist)
+transform!(dum_sorter, 
+          :urban_rural_diff => ByRow(x -> coalesce(x, 0));
+          renamecols=false)
+sort!(dum_sorter, :urban_rural_diff)
+
+plt = data(dist_urban_mean) * 
+    mapping(:dist_urban_mean => "Proportion contraception use",
+            :dist => sorter(dum_sorter.dist) => "District") * 
+    (mapping(; color=:urban) * visual(Scatter) + 
+     mapping(; group=:dist) * visual(Lines))
+draw(plt; figure=(;size=(500, 950), title="Distribution of district × urban means"), legend=(; position=:top))                 
+```
+
 To model this difference we build a model with `urban&dist` as a grouping factor.
 
 ```{julia}
