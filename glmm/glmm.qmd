@@ -443,7 +443,53 @@ using Effects
 design = Dict(
   :children => ["Y", "N"], :urban => ["Y", "N"], :age => [0.0]
 )
-preds = effects(design, gm3; invlink=AutoInvLink())
+preds = effects(design, gm3)
+```
+
+We can plot this with a few more values for age:
+
+```{julia}
+design = Dict(
+  :children => ["Y", "N"], 
+  :urban => ["Y", "N"], 
+  :age => -10:10
+)
+preds = effects(design, gm3; level=0.95)
+base = data(preds) * mapping(:age; 
+                            color=:children, 
+                            col=:urban => renamer(["N" => "rural", "Y" => "urban"])) 
+                             
+                             
+lines = mapping("use: Y") * visual(Lines)
+bands = mapping(:lower, :upper) * visual(Band; alpha=0.3)
+
+
+draw(base * (lines + bands),
+     legend = (; position = :top, 
+               framevisible=false),
+     axis=(; ylabel="Log odds of contraception use",
+           xlabel="Centered age"))
+```
+
+We can also plot this on the response scale, i.e. the probability scale:
+
+```{julia}
+preds = effects(design, gm3; invlink=AutoInvLink(), level=0.95)
+base = data(preds) * mapping(:age; 
+                            color=:children, 
+                            col=:urban => renamer(["N" => "rural", "Y" => "urban"])) 
+                             
+                             
+lines = mapping("use: Y") * visual(Lines)
+bands = mapping(:lower, :upper) * visual(Band; alpha=0.3)
+
+
+draw(base * (lines + bands);
+     legend = (; position = :top, 
+               framevisible=false),
+     axis=(; ylabel="Probability of contraception use",
+           xlabel="Centered age",
+           limits=(nothing, (0, 1))))
 ```
 
 
