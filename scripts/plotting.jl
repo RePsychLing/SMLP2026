@@ -30,7 +30,6 @@ nestingstructure(mkb07)
 nestingplot(mi)
 nestingplot(mm)
 
-# BUG HERE. I WILL FIX
 upsetplot(kb07; cols=Not([:subj, :item]))
 upsetplot(mkb07, :subj)
 upsetplot(mkb07, :item)
