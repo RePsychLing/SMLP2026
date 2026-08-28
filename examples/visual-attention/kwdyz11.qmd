@@ -59,8 +59,11 @@ using MixedModels
 using MixedModelsMakie
 using Random
 using MixedModelsDatasets: dataset
-using SMLP2026: fit_or_restore
+
 using StatsBase
+
+using SMLP2026: fit_or_restore, bootstrap_or_restore
+using SMLP2026.RKUtils
 ```
 
 # Read data, compute and plot densities and means
@@ -163,7 +166,7 @@ contrasts = Dict(
 )
 m1 = let
   form = @formula(log(rt) ~ 1 + CTR + (1 + CTR | Subj))
-  fit_or_restore("kwdyz11_m1.json", MixedModel, form, dat; contrasts)
+  fit_or_restore("kwdyz11_m1.json", MixedModel, form, dat; contrasts, REML=true)
 end
 ```
 

@@ -38,6 +38,7 @@ progress = false
 ```{julia}
 #| echo: false
 using SMLP2026: fit_or_restore
+using SMLP2026.RKUtils
 ```
 
 # A word of caution {#sec-caution}

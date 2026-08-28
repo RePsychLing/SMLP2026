@@ -68,15 +68,10 @@ transform!(df,
 levels!(df.Sex, ["male", "female"])
 recode!(df.Sex, "male" => "Boys", "female" => "Girls")
 levels!(df.Test, ["Run", "Star_r", "S20_r", "SLJ", "BPT"])
-recode!(
-  df.Test,
-  "Run" => "Endurance",
-  "Star_r" => "Coordination",
-  "S20_r" => "Speed",
-  "SLJ" => "PowerLOW",
-  "BPT" => "PowerUP",
-)
+
 describe(df)
+
+contrasts = Dict{Symbol,Any}(nm => SeqDiffCoding() for nm in (:Test, :Sex))
 ```
 
 ### Transformations
@@ -91,6 +86,48 @@ select!(groupby(df, :Test),  Not(:score), :score => zscore => :zScore)
 ::: {.callout-tip}
 The preprocessing steps above are also packaged as `SMLP2026.fggk21_preprocessed()`, so that other pages (e.g. the [contrast-coding tutorial](../../contrasts/contrasts_fggk21.qmd)) can reuse them without repeating the code.
 :::
+
+## Time final LMM of paper
+
+**Warmup**
+
+```{julia}
+#| eval: false
+## final LMM 
+m_test = let
+  f_test = @formula zScore ~ 1 + Test*a1*Sex + (1 | School) 
+  @time fit(MixedModel, f_test, df; contrasts, progress)
+end
+```
+
+**Timing the full model with current MixedModels.jl**
+
+```{julia}
+#| eval: false
+## final LMM 
+m_osf = let
+  f = @formula zScore ~ 1 + Test*a1*Sex +
+     (1+Test+a1+Sex | School) + (1+Test | Child) + 
+     zerocorr(1 + Test | Cohort)
+  fit(MixedModel, f, df; contrasts, progress)
+end
+```
+
+Minimizing 4724    Time: 0:23:33 ( 0.30  s/it)
+
+**Timing the full model with new branch pa/gradient-fable**
+
+```{julia}
+#Pkg.add MixedModels#pa/gradient-fable
+m_osf2 = let
+  f = @formula zScore ~ 1 + Test*a1*Sex +
+     (1+Test+a1+Sex | School) + (1+Test | Child) + 
+     zerocorr(1 + Test | Cohort)
+  fit(MixedModel, f, df; contrasts, progress, optimizer=:LD_LBFGS)
+end
+```
+
+Minimizing 81    Time: 0:01:12 ( 0.90  s/it)
 
 ## Extract a stratified subsample
 
@@ -658,10 +695,6 @@ issingular(m2)
 ```
 
 Depending on the random number generator seed, the model may or may not be supported in the alternative parameterization of scores. The fixed-effects profile is not affected (see the model comparisons below).
-
-:::{.callout-caution}
-RK: The order of RE terms is critical. In formula `f2` the `zerocorr()` term must be placed last as shown. If it is placed first, School-related and Child-related CPs are estimated/reported (?) as zero. This was not the case for formula `m1`. Thus, it appears to be related to the `0`-intercepts in School and Child terms. Need a reprex.
-:::
 
 ```{julia}
 VarCorr(m2)
