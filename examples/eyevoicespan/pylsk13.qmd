@@ -420,7 +420,7 @@ let
   eff_gaze.cg = categorical(string.(eff_gaze.Condition, " / ", eff_gaze.Group))
   draw(
     data(eff_gaze) *
-    mapping(:gaze => "Gaze duration [ms]";) * (
+    mapping(:gaze => "Gaze duration [ms]"; color=:cg => "Condition / Group") * (
       mapping(:lran => "log(RAN)") * visual(Lines) +
       mapping(:lower, :upper) * visual(Band; alpha=0.3)
   ))
