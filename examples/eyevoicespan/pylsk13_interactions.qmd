@@ -158,9 +158,9 @@ function three_panel(; obs_df, xcol, xlab, obs_y, par_y, pred_df, color, colorla
          (visual(Scatter; alpha=0.35) + linear())
   ppar = data(obs_df) * mapping(xcol => xlab, par_y => "adjusted log(RAN)"; color=color => colorlab) *
          (visual(Scatter; alpha=0.35) + linear())
-  ppred = data(pred_df) * mapping(xcol => xlab, :yhat => "predicted log(RAN)";
-                                  color=color => colorlab, lower=:lower, upper=:upper) *
-          visual(LinesFill)
+  ppred = data(pred_df) * mapping(xcol => xlab, color=color => colorlab) * 
+          (mapping(:yhat => "predicted log(RAN)") * visual(Lines) + 
+           mapping(:lower, :upper) * visual(Band; alpha=0.3))
   g = draw!(fig[1, 1], pobs; axis=(; limits=ylims, title="Observed"))
   draw!(fig[1, 2], ppar; axis=(; limits=ylims, title="Partial (remef)"))
   draw!(fig[1, 3], ppred; axis=(; limits=ylims, title="Predicted (Effects)"))

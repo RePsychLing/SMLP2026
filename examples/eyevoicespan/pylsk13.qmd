@@ -395,13 +395,12 @@ draw(
   data(eff_evs) *
   mapping(
     :evs => "Eye–voice span",
-    :lran => "log(RAN)";
     color=:cg => "Condition / Group",
-    lower=:lower,
-    upper=:upper,
-  ) *
-  visual(LinesFill),
-)
+  ) * (
+    mapping(:lran => "log(RAN)") * visual(Lines) + 
+    mapping(:lower, :upper) * visual(Band; alpha=0.3)
+    )
+  )
 ```
 
 ## Gaze effect by Condition and Group
@@ -421,15 +420,10 @@ let
   eff_gaze.cg = categorical(string.(eff_gaze.Condition, " / ", eff_gaze.Group))
   draw(
     data(eff_gaze) *
-    mapping(
-      :gaze => "Gaze duration [ms]",
-      :lran => "log(RAN)";
-      color=:cg => "Condition / Group",
-      lower=:lower,
-      upper=:upper,
-    ) *
-    visual(LinesFill),
-  )
+    mapping(:gaze => "Gaze duration [ms]";) * (
+      mapping(:lran => "log(RAN)") * visual(Lines) +
+      mapping(:lower, :upper) * visual(Band; alpha=0.3)
+  ))
 end
 ```
 
@@ -455,14 +449,10 @@ let
   )
   draw(
     data(eff) *
-    mapping(
-      :gaze => "Gaze duration [ms]",
-      :lran => "log(RAN)";
-      color=:evs_level => "Eye–voice span",
-      lower=:lower,
-      upper=:upper,
-    ) *
-    visual(LinesFill),
+    mapping(:gaze => "Gaze duration [ms]";
+            color=:evs_level => "Eye–voice span") *
+    (mapping(:lran => "log(RAN)") * visual(Lines) + 
+     mapping(:lower, :upper) * visual(Band; alpha=0.3))
   )
 end
 ```
