@@ -77,8 +77,6 @@ recode!(
   "BPT" => "PowerUP",
 )
 describe(df)
-
-contrasts = Dict{Symbol,Any}(nm => SeqDiffCoding() for nm in (:Test, :Sex))
 ```
 
 ### Transformations
