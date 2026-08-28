@@ -262,7 +262,7 @@ If the BLUPs are strongly shrunk towards zero then the additional complexity in 
 #| code-fold: true
 #| fig-cap: Shrinkage plot of means of the random effects in model m1
 #| label: fig-m1shrinkage
-shrinkageplot!(Figure(; size=(500, 500)), m1)
+shrinkageplot!(Figure(; size=(500, 500)), m1; labels=:auto)
 ```
 
 ::: {.callout-note}

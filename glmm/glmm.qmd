@@ -35,6 +35,7 @@ using MixedModels
 using MixedModelsMakie
 using MixedModelsDatasets: dataset
 using SMLP2026: fit_or_restore
+using Statistics
 
 const progress = isinteractive()
 ```
@@ -264,29 +265,27 @@ contrasts = Dict(
   :urban => HelmertCoding(),
   :livch => DummyCoding(), # default, but no harm in being explicit
 )
-nAGQ = 9
 dist = Bernoulli()
 gm1 = let
   form = @formula(
     use ~ 1 + age + abs2(age) + urban + livch + (1 | dist)
   )
-  fit(MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+  fit(MixedModel, form, contra, dist;  contrasts, progress)
 end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 contrasts = Dict(
   :urban => HelmertCoding(),
   :livch => DummyCoding(), # default, but no harm in being explicit
 )
-nAGQ = 9
 dist = Bernoulli()
 gm1 = let
   form = @formula(
     use ~ 1 + age + abs2(age) + urban + livch + (1 | dist)
   )
-  fit_or_restore("glmm_gm1.json", MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+  fit_or_restore("glmm_gm1.json", MixedModel, form, contra, dist; contrasts, progress)
 end
 ```
 
@@ -327,12 +326,12 @@ gm2 = let
       urban +
       (1 | dist)
   )
-  fit(MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+  fit(MixedModel, form, contra, dist; contrasts, progress)
 end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false 
 gm2 = let
   form = @formula(
     use ~
@@ -343,7 +342,7 @@ gm2 = let
       urban +
       (1 | dist)
   )
-  fit_or_restore("glmm_gm2.json", MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+  fit_or_restore("glmm_gm2.json", MixedModel, form, contra, dist; contrasts, progress)
 end
 ```
 
@@ -372,6 +371,40 @@ At present the calculation of the `geomdof` as `sum(influence(m))` is not correc
 ### Using `urban&dist` as a grouping factor
 
 It turns out that there can be more difference between urban and rural settings within the same political district than there is between districts.
+
+```{julia}
+dist_mean = combine(groupby(contra, :dist), 
+                           :use => (x -> mean(x .== "Y")) => "dist_mean")
+plt = data(dist_mean) * mapping(:dist_mean => "Distribution of district means") * AlgebraOfGraphics.density()
+draw(plt)                 
+```
+
+```{julia}
+dist_urban_mean = combine(groupby(contra, [:dist, :urban]), 
+                           :use => (x -> mean(x .== "Y")) => "dist_urban_mean")
+plt = data(dist_urban_mean) * mapping(:dist_urban_mean => "Distribution of district × urban means"; color=:urban) * AlgebraOfGraphics.density()
+draw(plt)                 
+```
+
+```{julia}
+dum_sorter = combine(groupby(dist_urban_mean, :dist),
+                     :dist_urban_mean => diff => :urban_rural_diff)    
+transform!(dum_sorter, :urban_rural_diff => ByRow(abs); renamecols=false)
+all_dists = DataFrame(; dist=unique(dist_urban_mean.dist))
+dum_sorter = leftjoin(all_dists, dum_sorter; on=:dist)
+transform!(dum_sorter, 
+          :urban_rural_diff => ByRow(x -> coalesce(x, 0));
+          renamecols=false)
+sort!(dum_sorter, :urban_rural_diff)
+
+plt = data(dist_urban_mean) * 
+    mapping(:dist_urban_mean => "Proportion contraception use",
+            :dist => sorter(dum_sorter.dist) => "District") * 
+    (mapping(; color=:urban) * visual(Scatter) + 
+     mapping(; group=:dist) * visual(Lines))
+draw(plt; figure=(;size=(500, 950), title="Distribution of district × urban means"), legend=(; position=:top))                 
+```
+
 To model this difference we build a model with `urban&dist` as a grouping factor.
 
 ```{julia}
@@ -386,12 +419,12 @@ gm3 = let
       urban +
       (1 | urban & dist)
   )
-  fit(MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+  fit(MixedModel, form, contra, dist; contrasts, progress)
 end
 ```
 
 ```{julia}
-#| include: false
+#| echo: false
 gm3 = let
   form = @formula(
     use ~
@@ -402,7 +435,7 @@ gm3 = let
       urban +
       (1 | urban & dist)
   )
-  fit_or_restore("glmm_gm3.json", MixedModel, form, contra, dist; nAGQ, contrasts, progress)
+  fit_or_restore("glmm_gm3.json", MixedModel, form, contra, dist; contrasts, progress)
 end
 ```
 
@@ -443,7 +476,53 @@ using Effects
 design = Dict(
   :children => ["Y", "N"], :urban => ["Y", "N"], :age => [0.0]
 )
-preds = effects(design, gm3; invlink=AutoInvLink())
+preds = effects(design, gm3)
+```
+
+We can plot this with a few more values for age:
+
+```{julia}
+design = Dict(
+  :children => ["Y", "N"], 
+  :urban => ["Y", "N"], 
+  :age => -10:10
+)
+preds = effects(design, gm3; level=0.95)
+base = data(preds) * mapping(:age; 
+                            color=:children, 
+                            col=:urban => renamer(["N" => "rural", "Y" => "urban"])) 
+                             
+                             
+lines = mapping("use: Y") * visual(Lines)
+bands = mapping(:lower, :upper) * visual(Band; alpha=0.3)
+
+
+draw(base * (lines + bands),
+     legend = (; position = :top, 
+               framevisible=false),
+     axis=(; ylabel="Log odds of contraception use",
+           xlabel="Centered age"))
+```
+
+We can also plot this on the response scale, i.e. the probability scale:
+
+```{julia}
+preds = effects(design, gm3; invlink=AutoInvLink(), level=0.95)
+base = data(preds) * mapping(:age; 
+                            color=:children, 
+                            col=:urban => renamer(["N" => "rural", "Y" => "urban"])) 
+                             
+                             
+lines = mapping("use: Y") * visual(Lines)
+bands = mapping(:lower, :upper) * visual(Band; alpha=0.3)
+
+
+draw(base * (lines + bands);
+     legend = (; position = :top, 
+               framevisible=false),
+     axis=(; ylabel="Probability of contraception use",
+           xlabel="Centered age",
+           limits=(nothing, (0, 1))))
 ```
 
 
