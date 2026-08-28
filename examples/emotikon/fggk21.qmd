@@ -87,48 +87,6 @@ select!(groupby(df, :Test),  Not(:score), :score => zscore => :zScore)
 The preprocessing steps above are also packaged as `SMLP2026.fggk21_preprocessed()`, so that other pages (e.g. the [contrast-coding tutorial](../../contrasts/contrasts_fggk21.qmd)) can reuse them without repeating the code.
 :::
 
-## Time final LMM of paper
-
-**Warmup**
-
-```{julia}
-#| eval: false
-## final LMM 
-m_test = let
-  f_test = @formula zScore ~ 1 + Test*a1*Sex + (1 | School) 
-  @time fit(MixedModel, f_test, df; contrasts, progress)
-end
-```
-
-**Timing the full model with current MixedModels.jl**
-
-```{julia}
-#| eval: false
-## final LMM 
-m_osf = let
-  f = @formula zScore ~ 1 + Test*a1*Sex +
-     (1+Test+a1+Sex | School) + (1+Test | Child) + 
-     zerocorr(1 + Test | Cohort)
-  fit(MixedModel, f, df; contrasts, progress)
-end
-```
-
-Minimizing 4724    Time: 0:23:33 ( 0.30  s/it)
-
-**Timing the full model with new branch pa/gradient-fable**
-
-```{julia}
-#Pkg.add MixedModels#pa/gradient-fable
-m_osf2 = let
-  f = @formula zScore ~ 1 + Test*a1*Sex +
-     (1+Test+a1+Sex | School) + (1+Test | Child) + 
-     zerocorr(1 + Test | Cohort)
-  fit(MixedModel, f, df; contrasts, progress, optimizer=:LD_LBFGS)
-end
-```
-
-Minimizing 81    Time: 0:01:12 ( 0.90  s/it)
-
 ## Extract a stratified subsample
 
 For the purpose of the tutorial, we extract a random sample of 1000 boys and 1000 girls. `Child`, `School`, and `Cohort` are grouping variables.
