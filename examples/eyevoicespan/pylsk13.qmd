@@ -73,7 +73,7 @@ set_aog_theme!()
 (56 children × 2 conditions = 112 rows).
 
 ```{julia}
-dat = DataFrame(load(joinpath("examples", "eyevoicespan", "pylsk13.rda"))["dat"])
+dat = DataFrame(load(joinpath(@__DIR__, "pylsk13.rda"))["dat"])
 ```
 
 We follow the general recommendation to code the levels of grouping variables as

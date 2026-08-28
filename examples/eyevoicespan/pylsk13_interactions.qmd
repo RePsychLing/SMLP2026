@@ -69,7 +69,7 @@ set_aog_theme!()
 
 ```{julia}
 #| code-fold: true
-dat = DataFrame(load(joinpath("examples", "eyevoicespan", "pylsk13.rda"))["dat"])
+dat = DataFrame(load(joinpath(@__DIR__, "pylsk13.rda"))["dat"])
 transform!(dat,
   :subj => (x -> categorical(string.("S", x))) => :Subj,
   :group => (x -> categorical(recode(x, 1 => "control", 2 => "dyslexic"))) => :Group,
